@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.env
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
