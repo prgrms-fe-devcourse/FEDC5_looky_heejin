@@ -15,7 +15,7 @@
     "axios": "^1.6.2",
     "body-scroll-lock": "^4.0.0-beta.0",
     "clsx": "^2.0.0",
-    "loadsh": "^0.0.4",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "react": "^18.2.0",
