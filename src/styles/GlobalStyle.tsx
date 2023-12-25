@@ -35,8 +35,9 @@ const CustomStyles = createGlobalStyle<any>`
     }
 
     #root {
-      width: 100%;
+      width: 600px;
       height: 100%;
+      margin: 0 auto;
     }
 `;
 
