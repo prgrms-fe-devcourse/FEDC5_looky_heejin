@@ -31,6 +31,7 @@
 // };
 
 // export default SplashPage;
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const SplashPage = () => {
@@ -43,6 +44,7 @@ const SplashPage = () => {
     // 컴포넌트가 언마운트되면 타임아웃을 클리어하여 메모리 누수를 방지합니다.
     return () => clearTimeout(redirectTimeout);
   }, [navigate]);
+
   return (
     <div>
       {/* 원하는 내용을 표시할 수 있습니다. */}
