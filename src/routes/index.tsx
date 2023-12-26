@@ -1,5 +1,6 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "@/App";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import Layout from "@/components/common/Layout";
 import {
   LoginPage,
   SplashPage,
@@ -11,53 +12,28 @@ import {
   ChatPage,
   PostDetailPage,
   NotFoundPage,
+  HomePage,
 } from "@/pages";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <SplashPage />,
-  },
-  {
-    path: "/home",
-    element: <App />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/signin",
-    element: <SignInPage />,
-  },
-  {
-    path: "/channels",
-    element: <ChannelsPage />,
-  },
-  {
-    path: "/profile",
-    element: <ProfilePage />,
-  },
-  {
-    path: "/search",
-    element: <SearchPage />,
-  },
-  {
-    path: "/chats",
-    element: <ChatsPage />,
-  },
-  {
-    path: "/chat:id",
-    element: <ChatPage />,
-  },
-  {
-    path: "/postdetail",
-    element: <PostDetailPage />,
-  },
-  {
-    path: "*",
-    element: <NotFoundPage />,
-  },
-]);
-
-export default router;
+const RouterComponent = () => {
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/channels" element={<ChannelsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/chats" element={<ChatsPage />} />
+          <Route path="/chat:id" element={<ChatPage />} />
+          <Route path="/postdetail" element={<PostDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
+};
+export default RouterComponent;

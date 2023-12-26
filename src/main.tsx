@@ -19,7 +19,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ManagedUIContext>
           <GlobalStyle />
           <App />
-          {/* <RouterProvider router={router} /> */}
         </ManagedUIContext>
       </Provider>
     </QueryClientProvider>
