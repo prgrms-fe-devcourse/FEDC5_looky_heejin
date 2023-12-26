@@ -9,8 +9,6 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { RootState } from "@/store";
 import { modalActions } from "@store/reducers";
 import { MODAL_VIEWS } from "@/store/modalType";
-import { Modal, ModalLayout } from "./Modal";
-import { TestModal } from "../modalViews";
 
 export const useUI = () => {
   const dispatch = useDispatch();
@@ -48,30 +46,6 @@ export const useUI = () => {
   return context;
 };
 
-// Modal ================================================================= //
-const ModalView: React.FC<{ modalView: string; closeModal(): any }> = ({
-  modalView,
-  closeModal,
-}) => {
-  return (
-    <Modal onClose={closeModal}>
-      {modalView === "INIT_VIEW" && (
-        <ModalLayout>
-          <TestModal />
-        </ModalLayout>
-      )}
-    </Modal>
-  );
-};
-
-const ModalUI: React.FC = () => {
-  const { displayModal, closeModal, modalView } = useUI();
-  return displayModal ? (
-    <ModalView modalView={modalView} closeModal={closeModal} />
-  ) : null;
-};
-// ================================================================= Modal //
-
 export const ManagedUIContext: FC<any> = ({ children }) => {
   const [localTheme, _] = useLocalStorage("theme");
 
@@ -86,7 +60,6 @@ export const ManagedUIContext: FC<any> = ({ children }) => {
   return (
     <ThemeProvider theme={themeMode === "light" ? lightTheme : darkTheme}>
       {children}
-      <ModalUI />
     </ThemeProvider>
   );
 };
