@@ -47,7 +47,6 @@ export const useUI = () => {
 };
 
 export const ManagedUIContext: FC<any> = ({ children }) => {
-  // const theme = useLocalStorage("theme");
   const [localTheme, _] = useLocalStorage("theme");
 
   const themeMode = useMemo((): string => {
