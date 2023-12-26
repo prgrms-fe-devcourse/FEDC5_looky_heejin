@@ -1,1 +1,10 @@
-// pages
+export { default as ChannelsPage } from "./ChannelsPage";
+export { default as ChatPage } from "./ChatPage";
+export { default as ChatsPage } from "./ChatsPage";
+export { default as LoginPage } from "./LoginPage";
+export { default as NotFoundPage } from "./NotFoundPage";
+export { default as PostDetailPage } from "./PostDetailPage";
+export { default as ProfilePage } from "./ProfilePage";
+export { default as SearchPage } from "./SearchPage";
+export { default as SignInPage } from "./SignInPage";
+export { default as SplashPage } from "./SplashPage";
