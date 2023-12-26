@@ -3,13 +3,13 @@ export const SYMBOL_TEXT: string = "looky";
 // -------------------------------------- APP SYMBOL //
 
 // BORDER ------------------------------------------ //
-export const BORDER_TINE_WIDTH: number = 1;
-export const BORDER_BASE_WIDTH: number = 1.5;
+export const BORDER_TINE_WIDTH: number = 1; // px
+export const BORDER_BASE_WIDTH: number = 1.5; // px
 // ------------------------------------------ BORDER //
 
 // CONTAINER ------------------------------------------------------- //
 export const CONTAINER_PADDING_VERTICAL: number = 3; // 3rem
-export const CONTAINER_PADDING_HORIZONTAIL: number = 2.5;
+export const CONTAINER_PADDING_HORIZONTAIL: number = 2.5; // rem
 export const MOBILEABLE_CONTAINER_HORIZONTAL_SPACE: string =
   "w-[100%] sm:max-w-[420px]";
 export const MOBILEABLE_CONTAINER_VERTICAL_SPACE: string =
@@ -17,7 +17,7 @@ export const MOBILEABLE_CONTAINER_VERTICAL_SPACE: string =
 // ------------------------------------------------------- CONTAINER //
 
 // SCREEN ------------------------------------------ //
-export const APP_MAX_WIDTH = 600;
+export const APP_MAX_WIDTH = 600; // px
 
 export const SCREEN_SIZE_MB = 450; // 450px
 export const SCREEN_SIZE_SM = 640; // 640px
