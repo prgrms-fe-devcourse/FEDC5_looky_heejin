@@ -3,12 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { MODAL_ACTION } from "@/store/modalType";
 
-export type ModalStateType = {
+export type TModalState = {
   displayModal: boolean;
   modalView: string;
 };
 
-const initialState: ModalStateType = {
+const initialState: TModalState = {
   displayModal: false,
   modalView: "INIT_VIEW",
 };
