@@ -2,6 +2,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
 import tw, { GlobalStyles as BaseStyles } from "twin.macro";
+import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 
 const CustomStyles = createGlobalStyle<any>`
     ${normalize}
@@ -36,9 +37,17 @@ const CustomStyles = createGlobalStyle<any>`
     }
 
     #root {
-      width: 600px;
+      width: ${APP_MAX_WIDTH}px;
       height: 100%;
       margin: 0 auto;
+    }
+
+    div, 
+    section,
+    nav,
+    aside {
+      display: flex;
+      flex-direction: column;
     }
 `;
 
