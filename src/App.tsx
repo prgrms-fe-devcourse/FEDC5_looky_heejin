@@ -1,60 +1,41 @@
-import { TEMP } from "@components/common";
-import { TestH1 } from "./styles/GlobalStyle";
-import { useUI } from "./components/common/uiContext";
-import useTheme from "./hooks/useTheme";
-import { useMutation } from "@tanstack/react-query";
-import { ILogIn } from "./types";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import { _LOGIN } from "./api/queries/login";
-import { useEffect } from "react";
-// import { useAuth } from "./hooks/useAuth";
-// import { useMe } from "./hooks/useMe";
+import Layout from "./components/common/Layout";
+import Home from "./pages/HomePage";
+import {
+  ChannelsPage,
+  ChatPage,
+  ChatsPage,
+  LoginPage,
+  NotFoundPage,
+  PostDetailPage,
+  ProfilePage,
+  SearchPage,
+  SignInPage,
+  SplashPage,
+} from "./pages";
 
 const App = () => {
-  const { modalView, displayModal } = useUI();
-  // const { setAuth } = useAuth();
-  // const { setMe } = useMe();
-
-  const theme = useTheme();
-
-  console.log(modalView, displayModal, theme?.theme_mode);
-
-  const mutation = useMutation({
-    mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
-    onSuccess({ user }) {
-      console.log("SUCCESS: ", user);
-      // setAuth(/..)
-      //  setMe()
-    },
-    onError(error) {
-      console.error("ERROR: ", error);
-    },
-  });
-
-  useEffect(() => {
-    mutation.mutate({
-      email: "admin@programmers.co.kr",
-      password: "programmers",
-    });
-  }, []);
-
-  if (mutation.isError) {
-    return <div>실패요 수고</div>;
-  }
-
-  if (mutation.isPending) {
-    return <div>기다리셈</div>;
-  }
-
-  if (mutation.isSuccess)
-    return (
-      // Todo
-      // Homepage 를 따로 불러서
-      <>
-        <TestH1 className="border-2 border-black">Hello World!</TestH1>
-        <h2>Hello</h2>
-        <div>{TEMP}</div>
-      </>
-    );
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/channels" element={<ChannelsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/chats" element={<ChatsPage />} />
+          <Route path="/chat:id" element={<ChatPage />} />
+          <Route path="/postdetail" element={<PostDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
 };
 
 export default App;
