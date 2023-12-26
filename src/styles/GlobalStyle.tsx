@@ -37,7 +37,8 @@ const CustomStyles = createGlobalStyle<any>`
     }
 
     #root {
-      width: ${APP_MAX_WIDTH}px;
+      width: 100%;
+      max-width: ${APP_MAX_WIDTH}px;
       height: 100%;
       margin: 0 auto;
     }
