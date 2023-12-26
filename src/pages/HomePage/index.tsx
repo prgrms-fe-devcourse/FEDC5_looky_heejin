@@ -45,7 +45,6 @@ const Home = () => {
   }
 
   if (mutation.isSuccess)
-    // Todo // Homepage 를 따로 불러서
     return (
       <div>
         <TestH1 className="border-2 border-black">Hello World!</TestH1>
