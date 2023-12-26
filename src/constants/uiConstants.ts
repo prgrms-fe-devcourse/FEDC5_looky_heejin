@@ -43,3 +43,4 @@ export const POSTER_DETAIL_CARD_WIDTH: number = 600; // 600px
 // Zindex //
 export const SEARCH_BAR = 30;
 export const NAVIGATER = 50;
+export const MODAL = 9999;
