@@ -17,7 +17,7 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
         return onClose();
       }
     },
-    [onClose],
+    [onClose]
   );
 
   useEffect(() => {
@@ -33,13 +33,7 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
     };
   }, [handleKey]);
 
-  return (
-    <ModalBackground
-      ref={ref}
-    >
-      {children}
-    </ModalBackground>
-  );
+  return <ModalBackground ref={ref}>{children}</ModalBackground>;
 };
 
 export default Modal;
