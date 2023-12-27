@@ -1,43 +1,47 @@
 import Logo from "/logo.png";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { LogInPageContainer } from "./LoginPage.styles";
-interface IFormData {
-  id: string;
-  password: string;
-}
+import {
+  FormContainer,
+  ImageContainer,
+  InputContainer,
+  LogInButtonContainer,
+  LogInPageContainer,
+  LinkContainer,
+} from "./LoginPage.styles";
+import { _LOGIN } from "@/api/queries/login";
+import { ILogIn } from "@/types";
 
 const LoginPageView = () => {
-  const { register, watch, handleSubmit } = useForm<IFormData>();
+  const { register, handleSubmit } = useForm<ILogIn>();
 
-  const submitForm: SubmitHandler<IFormData> = data => {
-    console.log(data);
+  const fetchLogIn: SubmitHandler<ILogIn> = async (formData: ILogIn) => {
+    const res = await _LOGIN(formData);
+    // 요기서 redux 데이터 설정
+    // 23.12.27 2320 API 응답 확인
+    console.log(res);
   };
-  console.log(watch("id"));
 
   return (
     <LogInPageContainer>
-      <img src={Logo} alt="루키 로고" loading="lazy" />
-      <form autoComplete="off" onSubmit={handleSubmit(submitForm)}>
-        <h3>로그인 폼_id</h3>
-        <input
+      <ImageContainer src={Logo} alt="루키 로고" loading="lazy" />
+      <FormContainer autoComplete="off" onSubmit={handleSubmit(fetchLogIn)}>
+        <InputContainer
           type="text"
-          {...register("id", { required: true, maxLength: 20 })}
+          placeholder="이메일"
+          {...register("email", { required: true, maxLength: 39 })}
         />
-      </form>
-      <form autoComplete="off" onSubmit={handleSubmit(submitForm)}>
-        <h3>로그인 폼_password</h3>
-        <input
-          type="text"
+      </FormContainer>
+      <form autoComplete="off" onSubmit={handleSubmit(fetchLogIn)}>
+        <InputContainer
+          type="password"
+          placeholder="비밀번호"
           {...register("password", { required: true, maxLength: 20 })}
         />
       </form>
-      {/* <div>todo_이메일</div>
-      <div>todo_비밀번호</div> */}
-      <button onClick={handleSubmit(submitForm)}>
-        <div>todo_로그인 버튼</div>
-      </button>
-      <Link to="/signin">회원가입 버튼</Link>
+      <LogInButtonContainer onClick={handleSubmit(fetchLogIn)}>
+        로그인
+      </LogInButtonContainer>
+      <LinkContainer to="/signin">회원가입</LinkContainer>
     </LogInPageContainer>
   );
 };
