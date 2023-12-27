@@ -18,7 +18,7 @@ const LoginPageView = () => {
     const res = await _LOGIN(formData);
     // 요기서 redux 데이터 설정
     // 23.12.27 2320 API 응답 확인
-    console.log(res);
+    if (res) console.log(res);
   };
 
   return (
