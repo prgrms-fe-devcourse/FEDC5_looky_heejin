@@ -52,7 +52,7 @@ const Home = () => {
         <h2>Hello</h2>
         <div>{TEMP}</div>
         <Button
-          variant="neumo"
+          variant="neumorp"
           onClickHandler={() => openModal()}
           useRipple={true}
         >

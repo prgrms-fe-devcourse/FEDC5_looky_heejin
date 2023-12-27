@@ -1,5 +1,4 @@
-import { BORDER_TINE_WIDTH } from "@/constants/uiConstants";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import tw from "twin.macro";
 
 const ButtonBaseWrapper = styled.button<any>`
@@ -17,7 +16,7 @@ export const Symbol = styled(ButtonBaseWrapper)<any>`
   background: linear-gradient(
     45deg,
     ${props => props.theme.symbol_color},
-    ${props => props.theme.symobl_secondary_color}
+    ${props => props.theme.symbol_secondary_color}
   );
 
   & > span {
@@ -37,7 +36,7 @@ export const Flat = styled(ButtonBaseWrapper)<any>`
   ${tw`transition duration-100`}
 `;
 
-export const Neumo = styled(ButtonBaseWrapper)<any>`
+export const Neumorp = styled(ButtonBaseWrapper)<any>`
   color: ${props =>
     props.$textColor ? props.$textColor : props.theme.text_primary_color};
 
