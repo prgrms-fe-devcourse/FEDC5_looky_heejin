@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { _LOGIN } from "@/api/queries/login";
 import { useUI } from "@/components/common/uiContext";
@@ -7,6 +7,7 @@ import { useTheme } from "styled-components";
 import { useMutation } from "@tanstack/react-query";
 import { TestH1 } from "@/styles/GlobalStyle";
 import { TEMP } from "@/components/common";
+import Button from "@/components/common/Button";
 
 const Home = () => {
   const { modalView, displayModal, openModal } = useUI();
@@ -45,13 +46,18 @@ const Home = () => {
   }
 
   if (mutation.isSuccess)
-    // Todo // Homepage 를 따로 불러서
     return (
       <div>
         <TestH1 className="border-2 border-black">Hello World!</TestH1>
         <h2>Hello</h2>
         <div>{TEMP}</div>
-        <button onClick={() => openModal()}>open Modal</button>
+        <Button
+          variant="neumo"
+          onClickHandler={() => openModal()}
+          useRipple={true}
+        >
+          <span>open Modal</span>
+        </Button>
       </div>
     );
 };
