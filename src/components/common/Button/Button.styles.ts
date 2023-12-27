@@ -29,16 +29,6 @@ export const Flat = styled(ButtonBaseWrapper)<any>`
   background-color: ${props =>
     props.$buttonColor ? props.$buttonColor : "trasnparent"};
 
-  ${props => {
-    if (!props.$buttonColor) {
-      return css`
-        border-width: ${BORDER_TINE_WIDTH}px;
-        border-style: solid;
-        border-color: ${props => props.theme.text_primary_color};
-      `;
-    }
-  }}
-
   & > span {
     color: ${props =>
       props.$textColor ? props.$textColor : props.theme.text_primary_color};
@@ -50,7 +40,7 @@ export const Flat = styled(ButtonBaseWrapper)<any>`
 export const Neumo = styled(ButtonBaseWrapper)<any>`
   color: ${props =>
     props.$textColor ? props.$textColor : props.theme.text_primary_color};
-    
+
   ${tw`flex justify-center items-center shadow-md hover:shadow-inner transition-shadow`}
 `;
 
