@@ -1,9 +1,11 @@
-import { lightTheme } from "@/styles/theme";
+import useTheme from "@/hooks/useTheme";
 
 export const MIN_ICON_WEIGHT = 100;
 export const MAX_ICON_WEIGHT = 900;
 export const ICON_OUTLINE = 0;
 export const ICON_FILL = 1;
+export const DEFAULT_ICON_SIZE = "2rem";
+export const DEFAULT_ICON_WEIGHT = 200;
 
 export interface IIconProps {
   name: string;
@@ -22,21 +24,23 @@ export interface IIconStyle {
 
 const Icon = ({
   name,
-  size = "2rem",
-  color = lightTheme.gray_500,
+  size = DEFAULT_ICON_SIZE,
+  color,
   fill = false,
-  weight = 200,
+  weight = DEFAULT_ICON_WEIGHT,
   className = "",
   ...props
 }: IIconProps) => {
-  let processedWeight = Math.min(
+  const processedWeight = Math.min(
     Math.max(weight, MIN_ICON_WEIGHT),
     MAX_ICON_WEIGHT
   );
 
+  const theme = useTheme();
+
   const iconStyle: IIconStyle = {
     fontSize: size,
-    color,
+    color: color ? color : theme?.gray_500,
     fontVariationSettings: `'FILL' ${
       fill ? ICON_FILL : ICON_OUTLINE
     },'wght' ${processedWeight}`,
