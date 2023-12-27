@@ -8,13 +8,13 @@ import React, {
 import { mergeRefs } from "react-merge-refs";
 import cn from "clsx";
 
-import { ButtonRipple, Disabled, Flat, Neumo, Symbol } from "./Button.styles";
+import { ButtonRipple, Disabled, Flat, Neumorp, Symbol } from "./Button.styles";
 import rippleStyle from "./Button.module.css";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   className?: string;
-  variant: "flat" | "neumo" | "symbol" | "disabled";
+  variant: "flat" | "neumorp" | "symbol" | "disabled";
   buttonColor?: string;
   textColor?: string;
   active?: boolean;
@@ -31,14 +31,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const ButtonType = {
   flat: Flat,
-  neumo: Neumo,
+  neumorp: Neumorp,
   symbol: Symbol,
   disabled: Disabled,
 };
 
 /**
  * @param variant 버튼의 테마를 지정 합니다
- * @param useRipple 리플 이팩트 적용 여부를 나타냅니다. neumo 테마에서는 적용되지 않습니다.
+ * @param useRipple 리플 이팩트 적용 여부를 나타냅니다. neumorp 테마에서는 적용되지 않습니다.
  * @param handlerDelay 리플 이펙트 적용시 리플 이펙트 완료 후 클릭 이벤트를 실행시켜야 하는 경우를 대비하여 클릭 핸들러의 실행을 딜레이 시키는 용도로 사용됩니다. default = 0
  */
 const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
@@ -119,7 +119,7 @@ const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
       {...rest}
     >
       {children}
-      {useRipple && variant !== "neumo" && !disabled && (
+      {useRipple && variant !== "neumorp" && !disabled && (
         <ButtonRipple ref={rippleRef} className="ripple" />
       )}
       {loading && <i className="pl-2 m-0 flex">{/* <LoadingDots /> */}</i>}
