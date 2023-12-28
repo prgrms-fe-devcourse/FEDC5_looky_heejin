@@ -4,6 +4,7 @@ import React, {
   useRef,
   MouseEvent,
   useCallback,
+  ReactNode,
 } from "react";
 import { mergeRefs } from "react-merge-refs";
 import cn from "clsx";
@@ -19,7 +20,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textColor?: string;
   active?: boolean;
   type?: "submit" | "reset" | "button";
-  children: any;
+  children: ReactNode | string;
   width?: string | number;
   loading?: boolean;
   disabled?: boolean;
