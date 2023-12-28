@@ -3,6 +3,7 @@ export const lightTheme: object = {
   background_color: "#F8F8F8",
   container_color: "#FEFEFE",
   symbol_color: "#FB6060",
+  symbol_secondary_color: "#F48A4E",
   text_primary_color: "#0F1118",
   text_secondary_color: "#F0F0F0",
   black_primary: "#262626",
