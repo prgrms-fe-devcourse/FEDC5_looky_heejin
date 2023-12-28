@@ -12,6 +12,10 @@ export const ImageContainer = styled.img`
 `;
 
 export const FormContainer = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   border-radius: 5px;
 `;
 
@@ -31,11 +35,10 @@ export const LogInButtonContainer = styled.button`
   height: 50px;
   ${props => props.theme.symbol_color};
 
-  /* todo secondary symbol color 추가 시 리팩토링 필요 */
   background: linear-gradient(
     90deg,
     ${props => props.theme.symbol_color},
-    #f48a4e
+    ${props => props.theme.symbol_secondary_color}
   );
   border-radius: 5px;
 `;
