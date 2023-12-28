@@ -13,7 +13,7 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalLayoutContainer = styled.div`
-  background-color: ${props => props.theme.background_color};
+  background-color: ${props => props.theme.container_color};
   padding: ${MODAL_VERTICAL_PADDIND}rem ${MODAL_HORIZONTAL_PADDING}rem;
 
   ${tw`relative shadow-md`}
