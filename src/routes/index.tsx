@@ -14,6 +14,7 @@ import {
   NotFoundPage,
   HomePage,
 } from "@/pages";
+import TestPage from "@/pages/TestPage";
 
 const RouterComponent = () => {
   return (
@@ -30,6 +31,7 @@ const RouterComponent = () => {
           <Route path="/chats" element={<ChatsPage />} />
           <Route path="/chat:id" element={<ChatPage />} />
           <Route path="/postdetail" element={<PostDetailPage />} />
+          <Route path="/test" element={<TestPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
