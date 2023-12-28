@@ -2,6 +2,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
 import tw, { GlobalStyles as BaseStyles } from "twin.macro";
+import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 
 const CustomStyles = createGlobalStyle<any>`
     ${normalize}
@@ -12,13 +13,14 @@ const CustomStyles = createGlobalStyle<any>`
     }
     body {
         /* min-width: 420px;
-        background-color: ${props => props.theme.background_color};
         transition: background-color 300ms ease-in-out;
         background-repeat: repeat; */
+        background-color: ${props => props.theme.background_color};
     }
 
     html,
     body {
+      height: 100%;
       /* height: 100%;
       box-sizing: border-box;
       touch-action: manipulation;
@@ -36,7 +38,17 @@ const CustomStyles = createGlobalStyle<any>`
 
     #root {
       width: 100%;
+      max-width: ${APP_MAX_WIDTH}px;
       height: 100%;
+      margin: 0 auto;
+    }
+
+    div, 
+    section,
+    nav,
+    aside {
+      display: flex;
+      flex-direction: column;
     }
 `;
 
