@@ -7,8 +7,12 @@ interface SearchRecentProps {
 }
 
 const LiContainer = styled.li`
+  width: 300px;
   color: ${props => props.theme.gray_500};
-
+  &:hover:not(.empty) {
+    filter: brightness(50%);
+    cursor: pointer;
+  }
   &:not(:last-child) {
     margin-bottom: 1rem;
   }
@@ -40,7 +44,9 @@ const SearchPageRecent = ({
             </LiContainer>
           ))
         ) : (
-          <LiContainer {...props}>최근 검색어가 없습니다.</LiContainer>
+          <LiContainer className="empty" {...props}>
+            최근 검색어가 없습니다.
+          </LiContainer>
         )}
       </ul>
     </section>
