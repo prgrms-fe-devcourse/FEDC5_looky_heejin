@@ -13,6 +13,7 @@ import {
   PostDetailPage,
   NotFoundPage,
   HomePage,
+  CreatePostPage,
 } from "@/pages";
 import TestPage from "@/pages/TestPage";
 
@@ -31,6 +32,7 @@ const RouterComponent = () => {
           <Route path="/chats" element={<ChatsPage />} />
           <Route path="/chat:id" element={<ChatPage />} />
           <Route path="/postdetail" element={<PostDetailPage />} />
+          <Route path="/newPost" element={<CreatePostPage />} />
           <Route path="/test" element={<TestPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
