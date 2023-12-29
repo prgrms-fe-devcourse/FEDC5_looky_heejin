@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import tw from "twin.macro";
 
-import { ModalLayout } from "../common/Modal";
-import InputLabel from "../common/InputLabel";
-import { Button } from "../common";
-import { useUI } from "../common/uiContext";
+import { ModalLayout } from "@/components/common/Modal";
+import InputLabel from "@/components/common/InputLabel";
+import { Button } from "@/components/common";
+import { useUI } from "@/components/common/uiContext";
 import { useTags } from "@/hooks/useTags";
 import { FieldErrors, useForm } from "react-hook-form";
 import { ITag } from "@/types/post";

@@ -1,4 +1,4 @@
-import { ModalLayout } from "../common/Modal";
+import { ModalLayout } from "@/components/common/Modal";
 
 const TestModal = () => {
   return (

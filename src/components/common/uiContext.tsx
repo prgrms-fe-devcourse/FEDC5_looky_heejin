@@ -10,8 +10,7 @@ import { RootState } from "@/store";
 import { modalActions } from "@store/reducers";
 import { MODAL_VIEWS } from "@/store/modalType";
 import { Modal } from "./Modal";
-import { TestModal } from "../modalViews";
-import TagCreateModal from "../modalViews/TagCreateModal";
+import { TagCreateModal, TestModal } from "@/components/modalViews";
 
 export const useUI = () => {
   const dispatch = useDispatch();
