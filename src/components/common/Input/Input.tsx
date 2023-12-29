@@ -1,13 +1,13 @@
 import { InputHTMLAttributes } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import cn from "clsx";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
 
 export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   kind?: "text" | "price";
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
   isInvalid?: boolean;
   required: boolean;
   [key: string]: any;
