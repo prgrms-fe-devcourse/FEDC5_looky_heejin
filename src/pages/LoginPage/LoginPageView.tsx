@@ -1,5 +1,5 @@
 import Logo from "/logo.png";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, SubmitErrorHandler, useForm } from "react-hook-form";
 import {
   FormContainer,
   ImageContainer,
@@ -10,6 +10,7 @@ import {
 } from "./LoginPage.styles";
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 
 const LoginPageView = () => {
   const {
@@ -20,22 +21,36 @@ const LoginPageView = () => {
     mode: "onChange",
   });
 
+  const mutation = useMutation({
+    mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
+    onSuccess({ user }) {
+      console.log("API 성공: ", user);
+    },
+    onError(error) {
+      console.error("API 에러: ", error);
+    },
+  });
+
+  const onValid: SubmitHandler<ILogIn> = (formData: ILogIn) => {
+    mutation.mutate(formData);
+  };
+
+  const onInValid: SubmitErrorHandler<ILogIn> = (error): void => {
+    console.log("양식이 안맞으므로 호출 X:", error);
+  };
+
   // 유효성 검사 정규식
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
 
-  const fetchLogIn: SubmitHandler<ILogIn> = async (formData: ILogIn) => {
-    const res = await _LOGIN(formData);
-    // 요기서 redux 데이터 설정
-    // 23.12.27 2320 API 응답 확인
-    if (res) console.log(res);
-  };
-
   return (
     <LogInPageContainer>
       <ImageContainer src={Logo} alt="루키 로고" loading="lazy" />
-      <FormContainer autoComplete="off" onSubmit={handleSubmit(fetchLogIn)}>
+      <FormContainer
+        autoComplete="off"
+        onSubmit={handleSubmit(onValid, onInValid)}
+      >
         <InputContainer
           type="text"
           placeholder="이메일"
@@ -78,7 +93,7 @@ const LoginPageView = () => {
         )} */}
         {errors?.password?.type === "maxLength" && <span>너무 길어요!</span>}
 
-        <LogInButtonContainer onSubmit={handleSubmit(fetchLogIn)}>
+        <LogInButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           로그인
         </LogInButtonContainer>
       </FormContainer>
