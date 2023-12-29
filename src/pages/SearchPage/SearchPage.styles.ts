@@ -27,3 +27,16 @@ export const Input = styled.input`
   border-radius: 1rem;
   box-sizing: border-box;
 `;
+
+export const IconWrap = styled.div`
+  display: inline-flex;
+  width: 50px;
+  height: 50px;
+  padding-left: 5px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(70%);
+  }
+`;
