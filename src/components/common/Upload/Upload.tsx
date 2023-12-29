@@ -1,8 +1,8 @@
 import { ReactNode, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
-import Icon from "../Icon/Icon";
 import { PLUS_ICON } from "@/constants/icons";
 import { Image } from "@/components/common";
+import Icon from "@/components/common/Icon/Icon";
 
 interface IUploadProps {
   droppable?: boolean;
