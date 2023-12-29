@@ -30,5 +30,5 @@ export default {
       // => @media (min-width: 1536px) { ... }
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar-hide")],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
