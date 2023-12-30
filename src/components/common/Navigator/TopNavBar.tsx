@@ -24,11 +24,16 @@ const NavBarPartition = styled.div`
   border: 1px solid black;
 `;
 
+const LogoImage = styled.img`
+  margin: auto auto;
+  width: 60%;
+`;
+
 const TopNavBar = () => {
   const { pathname } = useLocation();
-  const LOGO_VISIBLE_PATH = ["/home"];
 
-  const LOGO_INVISIBLE_PATH = [
+  const NAV_VISIBLE_PATH = [
+    "/home",
     "/channels",
     "/profile",
     "/search",
@@ -39,10 +44,11 @@ const TopNavBar = () => {
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const showNavBar = useMemo(
-    () => LOGO_VISIBLE_PATH.includes(currentPath),
+    () => NAV_VISIBLE_PATH.includes(currentPath),
     [currentPath]
   );
 
+  console.log(currentPath);
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -55,17 +61,19 @@ const TopNavBar = () => {
     [pathname]
   );
   return (
-    <TopNavBarWrapper>
-      <NavBarPartition
-        style={{ width: LEFT_PARTITION_WIDTH }}
-      ></NavBarPartition>
-      <NavBarPartition
-        style={{ width: CENTER_PARTITION_WIDTH }}
-      ></NavBarPartition>
-      <NavBarPartition
-        style={{ width: RIGHT_PARTITION_WIDTH }}
-      ></NavBarPartition>
-    </TopNavBarWrapper>
+    showNavBar && (
+      <TopNavBarWrapper>
+        <NavBarPartition style={{ width: LEFT_PARTITION_WIDTH }}>
+          {currentPath === "/home" && <LogoImage src="logo.png" alt="logo" />}
+        </NavBarPartition>
+        <NavBarPartition
+          style={{ width: CENTER_PARTITION_WIDTH }}
+        ></NavBarPartition>
+        <NavBarPartition
+          style={{ width: RIGHT_PARTITION_WIDTH }}
+        ></NavBarPartition>
+      </TopNavBarWrapper>
+    )
   );
 };
 
