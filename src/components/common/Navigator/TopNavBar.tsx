@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { Input } from "..";
+import Icon from "../Icon/Icon";
+import { BACK_ICON } from "@/constants/icons";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -21,12 +23,19 @@ const TopNavBarWrapper = styled.nav`
 `;
 
 const NavBarPartition = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
+`;
+
+const IconWrapper = styled.div`
+  display: inline-block;
+  margin: auto 10%;
+  & > :first-child {
+    cursor: pointer;
+  }
 `;
 
 const LogoImage = styled.img`
   margin: auto auto;
-  width: 60%;
 `;
 
 const TopNavBar = () => {
@@ -64,7 +73,13 @@ const TopNavBar = () => {
     showNavBar && (
       <TopNavBarWrapper>
         <NavBarPartition style={{ width: LEFT_PARTITION_WIDTH }}>
-          {currentPath === "/home" && <LogoImage src="logo.png" alt="logo" />}
+          {currentPath === "/home" ? (
+            <LogoImage src="logo.png" alt="logo" />
+          ) : (
+            <IconWrapper>
+              <Icon name={BACK_ICON} size="2.8rem" />
+            </IconWrapper>
+          )}
         </NavBarPartition>
         <NavBarPartition
           style={{ width: CENTER_PARTITION_WIDTH }}
