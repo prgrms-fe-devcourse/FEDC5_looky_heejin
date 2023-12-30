@@ -18,7 +18,7 @@ const BottomNavBarWrapper = styled.nav`
   justify-content: space-between;
   max-width: ${APP_MAX_WIDTH}px;
   width: 100%;
-  height: 2.5rem;
+  height: 3rem;
   background-color: white;
 `;
 const IconWrapper = styled.div`
