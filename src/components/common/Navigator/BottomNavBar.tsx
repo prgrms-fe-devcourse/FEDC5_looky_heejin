@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { Icon } from "..";
 import {
   CHANNEL_ICON,
@@ -6,9 +6,10 @@ import {
   SEARCH_ICON,
   USER_ICON,
 } from "@/constants/icons";
+import { useLocation } from "react-router-dom";
 
 const BottomNavBarWrapper = styled.div`
-  height: 3rem;
+  /* height: 3rem; */
   background-color: white;
   display: flex;
   flex-direction: row;
@@ -27,21 +28,43 @@ const IconWrapper = styled.div`
 `;
 
 const BottomNavBar = () => {
+  const { pathname } = useLocation();
+  const NAV_INABLE_PATH = [
+    "/home",
+    "/channels",
+    "/profile",
+    "/search",
+    "/chats",
+    "/postdetail",
+    "/test",
+  ];
+
+  const showNavBar = NAV_INABLE_PATH.includes(pathname);
+  const currentPath = pathname.split("/")[1];
+
+  const theme = useTheme();
+
   return (
-    <BottomNavBarWrapper>
-      <IconWrapper>
-        <Icon name={HOME_ICON} weight={250} />
-      </IconWrapper>
-      <IconWrapper>
-        <Icon name={SEARCH_ICON} weight={250} />
-      </IconWrapper>
-      <IconWrapper>
-        <Icon name={CHANNEL_ICON} weight={250} />
-      </IconWrapper>
-      <IconWrapper>
-        <Icon name={USER_ICON} weight={250} />
-      </IconWrapper>
-    </BottomNavBarWrapper>
+    showNavBar && (
+      <BottomNavBarWrapper>
+        <IconWrapper>
+          <Icon
+            name={HOME_ICON}
+            color={currentPath === "home" ? theme.symbol_color : ""}
+            weight={currentPath === "home" ? 300 : 250}
+          />
+        </IconWrapper>
+        <IconWrapper>
+          <Icon name={SEARCH_ICON} weight={250} />
+        </IconWrapper>
+        <IconWrapper>
+          <Icon name={CHANNEL_ICON} weight={250} />
+        </IconWrapper>
+        <IconWrapper>
+          <Icon name={USER_ICON} weight={250} />
+        </IconWrapper>
+      </BottomNavBarWrapper>
+    )
   );
 };
 
