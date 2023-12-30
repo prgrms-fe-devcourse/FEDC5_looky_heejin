@@ -15,11 +15,13 @@ import {
   HomePage,
 } from "@/pages";
 import TestPage from "@/pages/TestPage";
+import TopNavBar from "@/components/common/Navigator/TopNavBar";
 
 const RouterComponent = () => {
   return (
     <Router>
       <Layout>
+        <TopNavBar />
         <Routes>
           <Route path="/" element={<SplashPage />} />
           <Route path="/home" element={<HomePage />} />
