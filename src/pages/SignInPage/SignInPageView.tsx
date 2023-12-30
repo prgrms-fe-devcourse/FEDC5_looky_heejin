@@ -8,6 +8,7 @@ import {
   ImageContainer,
   InputContainer,
   SignInPageContainer,
+  SpanStyle,
   SubmitButtonContainer,
 } from "./SignInPage.styles";
 import SignInPageConstant from "./SignInPage.const";
@@ -89,7 +90,9 @@ const SignInPage = () => {
           placeholder="이메일"
           {...register("email", SignInPageConstant.EMAIL_VALIDATION_OPTION)}
         />
-        {errors.email?.message ? <span>{errors.email?.message}</span> : null}
+        {errors.email?.message ? (
+          <SpanStyle>{errors.email?.message}</SpanStyle>
+        ) : null}
         <InputContainer
           type="text"
           placeholder="닉네임"
@@ -99,7 +102,7 @@ const SignInPage = () => {
           )}
         />
         {errors.fullName?.message ? (
-          <span>{errors.fullName?.message}</span>
+          <SpanStyle>{errors.fullName?.message}</SpanStyle>
         ) : null}
         <InputContainer
           type="password"
@@ -110,7 +113,7 @@ const SignInPage = () => {
           )}
         />
         {errors.password?.message ? (
-          <span>{errors.password?.message}</span>
+          <SpanStyle>{errors.password?.message}</SpanStyle>
         ) : null}
         <InputContainer
           type="password"
@@ -126,7 +129,7 @@ const SignInPage = () => {
           })}
         />
         {errors.passwordCheck ? (
-          <span>{errors.passwordCheck.message}</span>
+          <SpanStyle>{errors.passwordCheck.message}</SpanStyle>
         ) : null}
         <SubmitButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           회원가입
