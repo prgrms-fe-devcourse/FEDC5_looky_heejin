@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { Input } from "..";
 import Icon from "../Icon/Icon";
-import { BACK_ICON } from "@/constants/icons";
+import { BACK_ICON, CHAT_ICON, NOTIFICATIONS_ICON } from "@/constants/icons";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -26,7 +26,14 @@ const NavBarPartition = styled.div`
   /* border: 1px solid black; */
 `;
 
-const IconWrapper = styled.div`
+const IconsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto 0;
+`;
+
+const BackIconWrapper = styled.div`
   display: inline-block;
   margin: auto 10%;
   & > :first-child {
@@ -34,7 +41,15 @@ const IconWrapper = styled.div`
   }
 `;
 
+const IconWrapper = styled.div`
+  margin: auto 4%;
+  & > :first-child {
+    cursor: pointer;
+  }
+`;
+
 const LogoImage = styled.img`
+  width: 60%;
   margin: auto auto;
 `;
 
@@ -76,17 +91,28 @@ const TopNavBar = () => {
           {currentPath === "/home" ? (
             <LogoImage src="logo.png" alt="logo" />
           ) : (
-            <IconWrapper>
+            <BackIconWrapper>
               <Icon name={BACK_ICON} size="2.8rem" />
-            </IconWrapper>
+            </BackIconWrapper>
           )}
         </NavBarPartition>
-        <NavBarPartition
-          style={{ width: CENTER_PARTITION_WIDTH }}
-        ></NavBarPartition>
-        <NavBarPartition
-          style={{ width: RIGHT_PARTITION_WIDTH }}
-        ></NavBarPartition>
+        <NavBarPartition style={{ width: CENTER_PARTITION_WIDTH }}>
+          {currentPath === "/home" ? (
+            <span style={{ margin: "auto auto" }}>channel명</span>
+          ) : (
+            ""
+          )}
+        </NavBarPartition>
+        <NavBarPartition style={{ width: RIGHT_PARTITION_WIDTH }}>
+          <IconsBox>
+            <IconWrapper>
+              <Icon name={CHAT_ICON}></Icon>
+            </IconWrapper>
+            <IconWrapper>
+              <Icon name={NOTIFICATIONS_ICON}></Icon>
+            </IconWrapper>
+          </IconsBox>
+        </NavBarPartition>
       </TopNavBarWrapper>
     )
   );
