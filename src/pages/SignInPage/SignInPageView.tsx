@@ -3,7 +3,13 @@ import { _SIGNIN } from "@/api/queries/signin";
 import { ISignIn } from "@/types";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { FormContainer, SignInPageContainer } from "./SignInPage.styles";
+import {
+  FormContainer,
+  ImageContainer,
+  InputContainer,
+  SignInPageContainer,
+  SubmitButtonContainer,
+} from "./SignInPage.styles";
 import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
 import { Image } from "@/components/common";
@@ -66,18 +72,20 @@ const SignInPage = () => {
 
   return (
     <SignInPageContainer>
-      <Image src={Logo} width={260} height={116} />
+      <ImageContainer>
+        <Image src={Logo} width={260} height={116} />
+      </ImageContainer>
       <FormContainer
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
-        <input
+        <InputContainer
           type="text"
           placeholder="이메일"
           {...register("email", SignInPageConstant.EMAIL_VALIDATION_OPTION)}
         />
         {errors.email?.message ? <span>{errors.email?.message}</span> : null}
-        <input
+        <InputContainer
           type="text"
           placeholder="닉네임"
           {...register(
@@ -88,7 +96,7 @@ const SignInPage = () => {
         {errors.fullName?.message ? (
           <span>{errors.fullName?.message}</span>
         ) : null}
-        <input
+        <InputContainer
           type="password"
           placeholder="비밀번호"
           {...register(
@@ -99,11 +107,11 @@ const SignInPage = () => {
         {errors.password?.message ? (
           <span>{errors.password?.message}</span>
         ) : null}
-        <input
+        <InputContainer
           type="password"
           placeholder="비밀번호 확인"
           {...register("passwordCheck", {
-            required: true,
+            ...SignInPageConstant.PASSWORD_CHECK_VALIDATION_OPTION,
             validate: {
               matchPassword: value => {
                 const { password } = getValues();
@@ -115,7 +123,9 @@ const SignInPage = () => {
         {errors.passwordCheck ? (
           <span>{errors.passwordCheck.message}</span>
         ) : null}
-        <button onSubmit={handleSubmit(onValid, onInValid)}>회원가입</button>
+        <SubmitButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
+          회원가입
+        </SubmitButtonContainer>
       </FormContainer>
     </SignInPageContainer>
   );
