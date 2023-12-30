@@ -45,7 +45,9 @@ const SignInPage = () => {
     mutationFn: async (formData: ISignIn) => await _SIGNIN(formData),
     onSuccess({ user }) {
       console.log("API 성공: ", user);
-      navigate("/login");
+      // API에서 바로 user정보와 토큰값을 주더라고요.
+      // 바로 home으로 돌려도 될 것 같아요!
+      navigate("/home");
     },
     onError(error) {
       console.error("API 에러: ", error);
