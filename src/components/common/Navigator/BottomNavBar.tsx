@@ -6,7 +6,7 @@ import {
   SEARCH_ICON,
   USER_ICON,
 } from "@/constants/icons";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const BottomNavBarWrapper = styled.div`
   /* height: 3rem; */
@@ -43,32 +43,39 @@ const BottomNavBar = () => {
   const currentPath = pathname.split("/")[1];
 
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleClick = (path: string) => {
+    if (path !== pathname) {
+      navigate(path);
+    }
+  };
 
   return (
     showNavBar && (
       <BottomNavBarWrapper>
-        <IconWrapper>
+        <IconWrapper onClick={() => handleClick("/home")}>
           <Icon
             name={HOME_ICON}
             color={currentPath === "home" ? theme.symbol_color : ""}
             weight={currentPath === "home" ? 300 : 250}
           />
         </IconWrapper>
-        <IconWrapper>
+        <IconWrapper onClick={() => handleClick("/search")}>
           <Icon
             name={SEARCH_ICON}
             color={currentPath === "search" ? theme.symbol_color : ""}
             weight={currentPath === "search" ? 300 : 250}
           />
         </IconWrapper>
-        <IconWrapper>
+        <IconWrapper onClick={() => handleClick("/channels")}>
           <Icon
             name={CHANNEL_ICON}
             color={currentPath === "channels" ? theme.symbol_color : ""}
             weight={currentPath === "channels" ? 300 : 250}
           />
         </IconWrapper>
-        <IconWrapper>
+        <IconWrapper onClick={() => handleClick("/profile")}>
           <Icon
             name={USER_ICON}
             color={currentPath === "profile" ? theme.symbol_color : ""}
