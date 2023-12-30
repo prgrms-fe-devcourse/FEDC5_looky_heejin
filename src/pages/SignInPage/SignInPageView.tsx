@@ -47,6 +47,8 @@ const SignInPage = () => {
       console.log("API 성공: ", user);
       // API에서 바로 user정보와 토큰값을 주더라고요.
       // 바로 home으로 돌려도 될 것 같아요!
+      // todo
+      // redux 저장소에 유저정보, 토큰값 저장하는 로직 필요
       navigate("/home");
     },
     onError(error) {
