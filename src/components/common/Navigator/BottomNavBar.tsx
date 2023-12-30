@@ -8,9 +8,15 @@ import {
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
+import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 
 const BottomNavBarWrapper = styled.div`
   /* height: 3rem; */
+  position: fixed;
+  bottom: 0;
+  max-width: ${APP_MAX_WIDTH}px;
+  height: 2.5rem;
+  width: 100%;
   background-color: white;
   display: flex;
   flex-direction: row;
