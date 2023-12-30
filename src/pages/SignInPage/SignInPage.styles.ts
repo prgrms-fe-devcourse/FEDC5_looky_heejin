@@ -25,13 +25,16 @@ export const ImageContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+export const SpanStyle = styled.span`
+  color: ${props => props.theme.text_primary_color};
+`;
+
 export const SubmitButtonContainer = styled.button`
-  color: ${props => props.theme.text_secondary_color};
+  color: #f0f0f0;
   font-weight: bold;
   margin: 10px 0;
   width: 300px;
   height: 50px;
-  ${props => props.theme.symbol_color};
 
   background: linear-gradient(
     90deg,
