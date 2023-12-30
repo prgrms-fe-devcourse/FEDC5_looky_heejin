@@ -1,3 +1,4 @@
+import Logo from "/logo.png";
 import { _SIGNIN } from "@/api/queries/signin";
 import { ISignIn } from "@/types";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
@@ -5,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { FormContainer, SignInPageContainer } from "./SignInPage.styles";
 import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
+import { Image } from "@/components/common";
 
 interface ISigninModify extends ISignIn {
   passwordCheck: string;
@@ -64,6 +66,7 @@ const SignInPage = () => {
 
   return (
     <SignInPageContainer>
+      <Image src={Logo} width={260} height={116} />
       <FormContainer
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
