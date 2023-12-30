@@ -13,6 +13,7 @@ import {
 import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
 import { Image } from "@/components/common";
+import { useNavigate } from "react-router-dom";
 
 interface ISigninModify extends ISignIn {
   passwordCheck: string;
@@ -37,13 +38,17 @@ const SignInPage = () => {
     },
   });
 
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: async (formData: ISignIn) => await _SIGNIN(formData),
     onSuccess({ user }) {
       console.log("API 성공: ", user);
+      navigate("/login");
     },
     onError(error) {
       console.error("API 에러: ", error);
+      alert(`API 호출 실패!`);
     },
   });
 
