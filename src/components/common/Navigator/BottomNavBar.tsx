@@ -7,6 +7,7 @@ import {
   USER_ICON,
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useCallback, useMemo } from "react";
 
 const BottomNavBarWrapper = styled.div`
   /* height: 3rem; */
@@ -39,17 +40,23 @@ const BottomNavBar = () => {
     "/test",
   ];
 
-  const showNavBar = NAV_INABLE_PATH.includes(pathname);
-  const currentPath = pathname.split("/")[1];
+  const showNavBar = useMemo(
+    () => NAV_INABLE_PATH.includes(pathname),
+    [pathname]
+  );
+  const currentPath = useMemo(() => pathname.split("/")[1], [pathname]);
 
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleClick = (path: string) => {
-    if (path !== pathname) {
-      navigate(path);
-    }
-  };
+  const handleClick = useCallback(
+    (path: string) => {
+      if (path !== pathname) {
+        navigate(path);
+      }
+    },
+    [pathname]
+  );
 
   return (
     showNavBar && (
