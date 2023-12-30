@@ -20,7 +20,7 @@ const IconWrapper = styled.div`
   flex-grow: 1;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
   &:hover {
     background-color: #eaeaea;
     cursor: pointer;
@@ -55,13 +55,25 @@ const BottomNavBar = () => {
           />
         </IconWrapper>
         <IconWrapper>
-          <Icon name={SEARCH_ICON} weight={250} />
+          <Icon
+            name={SEARCH_ICON}
+            color={currentPath === "search" ? theme.symbol_color : ""}
+            weight={currentPath === "search" ? 300 : 250}
+          />
         </IconWrapper>
         <IconWrapper>
-          <Icon name={CHANNEL_ICON} weight={250} />
+          <Icon
+            name={CHANNEL_ICON}
+            color={currentPath === "channels" ? theme.symbol_color : ""}
+            weight={currentPath === "channels" ? 300 : 250}
+          />
         </IconWrapper>
         <IconWrapper>
-          <Icon name={USER_ICON} weight={250} />
+          <Icon
+            name={USER_ICON}
+            color={currentPath === "profile" ? theme.symbol_color : ""}
+            weight={currentPath === "profile" ? 300 : 250}
+          />
         </IconWrapper>
       </BottomNavBarWrapper>
     )
