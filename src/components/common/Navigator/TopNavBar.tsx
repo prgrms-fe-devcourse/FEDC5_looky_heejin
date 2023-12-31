@@ -52,6 +52,7 @@ const IconWrapper = styled.div`
 const LogoImage = styled.img`
   width: 60%;
   margin: auto auto;
+  cursor: pointer;
 `;
 
 const TopNavBar = () => {
@@ -79,7 +80,7 @@ const TopNavBar = () => {
 
   const handleClick = useCallback(
     (path: string) => {
-      if (path !== pathname) {
+      if (path !== pathname || path === "/home") {
         navigate(path);
       }
     },
@@ -95,7 +96,11 @@ const TopNavBar = () => {
       <TopNavBarWrapper>
         <NavBarPartition style={{ width: LEFT_PARTITION_WIDTH }}>
           {currentPath === "/home" ? (
-            <LogoImage src="logo.png" alt="logo" />
+            <LogoImage
+              src="logo.png"
+              alt="logo"
+              onClick={() => handleClick("/home")}
+            />
           ) : (
             <BackIconWrapper>
               <Icon name={BACK_ICON} size="2.8rem" onClick={handleBackClick} />
@@ -108,7 +113,25 @@ const TopNavBar = () => {
           ) : (
             ""
           )}
-          {currentPath === "/search" && <Input required={true} />}
+          {currentPath === "/search" && (
+            <div
+              style={{
+                width: "138%",
+                marginLeft: "-13%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Input
+                required={true}
+                style={{
+                  backgroundColor: "grey",
+                  borderRadius: "2rem",
+                  height: "80%",
+                }}
+              />
+            </div>
+          )}
         </NavBarPartition>
         <NavBarPartition style={{ width: RIGHT_PARTITION_WIDTH }}>
           {currentPath === "/home" && (
