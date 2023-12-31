@@ -62,39 +62,40 @@ const BottomNavBar = () => {
     [pathname]
   );
 
+  if (!isShow) {
+    return null;
+  }
   return (
-    isShow && (
-      <BottomNavBarWrapper>
-        <IconWrapper onClick={() => handleClick("/home")}>
-          <Icon
-            name={HOME_ICON}
-            color={currentPath === "/home" ? theme.symbol_color : ""}
-            weight={currentPath === "/home" ? 300 : 250}
-          />
-        </IconWrapper>
-        <IconWrapper onClick={() => handleClick("/search")}>
-          <Icon
-            name={SEARCH_ICON}
-            color={currentPath === "/search" ? theme.symbol_color : ""}
-            weight={currentPath === "/search" ? 300 : 250}
-          />
-        </IconWrapper>
-        <IconWrapper onClick={() => handleClick("/channels")}>
-          <Icon
-            name={CHANNEL_ICON}
-            color={currentPath === "/channels" ? theme.symbol_color : ""}
-            weight={currentPath === "/channels" ? 300 : 250}
-          />
-        </IconWrapper>
-        <IconWrapper onClick={() => handleClick("/profile")}>
-          <Icon
-            name={USER_ICON}
-            color={currentPath === "/profile" ? theme.symbol_color : ""}
-            weight={currentPath === "/profile" ? 300 : 250}
-          />
-        </IconWrapper>
-      </BottomNavBarWrapper>
-    )
+    <BottomNavBarWrapper>
+      <IconWrapper onClick={() => handleClick("/home")}>
+        <Icon
+          name={HOME_ICON}
+          color={currentPath === "/home" ? theme.symbol_color : ""}
+          weight={currentPath === "/home" ? 300 : 250}
+        />
+      </IconWrapper>
+      <IconWrapper onClick={() => handleClick("/search")}>
+        <Icon
+          name={SEARCH_ICON}
+          color={currentPath === "/search" ? theme.symbol_color : ""}
+          weight={currentPath === "/search" ? 300 : 250}
+        />
+      </IconWrapper>
+      <IconWrapper onClick={() => handleClick("/channels")}>
+        <Icon
+          name={CHANNEL_ICON}
+          color={currentPath === "/channels" ? theme.symbol_color : ""}
+          weight={currentPath === "/channels" ? 300 : 250}
+        />
+      </IconWrapper>
+      <IconWrapper onClick={() => handleClick("/profile")}>
+        <Icon
+          name={USER_ICON}
+          color={currentPath === "/profile" ? theme.symbol_color : ""}
+          weight={currentPath === "/profile" ? 300 : 250}
+        />
+      </IconWrapper>
+    </BottomNavBarWrapper>
   );
 };
 
