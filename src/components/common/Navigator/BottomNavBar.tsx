@@ -45,7 +45,7 @@ const BottomNavBar = () => {
   ];
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
-  const showNavBar = useMemo(
+  const isShow = useMemo(
     () => NAV_INABLE_PATH.includes(currentPath),
     [currentPath]
   );
@@ -63,7 +63,7 @@ const BottomNavBar = () => {
   );
 
   return (
-    showNavBar && (
+    isShow && (
       <BottomNavBarWrapper>
         <IconWrapper onClick={() => handleClick("/home")}>
           <Icon
