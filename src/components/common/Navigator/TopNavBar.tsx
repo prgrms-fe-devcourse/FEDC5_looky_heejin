@@ -3,8 +3,9 @@ import styled, { useTheme } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
-import { Input } from "..";
+
 import Icon from "../Icon/Icon";
+import { Input } from "..";
 import { BACK_ICON, CHAT_ICON, NOTIFICATIONS_ICON } from "@/constants/icons";
 
 const LEFT_PARTITION_WIDTH = "20%";
@@ -84,6 +85,11 @@ const TopNavBar = () => {
     },
     [pathname]
   );
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     showNavBar && (
       <TopNavBarWrapper>
@@ -92,7 +98,7 @@ const TopNavBar = () => {
             <LogoImage src="logo.png" alt="logo" />
           ) : (
             <BackIconWrapper>
-              <Icon name={BACK_ICON} size="2.8rem" />
+              <Icon name={BACK_ICON} size="2.8rem" onClick={handleBackClick} />
             </BackIconWrapper>
           )}
         </NavBarPartition>
@@ -102,16 +108,19 @@ const TopNavBar = () => {
           ) : (
             ""
           )}
+          {currentPath === "/search" && <Input required={true} />}
         </NavBarPartition>
         <NavBarPartition style={{ width: RIGHT_PARTITION_WIDTH }}>
-          <IconsBox>
-            <IconWrapper>
-              <Icon name={CHAT_ICON}></Icon>
-            </IconWrapper>
-            <IconWrapper>
-              <Icon name={NOTIFICATIONS_ICON}></Icon>
-            </IconWrapper>
-          </IconsBox>
+          {currentPath === "/home" && (
+            <IconsBox>
+              <IconWrapper>
+                <Icon name={CHAT_ICON}></Icon>
+              </IconWrapper>
+              <IconWrapper>
+                <Icon name={NOTIFICATIONS_ICON}></Icon>
+              </IconWrapper>
+            </IconsBox>
+          )}
         </NavBarPartition>
       </TopNavBarWrapper>
     )
