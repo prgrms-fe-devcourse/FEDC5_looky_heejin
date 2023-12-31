@@ -53,7 +53,7 @@ const BottomNavBar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleClick = useCallback(
+  const handleIconClick = useCallback(
     (path: string) => {
       if (path !== pathname) {
         navigate(path);
@@ -67,28 +67,28 @@ const BottomNavBar = () => {
   }
   return (
     <BottomNavBarWrapper>
-      <IconWrapper onClick={() => handleClick("/home")}>
+      <IconWrapper onClick={() => handleIconClick("/home")}>
         <Icon
           name={HOME_ICON}
           color={currentPath === "/home" ? theme.symbol_color : ""}
           weight={currentPath === "/home" ? 300 : 250}
         />
       </IconWrapper>
-      <IconWrapper onClick={() => handleClick("/search")}>
+      <IconWrapper onClick={() => handleIconClick("/search")}>
         <Icon
           name={SEARCH_ICON}
           color={currentPath === "/search" ? theme.symbol_color : ""}
           weight={currentPath === "/search" ? 300 : 250}
         />
       </IconWrapper>
-      <IconWrapper onClick={() => handleClick("/channels")}>
+      <IconWrapper onClick={() => handleIconClick("/channels")}>
         <Icon
           name={CHANNEL_ICON}
           color={currentPath === "/channels" ? theme.symbol_color : ""}
           weight={currentPath === "/channels" ? 300 : 250}
         />
       </IconWrapper>
-      <IconWrapper onClick={() => handleClick("/profile")}>
+      <IconWrapper onClick={() => handleIconClick("/profile")}>
         <Icon
           name={USER_ICON}
           color={currentPath === "/profile" ? theme.symbol_color : ""}
