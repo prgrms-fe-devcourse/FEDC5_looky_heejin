@@ -35,8 +35,8 @@ const RouterComponent = () => {
           <Route path="/test" element={<TestPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        <BottomNavBar />
       </Layout>
+      <BottomNavBar />
     </Router>
   );
 };
