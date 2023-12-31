@@ -9,6 +9,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
+import { PathName } from "@/constants/pathnameConstants";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
@@ -35,13 +36,13 @@ const IconWrapper = styled.div`
 const BottomNavBar = () => {
   const { pathname } = useLocation();
   const NAV_INABLE_PATH = [
-    "/home",
-    "/channels",
-    "/profile",
-    "/search",
-    "/chats",
-    "/postdetail",
-    "/test",
+    PathName.HOME,
+    PathName.CHANNELS,
+    PathName.PROFILE,
+    PathName.SEARCH,
+    PathName.CHATS,
+    PathName.POSTDETAIL,
+    PathName.TEST,
   ];
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
@@ -67,32 +68,32 @@ const BottomNavBar = () => {
   }
   return (
     <BottomNavBarWrapper>
-      <IconWrapper onClick={() => handleIconClick("/home")}>
+      <IconWrapper onClick={() => handleIconClick(PathName.HOME)}>
         <Icon
           name={HOME_ICON}
-          color={currentPath === "/home" ? theme.symbol_color : ""}
-          weight={currentPath === "/home" ? 300 : 250}
+          color={currentPath === PathName.HOME ? theme.symbol_color : ""}
+          weight={currentPath === PathName.HOME ? 300 : 250}
         />
       </IconWrapper>
-      <IconWrapper onClick={() => handleIconClick("/search")}>
+      <IconWrapper onClick={() => handleIconClick(PathName.SEARCH)}>
         <Icon
           name={SEARCH_ICON}
-          color={currentPath === "/search" ? theme.symbol_color : ""}
-          weight={currentPath === "/search" ? 300 : 250}
+          color={currentPath === PathName.SEARCH ? theme.symbol_color : ""}
+          weight={currentPath === PathName.SEARCH ? 300 : 250}
         />
       </IconWrapper>
-      <IconWrapper onClick={() => handleIconClick("/channels")}>
+      <IconWrapper onClick={() => handleIconClick(PathName.CHANNELS)}>
         <Icon
           name={CHANNEL_ICON}
-          color={currentPath === "/channels" ? theme.symbol_color : ""}
-          weight={currentPath === "/channels" ? 300 : 250}
+          color={currentPath === PathName.CHANNELS ? theme.symbol_color : ""}
+          weight={currentPath === PathName.CHANNELS ? 300 : 250}
         />
       </IconWrapper>
-      <IconWrapper onClick={() => handleIconClick("/profile")}>
+      <IconWrapper onClick={() => handleIconClick(PathName.PROFILE)}>
         <Icon
           name={USER_ICON}
-          color={currentPath === "/profile" ? theme.symbol_color : ""}
-          weight={currentPath === "/profile" ? 300 : 250}
+          color={currentPath === PathName.PROFILE ? theme.symbol_color : ""}
+          weight={currentPath === PathName.PROFILE ? 300 : 250}
         />
       </IconWrapper>
     </BottomNavBarWrapper>
