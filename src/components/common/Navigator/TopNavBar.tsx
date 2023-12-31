@@ -23,8 +23,9 @@ const TopNavBarWrapper = styled.nav`
   background-color: white;
 `;
 
-const NavBarPartition = styled.div`
-  /* border: 1px solid black; */
+const NavBarPartition = styled.div<{ $width: string }>`
+  border: 1px solid black;
+  width: ${({ $width }) => $width && $width};
 `;
 
 const IconsBox = styled.div`
@@ -94,7 +95,7 @@ const TopNavBar = () => {
   return (
     showNavBar && (
       <TopNavBarWrapper>
-        <NavBarPartition style={{ width: LEFT_PARTITION_WIDTH }}>
+        <NavBarPartition $width={LEFT_PARTITION_WIDTH}>
           {currentPath === "/home" ? (
             <LogoImage
               src="logo.png"
@@ -107,7 +108,7 @@ const TopNavBar = () => {
             </BackIconWrapper>
           )}
         </NavBarPartition>
-        <NavBarPartition style={{ width: CENTER_PARTITION_WIDTH }}>
+        <NavBarPartition $width={CENTER_PARTITION_WIDTH}>
           {currentPath === "/home" ? (
             <span style={{ margin: "auto auto" }}>channel명</span>
           ) : (
@@ -133,7 +134,7 @@ const TopNavBar = () => {
             </div>
           )}
         </NavBarPartition>
-        <NavBarPartition style={{ width: RIGHT_PARTITION_WIDTH }}>
+        <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
           {currentPath === "/home" && (
             <IconsBox>
               <IconWrapper>
