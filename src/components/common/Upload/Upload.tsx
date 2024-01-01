@@ -120,14 +120,7 @@ const Upload = ({
         // value={value}
         onChange={handleFileChange}
       />
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          border: "2px dashed #aaa",
-          borderColor: dragging ? "blue" : "#aaa",
-        }}
-      >
+      <UploadArea $dragging={dragging}>
         {file ? (
           <Image
             src={file}
@@ -145,7 +138,7 @@ const Upload = ({
         >
           <Icon name={PLUS_ICON} weight={400} size={25} />
         </div>
-      </div>
+      </UploadArea>
     </UploadContainer>
   );
 };
@@ -155,6 +148,14 @@ export default Upload;
 const UploadContainer = styled.div<any>`
   display: inline-block;
   cursor: pointer;
+`;
+
+const UploadArea = styled.div<any>`
+  width: 100%;
+  height: 100%;
+  border: 2px dashed ${props => props.theme.gray_200};
+  border-color: ${props =>
+    props.$dragging ? props.theme.symbol_color : props.theme.gray_200};
 `;
 
 const Input = styled.input<any>`
