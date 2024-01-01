@@ -11,7 +11,7 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { SHA256 } from "crypto-js";
+import { sha256Encrypt } from "@/utils/crypto";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -45,7 +45,7 @@ const LoginPageView = () => {
   const onValid: SubmitHandler<ILogIn> = ({ email, password }) => {
     const filteredFormData = {
       email,
-      password: SHA256(password).toString(),
+      password: sha256Encrypt(password),
     };
     mutation.mutate(filteredFormData);
     console.log(filteredFormData);
