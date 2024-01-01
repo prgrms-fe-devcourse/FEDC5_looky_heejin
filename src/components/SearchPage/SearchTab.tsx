@@ -28,13 +28,18 @@ type TOption = "user" | "post";
 
 interface ISearchTab {
   option: TOption;
+  onClick: () => void;
 }
 
-const SearchTab = ({ option = "user", ...props }: ISearchTab) => {
+const SearchTab = ({ option = "user", onClick, ...props }: ISearchTab) => {
   return (
     <TabWrap {...props}>
-      <Tab option={option}>{"사용자"}</Tab>
-      <Tab option={option}>{"게시글"}</Tab>
+      <Tab option={option} onClick={onClick}>
+        {"사용자"}
+      </Tab>
+      <Tab option={option} onClick={onClick}>
+        {"게시글"}
+      </Tab>
     </TabWrap>
   );
 };
