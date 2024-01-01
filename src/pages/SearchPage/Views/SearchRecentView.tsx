@@ -45,7 +45,7 @@ const SearchRecentView = ({
         {reversedKeywords && reversedKeywords.length > 0 ? (
           reversedKeywords.map((item, index) => (
             <LiContainer
-              key={index}
+              key={item.toString().concat(index)}
               onClick={() => onItemClick(item)}
               {...props}
             >
