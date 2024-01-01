@@ -18,12 +18,14 @@ import { useNavigate } from "react-router-dom";
 import { sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMe } from "@/hooks/useMe";
 
 interface ISigninModify extends ISignIn {
   passwordCheck: string;
 }
 
 const SignInPage = () => {
+  const { setMe } = useMe();
   const { setAuth } = useAuth();
   const [_, storeToken] = useLocalStorage("token");
   const {
@@ -51,6 +53,11 @@ const SignInPage = () => {
     onSuccess({ user, token }) {
       console.log("API 성공: ", user);
       setAuth({ isLogIn: true, token });
+      setMe({
+        id: user._id,
+        userName: user.fullName,
+        profilePhoto: "",
+      });
       storeToken(token);
       navigate("/home");
     },
