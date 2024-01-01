@@ -15,7 +15,7 @@ import {
   HomePage,
 } from "@/pages";
 import TestPage from "@/pages/TestPage";
-import TopNavBar from "@/components/common/Navigator/TopNavBar";
+import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar";
 
 const RouterComponent = () => {
