@@ -3,10 +3,12 @@ import styled, { useTheme } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
-
-import Icon from "../Icon/Icon";
-import { Input } from "..";
-import { BACK_ICON, CHAT_ICON, NOTIFICATIONS_ICON } from "@/constants/icons";
+import Icon from "../../Icon/Icon";
+import { CHAT_ICON, NOTIFICATIONS_ICON } from "@/constants/icons";
+import { PathName } from "@/constants/pathNameConstants";
+import LogoImage from "./LogoImage";
+import BackButton from "./BackButton";
+import SearchBar from "./SearchBar";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -35,14 +37,6 @@ const IconsBox = styled.div`
   margin: auto 0;
 `;
 
-const BackIconWrapper = styled.div`
-  display: inline-block;
-  margin: auto 10%;
-  & > :first-child {
-    cursor: pointer;
-  }
-`;
-
 const IconWrapper = styled.div`
   margin: auto 4%;
   & > :first-child {
@@ -50,24 +44,18 @@ const IconWrapper = styled.div`
   }
 `;
 
-const LogoImage = styled.img`
-  width: 60%;
-  margin: auto auto;
-  cursor: pointer;
-`;
+const NAV_VISIBLE_PATH = [
+  PathName.HOME,
+  PathName.CHANNELS,
+  PathName.PROFILE,
+  PathName.SEARCH,
+  PathName.CHATS,
+  PathName.POSTDETAIL,
+  PathName.TEST,
+];
 
 const TopNavBar = () => {
   const { pathname } = useLocation();
-
-  const NAV_VISIBLE_PATH = [
-    "/home",
-    "/channels",
-    "/profile",
-    "/search",
-    "/chats",
-    "/postdetail",
-    "/test",
-  ];
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const showNavBar = useMemo(
@@ -81,7 +69,7 @@ const TopNavBar = () => {
 
   const handleClick = useCallback(
     (path: string) => {
-      if (path !== pathname || path === "/home") {
+      if (path !== pathname || path === PathName.HOME) {
         navigate(path);
       }
     },
@@ -96,46 +84,20 @@ const TopNavBar = () => {
     showNavBar && (
       <TopNavBarWrapper>
         <NavBarPartition $width={LEFT_PARTITION_WIDTH}>
-          {currentPath === "/home" ? (
-            <LogoImage
-              src="logo.png"
-              alt="logo"
-              onClick={() => handleClick("/home")}
-            />
+          {currentPath === PathName.HOME ? (
+            <LogoImage onClick={() => handleClick(PathName.HOME)} />
           ) : (
-            <BackIconWrapper>
-              <Icon name={BACK_ICON} size="2.8rem" onClick={handleBackClick} />
-            </BackIconWrapper>
+            <BackButton onClick={handleBackClick} />
           )}
         </NavBarPartition>
         <NavBarPartition $width={CENTER_PARTITION_WIDTH}>
-          {currentPath === "/home" ? (
+          {currentPath === PathName.HOME && (
             <span style={{ margin: "auto auto" }}>channel명</span>
-          ) : (
-            ""
           )}
-          {currentPath === "/search" && (
-            <div
-              style={{
-                width: "138%",
-                marginLeft: "-13%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Input
-                required={true}
-                style={{
-                  backgroundColor: "grey",
-                  borderRadius: "2rem",
-                  height: "80%",
-                }}
-              />
-            </div>
-          )}
+          {currentPath === PathName.SEARCH && <SearchBar />}
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
-          {currentPath === "/home" && (
+          {currentPath === PathName.HOME && (
             <IconsBox>
               <IconWrapper>
                 <Icon name={CHAT_ICON}></Icon>
