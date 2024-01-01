@@ -15,7 +15,7 @@ import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
 import { Image } from "@/components/common";
 import { useNavigate } from "react-router-dom";
-import { SHA256 } from "crypto-js";
+import { sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
@@ -64,7 +64,7 @@ const SignInPage = () => {
     const filteredFormData = {
       email,
       fullName,
-      password: SHA256(password).toString(),
+      password: sha256Encrypt(password),
     };
     mutation.mutate(filteredFormData);
     console.log(filteredFormData);
