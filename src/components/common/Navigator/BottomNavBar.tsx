@@ -9,7 +9,8 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
-import { PathName } from "@/constants/pathnameConstants";
+import { PathName } from "@/constants/pathNameConstants";
+import { Button } from "..";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
@@ -28,10 +29,16 @@ const IconWrapper = styled.div`
   align-items: center;
   transition: background-color 0.5s ease;
   &:hover {
-    background-color: #eaeaea;
+    background-color: ${({ theme }) => theme.gray_100};
     cursor: pointer;
   }
 `;
+
+const ButtonChildrenSortingStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
 const BottomNavBar = () => {
   const { pathname } = useLocation();
@@ -68,33 +75,75 @@ const BottomNavBar = () => {
   }
   return (
     <BottomNavBarWrapper>
-      <IconWrapper onClick={() => handleIconClick(PathName.HOME)}>
-        <Icon
-          name={HOME_ICON}
-          color={currentPath === PathName.HOME ? theme.symbol_color : ""}
-          weight={currentPath === PathName.HOME ? 300 : 250}
-        />
+      <IconWrapper>
+        <Button
+          variant="flat"
+          useRipple={true}
+          rippleColor={theme.symbol_color}
+          onClickHandler={() => handleIconClick(PathName.HOME)}
+          style={ButtonChildrenSortingStyle}
+        >
+          {
+            <Icon
+              name={HOME_ICON}
+              color={currentPath === PathName.HOME ? theme.symbol_color : ""}
+              weight={currentPath === PathName.HOME ? 300 : 250}
+            />
+          }
+        </Button>
       </IconWrapper>
-      <IconWrapper onClick={() => handleIconClick(PathName.SEARCH)}>
-        <Icon
-          name={SEARCH_ICON}
-          color={currentPath === PathName.SEARCH ? theme.symbol_color : ""}
-          weight={currentPath === PathName.SEARCH ? 300 : 250}
-        />
+      <IconWrapper>
+        <Button
+          variant="flat"
+          useRipple={true}
+          rippleColor={theme.symbol_color}
+          onClickHandler={() => handleIconClick(PathName.SEARCH)}
+          style={ButtonChildrenSortingStyle}
+        >
+          {
+            <Icon
+              name={SEARCH_ICON}
+              color={currentPath === PathName.SEARCH ? theme.symbol_color : ""}
+              weight={currentPath === PathName.SEARCH ? 300 : 250}
+            />
+          }
+        </Button>
       </IconWrapper>
-      <IconWrapper onClick={() => handleIconClick(PathName.CHANNELS)}>
-        <Icon
-          name={CHANNEL_ICON}
-          color={currentPath === PathName.CHANNELS ? theme.symbol_color : ""}
-          weight={currentPath === PathName.CHANNELS ? 300 : 250}
-        />
+      <IconWrapper>
+        <Button
+          variant="flat"
+          useRipple={true}
+          rippleColor={theme.symbol_color}
+          onClickHandler={() => handleIconClick(PathName.CHANNELS)}
+          style={ButtonChildrenSortingStyle}
+        >
+          {
+            <Icon
+              name={CHANNEL_ICON}
+              color={
+                currentPath === PathName.CHANNELS ? theme.symbol_color : ""
+              }
+              weight={currentPath === PathName.CHANNELS ? 300 : 250}
+            />
+          }
+        </Button>
       </IconWrapper>
-      <IconWrapper onClick={() => handleIconClick(PathName.PROFILE)}>
-        <Icon
-          name={USER_ICON}
-          color={currentPath === PathName.PROFILE ? theme.symbol_color : ""}
-          weight={currentPath === PathName.PROFILE ? 300 : 250}
-        />
+      <IconWrapper>
+        <Button
+          variant="flat"
+          useRipple={true}
+          rippleColor={theme.symbol_color}
+          onClickHandler={() => handleIconClick(PathName.PROFILE)}
+          style={ButtonChildrenSortingStyle}
+        >
+          {
+            <Icon
+              name={USER_ICON}
+              color={currentPath === PathName.PROFILE ? theme.symbol_color : ""}
+              weight={currentPath === PathName.PROFILE ? 300 : 250}
+            />
+          }
+        </Button>
       </IconWrapper>
     </BottomNavBarWrapper>
   );
