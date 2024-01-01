@@ -16,7 +16,7 @@ interface ICreatePostFormProps {
   file?: string;
 }
 
-interface IPostDataProps {
+interface IPostBodyData {
   title: string;
   image?: string;
   channelId: string;
@@ -46,14 +46,14 @@ const CreatePostPageView = () => {
     //title: String, <- 필요한 데이터를 JSON.stringfy 해서 넣음
     //image: Binary | null,
     //channelId: String
-    const JSONData = JSON.stringify({
+    const additionalData = JSON.stringify({
       title: data.title,
       content: data.content,
       tags,
     });
 
-    const postData: IPostDataProps = {
-      title: JSONData,
+    const postData: IPostBodyData = {
+      title: additionalData,
       image: data.file,
       channelId,
     };
