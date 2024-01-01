@@ -13,8 +13,10 @@ import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { SHA256 } from "crypto-js";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const LoginPageView = () => {
+  const { setAuth } = useAuth();
   const {
     register,
     handleSubmit,
@@ -29,6 +31,7 @@ const LoginPageView = () => {
     mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
     onSuccess({ user, token }) {
       console.log("API 성공: ", user, token);
+      setAuth({ isLogIn: true, token });
       navigate("/home");
     },
     onError(error) {
