@@ -1,24 +1,28 @@
 import { ITag } from "@/types/post";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TAGS_ACTION } from "../types/tagsType";
+import { NEW_POST_ACTION } from "../types/newPostType";
 
 export type TTagsState = {
   tags: ITag[];
+  channelId: string;
+  channelName: string;
 };
 
 const initialState: TTagsState = {
   tags: [],
+  channelId: "",
+  channelName: "",
 };
 
-const tagsSlice = createSlice({
-  name: "tags",
+const newPostSlice = createSlice({
+  name: "newPost",
   initialState,
   reducers: {
-    tagsReducer: (state, action: PayloadAction<TAGS_ACTION>) => {
+    newPostReducer: (state, action: PayloadAction<NEW_POST_ACTION>) => {
       switch (action.payload.type) {
         case "SET_TAGS": {
           return {
-            tempTag: null,
+            ...state,
             tags: action.payload.tags,
           };
         }
@@ -53,10 +57,18 @@ const tagsSlice = createSlice({
             };
           }
         }
-        case "INIT_TAGS": {
+        case "SET_CHANNEL": {
+          return {
+            ...state,
+            channelId: action.payload.channelId,
+            channelName: action.payload.channelName,
+          };
+        }
+        case "INIT": {
           return {
             tags: [],
-            tempTag: null,
+            channelId: "",
+            channelName: "",
           };
         }
       }
@@ -64,6 +76,6 @@ const tagsSlice = createSlice({
   },
 });
 
-export const tagsActions = tagsSlice.actions;
+export const newPostActions = newPostSlice.actions;
 
-export default tagsSlice.reducer;
+export default newPostSlice.reducer;

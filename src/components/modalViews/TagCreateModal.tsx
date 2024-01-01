@@ -5,7 +5,7 @@ import { ModalLayout } from "@/components/common/Modal";
 import InputLabel from "@/components/common/InputLabel";
 import { Button, Input } from "@/components/common";
 import { useUI } from "@/components/common/uiContext";
-import { useTags } from "@/hooks/useTags";
+import { useNewPost } from "@/hooks/useNewPost";
 import { FieldErrors, useForm } from "react-hook-form";
 import { ITag } from "@/types/post";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ const TagCreateModal = ({ props }: ITagCreateModalProps) => {
   const { x, y, id, isEdit = false } = props as ModalProps;
 
   const { closeModal } = useUI();
-  const { addTag, deleteTag, tags } = useTags();
+  const { addTag, deleteTag, tags } = useNewPost();
 
   const { register, handleSubmit, setValue } = useForm<ITagFormProps>({});
 
