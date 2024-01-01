@@ -11,6 +11,8 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
+import { SHA256 } from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const LoginPageView = () => {
   const {
@@ -21,18 +23,26 @@ const LoginPageView = () => {
     mode: "onChange",
   });
 
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
-    onSuccess({ user }) {
-      console.log("API 성공: ", user);
+    onSuccess({ user, token }) {
+      console.log("API 성공: ", user, token);
+      navigate("/home");
     },
     onError(error) {
       console.error("API 에러: ", error);
     },
   });
 
-  const onValid: SubmitHandler<ILogIn> = (formData: ILogIn) => {
-    mutation.mutate(formData);
+  const onValid: SubmitHandler<ILogIn> = ({ email, password }) => {
+    const filteredFormData = {
+      email,
+      password: SHA256(password).toString(),
+    };
+    mutation.mutate(filteredFormData);
+    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ILogIn> = (error): void => {
