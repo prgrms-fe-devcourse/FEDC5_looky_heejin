@@ -15,6 +15,7 @@ import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
 import { Image } from "@/components/common";
 import { useNavigate } from "react-router-dom";
+import { SHA256 } from "crypto-js";
 
 interface ISigninModify extends ISignIn {
   passwordCheck: string;
@@ -57,8 +58,14 @@ const SignInPage = () => {
     },
   });
 
-  const onValid: SubmitHandler<ISignIn> = (formData: ISignIn) => {
-    mutation.mutate(formData);
+  const onValid: SubmitHandler<ISignIn> = ({ email, fullName, password }) => {
+    const filteredFormData = {
+      email,
+      fullName,
+      password: SHA256(password).toString(),
+    };
+    mutation.mutate(filteredFormData);
+    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ISignIn> = (error): void => {
