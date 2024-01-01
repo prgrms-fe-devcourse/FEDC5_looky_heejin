@@ -25,6 +25,7 @@ export const darkTheme: object = {
   background_color: "#2C2C2C",
   container_color: "#FEFEFE50",
   symbol_color: "#FB6060",
+  symbol_secondary_color: "#F48A4E",
   text_primary_color: "#F0F0F0",
   text_secondary_color: "#0F1118",
   black_primary: "#262626",
