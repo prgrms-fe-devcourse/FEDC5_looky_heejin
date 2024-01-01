@@ -15,6 +15,7 @@ import {
   HomePage,
 } from "@/pages";
 import TestPage from "@/pages/TestPage";
+import BottomNavBar from "@/components/common/Navigator/BottomNavBar";
 
 const RouterComponent = () => {
   return (
@@ -35,6 +36,7 @@ const RouterComponent = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
+      <BottomNavBar />
     </Router>
   );
 };
