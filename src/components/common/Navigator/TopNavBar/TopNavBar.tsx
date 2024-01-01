@@ -9,6 +9,7 @@ import { PathName } from "@/constants/pathNameConstants";
 import LogoImage from "./LogoImage";
 import BackButton from "./BackButton";
 import SearchBar from "./SearchBar";
+import ChatAvatars from "./ChatAvatars";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -50,6 +51,7 @@ const NAV_VISIBLE_PATH = [
   PathName.PROFILE,
   PathName.SEARCH,
   PathName.CHATS,
+  PathName.CHAT,
   PathName.POSTDETAIL,
   PathName.TEST,
 ];
@@ -80,6 +82,11 @@ const TopNavBar = () => {
     navigate(-1);
   };
 
+  // DUMMY_DATA
+  const myAvatarSrc = "https://picsum.photos/100";
+  const partnerAvatarSrc = "https://picsum.photos/200";
+  const parterName = "누군가";
+
   return (
     showNavBar && (
       <TopNavBarWrapper>
@@ -95,6 +102,13 @@ const TopNavBar = () => {
             <span style={{ margin: "auto auto" }}>channel명</span>
           )}
           {currentPath === PathName.SEARCH && <SearchBar />}
+          {currentPath === PathName.CHAT && (
+            <ChatAvatars
+              myAvatarSrc={myAvatarSrc}
+              partnerAvatarSrc={partnerAvatarSrc}
+              partnerName={parterName}
+            />
+          )}
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (

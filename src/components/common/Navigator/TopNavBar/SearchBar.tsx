@@ -55,7 +55,7 @@ const SearchBar = () => {
   } = useForm({ mode: "onSubmit" });
 
   const onValid = (inputValue: FieldValues) => {
-    console.log("입력 값 : ", inputValue.search);
+    console.log(inputValue.search);
   };
 
   const onInvalid = (error: FieldErrors) => {
