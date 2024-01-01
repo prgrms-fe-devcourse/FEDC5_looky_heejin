@@ -1,7 +1,8 @@
 import React from "react";
 import { styled } from "styled-components";
-import { Input } from "../..";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
+import Icon from "../../Icon/Icon";
+import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
 
 const SearchBarWrapper = styled.div`
   height: 100%;
@@ -19,13 +20,29 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled.input`
+  position: relative;
   width: 100rem;
   height: 65%;
   background-color: ${props => props.theme.gray_100};
   border-radius: 2rem;
-  padding-left: 1rem;
+  padding-left: 3.3rem;
   &:focus {
     outline: none;
+  }
+`;
+
+const SearchIconWrapper = styled.div`
+  position: absolute;
+  left: 15%;
+`;
+
+const CloseIconWrapper = styled.div`
+  position: absolute;
+  right: 8%;
+  background-color: ${({ theme }) => theme.gray_500};
+  border-radius: 50%;
+  & {
+    cursor: pointer;
   }
 `;
 
@@ -33,15 +50,21 @@ const SearchBar = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
 
-  const onValid = (data: FieldValues) => {
-    console.log("입력 값 : ", data.search);
+  const onValid = (inputValue: FieldValues) => {
+    console.log("입력 값 : ", inputValue.search);
   };
 
   const onInvalid = (error: FieldErrors) => {
     console.log("에러 :", error);
+    console.log(errors);
+  };
+
+  const handleRemoveValue = () => {
+    setValue("search", "");
   };
   return (
     <SearchBarWrapper>
@@ -50,19 +73,19 @@ const SearchBar = () => {
           type="text"
           placeholder="사용자와 게시글을 검색해보세요"
           {...register("search", {
-            required: true,
+            required: "검색어를 입력해주세요",
             minLength: {
               message: "2자 이상 입력해주세요",
               value: 2,
             },
           })}
-          // style={{
-          //   backgroundColor: "grey",
-          //   borderRadius: "2rem",
-          //   height: "75%",
-          // }}
         />
-        {/* <button type="submit" style={{ display: "none" }}></button> */}
+        <SearchIconWrapper>
+          <Icon name={SEARCH_ICON} size="1.4rem" weight={300}></Icon>
+        </SearchIconWrapper>
+        <CloseIconWrapper onClick={handleRemoveValue}>
+          <Icon name={CLOSE_ICON} size="1rem" weight={300} color="white"></Icon>
+        </CloseIconWrapper>
       </StyledForm>
     </SearchBarWrapper>
   );
