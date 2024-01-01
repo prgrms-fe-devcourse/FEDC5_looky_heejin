@@ -9,7 +9,7 @@ import { ITag } from "@/types/post";
 import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
 import { Button, Input, Upload } from "@/components/common";
-import { Tag } from "./CreatePostPage.styles";
+import { Tag, TextArea } from "./CreatePostPage.styles";
 
 interface ICreatePostFormProps {
   title: string;
@@ -114,12 +114,17 @@ const CreatePostPageView = () => {
               placeholder="제목을 입력해주세요."
             />
           </InputWrapper>
-          <div className="__textArea w-full h-[65%] bg-gray-400 mb-4">
-            textarea
+          <div className="__textArea w-full h-[65%] mb-4">
+            <TextArea
+              className="w-full shadow-sm"
+              rows={6}
+              placeholder="설명을 입력해주세요"
+              {...register("content")}
+            />
           </div>
           <div>
             <Button variant="neumorp" type="button">
-              <span className="text-sm font-semibold">카테고리 선택</span>
+              <span className="text-sm font-semibold">채널 선택</span>
             </Button>
             <Row className="mt-3 space-x-2">
               <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
