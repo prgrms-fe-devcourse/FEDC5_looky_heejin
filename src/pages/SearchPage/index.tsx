@@ -1,19 +1,21 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   SearchWrap,
   SearchViewWrap,
   SearchBarWrap,
 } from "./SearchPage.styles.ts";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "@/hooks/useLocalStorage.ts";
 import SearchBar from "./SearchBar.tsx";
 import { SearchRecentView, SearchResultsView } from "./Views/index.ts";
-import { useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
   const [showResults, setShowResults] = useState(false);
   const [recentKeywords, setRecentKeywords] = useLocalStorage("keywords");
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const [_, setSearchParams] = useSearchParams();
 
   const addRecentHistory = useCallback(
     (newKeyword: string) => {
@@ -39,15 +41,37 @@ const SearchPage = () => {
       if (keyword.length < 1) return;
 
       addRecentHistory(keyword);
+      setSearchParams({ keyword: keyword });
 
       // Todo: API 호출
     },
     [addRecentHistory]
   );
 
-  // Todo: 쿼리 붙이기
+  // 최근 검색어 클릭하면 Search
   const handleKeywordClick = useCallback((clickedKeyword: string) => {
     handleSearch({ keyword: clickedKeyword });
+  }, []);
+
+  useEffect(() => {
+    if (location.search === "") {
+      setShowResults(false);
+    } else {
+      setShowResults(true);
+    }
+  }, [location.search]);
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", e => {
+      e.preventDefault();
+    });
+    return window.removeEventListener("popstate", e => {
+      e.preventDefault();
+    });
   }, []);
 
   return (
@@ -55,7 +79,7 @@ const SearchPage = () => {
       <SearchWrap>
         <SearchBarWrap>
           <SearchBar
-            onClick={() => navigate(-1)}
+            onClick={handleGoBack}
             onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
           />
         </SearchBarWrap>
