@@ -1,14 +1,15 @@
-import { Button, Input } from "@/components/common";
-import { Row } from "@/styles/GlobalStyle";
-import Upload from "@/components/common/Upload";
-import { Tag } from "./CreatePostPage.styles";
-import { useUI } from "@/components/common/uiContext";
-import { useTags } from "@/hooks/useTags";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useRef } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
+import { FieldErrors, useForm } from "react-hook-form";
+
+import { useTags } from "@/hooks/useTags";
 import { ITag } from "@/types/post";
-import { useRef } from "react";
+
+import { Row } from "@/styles/GlobalStyle";
+import { useUI } from "@/components/common/uiContext";
+import { Button, Input, Upload } from "@/components/common";
+import { Tag } from "./CreatePostPage.styles";
 
 interface ICreatePostFormProps {
   title: string;
@@ -117,7 +118,7 @@ const CreatePostPageView = () => {
             textarea
           </div>
           <div>
-            <Button variant="neumorp">
+            <Button variant="neumorp" type="button">
               <span className="text-sm font-semibold">카테고리 선택</span>
             </Button>
             <Row className="mt-3 space-x-2">
