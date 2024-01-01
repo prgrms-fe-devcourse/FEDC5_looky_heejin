@@ -14,9 +14,11 @@ import { useMutation } from "@tanstack/react-query";
 import { SHA256 } from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LoginPageView = () => {
   const { setAuth } = useAuth();
+  const [_, storeToken] = useLocalStorage("token");
   const {
     register,
     handleSubmit,
@@ -32,6 +34,7 @@ const LoginPageView = () => {
     onSuccess({ user, token }) {
       console.log("API 성공: ", user, token);
       setAuth({ isLogIn: true, token });
+      storeToken(token);
       navigate("/home");
     },
     onError(error) {

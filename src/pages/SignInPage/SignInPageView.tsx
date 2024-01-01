@@ -17,6 +17,7 @@ import { Image } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { SHA256 } from "crypto-js";
 import { useAuth } from "@/hooks/useAuth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface ISigninModify extends ISignIn {
   passwordCheck: string;
@@ -24,6 +25,7 @@ interface ISigninModify extends ISignIn {
 
 const SignInPage = () => {
   const { setAuth } = useAuth();
+  const [_, storeToken] = useLocalStorage("token");
   const {
     watch,
     register,
@@ -49,6 +51,7 @@ const SignInPage = () => {
     onSuccess({ user, token }) {
       console.log("API 성공: ", user);
       setAuth({ isLogIn: true, token });
+      storeToken(token);
       navigate("/home");
     },
     onError(error) {
