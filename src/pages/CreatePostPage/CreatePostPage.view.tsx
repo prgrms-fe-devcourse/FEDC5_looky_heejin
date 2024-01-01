@@ -1,10 +1,9 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { FieldErrors, useForm } from "react-hook-form";
 
-import { useTags } from "@/hooks/useTags";
-import { ITag } from "@/types/post";
+import { useNewPost } from "@/hooks/useNewPost";
 
 import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
@@ -19,16 +18,21 @@ interface ICreatePostFormProps {
 
 interface IPostDataProps {
   title: string;
-  content?: string;
-  file?: string;
-  tags?: ITag[];
+  image?: string;
+  channelId: string;
 }
 
 const CreatePostPageView = () => {
   const { openModal, setModalView } = useUI();
-  const { tags } = useTags();
+  const { tags, channelId, channelName, init: initNewPostData } = useNewPost();
 
   const tagWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return () => {
+      initNewPostData();
+    };
+  }, []);
 
   const {
     register,
@@ -38,11 +42,20 @@ const CreatePostPageView = () => {
   } = useForm<ICreatePostFormProps>();
 
   const onValid = (data: ICreatePostFormProps) => {
-    const postData: IPostDataProps = {
+    // request body
+    //title: String, <- 필요한 데이터를 JSON.stringfy 해서 넣음
+    //image: Binary | null,
+    //channelId: String
+    const JSONData = JSON.stringify({
       title: data.title,
       content: data.content,
       tags,
-      file: data.file,
+    });
+
+    const postData: IPostDataProps = {
+      title: JSONData,
+      image: data.file,
+      channelId,
     };
 
     console.log(postData);
@@ -76,6 +89,11 @@ const CreatePostPageView = () => {
       x,
       y,
     });
+  };
+
+  const channelSelectButtonClickHandler = () => {
+    setModalView("CHANNEL_SELECT_VIEW");
+    openModal();
   };
 
   return (
@@ -123,22 +141,19 @@ const CreatePostPageView = () => {
             />
           </div>
           <div>
-            <Button variant="neumorp" type="button">
+            <Button
+              variant="neumorp"
+              type="button"
+              onClick={channelSelectButtonClickHandler}
+            >
               <span className="text-sm font-semibold">채널 선택</span>
             </Button>
             <Row className="mt-3 space-x-2">
-              <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
-                아웃도어
-              </div>
-              <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
-                ootd
-              </div>
-              <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
-                캐주얼
-              </div>
-              <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
-                아메카지
-              </div>
+              {channelName && (
+                <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
+                  {channelName}
+                </div>
+              )}
             </Row>
           </div>
         </section>
