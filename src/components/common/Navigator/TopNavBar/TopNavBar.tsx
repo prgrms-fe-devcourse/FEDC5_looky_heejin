@@ -26,7 +26,7 @@ const TopNavBarWrapper = styled.nav`
 `;
 
 const NavBarPartition = styled.div<{ $width: string }>`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: ${({ $width }) => $width && $width};
 `;
 
