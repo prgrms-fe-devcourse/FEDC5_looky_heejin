@@ -10,7 +10,11 @@ import { RootState } from "@/store";
 import { modalActions } from "@store/reducers";
 import { Modal } from "./Modal";
 import { MODAL_VIEWS } from "@/store/types/modalType";
-import { TagCreateModal, TestModal } from "@/components/modalViews";
+import {
+  ChannelSelectModal,
+  TagCreateModal,
+  TestModal,
+} from "@/components/modalViews";
 
 export const useUI = () => {
   const dispatch = useDispatch();
@@ -62,6 +66,7 @@ const ModalView: React.FC<{
     <Modal onClose={closeModal}>
       {modalView === "INIT_VIEW" && <TestModal />}
       {modalView === "TAG_CREATE_VIEW" && <TagCreateModal props={props} />}
+      {modalView === "CHANNEL_SELECT_VIEW" && <ChannelSelectModal />}
     </Modal>
   );
 };
