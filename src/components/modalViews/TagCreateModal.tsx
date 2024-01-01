@@ -57,8 +57,6 @@ const TagCreateModal = ({ props }: ITagCreateModalProps) => {
       y,
     };
 
-    console.log(newTag);
-
     addTag(newTag);
 
     closeModal();
