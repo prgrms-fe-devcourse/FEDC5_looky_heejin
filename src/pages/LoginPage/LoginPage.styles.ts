@@ -31,7 +31,7 @@ export const LogInButtonContainer = styled.button`
   color: ${props => props.theme.text_secondary_color};
   font-weight: bold;
   margin: 10px 0;
-  width: 250px;
+  width: 300px;
   height: 50px;
   ${props => props.theme.symbol_color};
 
@@ -50,7 +50,7 @@ export const LinkContainer = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 300px;
   height: 50px;
   background-color: ${props => props.theme.gray_500};
   border-radius: 5px;
