@@ -4,6 +4,7 @@ export const PathName = {
   PROFILE: "/profile",
   SEARCH: "/search",
   CHATS: "/chats",
+  CHAT: "/chat",
   POSTDETAIL: "/postdetail",
   TEST: "/test",
 };
