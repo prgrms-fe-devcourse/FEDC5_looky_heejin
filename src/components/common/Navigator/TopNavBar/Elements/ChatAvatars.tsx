@@ -48,7 +48,7 @@ const ChatAvatars = ({
             shape="circle"
             src={myAvatarSrc}
             alt="내 아바타"
-            style={{ width: "32px" }}
+            style={{ width: "32px" }} // 임시값 리팩토링 필요
           />
         </AvatarWrapper>
 
@@ -57,7 +57,7 @@ const ChatAvatars = ({
           shape="circle"
           src={partnerAvatarSrc}
           alt="상대방 아바타"
-          style={{ width: "32px" }}
+          style={{ width: "32px" }} // 임시값 리팩토링 필요
         />
       </AvatarsWrapper>
       <PartnerName>{partnerName}</PartnerName>
