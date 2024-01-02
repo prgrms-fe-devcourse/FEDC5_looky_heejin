@@ -28,13 +28,13 @@ const StyledInput = styled.input`
   color: #656565;
   background-color: ${({ theme }) => theme.gray_100};
   border-radius: 2rem;
-  padding-left: 2.6rem;
+  padding-left: 2.7rem;
 
   &:focus {
     outline: none;
   }
   &::placeholder {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 `;
 
