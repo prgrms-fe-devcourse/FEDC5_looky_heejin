@@ -1,13 +1,12 @@
-import { FC } from "react";
 import styled from "styled-components";
 
 type TShape = "circle" | "round" | "square";
 
 interface IAvatarProps {
   size: string;
-  shape: TShape;
+  shape?: TShape;
   src: string;
-  alt: string;
+  alt?: string;
 }
 
 const ShapeToStyle: { [key: string]: string } = {
@@ -17,10 +16,10 @@ const ShapeToStyle: { [key: string]: string } = {
 };
 
 const SizeToStyle: { [key: string]: string } = {
-  XS: "45px",
-  S: "60px",
-  M: "70px",
-  L: "80px",
+  XS: "32px",
+  S: "45px",
+  M: "55px",
+  L: "65px",
 };
 
 const AvatarWrapper = styled.div<{ size: string; shape: TShape }>`
@@ -33,13 +32,13 @@ const AvatarWrapper = styled.div<{ size: string; shape: TShape }>`
   overflow: hidden;
 `;
 
-const Avatar: FC<IAvatarProps> = ({
+const Avatar = ({
   size = "S",
   shape = "circle",
   src = "https://picsum.photos/100",
   alt = "프로필",
   ...props
-}) => {
+}: IAvatarProps) => {
   return (
     <AvatarWrapper size={size} shape={shape} {...props}>
       <img src={src} alt={alt} />
