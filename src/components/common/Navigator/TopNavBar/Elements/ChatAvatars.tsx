@@ -26,7 +26,7 @@ const AvatarsWrapper = styled.div`
 
 const AvatarWrapper = styled.div`
   & :first-child {
-    margin-right: -1rem;
+    margin-right: -0.8rem;
   }
 `;
 
