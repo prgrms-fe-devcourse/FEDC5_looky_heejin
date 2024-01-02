@@ -26,8 +26,8 @@ const StyledInput = styled.input`
   width: 100rem;
   height: 65%;
   font-size: 0.85rem;
-  color: ${({ theme }) => theme.text_secondary_color};
-  background-color: ${({ theme }) => theme.gray_100};
+  color: ${({ theme }) => theme.text_primary_color};
+  background-color: ${({ theme }) => theme.container_color};
   border-radius: 2rem;
   padding-left: 2.7rem;
 
