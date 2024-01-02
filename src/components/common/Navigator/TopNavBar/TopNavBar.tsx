@@ -11,6 +11,7 @@ import BackButton from "./BackButton";
 import SearchBar from "./SearchBar";
 import ChatAvatars from "./ChatAvatars";
 import PageTitle from "./PageTitle";
+import { Button } from "../..";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -33,13 +34,19 @@ const NavBarPartition = styled.div<{ $width: string }>`
 `;
 
 const IconsBox = styled.div`
+  /* border: 1px solid black; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: auto 0;
+  /* margin-left: 1rem; */
+  & > :first-child {
+    padding-top: 3%;
+  }
 `;
 
 const IconWrapper = styled.div`
+  /* border: 1px solid black; */
   margin: auto 4%;
   & > :first-child {
     cursor: pointer;
@@ -78,7 +85,7 @@ const TopNavBar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleClick = useCallback(
+  const handleIconClick = useCallback(
     (path: string) => {
       if (path !== pathname || path === PathName.HOME) {
         navigate(path);
@@ -101,7 +108,7 @@ const TopNavBar = () => {
       <TopNavBarWrapper>
         <NavBarPartition $width={LEFT_PARTITION_WIDTH}>
           {currentPath === PathName.HOME ? (
-            <LogoImage onClick={() => handleClick(PathName.HOME)} />
+            <LogoImage onClick={() => handleIconClick(PathName.HOME)} />
           ) : (
             <BackButton onClick={handleBackClick} />
           )}
@@ -137,11 +144,17 @@ const TopNavBar = () => {
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (
             <IconsBox>
-              <IconWrapper>
-                <Icon name={CHAT_ICON}></Icon>
+              <IconWrapper onClick={() => handleIconClick(PathName.CHATS)}>
+                <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
               </IconWrapper>
-              <IconWrapper>
-                <Icon name={NOTIFICATIONS_ICON}></Icon>
+              <IconWrapper
+                onClick={() => handleIconClick(PathName.NOTIFICATIONS)}
+              >
+                <Icon
+                  name={NOTIFICATIONS_ICON}
+                  size="1.7rem"
+                  weight={250}
+                ></Icon>
               </IconWrapper>
             </IconsBox>
           )}
