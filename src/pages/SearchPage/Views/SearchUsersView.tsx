@@ -43,7 +43,7 @@ const SearchUsersView = ({ usersData, onClick, ...props }: IUsersProps) => {
                 onClick={() => onClick(user._id)}
                 {...props}
               >
-                <Avatar size="M" src={user.image} />
+                <Avatar size="S" src={user.image} />
                 <UserInfo>
                   <span>{user.fullName}</span>
                 </UserInfo>
