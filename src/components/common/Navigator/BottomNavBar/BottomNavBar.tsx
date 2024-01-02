@@ -1,5 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import Icon from "../Icon/Icon";
+import Icon from "../../Icon/Icon";
 import {
   CHANNEL_ICON,
   HOME_ICON,
@@ -10,7 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
-import { Button } from "..";
+import { Button } from "../..";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
