@@ -83,7 +83,7 @@ const SearchPage = () => {
             onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
           />
         </SearchBarWrap>
-        <SearchViewWrap>
+        <SearchViewWrap style={{ overflow: "hidden" }}>
           {!showResults ? (
             <SearchRecentView
               recentKeywords={recentKeywords || "[]"}
