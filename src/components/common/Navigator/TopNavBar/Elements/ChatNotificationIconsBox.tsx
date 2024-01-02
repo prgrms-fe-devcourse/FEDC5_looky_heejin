@@ -13,12 +13,12 @@ const IconsBox = styled.div`
   justify-content: center;
   margin: auto 0;
   & > :first-child {
-    padding-top: 3%;
+    padding-top: 0.3rem;
   }
 `;
 
 const IconWrapper = styled.div`
-  margin: auto 4%;
+  margin: auto 0.25rem;
   & > :first-child {
     cursor: pointer;
   }

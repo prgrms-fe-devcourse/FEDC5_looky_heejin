@@ -41,7 +41,7 @@ const StyledInput = styled.input`
 
 const SearchIconWrapper = styled.div`
   position: absolute;
-  margin-top: 0.1%;
+  margin-top: 0.1rem;
   left: 11.5%;
 `;
 
