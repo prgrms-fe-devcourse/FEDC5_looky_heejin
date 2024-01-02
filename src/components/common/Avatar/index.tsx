@@ -33,7 +33,7 @@ const AvatarWrapper = styled.div<IAvatarProps>`
   border: ${({ border, theme }) =>
     border === "solid" ? `1px solid ${theme.gray_300}` : "none"};
   background-image: ${({ src }) =>
-    src ? `url(${src})` : "url(src/assets/profile.svg)"};
+    src ? `url(${src})` : "url(/src/assets/profile.svg)"};
   border-radius: ${({ shape }) => shape && ShapeToStyle[shape]};
   background-color: ${({ theme }) => theme.background_color};
 `;
