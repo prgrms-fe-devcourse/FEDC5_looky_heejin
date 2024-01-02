@@ -11,8 +11,16 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
+import { sha256Encrypt } from "@/utils/crypto";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMe } from "@/hooks/useMe";
 
 const LoginPageView = () => {
+  const { setMe } = useMe();
+  const { setAuth } = useAuth();
+  const [_, storeToken] = useLocalStorage("token");
   const {
     register,
     handleSubmit,
@@ -21,18 +29,33 @@ const LoginPageView = () => {
     mode: "onChange",
   });
 
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
-    onSuccess({ user }) {
-      console.log("API 성공: ", user);
+    onSuccess({ user, token }) {
+      console.log("API 성공: ", user, token);
+      setAuth({ isLogIn: true, token });
+      setMe({
+        id: user._id,
+        userName: user.fullName,
+        profilePhoto: "",
+      });
+      storeToken(token);
+      navigate("/home");
     },
     onError(error) {
       console.error("API 에러: ", error);
     },
   });
 
-  const onValid: SubmitHandler<ILogIn> = (formData: ILogIn) => {
-    mutation.mutate(formData);
+  const onValid: SubmitHandler<ILogIn> = ({ email, password }) => {
+    const filteredFormData = {
+      email,
+      password: sha256Encrypt(password),
+    };
+    mutation.mutate(filteredFormData);
+    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ILogIn> = (error): void => {

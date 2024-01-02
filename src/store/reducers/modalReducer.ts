@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { MODAL_ACTION } from "@/store/modalType";
+import { MODAL_ACTION, MODAL_VIEWS } from "../types/modalType";
 
 export type TModalState = {
   displayModal: boolean;
-  modalView: string;
+  modalView: MODAL_VIEWS;
+  props?: any;
 };
 
 const initialState: TModalState = {
   displayModal: false,
   modalView: "INIT_VIEW",
+  props: null,
 };
 
 const modalSlice = createSlice({
@@ -22,18 +24,21 @@ const modalSlice = createSlice({
         case "OPEN_MODAL": {
           return {
             ...state,
+            props: action.payload.props,
             displayModal: true,
           };
         }
         case "CLOSE_MODAL": {
           return {
             ...state,
+            props: null,
             displayModal: false,
           };
         }
         case "SET_MODAL_VIEW": {
           return {
             ...state,
+            props: null,
             modalView: action.payload.view,
           };
         }
