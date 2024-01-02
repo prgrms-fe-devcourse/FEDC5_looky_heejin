@@ -7,7 +7,7 @@ interface ILogoImageProps {
 }
 
 const StyledImg = styled.img`
-  width: 45%;
+  width: 50%;
   margin: auto auto;
   cursor: pointer;
 `;
