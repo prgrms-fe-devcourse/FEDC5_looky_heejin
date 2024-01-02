@@ -10,6 +10,7 @@ import LogoImage from "./LogoImage";
 import BackButton from "./BackButton";
 import SearchBar from "./SearchBar";
 import ChatAvatars from "./ChatAvatars";
+import PageTitle from "./PageTitle";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -52,9 +53,17 @@ const NAV_VISIBLE_PATH = [
   PathName.SEARCH,
   PathName.CHATS,
   PathName.CHAT,
+  PathName.NOTIFICATIONS,
   PathName.POSTDETAIL,
   PathName.TEST,
 ];
+
+const NavTitle = {
+  CHANNELS: "채널 목록",
+  PROFILE: "프로필",
+  NOTIFICATIONS: "알림",
+  CHATS: "대화 목록",
+};
 
 const TopNavBar = () => {
   const { pathname } = useLocation();
@@ -82,7 +91,7 @@ const TopNavBar = () => {
     navigate(-1);
   };
 
-  // DUMMY_DATA
+  // DUMMY_DATA --> 데이터 붙여야함
   const myAvatarSrc = "https://picsum.photos/100";
   const partnerAvatarSrc = "https://picsum.photos/200";
   const parterName = "누군가";
@@ -99,7 +108,7 @@ const TopNavBar = () => {
         </NavBarPartition>
         <NavBarPartition $width={CENTER_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (
-            <span style={{ margin: "auto auto" }}>channel명</span>
+            <PageTitle title="빈티지"></PageTitle> // 데이터 붙여야함
           )}
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (
@@ -108,6 +117,21 @@ const TopNavBar = () => {
               partnerAvatarSrc={partnerAvatarSrc}
               partnerName={parterName}
             />
+          )}
+          {currentPath === PathName.CHANNELS && (
+            <PageTitle title={NavTitle.CHANNELS}></PageTitle>
+          )}
+          {currentPath === PathName.PROFILE && (
+            <PageTitle title={NavTitle.PROFILE}></PageTitle>
+          )}
+          {currentPath === PathName.CHATS && (
+            <PageTitle title={NavTitle.CHATS}></PageTitle>
+          )}
+          {currentPath === PathName.NOTIFICATIONS && (
+            <PageTitle title={NavTitle.NOTIFICATIONS}></PageTitle>
+          )}
+          {currentPath === PathName.POSTDETAIL && (
+            <PageTitle title="포스트 디테일"></PageTitle> // 데이터 붙여야 함
           )}
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
