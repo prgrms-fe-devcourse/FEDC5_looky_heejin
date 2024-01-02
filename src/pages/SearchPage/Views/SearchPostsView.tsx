@@ -1,14 +1,14 @@
-import { IUser } from "@/types";
+import { IPost } from "@/types";
 import { useEffect } from "react";
 
 interface IPostsProps {
-  searchData: IUser[];
+  postsData: IPost[];
 }
 
-const SearchPostsView = ({ searchData }: IPostsProps) => {
+const SearchPostsView = ({ postsData }: IPostsProps) => {
   useEffect(() => {
-    console.log("Posts:  ", searchData);
-  }, [searchData]);
+    // console.log("Posts:  ", postsData);
+  }, [postsData]);
 
   return (
     <>

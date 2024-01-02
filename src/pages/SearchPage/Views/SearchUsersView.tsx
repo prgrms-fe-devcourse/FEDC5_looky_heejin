@@ -4,7 +4,7 @@ import { IUser } from "@/types";
 import styled from "styled-components";
 
 interface IUsersProps {
-  searchData: IUser[];
+  usersData: IUser[];
   onClick: (userId: string) => void;
 }
 
@@ -27,8 +27,8 @@ const UserInfo = styled(Col)`
   justify-content: center;
 `;
 
-const SearchUsersView = ({ searchData, onClick, ...props }: IUsersProps) => {
-  if (!searchData) {
+const SearchUsersView = ({ usersData, onClick, ...props }: IUsersProps) => {
+  if (!usersData) {
     return null;
   }
 
@@ -36,14 +36,14 @@ const SearchUsersView = ({ searchData, onClick, ...props }: IUsersProps) => {
     <>
       <section>
         <ListWrap>
-          {Array.isArray(searchData) && searchData.length > 0 ? (
-            searchData.map(user => (
+          {Array.isArray(usersData) && usersData.length > 0 ? (
+            usersData.map(user => (
               <ListItem
                 key={user._id}
                 onClick={() => onClick(user._id)}
                 {...props}
               >
-                <Avatar size="S" shape="circle" src={user.image} />
+                <Avatar size="M" src={user.image} />
                 <UserInfo>
                   <span>{user.fullName}</span>
                 </UserInfo>
