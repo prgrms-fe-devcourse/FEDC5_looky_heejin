@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import Icon from "../../Icon/Icon";
+import Icon from "../../../Icon/Icon";
 import { BACK_ICON } from "@/constants/icons";
 
 interface IBackButtonProps {

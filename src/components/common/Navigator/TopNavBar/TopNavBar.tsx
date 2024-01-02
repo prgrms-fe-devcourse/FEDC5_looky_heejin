@@ -3,15 +3,15 @@ import styled, { useTheme } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
-import Icon from "../../Icon/Icon";
-import { CHAT_ICON, NOTIFICATIONS_ICON } from "@/constants/icons";
 import { PathName } from "@/constants/pathNameConstants";
-import LogoImage from "./LogoImage";
-import BackButton from "./BackButton";
-import SearchBar from "./SearchBar";
-import ChatAvatars from "./ChatAvatars";
-import PageTitle from "./PageTitle";
-import { Button } from "../..";
+import {
+  BackButton,
+  ChatAvatars,
+  ChatNotificationIconsBox,
+  LogoImage,
+  SearchBar,
+  PageTitle,
+} from "./index";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -31,26 +31,6 @@ const TopNavBarWrapper = styled.nav`
 const NavBarPartition = styled.div<{ $width: string }>`
   /* border: 1px solid black; */
   width: ${({ $width }) => $width && $width};
-`;
-
-const IconsBox = styled.div`
-  /* border: 1px solid black; */
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: auto 0;
-  /* margin-left: 1rem; */
-  & > :first-child {
-    padding-top: 3%;
-  }
-`;
-
-const IconWrapper = styled.div`
-  /* border: 1px solid black; */
-  margin: auto 4%;
-  & > :first-child {
-    cursor: pointer;
-  }
 `;
 
 const NAV_VISIBLE_PATH = [
@@ -143,20 +123,9 @@ const TopNavBar = () => {
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (
-            <IconsBox>
-              <IconWrapper onClick={() => handleIconClick(PathName.CHATS)}>
-                <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
-              </IconWrapper>
-              <IconWrapper
-                onClick={() => handleIconClick(PathName.NOTIFICATIONS)}
-              >
-                <Icon
-                  name={NOTIFICATIONS_ICON}
-                  size="1.7rem"
-                  weight={250}
-                ></Icon>
-              </IconWrapper>
-            </IconsBox>
+            <ChatNotificationIconsBox
+              onClick={handleIconClick}
+            ></ChatNotificationIconsBox>
           )}
         </NavBarPartition>
       </TopNavBarWrapper>

@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
-import Icon from "../../Icon/Icon";
+import Icon from "../../../Icon/Icon";
 import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
 import { SEARCH_BAR } from "@/constants/uiConstants";
 
