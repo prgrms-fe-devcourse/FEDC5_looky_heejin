@@ -23,8 +23,8 @@ import BottomNavBar from "@/components/common/Navigator/BottomNavBar/BottomNavBa
 const RouterComponent = () => {
   return (
     <Router>
+      <TopNavBar />
       <Layout>
-        <TopNavBar />
         <Routes>
           <Route path="/" element={<SplashPage />} />
           <Route path="/home" element={<HomePage />} />
