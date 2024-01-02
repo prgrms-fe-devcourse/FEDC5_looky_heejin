@@ -13,14 +13,21 @@ const ListWrap = styled(Col)``;
 const ListItem = styled(Row)`
   margin-top: 1rem;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.gray_200};
+  }
 `;
 
-const UserInfo = styled.div`
-  padding-left: 0.5rem;
+const UserInfo = styled(Col)`
   flex-grow: 1;
+  padding-left: 0.5rem;
+  height: 100%;
+  justify-content: center;
 `;
 
-const SearchUsersView = ({ searchData, onClick }: IUsersProps) => {
+const SearchUsersView = ({ searchData, onClick, ...props }: IUsersProps) => {
   if (!searchData) {
     return null;
   }
@@ -31,9 +38,15 @@ const SearchUsersView = ({ searchData, onClick }: IUsersProps) => {
         <ListWrap>
           {Array.isArray(searchData) && searchData.length > 0 ? (
             searchData.map(user => (
-              <ListItem key={user._id} onClick={() => onClick(user._id)}>
+              <ListItem
+                key={user._id}
+                onClick={() => onClick(user._id)}
+                {...props}
+              >
                 <Avatar size="S" shape="circle" src={user.image} />
-                <UserInfo>{user.fullName}</UserInfo>
+                <UserInfo>
+                  <span>{user.fullName}</span>
+                </UserInfo>
               </ListItem>
             ))
           ) : (
