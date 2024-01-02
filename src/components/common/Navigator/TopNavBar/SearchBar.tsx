@@ -3,12 +3,13 @@ import { styled } from "styled-components";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import Icon from "../../Icon/Icon";
 import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
+import { SEARCH_BAR } from "@/constants/uiConstants";
 
 const SearchBarWrapper = styled.div`
   height: 100%;
-  width: 138%;
-  margin-left: -13%;
-  z-index: 999;
+  width: 146%;
+  margin-left: -18%;
+  z-index: ${SEARCH_BAR};
 `;
 
 const StyledForm = styled.form`
@@ -23,22 +24,29 @@ const StyledInput = styled.input`
   position: relative;
   width: 100rem;
   height: 65%;
-  background-color: ${props => props.theme.gray_100};
+  font-size: 0.85rem;
+  color: #656565;
+  background-color: ${({ theme }) => theme.gray_100};
   border-radius: 2rem;
-  padding-left: 3.3rem;
+  padding-left: 2.6rem;
+
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    font-size: 0.8rem;
   }
 `;
 
 const SearchIconWrapper = styled.div`
   position: absolute;
-  left: 15%;
+  margin-top: 0.1%;
+  left: 11.5%;
 `;
 
 const CloseIconWrapper = styled.div`
   position: absolute;
-  right: 8%;
+  right: 6%;
   background-color: ${({ theme }) => theme.gray_500};
   border-radius: 50%;
   & {
@@ -81,10 +89,15 @@ const SearchBar = () => {
           })}
         />
         <SearchIconWrapper>
-          <Icon name={SEARCH_ICON} size="1.4rem" weight={300}></Icon>
+          <Icon name={SEARCH_ICON} size="1.3rem" weight={300}></Icon>
         </SearchIconWrapper>
         <CloseIconWrapper onClick={handleRemoveValue}>
-          <Icon name={CLOSE_ICON} size="1rem" weight={300} color="white"></Icon>
+          <Icon
+            name={CLOSE_ICON}
+            size="1rem"
+            weight={300}
+            color="#ffffff"
+          ></Icon>
         </CloseIconWrapper>
       </StyledForm>
     </SearchBarWrapper>

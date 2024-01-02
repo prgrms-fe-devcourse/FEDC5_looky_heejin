@@ -18,7 +18,7 @@ const BackButtonWrapper = styled.div`
 const BackButton = ({ onClick }: IBackButtonProps) => {
   return (
     <BackButtonWrapper>
-      <Icon name={BACK_ICON} size="2.8rem" onClick={onClick} />
+      <Icon name={BACK_ICON} size="2rem" onClick={onClick} />
     </BackButtonWrapper>
   );
 };
