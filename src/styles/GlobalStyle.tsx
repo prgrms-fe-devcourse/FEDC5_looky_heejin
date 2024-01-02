@@ -41,6 +41,9 @@ const CustomStyles = createGlobalStyle<any>`
       max-width: ${APP_MAX_WIDTH}px;
       height: 100%;
       margin: 0 auto;
+      /* navbar 고려한 padding */
+      padding-top: 3rem;
+      padding-bottom: 3rem;
     }
 
     div, 
