@@ -22,14 +22,13 @@ const TopNavBarWrapper = styled.nav`
   top: 0;
   display: flex;
   flex-direction: row;
-  max-width: ${APP_MAX_WIDTH}px;
   width: 100%;
   height: 3rem;
-  background-color: white;
+  max-width: ${APP_MAX_WIDTH}px;
+  background-color: ${({ theme }) => theme.background_color};
 `;
 
 const NavBarPartition = styled.div<{ $width: string }>`
-  /* border: 1px solid black; */
   width: ${({ $width }) => $width && $width};
 `;
 
@@ -61,8 +60,6 @@ const TopNavBar = () => {
     [currentPath]
   );
 
-  console.log(currentPath);
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleIconClick = useCallback(

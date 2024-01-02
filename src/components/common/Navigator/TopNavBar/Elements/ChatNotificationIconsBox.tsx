@@ -8,19 +8,16 @@ interface IChatNotificationIconsBoxProps {
 }
 
 const IconsBox = styled.div`
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: auto 0;
-  /* margin-left: 1rem; */
   & > :first-child {
     padding-top: 3%;
   }
 `;
 
 const IconWrapper = styled.div`
-  /* border: 1px solid black; */
   margin: auto 4%;
   & > :first-child {
     cursor: pointer;

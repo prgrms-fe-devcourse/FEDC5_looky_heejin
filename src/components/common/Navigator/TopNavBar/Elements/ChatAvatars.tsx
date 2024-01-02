@@ -9,15 +9,12 @@ interface IChatAvatarsProps {
 }
 
 const ChatAvatarsWrapper = styled.div`
-  /* border: 1px solid black; */
-  /* background-color: yellow; */
   display: flex;
   flex-direction: column;
   margin: auto 0;
 `;
 
 const AvatarsWrapper = styled.div`
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: row;
   justify-content: center;

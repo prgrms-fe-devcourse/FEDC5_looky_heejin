@@ -21,7 +21,7 @@ const BottomNavBarWrapper = styled.nav`
   max-width: ${APP_MAX_WIDTH}px;
   width: 100%;
   height: 3rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.background_color};
 `;
 const IconWrapper = styled.div`
   flex-grow: 1;
