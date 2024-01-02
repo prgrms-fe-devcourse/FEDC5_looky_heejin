@@ -30,7 +30,7 @@ const AvatarWrapper = styled.div`
 const PartnerName = styled.span`
   font-size: 0.5rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.text_secondary_color};
+  color: ${({ theme }) => theme.text_primary_color};
   margin: 0.5% auto 0 auto;
 `;
 
