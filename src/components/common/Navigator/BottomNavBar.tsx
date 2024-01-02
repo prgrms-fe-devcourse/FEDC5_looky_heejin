@@ -48,6 +48,7 @@ const BottomNavBar = () => {
     PathName.PROFILE,
     PathName.SEARCH,
     PathName.CHATS,
+    PathName.NOTIFICATIONS,
     PathName.POSTDETAIL,
     PathName.TEST,
   ];
