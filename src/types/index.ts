@@ -30,3 +30,16 @@ export interface IUser {
   updatedAt: string;
   __v?: number;
 }
+
+export interface IPost {
+  likes: [];
+  comments: [];
+  _id: string;
+  image?: string;
+  imagePublicId?: string;
+  title: string;
+  channel: {};
+  author: IUser;
+  createdAt: String;
+  updatedAt: String;
+}
