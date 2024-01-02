@@ -42,6 +42,11 @@ const SearchResultsView = () => {
     setShowUsers(!showUsers);
   };
 
+  const handleUserClick = (userId: string) => {
+    console.log("UserClicked!" + userId);
+    // Todo: Profile 페이지 이동
+  };
+
   return (
     <div>
       {showUsers ? (
@@ -50,7 +55,7 @@ const SearchResultsView = () => {
         <SearchTab option="post" onClick={handleTabClick}></SearchTab>
       )}
       {showUsers ? (
-        <SearchUsersView searchData={searchData} />
+        <SearchUsersView searchData={searchData} onClick={handleUserClick} />
       ) : (
         <SearchPostsView searchData={searchData} />
       )}
