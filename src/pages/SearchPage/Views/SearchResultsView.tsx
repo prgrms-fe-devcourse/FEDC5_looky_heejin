@@ -5,13 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 import { _SEARCH, _SEARCH_USERS } from "@/api/queries/search";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { IPost, IUser } from "@/types";
+import styled from "styled-components";
+import { Col } from "@/styles/GlobalStyle";
 
 const DUMMY_DATA = [
   {
     likes: [],
     comments: [],
-    _id: "65939d992ed4d31ff83cb873",
-    title: "캐주얼_테스트",
+    _id: "65939d992ed4d31ff83cb123",
+    title: "캐주얼_테스트1",
     image:
       "https://res.cloudinary.com/learnprogrammers/image/upload/v1704172952/post/f05d1be2-9cf9-415d-bc72-354fcc23a84a.jpg",
     imagePublicId: "post/f05d1be2-9cf9-415d-bc72-354fcc23a84a",
@@ -24,15 +26,57 @@ const DUMMY_DATA = [
   {
     likes: [],
     comments: [],
-    _id: "65939e1f2ed4d31ff83cb883",
-    title: "캐주얼_테스트_2",
+    _id: "65939d992ed4d31ff83cb124",
+    title: "캐주얼_테스트2",
     image:
-      "https://res.cloudinary.com/learnprogrammers/image/upload/v1704173086/post/4084fd38-0cc6-4a25-9e74-47dd9d244fd0.jpg",
-    imagePublicId: "post/4084fd38-0cc6-4a25-9e74-47dd9d244fd0",
+      "https://res.cloudinary.com/learnprogrammers/image/upload/v1704172952/post/f05d1be2-9cf9-415d-bc72-354fcc23a84a.jpg",
+    imagePublicId: "post/f05d1be2-9cf9-415d-bc72-354fcc23a84a",
     channel: "659236a82ed4d31ff83cb06a",
     author: "64edba4f8f63f012a6741681",
-    createdAt: "2024-01-02T05:24:47.022Z",
-    updatedAt: "2024-01-02T05:24:47.022Z",
+    createdAt: "2024-01-02T05:22:33.200Z",
+    updatedAt: "2024-01-02T05:22:33.200Z",
+    __v: 0,
+  },
+  {
+    likes: [],
+    comments: [],
+    _id: "65939d992ed4d31ff83cb125",
+    title: "캐주얼_테스트3",
+    image:
+      "https://res.cloudinary.com/learnprogrammers/image/upload/v1704172952/post/f05d1be2-9cf9-415d-bc72-354fcc23a84a.jpg",
+    imagePublicId: "post/f05d1be2-9cf9-415d-bc72-354fcc23a84a",
+    channel: "659236a82ed4d31ff83cb06a",
+    author: "64edba4f8f63f012a6741681",
+    createdAt: "2024-01-02T05:22:33.200Z",
+    updatedAt: "2024-01-02T05:22:33.200Z",
+    __v: 0,
+  },
+  {
+    likes: [],
+    comments: [],
+    _id: "65939d992ed4d31ff83cb126",
+    title: "캐주얼_테스트4",
+    image:
+      "https://res.cloudinary.com/learnprogrammers/image/upload/v1704172952/post/f05d1be2-9cf9-415d-bc72-354fcc23a84a.jpg",
+    imagePublicId: "post/f05d1be2-9cf9-415d-bc72-354fcc23a84a",
+    channel: "659236a82ed4d31ff83cb06a",
+    author: "64edba4f8f63f012a6741681",
+    createdAt: "2024-01-02T05:22:33.200Z",
+    updatedAt: "2024-01-02T05:22:33.200Z",
+    __v: 0,
+  },
+  {
+    likes: [],
+    comments: [],
+    _id: "65939d992ed4d31ff83cb127",
+    title: "캐주얼_테스트5",
+    image:
+      "https://res.cloudinary.com/learnprogrammers/image/upload/v1704172952/post/f05d1be2-9cf9-415d-bc72-354fcc23a84a.jpg",
+    imagePublicId: "post/f05d1be2-9cf9-415d-bc72-354fcc23a84a",
+    channel: "659236a82ed4d31ff83cb06a",
+    author: "64edba4f8f63f012a6741681",
+    createdAt: "2024-01-02T05:22:33.200Z",
+    updatedAt: "2024-01-02T05:22:33.200Z",
     __v: 0,
   },
   {
@@ -55,6 +99,10 @@ const DUMMY_DATA = [
     __v: 0,
   },
 ];
+
+const ViewWrap = styled(Col)`
+  flex-basis: 100vh;
+`;
 
 const SearchResultsView = () => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
@@ -136,18 +184,24 @@ const SearchResultsView = () => {
     navigate(`/profile/${userId}`);
   };
 
+  const handlePostClick = (postId: string) => {
+    console.log("PostClicked!" + postId);
+  };
+
   return (
     <div>
-      {showUsers ? (
-        <SearchTab option="user" onClick={handleTabClick}></SearchTab>
-      ) : (
-        <SearchTab option="post" onClick={handleTabClick}></SearchTab>
-      )}
-      {showUsers ? (
-        <SearchUsersView usersData={usersData} onClick={handleUserClick} />
-      ) : (
-        <SearchPostsView postsData={postsData} />
-      )}
+      <ViewWrap>
+        {showUsers ? (
+          <SearchTab option="user" onClick={handleTabClick}></SearchTab>
+        ) : (
+          <SearchTab option="post" onClick={handleTabClick}></SearchTab>
+        )}
+        {showUsers ? (
+          <SearchUsersView usersData={usersData} onClick={handleUserClick} />
+        ) : (
+          <SearchPostsView postsData={postsData} onClick={handlePostClick} />
+        )}
+      </ViewWrap>
     </div>
   );
 };
