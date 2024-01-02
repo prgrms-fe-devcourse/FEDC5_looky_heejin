@@ -1,3 +1,4 @@
+import { Row } from "@/styles/GlobalStyle";
 import { IPost } from "@/types";
 import { Post, PostInfo, PostWrap } from "@/pages/SearchPage/SearchPage.styles";
 
