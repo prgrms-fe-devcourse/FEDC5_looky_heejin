@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import Icon from "../../../Icon/Icon";
 import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
 import { SEARCH_BAR } from "@/constants/uiConstants";
+import { useSearchValue } from "@/hooks/useSearchValue";
 
 const SearchBarWrapper = styled.div`
   height: 100%;
@@ -55,6 +56,11 @@ const CloseIconWrapper = styled.div`
 `;
 
 const SearchBar = () => {
+  const { keyword, setSearchValue } = useSearchValue();
+  // input에 입력된 값이 리덕스 스토어에 잘 저장되는지 확인
+  useEffect(() => {
+    console.log(keyword);
+  }, [keyword]);
   const {
     register,
     handleSubmit,
@@ -64,6 +70,7 @@ const SearchBar = () => {
 
   const onValid = (inputValue: FieldValues) => {
     console.log(inputValue.search);
+    setSearchValue({ keyword: inputValue.search });
   };
 
   const onInvalid = (error: FieldErrors) => {
