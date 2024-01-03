@@ -27,7 +27,6 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
   }, [searchParams, setValue]);
 
   const onValid = (data: IInput) => {
-    console.log(data);
     onSearch(data.searchQuery);
   };
 

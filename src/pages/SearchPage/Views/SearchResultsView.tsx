@@ -65,12 +65,11 @@ const SearchResultsView = () => {
   };
 
   const handleUserClick = (userId: string) => {
-    console.log("UserClicked!" + userId);
     navigate(`/profile/${userId}`);
   };
 
   const handlePostClick = (postId: string) => {
-    console.log("PostClicked!" + postId);
+    navigate(`/profile/${postId}`);
   };
 
   return (

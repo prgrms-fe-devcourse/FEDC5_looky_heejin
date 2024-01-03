@@ -1,5 +1,4 @@
 import { IPost } from "@/types";
-import { useEffect } from "react";
 import { Post, PostInfo, PostWrap } from "@/pages/SearchPage/SearchPage.styles";
 
 interface IPostsProps {
@@ -8,10 +7,6 @@ interface IPostsProps {
 }
 
 const SearchPostsView = ({ postsData }: IPostsProps) => {
-  useEffect(() => {
-    console.log("Posts:  ", postsData);
-  }, [postsData]);
-
   // Todo: 슬라이드뷰
 
   return (
