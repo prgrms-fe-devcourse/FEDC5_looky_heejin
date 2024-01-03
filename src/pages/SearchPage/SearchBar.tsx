@@ -1,8 +1,9 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { useCallback, useEffect } from "react";
-import Icon from "@/components/common/Icon/Icon.tsx";
-import { Form, Input, IconWrap } from "./SearchPage.styles.ts";
+import Icon from "@/components/common/Icon/Icon";
+import { Form, Input, IconWrap } from "./SearchPage.styles";
 import { useSearchParams } from "react-router-dom";
+import CONST from "./SearchPage.const";
 
 interface ISearchBar {
   onSearch: (searchQuery: string) => void;
@@ -14,28 +15,36 @@ export interface IInput {
 }
 
 const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
-  const { register, handleSubmit, setValue } = useForm<IInput>();
+  const { register, handleSubmit, setValue } = useForm<IInput>({
+    mode: "onSubmit",
+  });
   const [searchParams] = useSearchParams();
 
+  // 최근 검색어 클릭 시 쿼리스트링 변경에 따라 Input setValue
   useEffect(() => {
     const keyword = searchParams.get("keyword") || "";
     setValue("searchQuery", keyword);
   }, [searchParams, setValue]);
 
-  const onSubmit: SubmitHandler<IInput> = data => {
+  const onValid = (data: IInput) => {
+    console.log(data);
     onSearch(data.searchQuery);
+  };
+
+  const onInvalid = (errors: FieldErrors) => {
+    console.error(errors);
   };
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key !== "Enter") {
         return;
-      } else {
-        e.preventDefault();
-        handleSubmit(onSubmit)();
       }
+
+      e.preventDefault();
+      handleSubmit(onValid, onInvalid)();
     },
-    [handleSubmit, onSubmit, setValue]
+    [handleSubmit, onValid, onInvalid]
   );
 
   return (
@@ -43,12 +52,12 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
       <IconWrap onClick={onClick}>
         <Icon name="arrow_back_ios" />
       </IconWrap>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onValid, onInvalid)}>
         <Input
           type="text"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요"
-          {...register("searchQuery")}
+          {...register("searchQuery", CONST.SEARCH_VALIDATION_OPTION)}
         />
       </Form>
     </>
