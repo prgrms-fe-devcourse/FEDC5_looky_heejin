@@ -49,7 +49,6 @@ const PostSimpleCard = () => {
               size={"XS"}
               shape={"round"}
               src={imageUrl ? imageUrl : ""}
-              alt={"사용자 아이콘"}
             ></Avatar>
             <span
               style={{
