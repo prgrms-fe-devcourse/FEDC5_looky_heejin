@@ -10,7 +10,7 @@ export const useAuth = () => {
   const { isLogIn, token } = useSelector(({ auth }: RootState) => auth);
 
   const setAuth = useCallback(
-    (param: { isLogIn: boolean; token: string }) =>
+    (param: { isLogIn: boolean; token: string | null }) =>
       dispatch(
         authActions.setAuth({ isLogIn: param.isLogIn, token: param.token })
       ),
@@ -20,7 +20,8 @@ export const useAuth = () => {
   const context = {
     isLogIn,
     token,
-    setAuth: (param: { isLogIn: boolean; token: string }) => setAuth(param),
+    setAuth: (param: { isLogIn: boolean; token: string | null }) =>
+      setAuth(param),
   };
 
   return context;

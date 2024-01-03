@@ -1,10 +1,9 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-
-import { ME } from "@/constants/queryKey";
-import { useAuth } from "@/hooks/useAuth";
 import { Navigate, NavigateProps, RouteProps } from "react-router-dom";
-import { _GET } from "@/api";
+
+import { _GET, rootAPI } from "@/api";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useQuery } from "@tanstack/react-query";
+import { ME } from "@/constants/queryKey";
 
 type TAuthRouteProps = {
   element: JSX.Element;
@@ -12,17 +11,28 @@ type TAuthRouteProps = {
 } & RouteProps;
 
 const AuthRoute = ({ element, ...rest }: TAuthRouteProps) => {
-  const { token } = useAuth();
+  const [token, _] = useLocalStorage("token");
+  rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
 
   const { data, isLoading } = useQuery({
     queryKey: [ME],
-    queryFn: async () => _GET("/auth-user"),
+    queryFn: async () => await _GET("/auth-user"),
   });
 
-  return data ? (
+  if (isLoading) return <div>loading...</div>;
+
+  return data?.data ? (
     element
   ) : (
-    <Navigate to={{ pathname: "/login" } as NavigateProps["to"]} replace />
+    <Navigate
+      to={
+        {
+          pathname: "/login",
+          state: { from: rest.location },
+        } as NavigateProps["to"]
+      }
+      replace
+    />
   );
 };
 

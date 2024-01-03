@@ -15,11 +15,8 @@ import { sha256Encrypt } from "@/utils/crypto";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-<<<<<<< HEAD
 import { useMe } from "@/hooks/useMe";
-=======
 import LoginPageConst from "./LoginPage.const";
->>>>>>> 58ca78b (refactor: 로그인 페이지 코드 로직 개선)
 
 const LoginPageView = () => {
   const { setMe } = useMe();

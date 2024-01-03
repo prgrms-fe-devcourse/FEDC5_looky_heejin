@@ -18,6 +18,7 @@ import {
 import TestPage from "@/pages/TestPage";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar";
 import AuthRoute from "./AuthRoute";
+import { Fragment } from "react";
 
 const routeMap = Object.freeze({
   "/": {
@@ -42,7 +43,7 @@ const routeMap = Object.freeze({
   },
   "/profile/:id": {
     component: ProfilePage,
-    auth: false,
+    auth: true,
   },
   "/search": {
     component: SearchPage,
@@ -101,4 +102,5 @@ const RouterComponent = () => {
     </Router>
   );
 };
+
 export default RouterComponent;
