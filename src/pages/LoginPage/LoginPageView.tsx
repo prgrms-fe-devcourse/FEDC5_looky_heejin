@@ -17,6 +17,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import LoginPageConst from "./LoginPage.const";
+import LoginPageConst from "./LoginPage.const";
+import { useMe } from "@/hooks/useMe";
 
 const LoginPageView = () => {
   const { setMe } = useMe();
