@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  SearchWrap,
-  SearchViewWrap,
-  SearchBarWrap,
-} from "./SearchPage.styles.ts";
+import { SearchWrap, SearchViewWrap, SearchBarWrap } from "./SearchPage.styles";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import SearchBar from "./SearchBar";
