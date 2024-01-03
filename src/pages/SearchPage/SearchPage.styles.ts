@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Col, Row } from "@/styles/GlobalStyle";
 import { NAV_HEIGHT } from "@/constants/uiConstants";
 
+// SearchPage
 export const SearchWrap = styled(Col)`
   height: 100vh;
   border: 1px solid black;
@@ -29,6 +30,7 @@ export const IconWrap = styled.div`
   }
 `;
 
+// SearchBar
 export const Form = styled.form`
   flex-grow: 1;
   align-self: center;
@@ -46,4 +48,66 @@ export const Input = styled.input`
   padding: 0.5rem;
   border: 1px solid ${props => props.theme.gray_300};
   box-sizing: border-box;
+`;
+
+// SearchRecentView
+export const LiContainer = styled.li`
+  width: 300px;
+  color: ${props => props.theme.gray_500};
+  &:hover:not(.empty) {
+    filter: brightness(50%);
+    cursor: pointer;
+  }
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+`;
+
+// SearchResultsView
+export const ViewWrap = styled(Col)`
+  flex-basis: 100vh;
+`;
+
+// SearchUsersView
+export const ListWrap = styled(Col)``;
+
+export const ListItem = styled(Row)`
+  margin-top: 1rem;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.gray_200};
+  }
+`;
+
+export const UserInfo = styled(Col)`
+  flex-grow: 1;
+  padding-left: 0.5rem;
+  height: 100%;
+  justify-content: center;
+`;
+
+// SearchPostView
+export const PostWrap = styled(Row)`
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: flex-start;
+`;
+
+export const Post = styled.div<{ src: string }>`
+  width: calc(50% - 0.2rem);
+  height: 265px;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  background-image: ${props => `url(${props.src})`};
+  background-size: cover;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(85%);
+  }
+`;
+
+export const PostInfo = styled.div`
+  height: 50px;
 `;
