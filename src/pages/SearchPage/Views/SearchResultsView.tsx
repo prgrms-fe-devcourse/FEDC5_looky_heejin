@@ -27,15 +27,15 @@ const SearchResultsView = () => {
   const navigate = useNavigate();
 
   interface FilteredData {
-    users: any[];
-    posts: any[];
+    users: IUser[];
+    posts: IPost[];
   }
 
   // 사용자, 게시글 데이터를 분리
   useEffect(() => {
     if (isSuccess) {
       const copy = [...data];
-      if (copy.length < 0) return;
+      if (copy.length < 2) return;
 
       const filteredData = copy.reduce<FilteredData>(
         (results, item) => {
