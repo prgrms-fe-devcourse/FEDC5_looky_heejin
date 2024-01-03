@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ChangeEvent, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import Icon from "@/components/common/Icon/Icon.tsx";
-import { Form, IconWrap, Input } from "./SearchPage.styles.ts";
+import { Form, Input, IconWrap } from "./SearchPage.styles.ts";
 import { useSearchParams } from "react-router-dom";
 
 interface ISearchBar {
@@ -15,21 +15,15 @@ export interface IInput {
 
 const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
   const { register, handleSubmit, setValue } = useForm<IInput>();
-  const { ref, ...inputProps } = register("searchQuery");
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const keyword = searchParams.get("keyword") || "";
-
     setValue("searchQuery", keyword);
   }, [searchParams, setValue]);
 
   const onSubmit: SubmitHandler<IInput> = data => {
     onSearch(data.searchQuery);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue("searchQuery", e.target.value);
   };
 
   const handleKeyDown = useCallback(
@@ -54,8 +48,7 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
           type="text"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요"
-          {...inputProps}
-          onChange={handleChange}
+          {...register("searchQuery")}
         />
       </Form>
     </>
