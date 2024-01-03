@@ -37,7 +37,7 @@ const SearchResultsView = () => {
       const copy = [...data];
       if (copy.length < 0) return;
 
-      const filteredData: FilteredData = copy.reduce<FilteredData>(
+      const filteredData = copy.reduce<FilteredData>(
         (results, item) => {
           if (item.title) {
             results.posts = results.posts.concat(item);

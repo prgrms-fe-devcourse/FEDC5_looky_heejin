@@ -5,9 +5,9 @@ import {
   SearchBarWrap,
 } from "./SearchPage.styles.ts";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
-import { useLocalStorage } from "@/hooks/useLocalStorage.ts";
-import SearchBar from "./SearchBar.tsx";
-import { SearchRecentView, SearchResultsView } from "./Views/index.ts";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import SearchBar from "./SearchBar";
+import { SearchRecentView, SearchResultsView } from "./Views";
 
 const SearchPage = () => {
   const [showResults, setShowResults] = useState(false);
@@ -35,18 +35,13 @@ const SearchPage = () => {
     [recentKeywords]
   );
 
-  const handleSearch = useCallback(
-    (searchQuery: { keyword: string }) => {
-      const keyword = searchQuery.keyword.trim();
-      if (keyword.length < 1) return;
+  const handleSearch = useCallback((searchQuery: { keyword: string }) => {
+    const keyword = searchQuery.keyword.trim();
+    if (keyword.length < 1) return;
 
-      addRecentHistory(keyword);
-      setSearchParams({ keyword: keyword });
-
-      // Todo: API 호출
-    },
-    [addRecentHistory]
-  );
+    addRecentHistory(keyword);
+    setSearchParams({ keyword: keyword });
+  }, []);
 
   // 최근 검색어 클릭하면 Search
   const handleKeywordClick = useCallback((clickedKeyword: string) => {
