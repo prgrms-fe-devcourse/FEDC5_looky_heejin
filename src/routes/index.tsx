@@ -18,89 +18,40 @@ import {
 import TestPage from "@/pages/TestPage";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar";
 import AuthRoute from "./AuthRoute";
-import { Fragment } from "react";
-
-const routeMap = Object.freeze({
-  "/": {
-    component: SplashPage,
-    auth: false,
-  },
-  "/home": {
-    component: HomePage,
-    auth: false,
-  },
-  "/login": {
-    component: LoginPage,
-    auth: false,
-  },
-  "/signin": {
-    component: SignInPage,
-    auth: false,
-  },
-  "/channels": {
-    component: ChannelsPage,
-    auth: false,
-  },
-  "/profile/:id": {
-    component: ProfilePage,
-    auth: true,
-  },
-  "/search": {
-    component: SearchPage,
-    auth: false,
-  },
-  "/chats": {
-    component: ChatsPage,
-    auth: true,
-  },
-  "/chat/:id": {
-    component: ChatPage,
-    auth: true,
-  },
-  "/postdetail/:id": {
-    component: PostDetailPage,
-    auth: false,
-  },
-  "/newPost": {
-    component: CreatePostPage,
-    auth: true,
-  },
-  "/test": {
-    component: TestPage,
-    auth: false,
-  },
-  "*": {
-    component: NotFoundPage,
-    auth: false,
-  },
-});
 
 const RouterComponent = () => {
   return (
     <Router>
       <Layout>
         <Routes>
-          {Object.entries(routeMap).map(([route, data]) => {
-            if (data.auth) {
-              return (
-                <Route
-                  key={route}
-                  path={route}
-                  element={
-                    <AuthRoute path={route} element={<data.component />} />
-                  }
-                />
-              );
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/channels" element={<ChannelsPage />} />
+          <Route
+            path="/profile/:id"
+            element={
+              <AuthRoute path="/profile/:id" element={<ProfilePage />} />
             }
-            return (
-              <Route key={route} path={route} element={<data.component />} />
-            );
-          })}
+          />
+          <Route path="/search" element={<SearchPage />} />
+          <Route
+            path="/chats"
+            element={<AuthRoute path="/chats" element={<ChatsPage />} />}
+          />
+          <Route
+            path="/chat/:id"
+            element={<AuthRoute path="/chat/:id" element={<ChatPage />} />}
+          />
+          <Route path="/postdetail/:id" element={<PostDetailPage />} />
+          <Route path="/newPost" element={<CreatePostPage />} />
+          <Route path="/test" element={<TestPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
       <BottomNavBar />
     </Router>
   );
 };
-
 export default RouterComponent;
