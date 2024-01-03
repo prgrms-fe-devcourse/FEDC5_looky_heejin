@@ -1,22 +1,10 @@
 import { useMemo } from "react";
-import { styled } from "styled-components";
+import { LiContainer } from "@/pages/SearchPage/SearchPage.styles";
 
 interface SearchRecentProps {
   recentKeywords: string;
   onItemClick: (item: string) => void;
 }
-
-const LiContainer = styled.li`
-  width: 300px;
-  color: ${props => props.theme.gray_500};
-  &:hover:not(.empty) {
-    filter: brightness(50%);
-    cursor: pointer;
-  }
-  &:not(:last-child) {
-    margin-bottom: 1rem;
-  }
-`;
 
 const SearchRecentView = ({
   recentKeywords,

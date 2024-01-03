@@ -5,12 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { _SEARCH, _SEARCH_USERS } from "@/api/queries/search";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { IPost, IUser } from "@/types";
-import styled from "styled-components";
-import { Col } from "@/styles/GlobalStyle";
-
-const ViewWrap = styled(Col)`
-  flex-basis: 100vh;
-`;
+import { ViewWrap } from "@/pages/SearchPage/SearchPage.styles";
 
 const SearchResultsView = () => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
