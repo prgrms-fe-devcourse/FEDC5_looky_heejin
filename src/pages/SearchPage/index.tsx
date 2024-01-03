@@ -31,13 +31,16 @@ const SearchPage = () => {
     [recentKeywords]
   );
 
-  const handleSearch = useCallback((searchQuery: { keyword: string }) => {
-    const keyword = searchQuery.keyword.trim();
-    if (keyword.length < 1) return;
+  const handleSearch = useCallback(
+    (searchQuery: { keyword: string }) => {
+      const keyword = searchQuery.keyword.trim();
+      if (keyword.length < 1) return;
 
-    addRecentHistory(keyword);
-    setSearchParams({ keyword: keyword });
-  }, []);
+      addRecentHistory(keyword);
+      setSearchParams({ keyword: keyword });
+    },
+    [addRecentHistory]
+  );
 
   // 최근 검색어 클릭하면 Search
   const handleKeywordClick = useCallback((clickedKeyword: string) => {
