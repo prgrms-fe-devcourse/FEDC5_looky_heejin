@@ -1,13 +1,13 @@
-import { FC } from "react";
 import styled from "styled-components";
 
 type TShape = "circle" | "round" | "square";
 
 interface IAvatarProps {
   size: string;
-  shape: TShape;
-  src: string;
-  alt: string;
+  shape?: TShape;
+  src?: string;
+  theme?: string;
+  border?: "none" | "solid";
 }
 
 const ShapeToStyle: { [key: string]: string } = {
@@ -17,33 +17,42 @@ const ShapeToStyle: { [key: string]: string } = {
 };
 
 const SizeToStyle: { [key: string]: string } = {
-  XS: "45px",
-  S: "60px",
-  M: "70px",
-  L: "80px",
+  XS: "32px",
+  S: "40px",
+  M: "48px",
+  L: "56px",
+  XL: "64px",
 };
 
-const AvatarWrapper = styled.div<{ size: string; shape: TShape }>`
-  width: ${({ size }) => SizeToStyle[size]};
+const AvatarWrapper = styled.div<IAvatarProps>`
   position: relative;
   display: inline-block;
-  border-style: none;
-  border-radius: ${({ shape }) => ShapeToStyle[shape]};
-  background-color: ${({ theme }) => theme.background_color};
   overflow: hidden;
+  width: ${({ size }) => SizeToStyle[size]};
+  height: ${({ size }) => SizeToStyle[size]};
+  border: ${({ border, theme }) =>
+    border === "solid" ? `1px solid ${theme.gray_300}` : "none"};
+  background-image: ${({ src }) =>
+    src ? `url(${src})` : "url(/src/assets/profile.svg)"};
+  border-radius: ${({ shape }) => shape && ShapeToStyle[shape]};
+  background-color: ${({ theme }) => theme.background_color};
 `;
 
-const Avatar: FC<IAvatarProps> = ({
+const Avatar = ({
   size = "S",
   shape = "circle",
-  src = "https://picsum.photos/100",
-  alt = "프로필",
+  src,
+  border = "solid",
   ...props
-}) => {
+}: IAvatarProps) => {
   return (
-    <AvatarWrapper size={size} shape={shape} {...props}>
-      <img src={src} alt={alt} />
-    </AvatarWrapper>
+    <AvatarWrapper
+      size={size}
+      shape={shape}
+      src={src}
+      border={border}
+      {...props}
+    ></AvatarWrapper>
   );
 };
 
