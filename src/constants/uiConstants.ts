@@ -31,7 +31,7 @@ export const TABLET_LIMIT = 1025; // 655 + 370px
 export const DESKTOP_VIEW_WIDTH = 655; // 655px
 // ------------------------------------------ SCREEN //
 
-export const NAV_HEIGHT: number = 3.75; // 3.75 rem
+export const NAV_HEIGHT: number = 3; // 3.75 rem
 
 // CARDS -------------------------------------------------------- //
 export const POSTER_SIMPLE_CARD_HEIGHT: number = 150; // 150px

@@ -8,8 +8,8 @@ export const GlobalStyle = createGlobalStyle<any>`
     ${normalize}
 
     *{
-        /* color: ${props => props.theme.text_primary_color};
-        font-family: sans-serif; */
+        color: ${props => props.theme.text_primary_color};
+        /* font-family: sans-serif; */
     }
     body {
         /* min-width: 420px;

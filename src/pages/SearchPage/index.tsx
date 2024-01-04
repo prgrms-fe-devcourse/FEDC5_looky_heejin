@@ -4,8 +4,10 @@ import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import SearchBar from "./SearchBar";
 import { SearchRecentView, SearchResultsView } from "./Views";
+import { useSearchValue } from "@/hooks/useSearchValue";
 
 const SearchPage = () => {
+  const { keyword } = useSearchValue();
   const [showResults, setShowResults] = useState(false);
   const [recentKeywords, setRecentKeywords] = useLocalStorage("keywords");
 
