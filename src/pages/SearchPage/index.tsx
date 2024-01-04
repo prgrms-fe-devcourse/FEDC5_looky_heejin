@@ -69,7 +69,7 @@ const SearchPage = () => {
   }, []);
 
   return (
-    <main>
+    <>
       <SearchWrap>
         <SearchBarWrap>
           <SearchBar
@@ -88,7 +88,7 @@ const SearchPage = () => {
           )}
         </SearchViewWrap>
       </SearchWrap>
-    </main>
+    </>
   );
 };
 
