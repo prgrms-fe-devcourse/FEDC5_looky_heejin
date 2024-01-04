@@ -13,13 +13,15 @@ const SearchPostsView = ({ postsData }: IPostsProps) => {
     <section>
       <PostWrap>
         {Array.isArray(postsData) && postsData.length > 0 ? (
-          postsData.map(post => {
-            return (
-              <Post key={post._id} src={post.image}>
-                <PostInfo>{post.title}</PostInfo>
-              </Post>
-            );
-          })
+          postsData
+            .filter(post => post.image !== undefined)
+            .map(post => {
+              return (
+                <Post key={post._id} src={post.image!}>
+                  <PostInfo>{post.title}</PostInfo>
+                </Post>
+              );
+            })
         ) : (
           <div>포스트가 없습니다</div>
         )}
