@@ -1,3 +1,4 @@
+import { NAV_HEIGHT } from "@/constants/uiConstants";
 import { ReactNode } from "react";
 
 interface ILayoutProps {
@@ -5,7 +6,16 @@ interface ILayoutProps {
 }
 
 const Layout: React.FC<ILayoutProps> = ({ children }) => {
-  return <main className="min-w-[100%] min-h-[100%]">{children}</main>;
+  return (
+    <main
+      style={{
+        paddingTop: `${NAV_HEIGHT}rem`,
+        paddingBottom: `${NAV_HEIGHT}rem`,
+      }}
+    >
+      {children}
+    </main>
+  );
 };
 
 export default Layout;
