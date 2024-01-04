@@ -42,22 +42,10 @@ const ChatAvatars = ({
     <ChatAvatarsWrapper>
       <AvatarsWrapper>
         <AvatarWrapper>
-          <Avatar
-            size="XS"
-            shape="circle"
-            src={myAvatarSrc}
-            alt="내 아바타"
-            style={{ width: "32px" }} // 임시값 리팩토링 필요
-          />
+          <Avatar size="XS" shape="circle" src={myAvatarSrc} />
         </AvatarWrapper>
 
-        <Avatar
-          size="XS"
-          shape="circle"
-          src={partnerAvatarSrc}
-          alt="상대방 아바타"
-          style={{ width: "32px" }} // 임시값 리팩토링 필요
-        />
+        <Avatar size="XS" shape="circle" src={partnerAvatarSrc} />
       </AvatarsWrapper>
       <PartnerName>{partnerName}</PartnerName>
     </ChatAvatarsWrapper>
