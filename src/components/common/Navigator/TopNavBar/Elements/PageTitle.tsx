@@ -8,7 +8,6 @@ interface IPageTitleProps {
 const StyledSpan = styled.span`
   margin: auto auto;
   font-size: 0.9rem;
-  color: ${({ theme }) => theme.text_primary_color};
 `;
 
 const PageTitle = ({ title }: IPageTitleProps) => {
