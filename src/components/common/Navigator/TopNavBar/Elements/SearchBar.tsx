@@ -5,6 +5,7 @@ import Icon from "../../../Icon/Icon";
 import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
 import { SEARCH_BAR } from "@/constants/uiConstants";
 import { useSearchValue } from "@/hooks/useSearchValue";
+import { Input } from "@/components/common";
 
 const SearchBarWrapper = styled.div`
   height: 100%;
@@ -17,11 +18,10 @@ const StyledForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 100%;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled(Input)`
   position: relative;
   width: 100rem;
   height: 65%;
@@ -85,9 +85,10 @@ const SearchBar = () => {
     <SearchBarWrapper>
       <StyledForm onSubmit={handleSubmit(onValid, onInvalid)}>
         <StyledInput
-          type="text"
+          kind="text"
           placeholder="사용자와 게시글을 검색해보세요"
-          {...register("search", {
+          required={true}
+          register={register("search", {
             required: "검색어를 입력해주세요",
             minLength: {
               message: "2자 이상 입력해주세요",
