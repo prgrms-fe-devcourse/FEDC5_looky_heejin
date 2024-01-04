@@ -1,5 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import Icon from "../Icon/Icon";
+import Icon from "../../Icon/Icon";
 import {
   CHANNEL_ICON,
   HOME_ICON,
@@ -8,9 +8,10 @@ import {
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
-import { APP_MAX_WIDTH } from "@/constants/uiConstants";
+import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
-import { Button } from "..";
+import { Button } from "../..";
+import { useMe } from "@/hooks/useMe";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
@@ -20,8 +21,8 @@ const BottomNavBarWrapper = styled.nav`
   justify-content: space-between;
   max-width: ${APP_MAX_WIDTH}px;
   width: 100%;
-  height: 3rem;
-  background-color: white;
+  height: ${NAV_HEIGHT}rem;
+  background-color: ${({ theme }) => theme.background_color};
 `;
 const IconWrapper = styled.div`
   flex-grow: 1;
@@ -41,20 +42,22 @@ const ButtonChildrenSortingStyle = {
 };
 
 const BottomNavBar = () => {
+  const { id } = useMe();
   const { pathname } = useLocation();
-  const NAV_INABLE_PATH = [
+  const NAV_VISIBLE_PATH = [
     PathName.HOME,
     PathName.CHANNELS,
     PathName.PROFILE,
     PathName.SEARCH,
     PathName.CHATS,
+    PathName.NOTIFICATIONS,
     PathName.POSTDETAIL,
     PathName.TEST,
   ];
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const isShow = useMemo(
-    () => NAV_INABLE_PATH.includes(currentPath),
+    () => NAV_VISIBLE_PATH.includes(currentPath),
     [currentPath]
   );
 
@@ -133,7 +136,7 @@ const BottomNavBar = () => {
           variant="flat"
           useRipple={true}
           rippleColor={theme.symbol_color}
-          onClickHandler={() => handleIconClick(PathName.PROFILE)}
+          onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
           style={ButtonChildrenSortingStyle}
         >
           {
