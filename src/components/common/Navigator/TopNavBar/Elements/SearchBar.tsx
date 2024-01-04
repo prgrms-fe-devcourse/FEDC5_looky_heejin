@@ -49,9 +49,7 @@ const CloseIconWrapper = styled.div`
   right: 6%;
   background-color: ${({ theme }) => theme.gray_500};
   border-radius: 50%;
-  & {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 const SearchBar = () => {
