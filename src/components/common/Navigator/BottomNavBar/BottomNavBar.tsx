@@ -42,7 +42,7 @@ const ButtonChildrenSortingStyle = {
 
 const BottomNavBar = () => {
   const { pathname } = useLocation();
-  const NAV_INABLE_PATH = [
+  const NAV_VISIBLE_PATH = [
     PathName.HOME,
     PathName.CHANNELS,
     PathName.PROFILE,
@@ -55,7 +55,7 @@ const BottomNavBar = () => {
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const isShow = useMemo(
-    () => NAV_INABLE_PATH.includes(currentPath),
+    () => NAV_VISIBLE_PATH.includes(currentPath),
     [currentPath]
   );
 
