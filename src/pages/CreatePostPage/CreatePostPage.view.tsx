@@ -16,12 +16,13 @@ import { useNavigate } from "react-router-dom";
 interface ICreatePostFormProps {
   title: string;
   content?: string;
-  file?: File;
+  file: File;
+  channelId: string;
 }
 
 interface IPostBodyData {
   title: string;
-  image?: File;
+  image: File;
   channelId: string;
 }
 
@@ -43,6 +44,10 @@ const CreatePostPageView = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setValue("channelId", channelId);
+  }, [channelId]);
+
   const mutation = useMutation({
     mutationFn: async (formData: IPostBodyData) =>
       await _POST("/posts/create", formData),
@@ -56,6 +61,7 @@ const CreatePostPageView = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<ICreatePostFormProps>();
 
@@ -73,7 +79,7 @@ const CreatePostPageView = () => {
     const postData: IPostBodyData = {
       title: additionalData,
       image: data.file,
-      channelId,
+      channelId: data.channelId,
     };
 
     mutation.mutate(postData);
@@ -181,6 +187,7 @@ const CreatePostPageView = () => {
         variant="symbol"
         className="absolute bottom-0"
         onClick={handleSubmit(onValid, onInvalid)}
+        disabled={!watch("channelId") || !watch("file")}
       >
         <span className="font-semibold">포스터 작성</span>
       </Button>
