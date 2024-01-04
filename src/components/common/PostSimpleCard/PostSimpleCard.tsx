@@ -54,10 +54,12 @@ const PostSimpleCard = () => {
   }, []);
 
   if (mutation.isError) {
+    // 에러문구 todo
     return <div>실패요 수고</div>;
   }
 
   if (mutation.isPending) {
+    // 스켈레톤 todo
     return <div>기다리셈</div>;
   }
 
