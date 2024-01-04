@@ -11,6 +11,7 @@ import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import { Button } from "../..";
+import { useMe } from "@/hooks/useMe";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
@@ -41,6 +42,7 @@ const ButtonChildrenSortingStyle = {
 };
 
 const BottomNavBar = () => {
+  const { id } = useMe();
   const { pathname } = useLocation();
   const NAV_VISIBLE_PATH = [
     PathName.HOME,
@@ -134,7 +136,7 @@ const BottomNavBar = () => {
           variant="flat"
           useRipple={true}
           rippleColor={theme.symbol_color}
-          onClickHandler={() => handleIconClick(PathName.PROFILE)}
+          onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
           style={ButtonChildrenSortingStyle}
         >
           {
