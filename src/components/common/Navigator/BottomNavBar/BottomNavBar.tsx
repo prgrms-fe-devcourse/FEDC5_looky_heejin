@@ -8,7 +8,7 @@ import {
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
-import { APP_MAX_WIDTH } from "@/constants/uiConstants";
+import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import { Button } from "../..";
 
@@ -20,7 +20,7 @@ const BottomNavBarWrapper = styled.nav`
   justify-content: space-between;
   max-width: ${APP_MAX_WIDTH}px;
   width: 100%;
-  height: 3rem;
+  height: ${NAV_HEIGHT}rem;
   background-color: ${({ theme }) => theme.background_color};
 `;
 const IconWrapper = styled.div`

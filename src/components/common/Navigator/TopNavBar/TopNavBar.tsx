@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
-import { APP_MAX_WIDTH } from "@/constants/uiConstants";
+import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import {
   BackButton,
@@ -23,7 +23,7 @@ const TopNavBarWrapper = styled.nav`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 3rem;
+  height: ${NAV_HEIGHT}rem;
   max-width: ${APP_MAX_WIDTH}px;
   background-color: ${({ theme }) => theme.background_color};
 `;
