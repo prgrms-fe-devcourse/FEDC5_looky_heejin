@@ -10,7 +10,7 @@ interface IUploadProps {
   clickable?: boolean;
   name?: string;
   accept?: string;
-  onChange?: (base64: string) => void;
+  onChange?: (file: File) => void;
   children?: ReactNode;
   [key: string]: any;
 }
@@ -26,10 +26,10 @@ const Upload = ({
 }: IUploadProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState<string | null>();
   const [dragging, setDragging] = useState(false);
 
-  const convertFileToBinary = (file: File) => {
+  const convertFileToBase64 = (file: File) => {
     return new Promise<string>(resolve => {
       const reader = new FileReader();
 
@@ -48,11 +48,11 @@ const Upload = ({
 
     if (files && files?.length > 0) {
       const changedFile = files[0];
-      const base64 = await convertFileToBinary(changedFile);
 
+      const base64 = await convertFileToBase64(changedFile);
       setFile(base64);
 
-      onChange && base64 && onChange(base64);
+      onChange && onChange(changedFile);
     }
   };
 
@@ -94,11 +94,11 @@ const Upload = ({
 
     if (files && files?.length > 0) {
       const changedFile = files[0];
-      const base64 = await convertFileToBinary(changedFile);
 
+      const base64 = await convertFileToBase64(changedFile);
       setFile(base64);
 
-      onChange && base64 && onChange(base64);
+      onChange && onChange(changedFile);
     }
     setDragging(false);
   };
