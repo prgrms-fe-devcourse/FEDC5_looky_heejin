@@ -27,6 +27,10 @@ const PostSimpleCard = () => {
     },
   });
 
+  const onClickProfile = () => {
+    navigate(`/profile/${PostSimpleCardConst.data_example.author}`);
+  };
+
   const onClickFavorite = () => {
     setFavoriteClicked(!favoriteClicked);
   };
@@ -153,19 +157,39 @@ const PostSimpleCard = () => {
             <div
               style={{
                 display: "flex",
+                width: "auto",
                 flexDirection: "row",
                 alignItems: "center",
                 margin: "5px",
               }}
             >
-              <Avatar
-                size={"S"}
-                shape={"circle"}
-                src={imageUrl ? imageUrl : ""}
-              ></Avatar>
-              <span style={{ marginLeft: "5px" }}>{userName}</span>
+              <span
+                onClick={onClickProfile}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <Avatar
+                  size={"S"}
+                  shape={"circle"}
+                  src={imageUrl ? imageUrl : ""}
+                ></Avatar>
+              </span>
+              <span
+                onClick={onClickProfile}
+                style={{
+                  cursor: "pointer",
+                  marginLeft: "5px",
+                }}
+              >
+                {userName}
+              </span>
             </div>
-            <div style={{ margin: "5px" }}>
+            <div
+              style={{
+                margin: "5px",
+              }}
+            >
               <span>{PostSimpleCardConst.data_example.title}</span>
             </div>
           </CardImageContainer>
