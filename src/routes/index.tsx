@@ -14,14 +14,17 @@ import {
   NotFoundPage,
   HomePage,
   CreatePostPage,
+  NotificationsPage,
 } from "@/pages";
 import TestPage from "@/pages/TestPage";
-import BottomNavBar from "@/components/common/Navigator/BottomNavBar";
+import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
+import BottomNavBar from "@/components/common/Navigator/BottomNavBar/BottomNavBar";
 import AuthRoute from "./AuthRoute";
 
 const RouterComponent = () => {
   return (
     <Router>
+      <TopNavBar />
       <Layout>
         <Routes>
           <Route path="/" element={<SplashPage />} />
@@ -36,6 +39,9 @@ const RouterComponent = () => {
             }
           />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/chats" element={<ChatsPage />} />
+          <Route path="/chat/:id" element={<ChatPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route
             path="/chats"
             element={<AuthRoute path="/chats" element={<ChatsPage />} />}

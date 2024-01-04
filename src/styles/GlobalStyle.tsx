@@ -8,8 +8,8 @@ export const GlobalStyle = createGlobalStyle<any>`
     ${normalize}
 
     *{
-        /* color: ${props => props.theme.text_primary_color};
-        font-family: sans-serif; */
+        color: ${props => props.theme.text_primary_color};
+        /* font-family: sans-serif; */
     }
     body {
         /* min-width: 420px;
@@ -41,6 +41,8 @@ export const GlobalStyle = createGlobalStyle<any>`
       max-width: ${APP_MAX_WIDTH}px;
       height: 100%;
       margin: 0 auto;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
     }
 
     div, 
