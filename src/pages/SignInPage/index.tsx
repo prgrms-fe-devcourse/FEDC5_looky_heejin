@@ -1,5 +1,1 @@
-const SignInPage = () => {
-  return <div>SignInPage</div>;
-};
-
-export default SignInPage;
+export { default } from "./SignInPageView";

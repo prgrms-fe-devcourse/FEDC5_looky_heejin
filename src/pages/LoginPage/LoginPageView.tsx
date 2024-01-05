@@ -11,38 +11,61 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
+import { sha256Encrypt } from "@/utils/crypto";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import LoginPageConst from "./LoginPage.const";
+import { useMe } from "@/hooks/useMe";
 
 const LoginPageView = () => {
+  const { setMe } = useMe();
+  const { setAuth } = useAuth();
+  const [_, storeToken] = useLocalStorage("token");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ILogIn>({
     mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
+
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
-    onSuccess({ user }) {
-      console.log("API 성공: ", user);
+    onSuccess({ user, token }) {
+      console.log("API 성공: ", user, token);
+      setAuth({ isLogIn: true, token });
+      setMe({
+        id: user._id,
+        userName: user.fullName,
+        profilePhoto: "",
+      });
+      storeToken(token);
+      navigate("/home");
     },
     onError(error) {
       console.error("API 에러: ", error);
     },
   });
 
-  const onValid: SubmitHandler<ILogIn> = (formData: ILogIn) => {
-    mutation.mutate(formData);
+  const onValid: SubmitHandler<ILogIn> = ({ email, password }) => {
+    const filteredFormData = {
+      email,
+      password: sha256Encrypt(password),
+    };
+    mutation.mutate(filteredFormData);
+    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ILogIn> = (error): void => {
     console.log("양식이 안맞으므로 호출 X:", error);
   };
-
-  // 유효성 검사 정규식
-  const emailRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
 
   return (
     <LogInPageContainer>
@@ -54,44 +77,18 @@ const LoginPageView = () => {
         <InputContainer
           type="text"
           placeholder="이메일"
-          {...register("email", {
-            required: true,
-            minLength: 8,
-            pattern: emailRegex,
-            maxLength: 50,
-          })}
+          {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
         />
-        {errors?.email?.type === "required" && (
-          <span>이메일을 입력해주세요</span>
-        )}
-        {errors?.email?.type === "minLength" && <span>너무 짧아요!</span>}
-        {errors?.email?.type === "pattern" && (
-          <span>이메일 양식에 맞게 입력해주세요</span>
-        )}
-        {errors?.email?.type === "maxLength" && <span>너무 길어요!</span>}
+        {errors.email?.message ? <span>{errors.email?.message}</span> : null}
 
         <InputContainer
           type="password"
           placeholder="비밀번호"
-          {...register("password", {
-            required: true,
-            // 비밀번호 정규식 검사 예외처리
-            // 사유 admin계정의 비밀번호가 숫자, 특수 문자 조건을 만족하지 않음
-            // pattern: passwordRegex,
-            minLength: 8,
-            maxLength: 30,
-          })}
+          {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
         />
-        {errors?.password?.type === "required" && (
-          <span>비밀번호를 입력해주세요</span>
-        )}
-        {errors?.password?.type === "minLength" && <span>너무 짧아요!</span>}
-        {/* {errors?.password?.type === "pattern" && (
-          <span>
-            소문자, 숫자, 특수문자를 각 하나 포함한 8자리 이상이여야 합니다.
-          </span>
-        )} */}
-        {errors?.password?.type === "maxLength" && <span>너무 길어요!</span>}
+        {errors.password?.message ? (
+          <span>{errors.password?.message}</span>
+        ) : null}
 
         <LogInButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           로그인

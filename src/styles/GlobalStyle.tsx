@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
-import tw, { GlobalStyles as BaseStyles } from "twin.macro";
+import tw from "twin.macro";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 
-const CustomStyles = createGlobalStyle<any>`
+export const GlobalStyle = createGlobalStyle<any>`
     ${normalize}
 
     *{
-        /* color: ${props => props.theme.text_primary_color};
-        font-family: sans-serif; */
+        color: ${props => props.theme.text_primary_color};
+        /* font-family: sans-serif; */
     }
     body {
         /* min-width: 420px;
@@ -51,13 +51,6 @@ const CustomStyles = createGlobalStyle<any>`
       flex-direction: column;
     }
 `;
-
-export const GlobalStyle = () => (
-  <>
-    <BaseStyles />
-    <CustomStyles />
-  </>
-);
 
 export const Col = styled.div`
   display: flex;

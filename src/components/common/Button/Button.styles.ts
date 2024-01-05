@@ -37,8 +37,9 @@ export const Flat = styled(ButtonBaseWrapper)<any>`
 `;
 
 export const Neumorp = styled(ButtonBaseWrapper)<any>`
+  background-color: ${props => props.theme.white_primary + 30};
   color: ${props =>
-    props.$textColor ? props.$textColor : props.theme.text_primary_color};
+    props.$textColor ? props.$textColor : props.theme.text_primary_color}; 
 
   ${tw`flex justify-center items-center shadow-md hover:shadow-inner transition-shadow`}
 `;
