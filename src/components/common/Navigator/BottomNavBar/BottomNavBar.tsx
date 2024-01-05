@@ -1,6 +1,7 @@
 import styled, { useTheme } from "styled-components";
 import Icon from "../../Icon/Icon";
 import {
+  ADD_BOX_ICON,
   CHANNEL_ICON,
   HOME_ICON,
   SEARCH_ICON,
@@ -51,6 +52,7 @@ const BottomNavBar = () => {
     PathName.SEARCH,
     PathName.CHATS,
     PathName.NOTIFICATIONS,
+    PathName.NEWPOST,
     PathName.POSTDETAIL,
     PathName.TEST,
   ];
@@ -108,6 +110,23 @@ const BottomNavBar = () => {
               name={SEARCH_ICON}
               color={currentPath === PathName.SEARCH ? theme.symbol_color : ""}
               weight={currentPath === PathName.SEARCH ? 300 : 250}
+            />
+          }
+        </Button>
+      </IconWrapper>
+      <IconWrapper>
+        <Button
+          variant="flat"
+          useRipple={true}
+          rippleColor={theme.symbol_color}
+          onClickHandler={() => handleIconClick(PathName.NEWPOST)}
+          style={ButtonChildrenSortingStyle}
+        >
+          {
+            <Icon
+              name={ADD_BOX_ICON}
+              color={currentPath === PathName.NEWPOST ? theme.symbol_color : ""}
+              weight={currentPath === PathName.NEWPOST ? 300 : 250}
             />
           }
         </Button>
