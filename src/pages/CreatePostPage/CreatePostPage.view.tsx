@@ -9,16 +9,20 @@ import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
 import { Button, Input, Upload } from "@/components/common";
 import { Tag, TextArea } from "./CreatePostPage.styles";
+import { useMutation } from "@tanstack/react-query";
+import { _POST, rootAPI } from "@/api";
+import { useNavigate } from "react-router-dom";
 
 interface ICreatePostFormProps {
   title: string;
   content?: string;
-  file?: string;
+  file: File;
+  channelId: string;
 }
 
 interface IPostBodyData {
   title: string;
-  image?: string;
+  image: File;
   channelId: string;
 }
 
@@ -26,18 +30,38 @@ const CreatePostPageView = () => {
   const { openModal, setModalView } = useUI();
   const { tags, channelId, channelName, init: initNewPostData } = useNewPost();
 
+  const navigate = useNavigate();
+
   const tagWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
+
     return () => {
       initNewPostData();
+      rootAPI.defaults.headers["Content-Type"] =
+        "application/x-www-form-urlencoded";
     };
   }, []);
+
+  useEffect(() => {
+    setValue("channelId", channelId);
+  }, [channelId]);
+
+  const mutation = useMutation({
+    mutationFn: async (formData: IPostBodyData) =>
+      await _POST("/posts/create", formData),
+    onSuccess: data => {
+      navigate(-1);
+    },
+    onError: data => console.log("Error", data),
+  });
 
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<ICreatePostFormProps>();
 
@@ -55,10 +79,10 @@ const CreatePostPageView = () => {
     const postData: IPostBodyData = {
       title: additionalData,
       image: data.file,
-      channelId,
+      channelId: data.channelId,
     };
 
-    console.log(postData);
+    mutation.mutate(postData);
   };
   const onInvalid = (errors: FieldErrors) => {
     console.log(errors);
@@ -101,10 +125,11 @@ const CreatePostPageView = () => {
       <form
         onSubmit={handleSubmit(onValid, onInvalid)}
         className="relative w-full h-full flex flex-col"
+        encType="multipart/form-data"
       >
         <section className="__upload w-full h-[50%] relative">
           <Upload
-            onChange={base64 => setValue("file", base64)}
+            onChange={file => setValue("file", file)}
             clickable={false}
             className="relative w-full h-full"
           >
@@ -162,6 +187,7 @@ const CreatePostPageView = () => {
         variant="symbol"
         className="absolute bottom-0"
         onClick={handleSubmit(onValid, onInvalid)}
+        disabled={!watch("channelId") || !watch("file")}
       >
         <span className="font-semibold">포스터 작성</span>
       </Button>
