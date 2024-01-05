@@ -6,6 +6,7 @@ export const NOTIFICATIONS_ICON: string = "notifications";
 export const CHANNEL_ICON: string = "list_alt";
 export const CHAT_ICON: string = "chat";
 export const PLUS_ICON: string = "add";
+export const ADD_BOX_ICON: string = "add_box";
 export const CLOSE_ICON: string = "close";
 export const BACK_ICON: string = "chevron_left";
 export const SEND_ICON: string = "send";
