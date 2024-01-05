@@ -8,7 +8,7 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
     if ($basis === "half") {
       return css`
         max-height: 70%;
-        max-width: calc(100% - 11px);
+        max-width: calc(50% - 11px);
         flex-basis: calc(50% - 11px);
       `;
     } else {
@@ -22,16 +22,19 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
 
   @media screen and (max-width: 500px) {
     max-height: 70%;
+    max-width: calc(100% - 11px);
     flex-basis: calc(100% - 11px);
   }
   box-sizing: border-box;
   margin: 0px 5.5px 12px;
+  /* 추후 삭제 예정 */
   border: 1px solid royalblue;
 `;
 
 export const CardInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
-  min-height: auto;
 `;
 
 export const CardImageContainer = styled.div`
@@ -81,6 +84,15 @@ export const IconContainer = styled.div<{
         `;
     }
   }};
+`;
+
+export const TextContainer = styled.div`
+  width: calc(100% - 11px);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
 `;
 
 export const ProfileContainer = styled(Row)`
