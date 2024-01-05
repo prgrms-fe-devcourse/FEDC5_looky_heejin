@@ -13,8 +13,11 @@ import { useEffect, useState } from "react";
 import { Avatar } from "..";
 import useTheme from "@/hooks/useTheme";
 import { useNavigate } from "react-router-dom";
+import type { IPost } from "./PostSimpleCard.type";
 
-const PostSimpleCard = () => {
+// todo에러 해결 시간 소요 과다로 인한 any 처리
+const PostSimpleCard = ({ postData }: { postData: any }) => {
+  // console.log(postData);
   const navigate = useNavigate();
   const theme = useTheme();
   const [imageUrl, setimageUrl] = useState<string>();
