@@ -5,6 +5,7 @@ import {
   CardInfoContainer,
   IconContainer,
   ProfileContainer,
+  TextContainer,
 } from "./PostSimpleCard.styles";
 import PostSimpleCardConst from "./PostSimpleCard.const";
 import { _USERDATA } from "@/api/queries/userData";
@@ -13,11 +14,34 @@ import { useEffect, useState } from "react";
 import { Avatar } from "..";
 import useTheme from "@/hooks/useTheme";
 import { useNavigate } from "react-router-dom";
-import type { IPost } from "./PostSimpleCard.type";
+import type { ITag } from "@/types/post";
+export interface ITitle {
+  title: string;
+  content: string;
+  tags: ITag[] | null;
+}
+
+const IsJsonString = (str: string) => {
+  try {
+    let json = JSON.parse(str);
+    return typeof json === "object";
+  } catch (e) {
+    return false;
+  }
+};
 
 // todo에러 해결 시간 소요 과다로 인한 any 처리
 const PostSimpleCard = ({ postData }: { postData: any }) => {
-  // console.log(postData);
+  let parsedData: ITitle = {
+    title: "",
+    content: "",
+    tags: null,
+  };
+  if (IsJsonString(postData.title)) {
+    const parsedJson = JSON.parse(postData.title);
+    console.log(parsedJson);
+    parsedData = parsedJson;
+  }
   const navigate = useNavigate();
   const theme = useTheme();
   const [imageUrl, setimageUrl] = useState<string>();
@@ -27,7 +51,7 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
   const mutation = useMutation({
     mutationFn: async (params: string) => await _USERDATA(params),
     onSuccess(data) {
-      console.log("API 성공: ", data);
+      // console.log("API 성공: ", data);
       setimageUrl(data.image);
       setUserName(data.fullName);
     },
@@ -59,7 +83,7 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
   };
 
   useEffect(() => {
-    mutation.mutate(PostSimpleCardConst.data_example.author);
+    mutation.mutate(postData.author._id);
   }, []);
 
   if (mutation.isError) {
@@ -73,13 +97,14 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
   }
 
   if (mutation.isSuccess) {
+    // console.log(JSON.parse(title));
     return (
       <>
         <CardContainer $basis="half">
           <CardImageContainer style={{ minHeight: "200px", minWidth: "200px" }}>
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
-              src={PostSimpleCardConst.data_example.image}
+              src={postData.image ? postData.image : ""}
               alt="포스팅 이미지"
             />
           </CardImageContainer>
@@ -146,13 +171,30 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
                 {userName}
               </span>
             </ProfileContainer>
+
             <div
+              className="전체 텍스트 래핑"
               style={{
-                margin: "5px",
+                display: "flex",
+                flexDirection: "column",
+                boxSizing: "border-box",
+                outline: "none",
               }}
             >
-              <span>{PostSimpleCardConst.data_example.title}</span>
+              <TextContainer>
+                {parsedData === null
+                  ? postData.title
+                  : parsedData.title +
+                    "asuocbiuycbuiasbcijuasbcuiosabcuisabciuasbcuiasbcuiascbaiuscbiuasbc"}
+              </TextContainer>
+              <TextContainer>
+                {parsedData === null
+                  ? postData.content
+                  : parsedData.content +
+                    "ausbcuiasbciuasbciacpkiasncoinacsonaocnoiacnsouabsiuc"}
+              </TextContainer>
             </div>
+            {/* todo, 태그 정보 */}
           </CardInfoContainer>
         </CardContainer>
       </>
