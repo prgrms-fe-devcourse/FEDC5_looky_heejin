@@ -5,10 +5,11 @@ export interface IPost {
   image?: string;
   imagePublicId?: string;
   title: string;
-  channel: string;
-  author: string;
+  channel: IChannel;
+  author: IUser;
   createdAt: string;
   updatedAt: string;
+  __v: number;
 }
 
 export interface IChannel {
@@ -21,19 +22,32 @@ export interface IChannel {
   updatedAt: string;
 }
 
+export interface INotification {
+  seen: boolean;
+  _id: string;
+  author: any;
+  user: IUser | string;
+  post?: string | null; // 포스트 id
+  follow?: string | null; // 사용자 id
+  comment?: string | null;
+  message?: string | null; // 메시지 id
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IUser {
-  coverImage: string;
-  image: string;
+  coverImage?: string;
+  image?: string;
   role: string;
   emailVerified: boolean;
   banned: boolean;
   isOnline: boolean;
   posts: IPost[];
   likes: ILike[];
-  comments: string[];
+  comments: IComment[];
   followers: [];
   following: IFollow[];
-  notifications: Notification[];
+  notifications: INotification[];
   messages: IMessage[];
   _id: string;
   fullName: string;
@@ -50,7 +64,6 @@ export interface ILike {
   post: string; // 포스트 id
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface IComment {
@@ -68,29 +81,7 @@ export interface IFollow {
   follower: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface IUser {
-  coverImage: string;
-  image: string;
-  role: string;
-  emailVerified: boolean;
-  banned: boolean;
-  isOnline: boolean;
-  posts: IPost[];
-  likes: ILike[];
-  comments: string[];
-  followers: [];
-  following: IFollow[];
-  notifications: Notification[];
-  messages: IMessage[];
-  _id: string;
-  fullName: string;
-  nickname: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
+  __v: number;
 }
 
 export interface IMessage {
