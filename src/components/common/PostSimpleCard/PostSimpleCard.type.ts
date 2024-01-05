@@ -1,11 +1,11 @@
 export interface IPost {
-  likes: ILike[];
-  comments: IComment[];
+  likes: any[];
+  comments: any[];
   _id: string;
   image?: string;
   imagePublicId?: string;
-  title: string;
   channel: IChannel;
+  title: string;
   author: IUser;
   createdAt: string;
   updatedAt: string;
@@ -42,20 +42,19 @@ export interface IUser {
   emailVerified: boolean;
   banned: boolean;
   isOnline: boolean;
-  posts: IPost[];
-  likes: ILike[];
-  comments: IComment[];
-  followers: [];
-  following: IFollow[];
-  notifications: INotification[];
-  messages: IMessage[];
+  posts: string[];
+  likes: any[];
+  comments: any[];
+  followers: any[];
+  following: any[];
+  notifications: any[];
+  messages: any[];
   _id: string;
   fullName: string;
-  nickname: string;
-  name: string;
   email: string;
   createdAt: string;
   updatedAt: string;
+  __v: number;
 }
 
 export interface ILike {
@@ -64,6 +63,7 @@ export interface ILike {
   post: string; // 포스트 id
   createdAt: string;
   updatedAt: string;
+  __v: number;
 }
 
 export interface IComment {
