@@ -5,13 +5,13 @@ import {
   CHANNEL_ICON,
   HOME_ICON,
   SEARCH_ICON,
-  USER_ICON,
+  // USER_ICON,
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
-import { Button } from "../..";
+import { Avatar, Button } from "../..";
 import { useMe } from "@/hooks/useMe";
 
 const BottomNavBarWrapper = styled.nav`
@@ -158,13 +158,22 @@ const BottomNavBar = () => {
           onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
           style={ButtonChildrenSortingStyle}
         >
-          {
+          {/* {
             <Icon
               name={USER_ICON}
               color={currentPath === PathName.PROFILE ? theme.symbol_color : ""}
               weight={currentPath === PathName.PROFILE ? 300 : 250}
             />
-          }
+          } */}
+          {/* 아이콘 -> 아바타 컴포넌트로 교체 */}
+          <Avatar
+            size="XS"
+            src="https://picsum.photos/100"
+            style={{
+              width: "27px",
+              height: "27px",
+            }}
+          />
         </Button>
       </IconWrapper>
     </BottomNavBarWrapper>
