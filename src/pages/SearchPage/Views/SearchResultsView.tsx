@@ -1,4 +1,3 @@
-import { SearchTab } from "@/components/SearchPage";
 import { useEffect, useState } from "react";
 import { SearchPostsView, SearchUsersView } from ".";
 import { useQuery } from "@tanstack/react-query";
@@ -6,6 +5,12 @@ import { _SEARCH, _SEARCH_USERS } from "@/api/queries/search";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { IPost, IUser } from "@/types";
 import { ViewWrap } from "@/pages/SearchPage/SearchPage.styles";
+import SearchTab from "@/components/SearchTab";
+
+interface FilteredData {
+  users: IUser[];
+  posts: IPost[];
+}
 
 const SearchResultsView = () => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
@@ -20,11 +25,6 @@ const SearchResultsView = () => {
   });
 
   const navigate = useNavigate();
-
-  interface FilteredData {
-    users: IUser[];
-    posts: IPost[];
-  }
 
   // 사용자, 게시글 데이터를 분리
   useEffect(() => {
@@ -52,14 +52,6 @@ const SearchResultsView = () => {
     }
   }, [isSuccess]);
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   const handleTabClick = () => {
     setShowUsers(!showUsers);
   };
@@ -71,6 +63,14 @@ const SearchResultsView = () => {
   const handlePostClick = (postId: string) => {
     navigate(`/profile/${postId}`);
   };
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
