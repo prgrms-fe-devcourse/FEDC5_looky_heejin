@@ -1,4 +1,11 @@
-import { CardContainer, CardImageContainer } from "./PostSimpleCard.styles";
+import {
+  CardContainer,
+  CardImage,
+  CardImageContainer,
+  CardInfoContainer,
+  IconContainer,
+  ProfileContainer,
+} from "./PostSimpleCard.styles";
 import PostSimpleCardConst from "./PostSimpleCard.const";
 import { _USERDATA } from "@/api/queries/userData";
 import { useMutation } from "@tanstack/react-query";
@@ -20,7 +27,6 @@ const PostSimpleCard = () => {
       console.log("API 성공: ", data);
       setimageUrl(data.image);
       setUserName(data.fullName);
-      // console.log(imageUrl);
     },
     onError(error) {
       console.error("API 에러: ", error);
@@ -64,27 +70,18 @@ const PostSimpleCard = () => {
   }
 
   if (mutation.isSuccess) {
-    console.log(imageUrl);
     return (
       <>
         <CardContainer $basis="half">
-          <div>
-            <img
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          <CardImageContainer style={{ minHeight: "200px", minWidth: "200px" }}>
+            {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
+            <CardImage
               src={PostSimpleCardConst.data_example.image}
+              alt="포스팅 이미지"
             />
-          </div>
-          <CardImageContainer>
-            <div
-              onClick={onClickSend}
-              style={{
-                cursor: "pointer",
-                boxSizing: "border-box",
-                position: "absolute",
-                top: "5%",
-                right: "1%",
-              }}
-            >
+          </CardImageContainer>
+          <CardInfoContainer>
+            <IconContainer $icon="send" onClick={onClickSend}>
               <span
                 style={{
                   rotate: "-45deg",
@@ -93,32 +90,11 @@ const PostSimpleCard = () => {
               >
                 send
               </span>
-            </div>
-            <div
-              onClick={onClickComment}
-              style={{
-                cursor: "pointer",
-                boxSizing: "border-box",
-                position: "absolute",
-                top: "7%",
-                right: "14%",
-              }}
-            >
+            </IconContainer>
+            <IconContainer $icon="comment" onClick={onClickComment}>
               <span className="material-symbols-rounded">comment</span>
-            </div>
-            <div
-              onClick={onClickTag}
-              style={{
-                scale: "1.1",
-                cursor: "pointer",
-                boxSizing: "border-box",
-                position: "absolute",
-                top: "-40%",
-                right: "2%",
-                borderRadius: "50%",
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-              }}
-            >
+            </IconContainer>
+            <IconContainer $icon="sell" onClick={onClickTag}>
               <span
                 style={{
                   scale: "0.8",
@@ -129,20 +105,8 @@ const PostSimpleCard = () => {
               >
                 sell
               </span>
-            </div>
-            <div
-              onClick={onClickFavorite}
-              style={{
-                scale: "1.1",
-                cursor: "pointer",
-                boxSizing: "border-box",
-                position: "absolute",
-                top: "-80%",
-                right: "2%",
-                borderRadius: "50%",
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-              }}
-            >
+            </IconContainer>
+            <IconContainer $icon="favorite" onClick={onClickFavorite}>
               <span
                 style={{
                   scale: "0.8",
@@ -155,16 +119,8 @@ const PostSimpleCard = () => {
               >
                 favorite
               </span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                width: "auto",
-                flexDirection: "row",
-                alignItems: "center",
-                margin: "5px",
-              }}
-            >
+            </IconContainer>
+            <ProfileContainer>
               <span
                 onClick={onClickProfile}
                 style={{
@@ -186,7 +142,7 @@ const PostSimpleCard = () => {
               >
                 {userName}
               </span>
-            </div>
+            </ProfileContainer>
             <div
               style={{
                 margin: "5px",
@@ -194,7 +150,7 @@ const PostSimpleCard = () => {
             >
               <span>{PostSimpleCardConst.data_example.title}</span>
             </div>
-          </CardImageContainer>
+          </CardInfoContainer>
         </CardContainer>
       </>
     );
