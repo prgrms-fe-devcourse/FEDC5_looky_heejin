@@ -24,7 +24,7 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
   useEffect(() => {
     const keyword = searchParams.get("keyword") || "";
     setValue("searchQuery", keyword);
-  }, [searchParams, setValue]);
+  }, [searchParams]);
 
   const onValid = (data: IInput) => {
     onSearch(data.searchQuery);
