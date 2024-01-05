@@ -30,7 +30,7 @@ const IsJsonString = (str: string) => {
   }
 };
 
-// todo에러 해결 시간 소요 과다로 인한 any 처리
+// todo, 타입 충돌로 인해서 추후 타입 명시
 const PostSimpleCard = ({ postData }: { postData: any }) => {
   let parsedData: ITitle = {
     title: "",
@@ -39,7 +39,6 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
   };
   if (IsJsonString(postData.title)) {
     const parsedJson = JSON.parse(postData.title);
-    console.log(parsedJson);
     parsedData = parsedJson;
   }
   const navigate = useNavigate();
@@ -51,7 +50,6 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
   const mutation = useMutation({
     mutationFn: async (params: string) => await _USERDATA(params),
     onSuccess(data) {
-      // console.log("API 성공: ", data);
       setimageUrl(data.image);
       setUserName(data.fullName);
     },
@@ -79,7 +77,7 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
 
   const onClickSend = () => {
     // todo
-    navigate(`/chat/${PostSimpleCardConst.data_example.author}`);
+    navigate(`/chat/${postData.author._id}`);
   };
 
   useEffect(() => {
@@ -97,7 +95,6 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
   }
 
   if (mutation.isSuccess) {
-    // console.log(JSON.parse(title));
     return (
       <>
         <CardContainer $basis="half">
@@ -173,7 +170,6 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
             </ProfileContainer>
 
             <div
-              className="전체 텍스트 래핑"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -182,16 +178,10 @@ const PostSimpleCard = ({ postData }: { postData: any }) => {
               }}
             >
               <TextContainer>
-                {parsedData === null
-                  ? postData.title
-                  : parsedData.title +
-                    "asuocbiuycbuiasbcijuasbcuiosabcuisabciuasbcuiasbcuiascbaiuscbiuasbc"}
+                {parsedData === null ? postData.title : parsedData.title}
               </TextContainer>
               <TextContainer>
-                {parsedData === null
-                  ? postData.content
-                  : parsedData.content +
-                    "ausbcuiasbciuasbciacpkiasncoinacsonaocnoiacnsouabsiuc"}
+                {parsedData === null ? postData.title : parsedData.content}
               </TextContainer>
             </div>
             {/* todo, 태그 정보 */}
