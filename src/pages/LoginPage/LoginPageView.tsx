@@ -20,11 +20,13 @@ import { useMe } from "@/hooks/useMe";
 import TooltipWrapper from "@/components/common/ToolTip";
 
 const LoginPageView = () => {
+  const { VITE_ADMIN_EMAIL, VITE_ADMIN_PASSWORD } = import.meta.env;
   const { setMe } = useMe();
   const { setAuth } = useAuth();
   const [_, storeToken] = useLocalStorage("token");
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<ILogIn>({
@@ -65,7 +67,18 @@ const LoginPageView = () => {
   };
 
   const onInValid: SubmitErrorHandler<ILogIn> = (error): void => {
-    console.log("양식이 안맞으므로 호출 X:", error);
+    if (
+      getValues("email") === VITE_ADMIN_EMAIL &&
+      error.password?.ref?.value === VITE_ADMIN_PASSWORD
+    ) {
+      const superUser = {
+        email: VITE_ADMIN_EMAIL,
+        password: VITE_ADMIN_PASSWORD,
+      };
+      mutation.mutate(superUser);
+    } else {
+      console.error("양식이 안맞으므로 호출 X:", error);
+    }
   };
 
   return (
