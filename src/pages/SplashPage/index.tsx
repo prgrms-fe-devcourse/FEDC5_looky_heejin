@@ -12,7 +12,6 @@ const SplashPage = () => {
     const redirectTimeout = setTimeout(() => {
       token ? navigate("/home") : navigate("/login");
     }, 2000);
-    // 컴포넌트가 언마운트되면 타임아웃을 클리어하여 메모리 누수를 방지합니다.
     return () => clearTimeout(redirectTimeout);
   }, [navigate]);
 
