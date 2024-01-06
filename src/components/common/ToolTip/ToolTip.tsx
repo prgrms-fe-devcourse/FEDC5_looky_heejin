@@ -4,6 +4,7 @@ const TooltipWrapper = styled.div<{
   $direction: string;
   $clicked?: boolean;
   $tooltip: string;
+  $options: "focus" | "hover" | "all";
 }>`
   position: relative;
   z-index: 2;
@@ -33,8 +34,7 @@ const TooltipWrapper = styled.div<{
       }
     }}
     white-space: nowrap;
-    /* transition: all 0.2s ease; */
-    font-size: 20px;
+    font-size: 1.2rem;
   }
 
   &:before {
@@ -43,7 +43,7 @@ const TooltipWrapper = styled.div<{
     position: absolute;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: 550;
     color: ${props => props.theme.white_primary};
     background: ${props => props.theme.symbol_color};
@@ -116,22 +116,70 @@ const TooltipWrapper = styled.div<{
     }
   }}
 
-  &:focus-within:before,
-  &:focus-within:after {
-    ${({ $tooltip }) => {
-      if ($tooltip === "") {
+  ${props => {
+    switch (props.$options) {
+      case "all":
+        switch (props.$tooltip) {
+          case "":
+            return css`
+              &:hover:before,
+              &:hover:after {
+                visibility: visible;
+                opacity: 1;
+              }
+
+              &:focus-within:before,
+              &:focus-within:after {
+                visibility: hidden;
+                opacity: 0;
+              }
+            `;
+          default:
+            return css`
+              &:hover:before,
+              &:hover:after {
+                visibility: visible;
+                opacity: 1;
+              }
+
+              &:focus-within:before,
+              &:focus-within:after {
+                visibility: visible;
+                opacity: 1;
+              }
+            `;
+        }
+      case "focus":
+        switch (props.$tooltip) {
+          case "":
+            return css`
+              &:focus-within:before,
+              &:focus-within:after {
+                visibility: hidden;
+                opacity: 0;
+              }
+            `;
+          default:
+            return css`
+              &:focus-within:before,
+              &:focus-within:after {
+                visibility: visible;
+                opacity: 1;
+              }
+            `;
+        }
+      case "hover":
         return css`
-          visibility: hidden;
-          opacity: 0;
+          &:hover:before,
+          &:hover:after {
+            visibility: visible;
+            opacity: 1;
+          }
         `;
-      } else {
-        return css`
-          visibility: visible;
-          opacity: 1;
-        `;
-      }
-    }}
-  }
+      default:
+        return null;
+    }
+  }}
 `;
 
 export default TooltipWrapper;

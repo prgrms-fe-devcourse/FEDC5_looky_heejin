@@ -79,6 +79,7 @@ const LoginPageView = () => {
           data-tooltip={errors.email?.message ? errors.email?.message : ""}
           $direction="right"
           $tooltip={errors.email?.message ? errors.email?.message : ""}
+          $options="focus"
         >
           <InputContainer
             type="text"
@@ -94,6 +95,7 @@ const LoginPageView = () => {
           }
           $direction="right"
           $tooltip={errors.password?.message ? errors.password?.message : ""}
+          $options="focus"
         >
           <InputContainer
             type="password"
