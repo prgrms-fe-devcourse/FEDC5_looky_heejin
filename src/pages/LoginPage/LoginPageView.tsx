@@ -17,6 +17,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import LoginPageConst from "./LoginPage.const";
 import { useMe } from "@/hooks/useMe";
+import TooltipWrapper from "@/components/common/ToolTip";
 
 const LoginPageView = () => {
   const { setMe } = useMe();
@@ -74,21 +75,41 @@ const LoginPageView = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
-        <InputContainer
-          type="text"
-          placeholder="이메일"
-          {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
-        />
-        {errors.email?.message ? <span>{errors.email?.message}</span> : null}
+        <TooltipWrapper
+          data-tooltip={errors.email?.message ? errors.email?.message : ""}
+          $direction="right"
+          $tooltip={errors.email?.message ? errors.email?.message : ""}
+        >
+          <InputContainer
+            type="text"
+            placeholder="이메일"
+            {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
+          />
+        </TooltipWrapper>
+        {/* {errors.email?.message ? <span>{errors.email?.message}</span> : null} */}
 
-        <InputContainer
-          type="password"
-          placeholder="비밀번호"
-          {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
-        />
-        {errors.password?.message ? (
-          <span>{errors.password?.message}</span>
-        ) : null}
+        <TooltipWrapper
+          data-tooltip={
+            errors.password?.message ? errors.password?.message : ""
+          }
+          $direction="right"
+          $tooltip={errors.password?.message ? errors.password?.message : ""}
+        >
+          <InputContainer
+            type="password"
+            placeholder="비밀번호"
+            {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
+          />
+          {/* {errors.password?.message ? (
+            <span
+              style={{
+                fontSize: "1rem",
+              }}
+            >
+              {errors.password?.message}
+            </span>
+          ) : null} */}
+        </TooltipWrapper>
 
         <LogInButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           로그인
