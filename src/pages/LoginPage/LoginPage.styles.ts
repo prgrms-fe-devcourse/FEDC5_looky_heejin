@@ -20,6 +20,10 @@ export const FormContainer = styled.form`
 `;
 
 export const InputContainer = styled.input`
+  color: ${props => props.theme.text_primary_color};
+  background-color: ${props => props.theme.container_color};
+  padding-left: 5px;
+  font-size: 1.15rem;
   border-radius: 5px;
   border: none;
   width: 300px;
@@ -28,7 +32,7 @@ export const InputContainer = styled.input`
 `;
 
 export const LogInButtonContainer = styled.button`
-  color: ${props => props.theme.text_secondary_color};
+  color: ${props => props.theme.white_primary};
   font-weight: bold;
   margin: 10px 0;
   width: 300px;
@@ -44,7 +48,7 @@ export const LogInButtonContainer = styled.button`
 `;
 
 export const LinkContainer = styled(Link)`
-  color: ${props => props.theme.text_secondary_color};
+  color: ${props => props.theme.white_primary};
   font-weight: bold;
   margin: 10px 0;
   display: flex;
