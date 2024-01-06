@@ -6,6 +6,7 @@ export const PathName = {
   CHATS: "/chats",
   CHAT: "/chat",
   NOTIFICATIONS: "/notifications",
+  NEWPOST: "/newPost",
   POSTDETAIL: "/postdetail",
   TEST: "/test",
 };
