@@ -1,12 +1,13 @@
 import Logo from "/logo.png";
 import { SubmitHandler, SubmitErrorHandler, useForm } from "react-hook-form";
 import {
+  DoNotLoginLink,
   FormContainer,
   ImageContainer,
   InputContainer,
   LogInButtonContainer,
   LogInPageContainer,
-  LinkContainer,
+  SignInLinkContainer,
 } from "./LoginPage.styles";
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
@@ -100,7 +101,6 @@ const LoginPageView = () => {
             {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
           />
         </TooltipWrapper>
-        {/* {errors.email?.message ? <span>{errors.email?.message}</span> : null} */}
 
         <TooltipWrapper
           data-tooltip={
@@ -115,22 +115,14 @@ const LoginPageView = () => {
             placeholder="비밀번호"
             {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
           />
-          {/* {errors.password?.message ? (
-            <span
-              style={{
-                fontSize: "1rem",
-              }}
-            >
-              {errors.password?.message}
-            </span>
-          ) : null} */}
         </TooltipWrapper>
 
         <LogInButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           로그인
         </LogInButtonContainer>
       </FormContainer>
-      <LinkContainer to="/signin">회원가입</LinkContainer>
+      <SignInLinkContainer to="/signin">회원가입</SignInLinkContainer>
+      <DoNotLoginLink to="/home">로그인 하지 않고 이용하기</DoNotLoginLink>
     </LogInPageContainer>
   );
 };

@@ -47,7 +47,7 @@ export const LogInButtonContainer = styled.button`
   border-radius: 5px;
 `;
 
-export const LinkContainer = styled(Link)`
+export const SignInLinkContainer = styled(Link)`
   color: ${props => props.theme.white_primary};
   font-weight: bold;
   margin: 10px 0;
@@ -58,4 +58,9 @@ export const LinkContainer = styled(Link)`
   height: 50px;
   background-color: ${props => props.theme.gray_500};
   border-radius: 5px;
+`;
+
+export const DoNotLoginLink = styled(Link)`
+  text-decoration: underline;
+  color: ${props => props.theme.gray_500};
 `;
