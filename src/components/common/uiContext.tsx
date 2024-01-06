@@ -12,6 +12,7 @@ import { Modal } from "./Modal";
 import { MODAL_VIEWS } from "@/store/types/modalType";
 import {
   ChannelSelectModal,
+  PostDetailModal,
   TagCreateModal,
   TestModal,
 } from "@/components/modalViews";
@@ -67,6 +68,7 @@ const ModalView: React.FC<{
       {modalView === "INIT_VIEW" && <TestModal />}
       {modalView === "TAG_CREATE_VIEW" && <TagCreateModal props={props} />}
       {modalView === "CHANNEL_SELECT_VIEW" && <ChannelSelectModal />}
+      {modalView === "POST_DETAIL_VIEW" && <PostDetailModal />}
     </Modal>
   );
 };
