@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const TooltipWrapper = styled.div<{
-  $direction: string;
+  $direction: "left" | "right" | "bottom" | "top";
   $clicked?: boolean;
   $tooltip: string;
   $options: "focus" | "hover" | "all";
