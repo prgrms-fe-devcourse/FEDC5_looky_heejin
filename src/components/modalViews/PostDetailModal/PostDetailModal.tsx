@@ -21,6 +21,7 @@ import {
   ImageWrapper,
   InputWrapper,
   LikeCountSpan,
+  MoreComments,
   PostDetailWrapper,
   ReplyButton,
   StyledImg,
@@ -207,18 +208,19 @@ const PostDetail = () => {
                   {comment.comment}
                 </li>
               ))}
-              {newComments.map(comment => (
+
+              {newComments.length > 0 && (
                 <li key={Date.now()}>
                   <UserNameInComment>
-                    {userName} {comment}
+                    {userName} {newComments[newComments.length - 1]}
                   </UserNameInComment>
                 </li>
-              ))}
+              )}
             </ul>
           ) : (
-            <span onClick={handleShowComments}>
+            <MoreComments onClick={handleShowComments}>
               댓글 {comments.length + newComments.length}개 보기
-            </span>
+            </MoreComments>
           )}
         </CommentWrapper>
 

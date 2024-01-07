@@ -146,14 +146,23 @@ export const CommentChatWrapper = styled.div`
 export const CommentWrapper = styled.div`
   font-size: 0.8rem;
   margin-top: 1rem;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid red;
+  padding-left: 1.1rem;
+  padding-top: 0.5rem;
+
+  border-top: 1px solid ${({ theme }) => theme.container_color};
+  /* border: 1px solid red; */
+  /* background-color: blue; */
+
+  cursor: pointer;
 `;
 
 export const UserNameInComment = styled.span`
   font-weight: 600;
   /* color: red; */
+`;
+
+export const MoreComments = styled.span`
+  color: ${({ theme }) => theme.gray_500};
 `;
 
 // 댓글입력창 --------------------------------------------
@@ -167,7 +176,7 @@ export const StyledInput = styled(Input)`
   border-radius: 2rem;
   height: 2rem;
   font-size: 0.85rem;
-  width: 98%;
+  width: 96%;
   margin: auto auto;
 `;
 
