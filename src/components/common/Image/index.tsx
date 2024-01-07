@@ -60,7 +60,19 @@ const Image = ({
     };
   }, [src]);
 
-  if (!src) return null;
+  if (!src)
+    return (
+      <div
+        style={{
+          position: `${fill ? "absolute" : "relative"}`,
+          top: `${fill && 0}`,
+          left: `${fill && 0}`,
+          width: `${fill ? "100%" : `${width}px`}`,
+          height: `${fill ? "100%" : `${height}px`}`,
+        }}
+        className="bg-gray-500"
+      />
+    );
 
   if (!fill && (!width || !height)) {
     console.warn("fill 모드가 아닌 경우 width, height 를 필요로 합니다.");
