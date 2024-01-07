@@ -105,14 +105,47 @@ const SignInPage = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
+        <div
+          style={{
+            fontSize: "1.1rem",
+            marginTop: "10px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span>이메일</span>
+          {errors.email?.message ? (
+            <SpanStyle>{errors.email?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </div>
         <InputContainer
           type="text"
           placeholder="이메일"
           {...register("email", SignInPageConstant.EMAIL_VALIDATION_OPTION)}
         />
-        {errors.email?.message ? (
-          <SpanStyle>{errors.email?.message}</SpanStyle>
-        ) : null}
+        <div
+          style={{
+            fontSize: "1.1rem",
+            marginTop: "10px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span>닉네임</span>
+          {errors.fullName?.message ? (
+            <SpanStyle>{errors.fullName?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </div>
         <InputContainer
           type="text"
           placeholder="닉네임"
@@ -121,9 +154,25 @@ const SignInPage = () => {
             SignInPageConstant.FULLNAME_VALIDATION_OPTION
           )}
         />
-        {errors.fullName?.message ? (
-          <SpanStyle>{errors.fullName?.message}</SpanStyle>
-        ) : null}
+
+        <div
+          style={{
+            fontSize: "1.1rem",
+            marginTop: "10px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span>비밀번호</span>
+          {errors.password?.message ? (
+            <SpanStyle>{errors.password?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </div>
         <InputContainer
           type="password"
           placeholder="비밀번호"
@@ -132,9 +181,25 @@ const SignInPage = () => {
             SignInPageConstant.PASSWORD_VALIDATION_OPTION
           )}
         />
-        {errors.password?.message ? (
-          <SpanStyle>{errors.password?.message}</SpanStyle>
-        ) : null}
+
+        <div
+          style={{
+            fontSize: "1.1rem",
+            marginTop: "10px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <span>비밀번호 확인</span>
+          {errors.passwordCheck ? (
+            <SpanStyle>{errors.passwordCheck.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </div>
         <InputContainer
           type="password"
           placeholder="비밀번호 확인"
@@ -148,9 +213,7 @@ const SignInPage = () => {
             },
           })}
         />
-        {errors.passwordCheck ? (
-          <SpanStyle>{errors.passwordCheck.message}</SpanStyle>
-        ) : null}
+
         <SubmitButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           회원가입
         </SubmitButtonContainer>
