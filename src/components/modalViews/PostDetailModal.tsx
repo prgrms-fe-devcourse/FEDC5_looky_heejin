@@ -155,6 +155,7 @@ const PostDetail = () => {
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
 
   const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
+  const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
   // const navigate = useNavigate();
@@ -168,7 +169,7 @@ const PostDetail = () => {
       // console.log("fullName:", data?.data.author.fullName);
       // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
       // console.log("좋아요 누른 사람들:", data?.data.likes);
-      // console.log("comments:", data?.data.comments);
+      console.log("comments:", data?.data.comments);
       setUserId(data?.data.author._id);
       setUserName(data?.data.author.fullName);
       // setContent(JSON.parse(data?.data.title).content);
@@ -216,6 +217,10 @@ const PostDetail = () => {
     //   해당 포스트의 작성자(id)가 현재 로그인한 나라면 자기 자신과는 채팅할 수 없다는 로직. 혹은 렌더링 시 채팅버튼 아예 안보여줘야함
     // }
     // navigate(`/chat/${userId}`);
+  };
+
+  const handleShowComments = () => {
+    setIsShowComments(true);
   };
 
   console.log(likes);
@@ -280,7 +285,17 @@ const PostDetail = () => {
           )}
         </ContentWrapper>
 
-        <span>댓글 {comments.length}개 보기</span>
+        {isShowComments ? (
+          <ul>
+            {comments.map(comment => (
+              <li key={comment._id}>{comment.comment}</li>
+            ))}
+          </ul>
+        ) : (
+          <span onClick={handleShowComments}>
+            댓글 {comments.length}개 보기
+          </span>
+        )}
       </CaptionWrapper>
     </PostDetailWrapper>
   );
