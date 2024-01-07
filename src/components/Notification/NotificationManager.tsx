@@ -28,8 +28,8 @@ const MOCK_DATA: INotification[] = [
     comment: null,
     like: null,
     message: null, // 메시지 id
-    createdAt: "2024-01-05T08:26:00.457Z",
-    updatedAt: "2024-01-05T08:26:00.457Z",
+    createdAt: "2024-01-04T08:26:00.457Z",
+    updatedAt: "2024-01-04T08:26:00.457Z",
   },
   {
     seen: false,
@@ -41,8 +41,8 @@ const MOCK_DATA: INotification[] = [
     comment: "1",
     like: null,
     message: null, // 메시지 id
-    createdAt: "2024-01-05T11:26:00.457Z",
-    updatedAt: "2024-01-05T11:26:00.457Z",
+    createdAt: "2024-01-06T11:26:00.457Z",
+    updatedAt: "2024-01-06T11:26:00.457Z",
   },
   {
     seen: false,
@@ -54,8 +54,8 @@ const MOCK_DATA: INotification[] = [
     comment: null,
     like: null,
     message: "1", // 메시지 id
-    createdAt: "2024-01-05T15:26:00.457Z",
-    updatedAt: "2024-01-05T15:26:00.457Z",
+    createdAt: "2024-01-06T15:26:00.457Z",
+    updatedAt: "2024-01-06T15:26:00.457Z",
   },
   {
     seen: false,
@@ -67,8 +67,8 @@ const MOCK_DATA: INotification[] = [
     comment: null,
     like: "1",
     message: null, // 메시지 id
-    createdAt: "2024-01-05T13:52:00.457Z",
-    updatedAt: "2024-01-05T13:52:00.457Z",
+    createdAt: "2024-01-07T13:55:00.457Z",
+    updatedAt: "2024-01-07T13:55:00.457Z",
   },
 ];
 
