@@ -38,7 +38,8 @@ export const ImageContainer = styled.div`
 `;
 
 export const SpanStyle = styled.span`
-  color: ${props => props.theme.text_primary_color};
+  font-size: 0.75rem;
+  color: ${props => props.theme.symbol_color};
 `;
 
 export const SubmitButtonContainer = styled.button`
