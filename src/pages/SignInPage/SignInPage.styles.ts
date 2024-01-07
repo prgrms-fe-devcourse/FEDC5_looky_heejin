@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Col } from "@/styles/GlobalStyle";
+import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
 
 export const SignInPageContainer = styled(Col)`
   height: 100%;
@@ -15,10 +16,21 @@ export const FormContainer = styled.form`
 `;
 
 export const InputContainer = styled.input`
-  border: none;
+  color: ${props => props.theme.text_primary_color};
+  background-color: ${props => props.theme.container_color};
+  padding-left: 5px;
+  font-size: 1.15rem;
+  border-width: ${BORDER_BASE_WIDTH}px;
+  border-color: transparent;
+  border-radius: 0.375rem;
   width: 300px;
   margin: 10px 0;
   height: 50px;
+
+  &:focus {
+    border-color: ${props => props.theme.symbol_color};
+    outline: none;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -30,7 +42,7 @@ export const SpanStyle = styled.span`
 `;
 
 export const SubmitButtonContainer = styled.button`
-  color: #f0f0f0;
+  color: ${props => props.theme.white_primary};
   font-weight: bold;
   margin: 10px 0;
   width: 300px;
@@ -41,5 +53,5 @@ export const SubmitButtonContainer = styled.button`
     ${props => props.theme.symbol_color},
     ${props => props.theme.symbol_secondary_color}
   );
-  border-radius: 5px;
+  border-radius: 0.375rem;
 `;
