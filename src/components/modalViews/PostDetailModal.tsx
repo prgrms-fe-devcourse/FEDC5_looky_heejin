@@ -5,7 +5,7 @@ import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
+import styled, { keyframes, useTheme } from "styled-components";
 
 const PostDetailWrapper = styled.div`
   border: 1px solid white;
@@ -92,6 +92,41 @@ const ContentDetail = styled.span`
   color: red;
 `;
 
+const heartAnimation = keyframes`
+  0% {
+    opacity: 1;
+    transform: scale(4) rotate(-20deg);
+  }
+  10% {
+    opacity: 0.8;
+    transform: scale(3) rotate(20deg);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(3) rotate(-10deg);
+  }
+  30% {
+    opacity: 0.8;
+    transform: scale(3) rotate(10deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(12) rotate(0deg);
+  }
+`;
+
+const HeartInImage = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  animation: ${heartAnimation} 0.8s ease-out forwards;
+`;
+
 const PostDetail = () => {
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
@@ -104,8 +139,11 @@ const PostDetail = () => {
 
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
 
+  const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
+
   const theme = useTheme();
   const contentLength = content.length;
+  console.log(isShowHeart);
 
   // fetch data --------------------------------------------
   const mutation = useMutation({
@@ -142,12 +180,29 @@ const PostDetail = () => {
   };
 
   const handleHeart = () => {
-    setIsILiked(isILiked => !isILiked);
+    if (!isShowHeart) {
+      setIsILiked(isILiked => !isILiked);
+      setIsShowHeart(true);
+      setTimeout(() => {
+        setIsShowHeart(false);
+      }, 800);
+    }
   };
+
   return (
     <PostDetailWrapper>
       PostDetail
       <ImageWrapper>
+        {isShowHeart && isILiked && (
+          <HeartInImage>
+            <Icon
+              name={HEART_ICON}
+              fill={true}
+              color={theme.symbol_color}
+            ></Icon>
+          </HeartInImage>
+        )}
+
         <StyledImg src="https://wikidocs.net/images/page/49159/png-2702691_1920_back.png" />
       </ImageWrapper>
       <CaptionWrapper>
