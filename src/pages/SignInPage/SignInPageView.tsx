@@ -75,7 +75,6 @@ const SignInPage = () => {
       password: sha256Encrypt(password),
     };
     mutation.mutate(filteredFormData);
-    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ISignIn> = (error): void => {
