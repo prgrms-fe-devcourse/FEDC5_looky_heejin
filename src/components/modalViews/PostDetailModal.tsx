@@ -1,10 +1,11 @@
 import { _GET } from "@/api";
-import { Avatar, Image } from "@/components/common";
+import { Avatar, Image, Input } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes, useTheme } from "styled-components";
 
@@ -142,6 +143,7 @@ const HeartInImage = styled.div`
 `;
 
 const PostDetail = () => {
+  const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [content, setContent] = useState<string>(
@@ -223,6 +225,14 @@ const PostDetail = () => {
     setIsShowComments(true);
   };
 
+  const onValid = comment => {
+    console.log(comment);
+  };
+
+  const onInvalid = error => {
+    console.log(error);
+  };
+
   console.log(likes);
   return (
     <PostDetailWrapper>
@@ -296,6 +306,14 @@ const PostDetail = () => {
             댓글 {comments.length}개 보기
           </span>
         )}
+        <form onSubmit={handleSubmit(onValid, onInvalid)}>
+          <Input
+            kind="text"
+            placeholder="댓글을 입력하세요"
+            register={register("comment", { required: "댓글을 입력해주세요" })}
+          />
+          <span>게시</span>
+        </form>
       </CaptionWrapper>
     </PostDetailWrapper>
   );
