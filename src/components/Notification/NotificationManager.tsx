@@ -13,6 +13,7 @@ const MOCK_DATA: INotification[] = [
     post: "1", // 포스트 id
     follow: null, // 사용자 id
     comment: null,
+    like: null,
     message: null, // 메시지 id
     createdAt: "2024-01-05T10:26:00.457Z",
     updatedAt: "2024-01-05T10:26:00.457Z",
@@ -25,6 +26,7 @@ const MOCK_DATA: INotification[] = [
     post: null, // 포스트 id
     follow: "1", // 사용자 id
     comment: null,
+    like: null,
     message: null, // 메시지 id
     createdAt: "2024-01-05T08:26:00.457Z",
     updatedAt: "2024-01-05T08:26:00.457Z",
@@ -37,6 +39,7 @@ const MOCK_DATA: INotification[] = [
     post: null, // 포스트 id
     follow: null, // 사용자 id
     comment: "1",
+    like: null,
     message: null, // 메시지 id
     createdAt: "2024-01-05T11:26:00.457Z",
     updatedAt: "2024-01-05T11:26:00.457Z",
@@ -49,9 +52,23 @@ const MOCK_DATA: INotification[] = [
     post: null, // 포스트 id
     follow: null, // 사용자 id
     comment: null,
+    like: null,
     message: "1", // 메시지 id
     createdAt: "2024-01-05T15:26:00.457Z",
     updatedAt: "2024-01-05T15:26:00.457Z",
+  },
+  {
+    seen: false,
+    _id: "5",
+    author: { image: "", fullName: "누군가" },
+    user: "누군가",
+    post: null, // 포스트 id
+    follow: null, // 사용자 id
+    comment: null,
+    like: "1",
+    message: null, // 메시지 id
+    createdAt: "2024-01-05T13:52:00.457Z",
+    updatedAt: "2024-01-05T13:52:00.457Z",
   },
 ];
 

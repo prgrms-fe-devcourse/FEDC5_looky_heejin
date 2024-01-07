@@ -1,4 +1,4 @@
-import { IComment } from "./post";
+import { IComment, ILike } from "./post";
 import { IUser } from "./user";
 
 export interface INotification {
@@ -9,6 +9,7 @@ export interface INotification {
   post?: string | null; // 포스트 id
   follow?: string | null; // 사용자 id
   comment?: string | null;
+  like?: string | null;
   message?: string | null; // 메시지 id
   createdAt: string;
   updatedAt: string;
@@ -22,6 +23,7 @@ export interface INotification {
 //   post?: string | null; // 포스트 id
 //   follow?: string; // 사용자 id
 //   comment?: IComment;
+//   like?: ILike;
 //   message?: string; // 메시지 id
 //   createdAt: string;
 //   updatedAt: string;
