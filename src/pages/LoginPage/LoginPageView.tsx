@@ -54,6 +54,8 @@ const LoginPageView = () => {
       navigate("/home");
     },
     onError(error) {
+      // todo toast 관련 라이브러리로 대체 예정
+      alert(`가입되지 않은 계정이거나 비밀번호 오류입니다!`);
       console.error("API 에러: ", error);
     },
   });
@@ -64,7 +66,6 @@ const LoginPageView = () => {
       password: sha256Encrypt(password),
     };
     mutation.mutate(filteredFormData);
-    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ILogIn> = (error): void => {
@@ -94,6 +95,7 @@ const LoginPageView = () => {
           $direction="right"
           $tooltip={errors.email?.message ? errors.email?.message : ""}
           $options="focus"
+          $clicked={errors.email?.message ? true : false}
         >
           <InputContainer
             type="text"
@@ -109,6 +111,7 @@ const LoginPageView = () => {
           $direction="right"
           $tooltip={errors.password?.message ? errors.password?.message : ""}
           $options="focus"
+          $clicked={errors.password?.message ? true : false}
         >
           <InputContainer
             type="password"
