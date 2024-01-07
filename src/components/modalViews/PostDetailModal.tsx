@@ -1,5 +1,5 @@
 import { _GET } from "@/api";
-import { Avatar, Image, Input } from "@/components/common";
+import { Avatar, Button, Image, Input } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
@@ -30,7 +30,7 @@ const StyledImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 `;
 
 const CaptionWrapper = styled.div`
@@ -38,28 +38,50 @@ const CaptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const UserInfoWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* height: 7rem; */
+  /* border: 1px solid red; */
+`;
 const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 15%;
-  padding-top: 0.5rem;
+  width: 12%;
+  /* padding-top: 0.5rem; */
   /* border: 1px solid white; */
 `;
 
 const UserNameWrapper = styled.div`
   display: flex;
-  height: 3.5rem;
+  height: 3.75rem;
   justify-content: center;
-  padding-left: 0.2rem;
 `;
 
 const UserNameSpan = styled.span`
-  border: 1px solid white;
+  font-size: 1rem;
+  font-weight: 500;
+`;
+
+const FollowButton = styled(Button)`
+  display: flex;
+  width: 4.3rem;
+  height: 2rem;
+  position: absolute;
+  right: 1.5rem;
+  font-size: 0.8rem;
+  border-radius: 0.8rem;
+  background-color: ${({ theme }) => theme.gray_500};
+
+  align-items: center;
+  justify-content: center;
 `;
 
 const ContentWrapper = styled.div`
   padding: 0 1rem;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 `;
 
 const StyledSpan = styled.span`
@@ -69,8 +91,10 @@ const StyledSpan = styled.span`
   display: -webkit-box;
   -webkit-line-clamp: 5;
   /* -webkit-box-orient: vertical; */
+  line-height: 1.2rem;
+  font-size: 0.9rem;
   padding-left: 0.2rem;
-  margin-right: 0.8rem;
+  margin-right: 0.3rem;
 `;
 
 const IconsWrapper = styled.div`
@@ -78,48 +102,88 @@ const IconsWrapper = styled.div`
   /* top: 0.7rem; */
   /* right: 1rem; */
   width: 100%;
+  height: 2.8rem;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 
   & > * {
     cursor: pointer;
   }
 
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 `;
 
 const HeartWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding-left: 1rem;
+  margin-left: 0.8rem;
+  & :first-child {
+    margin-top: 0.2rem;
+  }
+`;
+
+const LikeCountSpan = styled.span`
+  margin: auto auto;
+  font-size: 0.9rem;
+
+  padding-left: 0.3rem;
+
+  /* border: 1px solid blue; */
 `;
 
 const CommentChatWrapper = styled.div`
-  padding-right: 1rem;
-`;
-const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  // TODO : 리팩토링 - 공통으로 빼기
+  margin-right: 0.8rem;
+  & :first-child {
+    margin-top: 0.3rem;
+    margin-right: 0.3rem;
+  }
+  /* padding-right: 1rem; */
+`;
+
+const CommentWrapper = styled.div`
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid red;
+`;
+
+const UserNameInComment = styled.span`
+  font-weight: 600;
+  /* color: red; */
 `;
 
 const InputWrapper = styled.div`
   position: relative;
+  /* border: 1px solid red; */
+  height: 2.8rem;
 `;
 
-const StyledInput = styled(Input)``;
+const StyledInput = styled(Input)`
+  border-radius: 2rem;
+  height: 2rem;
+  font-size: 0.85rem;
+  width: 98%;
+  margin: auto auto;
+`;
 
 const ReplyButton = styled.span`
   position: absolute;
-  /* margin: auto auto; */
-  top: 0.1rem;
-  right: 0.1rem;
+  top: 0.9rem;
+  right: 1.5rem;
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.gray_300};
   cursor: pointer;
 `;
 
 const ContentDetail = styled.span`
   cursor: pointer;
-  color: red;
+  color: ${({ theme }) => theme.gray_500};
 `;
 
 const heartAnimation = keyframes`
@@ -188,7 +252,7 @@ const PostDetail = () => {
       // console.log("fullName:", data?.data.author.fullName);
       // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
       // console.log("좋아요 누른 사람들:", data?.data.likes);
-      // console.log("comments:", data?.data.comments);
+      console.log("comments:", data?.data.comments);
       console.log(data);
       console.log(data?.data.image);
       setUserId(data?.data.author._id);
@@ -260,12 +324,14 @@ const PostDetail = () => {
     <PostDetailWrapper>
       <UserInfoWrapper>
         <AvatarWrapper>
-          <Avatar size="M" />
+          <Avatar size="S" />
         </AvatarWrapper>
         <UserNameWrapper>
           <UserNameSpan>{userName}</UserNameSpan>
         </UserNameWrapper>
-        <button style={{ backgroundColor: "blue" }}>팔로우</button>
+        <FollowButton variant="flat" rippleColor={theme.gray_300}>
+          팔로우
+        </FollowButton>
       </UserInfoWrapper>
       <ImageWrapper>
         {isShowHeart && isILiked && (
@@ -289,52 +355,67 @@ const PostDetail = () => {
               onClick={handleLike}
               fill={isILiked ? true : false}
               color={isILiked ? theme.symbol_color : ""}
+              size="2.3rem"
             ></Icon>
-            <span>{likeCount}명이 좋아합니다.</span>
+            <LikeCountSpan>
+              {isILiked
+                ? `회원님 외 ${likeCount}명이 좋아합니다.`
+                : `${likeCount}명이 좋아합니다.`}
+            </LikeCountSpan>
           </HeartWrapper>
-          <CommentChatWrapper
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              border: "1px solid red",
-            }}
-          >
-            <Icon name={CHAT_ICON} size="1.7rem" onClick={handleChat} />
-            <Icon name={SEND_ICON} />
+          <CommentChatWrapper>
+            <Icon name={CHAT_ICON} size="2rem" onClick={handleChat} />
+            <Icon name={SEND_ICON} size="2.3rem" />
           </CommentChatWrapper>
         </IconsWrapper>
         <ContentWrapper>
           {isContentDetail ? (
-            <StyledSpan>{content}</StyledSpan>
+            <StyledSpan>
+              <UserNameSpan>{userName}&nbsp;&nbsp;</UserNameSpan>
+              {content}
+            </StyledSpan>
           ) : (
             <StyledSpan>
-              {content.slice(0, 20)}...&nbsp;
+              <UserNameSpan>{userName}&nbsp;&nbsp;</UserNameSpan>
+              {content.slice(0, 40)}&nbsp;&nbsp;
               <ContentDetail onClick={handleContentDetail}>
-                더보기
+                ...더 보기
               </ContentDetail>
             </StyledSpan>
           )}
         </ContentWrapper>
 
-        {isShowComments ? (
-          <ul>
-            {comments.map(comment => (
-              <li key={comment._id}>{comment.comment}</li>
-            ))}
-            {newComments.map(comment => (
-              <li key={Date.now()}>{comment}</li>
-            ))}
-          </ul>
-        ) : (
-          <span onClick={handleShowComments}>
-            댓글 {comments.length + newComments.length}개 보기
-          </span>
-        )}
+        <CommentWrapper>
+          {isShowComments ? (
+            <ul>
+              {comments.map(comment => (
+                <li key={comment._id}>
+                  <UserNameInComment>
+                    {comment.author.fullName}{" "}
+                  </UserNameInComment>
+                  {comment.comment}
+                </li>
+              ))}
+              {newComments.map(comment => (
+                <li key={Date.now()}>
+                  <UserNameInComment>
+                    {userName} {comment}
+                  </UserNameInComment>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <span onClick={handleShowComments}>
+              댓글 {comments.length + newComments.length}개 보기
+            </span>
+          )}
+        </CommentWrapper>
+
         <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <InputWrapper>
             <StyledInput
               kind="text"
+              required={true}
               placeholder="댓글을 입력하세요"
               register={register("comment", {
                 required: "댓글을 입력해주세요",
