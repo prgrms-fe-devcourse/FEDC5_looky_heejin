@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Col } from "@/styles/GlobalStyle";
+import { Col, Row } from "@/styles/GlobalStyle";
 import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
 
 export const SignInPageContainer = styled(Col)`
@@ -55,4 +55,12 @@ export const SubmitButtonContainer = styled.button`
     ${props => props.theme.symbol_secondary_color}
   );
   border-radius: 0.375rem;
+`;
+
+export const ErrorContainer = styled(Row)`
+  font-size: 1.1rem;
+  margin-top: 10px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 `;
