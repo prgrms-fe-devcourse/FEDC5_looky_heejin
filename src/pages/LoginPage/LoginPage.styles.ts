@@ -1,3 +1,4 @@
+import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -24,11 +25,17 @@ export const InputContainer = styled.input`
   background-color: ${props => props.theme.container_color};
   padding-left: 5px;
   font-size: 1.15rem;
-  border-radius: 5px;
-  border: none;
+  border-width: ${BORDER_BASE_WIDTH}px;
+  border-color: transparent;
+  border-radius: 0.375rem;
   width: 300px;
   margin: 10px 0;
   height: 50px;
+
+  &:focus {
+    border-color: ${props => props.theme.symbol_color};
+    outline: none;
+  }
 `;
 
 export const LogInButtonContainer = styled.button`
