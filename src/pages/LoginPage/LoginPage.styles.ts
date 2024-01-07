@@ -44,7 +44,6 @@ export const LogInButtonContainer = styled.button`
   margin: 10px 0;
   width: 300px;
   height: 50px;
-  ${props => props.theme.symbol_color};
 
   background: linear-gradient(
     90deg,
