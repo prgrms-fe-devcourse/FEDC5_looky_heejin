@@ -34,11 +34,18 @@ const TooltipWrapper = styled.div<{
       }
     }}
     white-space: nowrap;
+    ${props => {
+      if (props.$tooltip) {
+        return css`
+          transition: all 0.2s ease;
+        `;
+      }
+    }}
     font-size: 1.2rem;
   }
 
   &:before {
-    content: attr(data-tooltip);
+    content: "${props => `${props.$tooltip}`}";
     height: auto;
     position: absolute;
     padding: 5px 10px;

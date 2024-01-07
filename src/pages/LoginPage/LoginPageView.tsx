@@ -91,7 +91,6 @@ const LoginPageView = () => {
         onSubmit={handleSubmit(onValid, onInValid)}
       >
         <TooltipWrapper
-          data-tooltip={errors.email?.message ? errors.email?.message : ""}
           $direction="right"
           $tooltip={errors.email?.message ? errors.email?.message : ""}
           $options="focus"
@@ -105,9 +104,6 @@ const LoginPageView = () => {
         </TooltipWrapper>
 
         <TooltipWrapper
-          data-tooltip={
-            errors.password?.message ? errors.password?.message : ""
-          }
           $direction="right"
           $tooltip={errors.password?.message ? errors.password?.message : ""}
           $options="focus"
