@@ -2,11 +2,16 @@ import { _GET } from "@/api";
 import { Avatar, Image } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, SEND_ICON } from "@/constants/icons";
+import { APP_MAX_WIDTH } from "@/constants/uiConstants";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const PostDetailWrapper = styled.div`
   border: 1px solid white;
+  max-width: ${APP_MAX_WIDTH}px;
+  height: 100vh;
+  overflow-y: auto;
 `;
 
 const ImageWrapper = styled.div`
@@ -80,19 +85,21 @@ const IconWrapper = styled.div`
 `;
 
 const PostDetail = () => {
-  const [Data, setData] = useState<string>("");
+  // fetch data --------------------------------------------
+  const mutation = useMutation({
+    mutationFn: async (params: string) => await _GET(params),
+    onSuccess(data) {
+      console.log(data);
+    },
+    onError(error) {
+      console.log("API 에러: ", error);
+    },
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await _GET("/posts");
-      setData(data?.data[12]);
-    };
-
-    fetchData();
+    mutation.mutate("/posts/65961633fc83a20c6e9c6a10");
   }, []);
-
-  console.log(Data);
-
+  // ---------------------------------------------------------
   return (
     <PostDetailWrapper>
       PostDetail
