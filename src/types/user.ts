@@ -11,8 +11,8 @@ export interface IUser {
   posts: IPost[];
   likes: ILike[];
   comments: string[];
-  followers: IFallow[];
-  following: IFallow[];
+  followers: IFollow[];
+  following: IFollow[];
   notifications: Notification[];
   messages: IMessage[];
   _id: string;
@@ -22,7 +22,7 @@ export interface IUser {
   updatedAt: string;
 }
 
-export interface IFallow {
+export interface IFollow {
   _id: string;
   user: string;
   follower: string;
