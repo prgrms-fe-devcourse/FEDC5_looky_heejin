@@ -30,6 +30,7 @@ const StyledImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 1rem;
 `;
 
 const CaptionWrapper = styled.div`
@@ -160,6 +161,7 @@ const PostDetail = () => {
   const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [content, setContent] = useState<string>(
     "국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 공무원인 근로자는 법률이 정하는 자에 한하여 단결권·단체교섭권 및 단체행동권을 가진다. 모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에 노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 국가는 모성의 보호를 위하여 노력하여야 한다. 선거에 관한 경비는 법률이 정하는 경우를 제외하고는 정당 또는 후보자에게 부담시킬 수 없다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될"
   );
@@ -182,13 +184,16 @@ const PostDetail = () => {
   const mutation = useMutation({
     mutationFn: async (params: string) => await _GET(params),
     onSuccess(data) {
-      console.log("유저의 아이디:", data?.data.author._id);
+      // console.log("유저의 아이디:", data?.data.author._id);
       // console.log("fullName:", data?.data.author.fullName);
       // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
       // console.log("좋아요 누른 사람들:", data?.data.likes);
-      console.log("comments:", data?.data.comments);
+      // console.log("comments:", data?.data.comments);
+      console.log(data);
+      console.log(data?.data.image);
       setUserId(data?.data.author._id);
       setUserName(data?.data.author.fullName);
+      setImageUrl(data?.data.image);
       // setContent(JSON.parse(data?.data.title).content);
       setLikes(data?.data.likes);
       setLikeCount(likes.length);
@@ -250,7 +255,7 @@ const PostDetail = () => {
     console.log(error);
   };
 
-  console.log(likes);
+  // console.log(likes);
   return (
     <PostDetailWrapper>
       <UserInfoWrapper>
@@ -273,7 +278,7 @@ const PostDetail = () => {
           </HeartInImage>
         )}
 
-        <StyledImg src="https://wikidocs.net/images/page/49159/png-2702691_1920_back.png" />
+        <StyledImg src={imageUrl} />
       </ImageWrapper>
       <CaptionWrapper>
         <IconsWrapper>
