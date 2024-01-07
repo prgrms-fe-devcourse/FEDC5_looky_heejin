@@ -60,7 +60,13 @@ const Image = ({
     };
   }, [src]);
 
-  if (!src)
+  if (!fill && (!width || !height)) {
+    console.warn("fill 모드가 아닌 경우 width, height 를 필요로 합니다.");
+
+    return null;
+  }
+
+  if (!src || (!webpImageUrl && !pngImageUrl))
     return (
       <div
         style={{
@@ -73,12 +79,6 @@ const Image = ({
         className="bg-gray-500"
       />
     );
-
-  if (!fill && (!width || !height)) {
-    console.warn("fill 모드가 아닌 경우 width, height 를 필요로 합니다.");
-
-    return null;
-  }
 
   return (
     <>
