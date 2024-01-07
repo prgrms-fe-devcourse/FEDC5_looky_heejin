@@ -1,225 +1,36 @@
 import { _GET } from "@/api";
-import { Avatar, Button, Image, Input } from "@/components/common";
+import { Avatar } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
-import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import styled, { keyframes, useTheme } from "styled-components";
-
-const PostDetailWrapper = styled.div`
-  border: 1px solid white;
-  width: ${APP_MAX_WIDTH}px;
-  height: 100vh;
-  overflow-y: auto;
-`;
-
-const ImageWrapper = styled.div`
-  width: 100%;
-  height: 0;
-  padding-top: 133%;
-  position: relative;
-`;
-
-const StyledImg = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0.5rem;
-`;
-
-const CaptionWrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`;
-const UserInfoWrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  /* height: 7rem; */
-  /* border: 1px solid red; */
-`;
-const AvatarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 12%;
-  /* padding-top: 0.5rem; */
-  /* border: 1px solid white; */
-`;
-
-const UserNameWrapper = styled.div`
-  display: flex;
-  height: 3.75rem;
-  justify-content: center;
-`;
-
-const UserNameSpan = styled.span`
-  font-size: 1rem;
-  font-weight: 500;
-`;
-
-const FollowButton = styled(Button)`
-  display: flex;
-  width: 4.3rem;
-  height: 2rem;
-  position: absolute;
-  right: 1.5rem;
-  font-size: 0.8rem;
-  border-radius: 0.8rem;
-  background-color: ${({ theme }) => theme.gray_500};
-
-  align-items: center;
-  justify-content: center;
-`;
-
-const ContentWrapper = styled.div`
-  padding: 0 1rem;
-  /* border: 1px solid white; */
-`;
-
-const StyledSpan = styled.span`
-  overflow: hidden;
-  /* text-overflow: ellipsis; */
-  word-wrap: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  /* -webkit-box-orient: vertical; */
-  line-height: 1.2rem;
-  font-size: 0.9rem;
-  padding-left: 0.2rem;
-  margin-right: 0.3rem;
-`;
-
-const IconsWrapper = styled.div`
-  /* position: absolute; */
-  /* top: 0.7rem; */
-  /* right: 1rem; */
-  width: 100%;
-  height: 2.8rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  & > * {
-    cursor: pointer;
-  }
-
-  /* border: 1px solid blue; */
-`;
-
-const HeartWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 0.8rem;
-  & :first-child {
-    margin-top: 0.2rem;
-  }
-`;
-
-const LikeCountSpan = styled.span`
-  margin: auto auto;
-  font-size: 0.9rem;
-
-  padding-left: 0.3rem;
-
-  /* border: 1px solid blue; */
-`;
-
-const CommentChatWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  // TODO : 리팩토링 - 공통으로 빼기
-  margin-right: 0.8rem;
-  & :first-child {
-    margin-top: 0.3rem;
-    margin-right: 0.3rem;
-  }
-  /* padding-right: 1rem; */
-`;
-
-const CommentWrapper = styled.div`
-  font-size: 0.8rem;
-  margin-top: 1rem;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid red;
-`;
-
-const UserNameInComment = styled.span`
-  font-weight: 600;
-  /* color: red; */
-`;
-
-const InputWrapper = styled.div`
-  position: relative;
-  /* border: 1px solid red; */
-  height: 2.8rem;
-`;
-
-const StyledInput = styled(Input)`
-  border-radius: 2rem;
-  height: 2rem;
-  font-size: 0.85rem;
-  width: 98%;
-  margin: auto auto;
-`;
-
-const ReplyButton = styled.span`
-  position: absolute;
-  top: 0.9rem;
-  right: 1.5rem;
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.gray_300};
-  cursor: pointer;
-`;
-
-const ContentDetail = styled.span`
-  cursor: pointer;
-  color: ${({ theme }) => theme.gray_500};
-`;
-
-const heartAnimation = keyframes`
-  0% {
-    opacity: 1;
-    transform: scale(4) rotate(-15deg);
-  }
-  10% {
-    opacity: 0.8;
-    transform: scale(3) rotate(15deg);
-  }
-  20% {
-    opacity: 0.8;
-    transform: scale(3) rotate(-10deg);
-  }
-  30% {
-    opacity: 0.8;
-    transform: scale(2) rotate(10deg);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(12) rotate(0deg);
-  }
-`;
-
-const HeartInImage = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 9999;
-  animation: ${heartAnimation} 0.9s ease-out forwards;
-`;
+import { useTheme } from "styled-components";
+import {
+  AvatarWrapper,
+  CaptionWrapper,
+  CommentChatWrapper,
+  CommentWrapper,
+  ContentDetail,
+  ContentWrapper,
+  FollowButton,
+  HeartInImage,
+  HeartWrapper,
+  IconsWrapper,
+  ImageWrapper,
+  InputWrapper,
+  LikeCountSpan,
+  PostDetailWrapper,
+  ReplyButton,
+  StyledImg,
+  StyledInput,
+  StyledSpan,
+  UserInfoWrapper,
+  UserNameInComment,
+  UserNameSpan,
+  UserNameWrapper,
+} from "./PostDetailModal.styles";
 
 const PostDetail = () => {
   const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
