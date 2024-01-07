@@ -102,6 +102,20 @@ const UserInfoWrapper = styled.div`
   flex-direction: row;
 `;
 
+const InputWrapper = styled.div`
+  position: relative;
+`;
+
+const StyledInput = styled(Input)``;
+
+const ReplyButton = styled.span`
+  position: absolute;
+  /* margin: auto auto; */
+  top: 0.1rem;
+  right: 0.1rem;
+  cursor: pointer;
+`;
+
 const ContentDetail = styled.span`
   cursor: pointer;
   color: red;
@@ -153,6 +167,7 @@ const PostDetail = () => {
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isILiked, setIsILiked] = useState<boolean>(false);
   const [comments, setComments] = useState<string[]>([]);
+  const [newComments, setNewComments] = useState<string[]>([]);
 
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
 
@@ -226,6 +241,8 @@ const PostDetail = () => {
   };
 
   const onValid = comment => {
+    setNewComments([...newComments, comment.comment]);
+    setValue("comment", "");
     console.log(comment);
   };
 
@@ -300,19 +317,28 @@ const PostDetail = () => {
             {comments.map(comment => (
               <li key={comment._id}>{comment.comment}</li>
             ))}
+            {newComments.map(comment => (
+              <li key={Date.now()}>{comment}</li>
+            ))}
           </ul>
         ) : (
           <span onClick={handleShowComments}>
-            댓글 {comments.length}개 보기
+            댓글 {comments.length + newComments.length}개 보기
           </span>
         )}
         <form onSubmit={handleSubmit(onValid, onInvalid)}>
-          <Input
-            kind="text"
-            placeholder="댓글을 입력하세요"
-            register={register("comment", { required: "댓글을 입력해주세요" })}
-          />
-          <span>게시</span>
+          <InputWrapper>
+            <StyledInput
+              kind="text"
+              placeholder="댓글을 입력하세요"
+              register={register("comment", {
+                required: "댓글을 입력해주세요",
+              })}
+            />
+            <ReplyButton onClick={handleSubmit(onValid, onInvalid)}>
+              게시
+            </ReplyButton>
+          </InputWrapper>
         </form>
       </CaptionWrapper>
     </PostDetailWrapper>
