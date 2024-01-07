@@ -50,7 +50,7 @@ export const LogInButtonContainer = styled.button`
     ${props => props.theme.symbol_color},
     ${props => props.theme.symbol_secondary_color}
   );
-  border-radius: 5px;
+  border-radius: 0.375rem;
 `;
 
 export const SignInLinkContainer = styled(Link)`
@@ -63,7 +63,7 @@ export const SignInLinkContainer = styled(Link)`
   width: 300px;
   height: 50px;
   background-color: ${props => props.theme.gray_500};
-  border-radius: 5px;
+  border-radius: 0.375rem;
 `;
 
 export const DoNotLoginLink = styled(Link)`
