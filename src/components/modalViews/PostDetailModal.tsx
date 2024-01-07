@@ -5,6 +5,7 @@ import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { keyframes, useTheme } from "styled-components";
 
 const PostDetailWrapper = styled.div`
@@ -33,15 +34,14 @@ const StyledImg = styled.img`
 const CaptionWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 15%;
-  height: 10rem;
   padding-top: 0.5rem;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 `;
 
 const UserNameWrapper = styled.div`
@@ -56,6 +56,7 @@ const UserNameSpan = styled.span`
 `;
 
 const ContentWrapper = styled.div`
+  padding: 0 1rem;
   border: 1px solid white;
 `;
 
@@ -70,21 +71,34 @@ const StyledSpan = styled.span`
   margin-right: 0.8rem;
 `;
 
-const IconWrapper = styled.div`
-  position: absolute;
-  top: 0.7rem;
-  right: 1rem;
+const IconsWrapper = styled.div`
+  /* position: absolute; */
+  /* top: 0.7rem; */
+  /* right: 1rem; */
+  width: 100%;
   display: flex;
   flex-direction: row;
-  & :first-child {
-    margin-top: 0.3rem;
-    margin-right: 0.3rem;
-  }
+  justify-content: space-between;
+
   & > * {
     cursor: pointer;
   }
 
-  border: 1px solid white;
+  border: 1px solid blue;
+`;
+
+const HeartWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 1rem;
+`;
+
+const CommentChatWrapper = styled.div`
+  padding-right: 1rem;
+`;
+const UserInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const ContentDetail = styled.span`
@@ -95,11 +109,11 @@ const ContentDetail = styled.span`
 const heartAnimation = keyframes`
   0% {
     opacity: 1;
-    transform: scale(4) rotate(-20deg);
+    transform: scale(4) rotate(-15deg);
   }
   10% {
     opacity: 0.8;
-    transform: scale(3) rotate(20deg);
+    transform: scale(3) rotate(15deg);
   }
   20% {
     opacity: 0.8;
@@ -107,7 +121,7 @@ const heartAnimation = keyframes`
   }
   30% {
     opacity: 0.8;
-    transform: scale(3) rotate(10deg);
+    transform: scale(2) rotate(10deg);
   }
   50% {
     opacity: 0.8;
@@ -124,7 +138,7 @@ const HeartInImage = styled.div`
   top: 50%;
   left: 50%;
   z-index: 9999;
-  animation: ${heartAnimation} 0.8s ease-out forwards;
+  animation: ${heartAnimation} 0.9s ease-out forwards;
 `;
 
 const PostDetail = () => {
@@ -134,6 +148,7 @@ const PostDetail = () => {
     "국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 공무원인 근로자는 법률이 정하는 자에 한하여 단결권·단체교섭권 및 단체행동권을 가진다. 모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에 노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 국가는 모성의 보호를 위하여 노력하여야 한다. 선거에 관한 경비는 법률이 정하는 경우를 제외하고는 정당 또는 후보자에게 부담시킬 수 없다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될"
   );
   const [likes, setLikes] = useState<string[]>([]);
+  const [likeCount, setLikeCount] = useState<number>(0);
   const [isILiked, setIsILiked] = useState<boolean>(false);
   const [comments, setComments] = useState<string[]>([]);
 
@@ -142,8 +157,8 @@ const PostDetail = () => {
   const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
 
   const theme = useTheme();
+  // const navigate = useNavigate();
   const contentLength = content.length;
-  console.log(isShowHeart);
 
   // fetch data --------------------------------------------
   const mutation = useMutation({
@@ -158,6 +173,7 @@ const PostDetail = () => {
       setUserName(data?.data.author.fullName);
       // setContent(JSON.parse(data?.data.title).content);
       setLikes(data?.data.likes);
+      setLikeCount(likes.length);
       setIsILiked(
         data?.data.author._id ===
           likes.some(({ _id }) => _id === data?.data.author._id)
@@ -179,19 +195,41 @@ const PostDetail = () => {
     console.log(isContentDetail);
   };
 
-  const handleHeart = () => {
+  const handleLike = () => {
     if (!isShowHeart) {
       setIsILiked(isILiked => !isILiked);
       setIsShowHeart(true);
+      // TODO:  좋아요 api 통신해야함 낙관적 업데이트?
+      setLikeCount(likeCount => {
+        if (!isILiked) return likeCount + 1;
+        return likeCount - 1;
+      });
+
       setTimeout(() => {
         setIsShowHeart(false);
-      }, 800);
+      }, 900);
     }
   };
 
+  const handleChat = () => {
+    // if (userId) {
+    //   해당 포스트의 작성자(id)가 현재 로그인한 나라면 자기 자신과는 채팅할 수 없다는 로직. 혹은 렌더링 시 채팅버튼 아예 안보여줘야함
+    // }
+    // navigate(`/chat/${userId}`);
+  };
+
+  console.log(likes);
   return (
     <PostDetailWrapper>
-      PostDetail
+      <UserInfoWrapper>
+        <AvatarWrapper>
+          <Avatar size="M" />
+        </AvatarWrapper>
+        <UserNameWrapper>
+          <UserNameSpan>{userName}</UserNameSpan>
+        </UserNameWrapper>
+        <button style={{ backgroundColor: "blue" }}>팔로우</button>
+      </UserInfoWrapper>
       <ImageWrapper>
         {isShowHeart && isILiked && (
           <HeartInImage>
@@ -206,38 +244,43 @@ const PostDetail = () => {
         <StyledImg src="https://wikidocs.net/images/page/49159/png-2702691_1920_back.png" />
       </ImageWrapper>
       <CaptionWrapper>
-        <AvatarWrapper>
-          <Avatar size="M" />
-        </AvatarWrapper>
-        <div style={{ width: "85%" }}>
-          <UserNameWrapper>
-            <UserNameSpan>{userName}</UserNameSpan>
-          </UserNameWrapper>
-
-          <ContentWrapper>
-            {isContentDetail ? (
-              <StyledSpan>{content}</StyledSpan>
-            ) : (
-              <StyledSpan>
-                {content.slice(0, 20)}...&nbsp;
-                <ContentDetail onClick={handleContentDetail}>
-                  더보기
-                </ContentDetail>
-              </StyledSpan>
-            )}
-          </ContentWrapper>
-        </div>
-        <IconWrapper>
+        <IconsWrapper>
           {/* 추후 refactor 포인트 : className으로 바꾸기  */}
-          <Icon
-            name={HEART_ICON}
-            onClick={handleHeart}
-            fill={isILiked ? true : false}
-            color={isILiked ? theme.symbol_color : ""}
-          ></Icon>
-          <Icon name={CHAT_ICON} size="1.7rem" />
-          <Icon name={SEND_ICON} />
-        </IconWrapper>
+          <HeartWrapper>
+            <Icon
+              name={HEART_ICON}
+              onClick={handleLike}
+              fill={isILiked ? true : false}
+              color={isILiked ? theme.symbol_color : ""}
+            ></Icon>
+            <span>{likeCount}명이 좋아합니다.</span>
+          </HeartWrapper>
+          <CommentChatWrapper
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              border: "1px solid red",
+            }}
+          >
+            <Icon name={CHAT_ICON} size="1.7rem" onClick={handleChat} />
+            <Icon name={SEND_ICON} />
+          </CommentChatWrapper>
+        </IconsWrapper>
+        <ContentWrapper>
+          {isContentDetail ? (
+            <StyledSpan>{content}</StyledSpan>
+          ) : (
+            <StyledSpan>
+              {content.slice(0, 20)}...&nbsp;
+              <ContentDetail onClick={handleContentDetail}>
+                더보기
+              </ContentDetail>
+            </StyledSpan>
+          )}
+        </ContentWrapper>
+
+        <span>댓글 {comments.length}개 보기</span>
       </CaptionWrapper>
     </PostDetailWrapper>
   );
