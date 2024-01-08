@@ -1,6 +1,7 @@
 import { Button, Input } from "@/components/common";
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
 
 // 전체 -----------------------------------------
 export const PostDetailWrapper = styled.div`
@@ -262,4 +263,18 @@ export const HeartInImage = styled.div`
   left: 50%;
   z-index: 9999;
   animation: ${heartAnimation} 0.9s ease-out forwards;
+`;
+
+export const Tag = styled.i<any>`
+  z-index: 50;
+  top: ${props => props.y}%;
+  left: ${props => props.x}%;
+  background: linear-gradient(
+    45deg,
+    ${props => props.theme.symbol_color},
+    ${props => props.theme.symbol_secondary_color}
+  );
+  transform: translateX(-50%) translateY(-50%);
+
+  ${tw`absolute w-3 h-3 rounded-full`};
 `;
