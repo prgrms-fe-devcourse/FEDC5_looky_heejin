@@ -4,8 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { ICON_SIZE, ICON_SIZE_SMALL } from "./ProfilePage.const";
 import Buttons, { IButtonProps } from "./Buttons";
-import { Avatar, Button, Icon } from "@/components/common";
+import { Avatar, Button } from "@/components/common";
 import { ButtonsWrap, InfoWrap, Profile } from "./ProfilePage.style";
+import Icon from "@/components/common/Icon/Icon";
 
 const buttonStyle: IButtonProps["style"] = {
   variant: "neumorp",
@@ -68,7 +69,7 @@ const ProfileView = () => {
               <Icon
                 name={!IsFollow ? "person_add" : "person_check"}
                 // 확인하기
-                color={IsFollow ? "#FB6060" : undefined}
+                color={IsFollow ? theme.symbol_color : undefined}
                 onClick={() => setIsFollow(!IsFollow)}
               />
             </Buttons>
