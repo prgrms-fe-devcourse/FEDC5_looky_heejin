@@ -1,6 +1,7 @@
 import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Row } from "@/styles/GlobalStyle";
 
 export const LogInPageContainer = styled.div`
   height: 100%;
@@ -69,4 +70,17 @@ export const SignInLinkContainer = styled(Link)`
 export const DoNotLoginLink = styled(Link)`
   text-decoration: underline;
   color: ${props => props.theme.gray_500};
+`;
+
+export const ErrorContainer = styled(Row)`
+  font-size: 1.1rem;
+  margin-top: 10px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const SpanStyle = styled.span`
+  font-size: 0.75rem;
+  color: ${props => props.theme.symbol_color};
 `;

@@ -2,12 +2,14 @@ import Logo from "/logo.png";
 import { SubmitHandler, SubmitErrorHandler, useForm } from "react-hook-form";
 import {
   DoNotLoginLink,
+  ErrorContainer,
   FormContainer,
   ImageContainer,
   InputContainer,
   LogInButtonContainer,
   LogInPageContainer,
   SignInLinkContainer,
+  SpanStyle,
 } from "./LoginPage.styles";
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
@@ -18,7 +20,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import LoginPageConst from "./LoginPage.const";
 import { useMe } from "@/hooks/useMe";
-import TooltipWrapper from "@/components/common/ToolTip";
 
 const LoginPageView = () => {
   const { VITE_ADMIN_EMAIL, VITE_ADMIN_PASSWORD } = import.meta.env;
@@ -90,31 +91,33 @@ const LoginPageView = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
-        <TooltipWrapper
-          $direction="right"
-          $tooltip={errors.email?.message ? errors.email?.message : ""}
-          $options="focus"
-          $clicked={errors.email?.message ? true : false}
-        >
-          <InputContainer
-            type="text"
-            placeholder="이메일"
-            {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
-          />
-        </TooltipWrapper>
+        <ErrorContainer>
+          <span className="font-bold">이메일</span>
+          {errors.email?.message ? (
+            <SpanStyle>{errors.email?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </ErrorContainer>
+        <InputContainer
+          type="text"
+          placeholder="looky@example.com"
+          {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
+        />
 
-        <TooltipWrapper
-          $direction="right"
-          $tooltip={errors.password?.message ? errors.password?.message : ""}
-          $options="focus"
-          $clicked={errors.password?.message ? true : false}
-        >
-          <InputContainer
-            type="password"
-            placeholder="비밀번호"
-            {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
-          />
-        </TooltipWrapper>
+        <ErrorContainer>
+          <span className="font-bold">비밀번호</span>
+          {errors.password?.message ? (
+            <SpanStyle>{errors.password?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </ErrorContainer>
+        <InputContainer
+          type="password"
+          placeholder="비밀번호"
+          {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
+        />
 
         <LogInButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           로그인
