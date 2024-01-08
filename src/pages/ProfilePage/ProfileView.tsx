@@ -4,13 +4,24 @@ import { useEffect, useState } from "react";
 import { ICON_SIZE, ICON_SIZE_SMALL } from "./ProfilePage.const";
 import Buttons, { IButtonProps } from "./Buttons";
 import { Avatar, Button } from "@/components/common";
-import { ButtonsWrap, InfoWrap, Profile } from "./ProfilePage.style";
+import {
+  AvatarWrap,
+  ButtonsWrap,
+  InfoWrap,
+  Profile,
+} from "./ProfilePage.style";
 import Icon from "@/components/common/Icon/Icon";
 import { IUser } from "@/types";
 
 interface IProfileProps {
   userInfo: IUser;
-  onClickChat: (paramsId: string) => void;
+  isFollow: boolean;
+  onClickPassword: (e: React.MouseEvent) => void;
+  onClickEdit: (e: React.MouseEvent) => void;
+  onClickAvatar: (e: React.MouseEvent) => void;
+  onClickCover: (e: React.MouseEvent) => void;
+  onClickChat: (e: React.MouseEvent, paramsId: string) => void;
+  onClickFollow: (e: React.MouseEvent) => void;
   [key: string]: any;
 }
 
@@ -26,13 +37,18 @@ const buttonStyle: IButtonProps["style"] = {
 
 const ProfileView = ({
   userInfo,
+  isFollow,
+  onClickPassword,
+  onClickEdit,
+  onClickAvatar,
+  onClickCover,
   onClickChat,
+  onClickFollow,
   ...props
 }: IProfileProps) => {
   const { _id, email, fullName } = userInfo;
   const { id, profilePhoto } = useMe();
-  const [IsMe, setIsMe] = useState(id === _id);
-  const [IsFollow, setIsFollow] = useState(false);
+  const [isMe, setIsMe] = useState(id === _id);
 
   const theme = useTheme();
 
@@ -41,19 +57,22 @@ const ProfileView = ({
   }, [_id]);
 
   return (
-    <Profile>
-      {IsMe && (
+    <Profile isMe={isMe} onClick={onClickCover}>
+      {isMe && (
         <ButtonsWrap className="me">
           <Buttons style={buttonStyle}>
             <Icon
               name="Password"
               size={ICON_SIZE_SMALL}
+              onClick={onClickPassword}
             />
           </Buttons>
         </ButtonsWrap>
       )}
       <InfoWrap {...props}>
-        <Avatar src={profilePhoto ?? undefined} size="XL"></Avatar>
+        <AvatarWrap isMe={isMe} onClick={onClickAvatar}>
+          <Avatar src={profilePhoto ?? undefined} size="XL" />
+        </AvatarWrap>
         <div style={{ color: theme.white_primary, paddingTop: "1rem" }}>
           {email}
         </div>
@@ -61,7 +80,7 @@ const ProfileView = ({
           {fullName}
         </span>
         {/* 닉네임 수정 버튼 */}
-        {IsMe && (
+        {isMe && (
           <ButtonsWrap className="me">
             <Button
               width={ICON_SIZE_SMALL}
@@ -71,19 +90,23 @@ const ProfileView = ({
                 borderRadius: ICON_SIZE_SMALL / 2,
               }}
             >
-              <Icon name="Edit" size={ICON_SIZE_SMALL} />
+              <Icon
+                name="Edit"
+                color={theme.background_color}
+                size={ICON_SIZE_SMALL}
+                onClick={onClickEdit}
+              />
             </Button>
           </ButtonsWrap>
         )}
-        {!IsMe && (
+        {!isMe && (
           <ButtonsWrap className="others">
             <Buttons style={buttonStyle}>
-              <Icon name="chat_bubble" onClick={() => onClickChat(_id)} />
+              <Icon name="chat_bubble" onClick={e => onClickChat(e, _id)} />
               <Icon
-                name={!IsFollow ? "person_add" : "person_check"}
-                // 확인하기
-                color={IsFollow ? theme.symbol_color : undefined}
-                onClick={() => setIsFollow(!IsFollow)}
+                name={!isFollow ? "person_add" : "person_check"}
+                color={isFollow ? theme.symbol_color : undefined}
+                onClick={onClickFollow}
               />
             </Buttons>
           </ButtonsWrap>
