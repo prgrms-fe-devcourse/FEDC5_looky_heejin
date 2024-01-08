@@ -8,6 +8,8 @@ export const PostDetailWrapper = styled.div`
   width: ${APP_MAX_WIDTH}px;
   height: 100vh;
   overflow-y: auto;
+  border: ${({ theme }) => `0.5px solid ${theme.container_color}`};
+  border-radius: 0.5rem;
 `;
 
 // (상) UserInfo --------------------------------------------
@@ -147,7 +149,8 @@ export const CommentWrapper = styled.div`
   font-size: 0.8rem;
   margin-top: 1rem;
   padding-left: 1.1rem;
-  padding-top: 0.5rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.3rem;
 
   border-top: 1px solid ${({ theme }) => theme.container_color};
   /* border: 1px solid red; */
@@ -173,10 +176,10 @@ export const InputWrapper = styled.div`
 `;
 
 export const StyledInput = styled(Input)`
-  border-radius: 2rem;
+  border-radius: 1rem;
   height: 2rem;
   font-size: 0.85rem;
-  width: 96%;
+  width: 97%;
   margin: auto auto;
 `;
 
