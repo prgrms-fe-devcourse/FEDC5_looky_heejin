@@ -1,4 +1,4 @@
-import { _GET } from "@/api";
+import { _GET, _POST } from "@/api";
 import { Avatar } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
@@ -32,6 +32,9 @@ import {
   UserNameSpan,
   UserNameWrapper,
 } from "./PostDetailModal.styles";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { IComment } from "@/types";
+import { _COMMENT } from "@/api/queries/comment";
 
 const PostDetail = () => {
   const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
@@ -55,10 +58,11 @@ const PostDetail = () => {
   const theme = useTheme();
   // const navigate = useNavigate();
   const contentLength = content.length;
+  const postId = "65961633fc83a20c6e9c6a10";
 
   // fetch data --------------------------------------------
   const mutation = useMutation({
-    mutationFn: async (params: string) => await _GET(params),
+    mutationFn: async (endPoint: string) => await _GET(endPoint),
     onSuccess(data) {
       // console.log("유저의 아이디:", data?.data.author._id);
       // console.log("fullName:", data?.data.author.fullName);
@@ -67,6 +71,7 @@ const PostDetail = () => {
       console.log("comments:", data?.data.comments);
       console.log(data);
       console.log(data?.data.image);
+
       setUserId(data?.data.author._id);
       setUserName(data?.data.author.fullName);
       setImageUrl(data?.data.image);
@@ -84,10 +89,42 @@ const PostDetail = () => {
     },
   });
 
+  const [token, _] = useLocalStorage("token");
+
+  const commentMutation = useMutation({
+    mutationFn: async (formData: IComment) => await _COMMENT(formData),
+    onSuccess({ comment, postId }) {
+      console.log("api 성공", comment, postId);
+    },
+    onError(error) {
+      console.log("댓글 APi 통신 에러");
+    },
+  });
+
   useEffect(() => {
     mutation.mutate("/posts/65961633fc83a20c6e9c6a10");
   }, []);
   // ---------------------------------------------------------
+
+  // const mutation = useMutation({
+  //   mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
+  //   onSuccess({ user, token }) {
+  //     console.log("API 성공: ", user, token);
+  //     setAuth({ isLogIn: true, token });
+  //     setMe({
+  //       id: user._id,
+  //       userName: user.fullName,
+  //       profilePhoto: "",
+  //     });
+  //     storeToken(token);
+  //     navigate("/home");
+  //   },
+  //   onError(error) {
+  //     console.error("API 에러: ", error);
+  //   },
+  // });
+
+  // --------------------------------------
 
   const handleContentDetail = () => {
     setIsContentDetail(true);
@@ -123,6 +160,8 @@ const PostDetail = () => {
 
   const onValid = comment => {
     setNewComments([...newComments, comment.comment]);
+    const newComment: IComment = { comment: comment.comment, postId };
+    commentMutation.mutate(newComment);
     setValue("comment", "");
     console.log(comment);
   };
