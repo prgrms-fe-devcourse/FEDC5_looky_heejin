@@ -57,7 +57,12 @@ const ProfileView = ({
   }, [_id]);
 
   return (
-    <Profile isMe={isMe} onClick={onClickCover}>
+    <Profile
+      isMe={isMe}
+      onClick={e => {
+        isMe ? onClickCover(e) : null;
+      }}
+    >
       {isMe && (
         <ButtonsWrap className="me">
           <Buttons style={buttonStyle}>
@@ -70,7 +75,12 @@ const ProfileView = ({
         </ButtonsWrap>
       )}
       <InfoWrap {...props}>
-        <AvatarWrap isMe={isMe} onClick={onClickAvatar}>
+        <AvatarWrap
+          isMe={isMe}
+          onClick={e => {
+            isMe ? onClickAvatar(e) : null;
+          }}
+        >
           <Avatar src={profilePhoto ?? undefined} size="XL" />
         </AvatarWrap>
         <div style={{ color: theme.white_primary, paddingTop: "1rem" }}>
