@@ -49,7 +49,9 @@ export const _PUT = async (endPoint: string, params: any) => {
 
 export const _DELETE = async (endPoint: string, params: any) => {
   try {
-    const response = await rootAPI.delete(endPoint, params);
+    const response = await rootAPI.delete(endPoint, {
+      data: params,
+    });
     return response;
   } catch (error) {
     console.error(error);
