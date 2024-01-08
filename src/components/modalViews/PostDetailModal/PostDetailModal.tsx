@@ -33,8 +33,9 @@ import {
   UserNameWrapper,
 } from "./PostDetailModal.styles";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { IComment } from "@/types";
+import { IComment, INotification } from "@/types";
 import { _COMMENT } from "@/api/queries/comment";
+import { _NOTIFY } from "@/api/queries/notify";
 
 const PostDetail = () => {
   const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
@@ -91,10 +92,29 @@ const PostDetail = () => {
 
   const [token, _] = useLocalStorage("token");
 
+  const notificationMutation = useMutation({
+    mutationFn: async (formData: INotification) => await _NOTIFY(formData),
+    onSuccess(data) {
+      console.log("알림 api 성공", data);
+    },
+    onError(error) {
+      console.log("알림 api 통신 에러");
+    },
+  });
+
   const commentMutation = useMutation({
     mutationFn: async (formData: IComment) => await _COMMENT(formData),
-    onSuccess({ comment, postId }) {
-      console.log("api 성공", comment, postId);
+    onSuccess(data) {
+      console.log("댓글 데이터", data);
+      const newNotification: INotification = {
+        notificationType: "COMMENT",
+        notificationTypeId: data._id,
+        userId,
+        postId: data.post,
+      };
+
+      notificationMutation.mutate(newNotification);
+      // console.log(data);
     },
     onError(error) {
       console.log("댓글 APi 통신 에러");
@@ -159,7 +179,7 @@ const PostDetail = () => {
   };
 
   const onValid = comment => {
-    setNewComments([...newComments, comment.comment]);
+    // setNewComments([...newComments, comment.comment]);
     const newComment: IComment = { comment: comment.comment, postId };
     commentMutation.mutate(newComment);
     setValue("comment", "");
