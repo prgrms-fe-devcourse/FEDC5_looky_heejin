@@ -4,6 +4,7 @@ import { ISignIn } from "@/types";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
+  ErrorContainer,
   FormContainer,
   ImageContainer,
   InputContainer,
@@ -13,7 +14,7 @@ import {
 } from "./SignInPage.styles";
 import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
-import { Image } from "@/components/common";
+import { Image, InputLabel } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";
@@ -74,7 +75,6 @@ const SignInPage = () => {
       password: sha256Encrypt(password),
     };
     mutation.mutate(filteredFormData);
-    console.log(filteredFormData);
   };
 
   const onInValid: SubmitErrorHandler<ISignIn> = (error): void => {
@@ -105,25 +105,47 @@ const SignInPage = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
+        {/* <div style={{ width: "100%" }}>
+          <InputLabel title="이메일" help={errors.email?.message} />
+        </div> */}
+        <ErrorContainer>
+          <span className="font-bold">이메일</span>
+          {errors.email?.message ? (
+            <SpanStyle>{errors.email?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </ErrorContainer>
         <InputContainer
           type="text"
-          placeholder="이메일"
+          placeholder="looky@example.com"
           {...register("email", SignInPageConstant.EMAIL_VALIDATION_OPTION)}
         />
-        {errors.email?.message ? (
-          <SpanStyle>{errors.email?.message}</SpanStyle>
-        ) : null}
+        <ErrorContainer>
+          <span className="font-bold">닉네임</span>
+          {errors.fullName?.message ? (
+            <SpanStyle>{errors.fullName?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </ErrorContainer>
         <InputContainer
           type="text"
-          placeholder="닉네임"
+          placeholder="lookies"
           {...register(
             "fullName",
             SignInPageConstant.FULLNAME_VALIDATION_OPTION
           )}
         />
-        {errors.fullName?.message ? (
-          <SpanStyle>{errors.fullName?.message}</SpanStyle>
-        ) : null}
+
+        <ErrorContainer>
+          <span className="font-bold">비밀번호</span>
+          {errors.password?.message ? (
+            <SpanStyle>{errors.password?.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </ErrorContainer>
         <InputContainer
           type="password"
           placeholder="비밀번호"
@@ -132,9 +154,15 @@ const SignInPage = () => {
             SignInPageConstant.PASSWORD_VALIDATION_OPTION
           )}
         />
-        {errors.password?.message ? (
-          <SpanStyle>{errors.password?.message}</SpanStyle>
-        ) : null}
+
+        <ErrorContainer>
+          <span className="font-bold">비밀번호 확인</span>
+          {errors.passwordCheck ? (
+            <SpanStyle>{errors.passwordCheck.message}</SpanStyle>
+          ) : (
+            <SpanStyle></SpanStyle>
+          )}
+        </ErrorContainer>
         <InputContainer
           type="password"
           placeholder="비밀번호 확인"
@@ -148,9 +176,7 @@ const SignInPage = () => {
             },
           })}
         />
-        {errors.passwordCheck ? (
-          <SpanStyle>{errors.passwordCheck.message}</SpanStyle>
-        ) : null}
+
         <SubmitButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
           회원가입
         </SubmitButtonContainer>
