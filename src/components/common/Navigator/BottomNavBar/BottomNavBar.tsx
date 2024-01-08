@@ -23,6 +23,7 @@ const BottomNavBarWrapper = styled.nav`
   width: 100%;
   height: ${NAV_HEIGHT}rem;
   background-color: ${({ theme }) => theme.background_color};
+  border-top: ${({ theme }) => `1px solid ${theme.container_color}`};
 `;
 const IconWrapper = styled.div`
   flex-grow: 1;
@@ -51,7 +52,6 @@ const BottomNavBar = () => {
     PathName.SEARCH,
     PathName.CHATS,
     PathName.NOTIFICATIONS,
-    PathName.NEWPOST,
     PathName.POSTDETAIL,
     PathName.TEST,
   ];
