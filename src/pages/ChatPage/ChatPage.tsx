@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
@@ -6,13 +6,18 @@ import { NAV_HEIGHT } from "@/constants/uiConstants";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button, Input } from "@/components/common";
 import { CHAT } from "@/constants/queryKey";
-import { _GET } from "@/api";
+import { _GET, _POST, _PUT } from "@/api";
 import { Message } from "@/components/Chats";
 import { IMessage } from "@/types/message";
 import { useMe } from "@/hooks/useMe";
 
-interface IChatFormProps {
-  content: string;
+interface IMessageForm {
+  message: string;
+}
+
+interface IMessageBodyData {
+  message: string;
+  receiver: string;
 }
 
 const ChatPage = () => {
@@ -21,25 +26,45 @@ const ChatPage = () => {
 
   const { id } = useMe();
 
+  const chatEndPointRef = useRef<HTMLDivElement | null>(null);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: [`${CHAT}-${userId}`],
     queryFn: async () => await _GET(`/messages?userId=${userId}`),
+    enabled: !!userId,
+    refetchInterval: 1000,
   });
 
-  // console.log(data);
+  const mutation = useMutation({
+    mutationFn: async (formData: IMessageBodyData) =>
+      await _POST("/messages/create", formData),
+  });
 
-  // const mutation = useMutation({
-  //   mutationFn:
-  //   onSuccess: data => {},
-  // });
+  const seenUpdateMutation = useMutation({
+    mutationFn: async () => await _PUT("/messages/update-seen", { sender: id }),
+  });
 
-  const { register, handleSubmit } = useForm<IChatFormProps>({});
+  const { register, handleSubmit, reset } = useForm<IMessageForm>({});
 
-  const onValid = (data: IChatFormProps) => {
+  const onValid = (data: IMessageForm) => {
     console.log(data);
+    mutation.mutate({ message: data.message, receiver: userId });
+    scrollToBottom(true);
+    reset();
   };
 
-  // console.log(userId);
+  const scrollToBottom = (useSmooth?: boolean) => {
+    chatEndPointRef?.current?.scrollIntoView({
+      behavior: useSmooth ? "smooth" : "instant",
+    });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+    seenUpdateMutation.mutate();
+
+    return () => seenUpdateMutation.mutate();
+  }, []);
 
   if (isLoading) return <div>loading...</div>;
   if (isError) return <div>Error...</div>;
@@ -47,7 +72,7 @@ const ChatPage = () => {
   return (
     <div className="w-full h-full relative">
       <div
-        className="flex flex-col gap-1 p-4 overflow-hidden w-full"
+        className="flex flex-col gap-1 p-4 overflow-auto w-full"
         style={{ height: "calc(100%)" }}
       >
         {data &&
@@ -60,14 +85,15 @@ const ChatPage = () => {
               senderName={message.sender.fullName}
             />
           ))}
+        <div ref={chatEndPointRef} />
       </div>
       <div
         className="w-full absolute -bottom-12"
         style={{ height: `${NAV_HEIGHT}rem` }}
       >
-        <form className="relative w-full">
+        <form className="relative w-full" onSubmit={handleSubmit(onValid)}>
           <Input
-            register={register("content")}
+            register={register("message")}
             required={false}
             className="rounded-s-full rounded-e-full pr-[5rem]"
             type="text"
@@ -84,7 +110,7 @@ const ChatPage = () => {
               }}
               onClick={handleSubmit(onValid)}
             >
-              <span className="">send</span>
+              <span className="">보내기</span>
             </Button>
           </div>
         </form>
