@@ -109,6 +109,7 @@ const PostDetail = () => {
       const newNotification: INotification = {
         notificationType: "COMMENT",
         notificationTypeId: data._id,
+        // 나야 상대방이야..?
         userId: myId,
         postId: data.post,
       };
@@ -125,6 +126,13 @@ const PostDetail = () => {
     mutationFn: async formData => await _POST("/likes/create", formData),
     onSuccess(data) {
       console.log("좋아요 api 통신 성공 ", data);
+      const newNotification: INotification = {
+        notificationType: "LIKE",
+        notificationTypeId: data._id,
+        // 나야 상대방이야 ..?
+        userId: myId,
+        postId: data.post,
+      };
     },
     onError(error) {
       console.log("좋아요 생성 에러");
