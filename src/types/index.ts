@@ -44,9 +44,20 @@ export interface IPost {
   updatedAt: String;
 }
 
-export interface IComment {
+export interface ICreateComment {
   comment: string;
   postId: string;
+}
+export interface IDeleteComment {
+  id: string;
+}
+
+export interface ICreateLike {
+  postId: string;
+}
+
+export interface IDeleteLike {
+  id: string;
 }
 
 export interface INotification {
