@@ -48,3 +48,10 @@ export interface IComment {
   comment: string;
   postId: string;
 }
+
+export interface INotification {
+  notificationType: "COMMENT" | "FOLLOW" | "LIKE" | "MESSAGE";
+  notificationTypeId: string;
+  userId: string;
+  postId: string | null;
+}
