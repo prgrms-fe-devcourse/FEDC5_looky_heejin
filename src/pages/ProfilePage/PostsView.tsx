@@ -50,9 +50,9 @@ const DUMMY_POST: IPost[] | [] = [
 const PostsView = () => {
   return (
     <Posts>
-      <PostsList>
-        {DUMMY_POST && DUMMY_POST.length > 0 ? (
-          DUMMY_POST.map(post => (
+      {DUMMY_POST && DUMMY_POST.length > 0 ? (
+        <PostsList>
+          {DUMMY_POST.map(post => (
             <PostCard key={post._id}>
               <ImageWrap>
                 <Image
@@ -62,13 +62,13 @@ const PostsView = () => {
                 />
               </ImageWrap>
             </PostCard>
-          ))
-        ) : (
-          <div style={{ flexGrow: "1", justifyContent: "center" }}>
-            포스트를 추가해보세요!
-          </div>
-        )}
-      </PostsList>
+          ))}
+        </PostsList>
+      ) : (
+        <div style={{ flexGrow: "1", justifyContent: "center" }}>
+          포스트를 추가해보세요!
+        </div>
+      )}
     </Posts>
   );
 };
