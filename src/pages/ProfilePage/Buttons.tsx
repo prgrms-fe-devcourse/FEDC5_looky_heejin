@@ -2,19 +2,20 @@ import { Button } from "@/components/common";
 import { ReactNode } from "react";
 import { styled } from "styled-components";
 
-interface ButtonProps {
+type TVariant = "flat" | "neumorp" | "symbol" | "disabled";
+export interface IButtonProps {
   children: ReactNode[] | ReactNode;
   style: {
-    variant: "flat" | "neumorp" | "symbol" | "disabled";
+    variant: TVariant;
     width?: number;
-    style?: {};
+    [key: string]: any;
   };
 }
 
 const ButtonWrap = styled.div<{ key: string }>``;
 
 // children은 Icon을 받는다.
-const Buttons = ({ children, style }: ButtonProps) => {
+const Buttons = ({ children, style }: IButtonProps) => {
   return (
     <>
       {Array.isArray(children) ? (
