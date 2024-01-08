@@ -47,7 +47,7 @@ const ChatPage = () => {
   return (
     <div className="w-full h-full relative">
       <div
-        className="flex flex-col gap-8 p-4 overflow-hidden w-full"
+        className="flex flex-col gap-1 p-4 overflow-hidden w-full"
         style={{ height: "calc(100%)" }}
       >
         {data &&

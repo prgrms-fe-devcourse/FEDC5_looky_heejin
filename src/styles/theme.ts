@@ -37,6 +37,7 @@ export const darkTheme: object = {
   gray_100: "#EFEFEF",
   transparent_10: "#FEFEFE10",
   transparent_30: "#FEFEFE30",
+  transparent_50: "#FEFEFE50",
   transparent_90: "#FEFEFE90",
   red_100: "#FF6878",
   red_300: "#EB2F06",
