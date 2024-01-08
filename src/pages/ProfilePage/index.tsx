@@ -1,5 +1,20 @@
+import styled from "styled-components";
+import PostsView from "./PostsView";
+import ProfileView from "./ProfileView";
+
+const ProfileWrap = styled.div`
+  overflow-y: scroll;
+`;
+
 const ProfilePage = () => {
-  return <div>ProfilePage</div>;
+  return (
+    <>
+      <ProfileWrap>
+        <ProfileView />
+        <PostsView />
+      </ProfileWrap>
+    </>
+  );
 };
 
 export default ProfilePage;
