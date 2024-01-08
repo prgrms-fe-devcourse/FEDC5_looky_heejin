@@ -11,6 +11,7 @@ import {
   AvatarWrapper,
   CaptionWrapper,
   CommentChatWrapper,
+  CommentContent,
   CommentWrapper,
   ContentDetail,
   ContentWrapper,
@@ -22,10 +23,12 @@ import {
   InputWrapper,
   LikeCountSpan,
   MoreComments,
+  NoComments,
   PostDetailWrapper,
   ReplyButton,
   StyledImg,
   StyledInput,
+  StyledLi,
   StyledSpan,
   UserInfoWrapper,
   UserNameInComment,
@@ -33,12 +36,21 @@ import {
   UserNameWrapper,
 } from "./PostDetailModal.styles";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { IComment, INotification } from "@/types";
-import { _COMMENT } from "@/api/queries/comment";
+import {
+  ICreateComment,
+  IDeleteComment,
+  ICreateLike,
+  IDeleteLike,
+  INotification,
+} from "@/types";
+import { _CREATE_COMMENT } from "@/api/queries/comment";
 import { _NOTIFY } from "@/api/queries/notify";
 import { useMe } from "@/hooks/useMe";
+import { useUI } from "@/components/common/uiContext";
+import { _CREATE_LIKE, _DELETE_LIKE } from "@/api/queries/like";
 
 const PostDetail = () => {
+  const { closeModal } = useUI();
   const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
@@ -58,14 +70,15 @@ const PostDetail = () => {
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
-  // const navigate = useNavigate();
-  const contentLength = content.length;
-  const postId = "65961633fc83a20c6e9c6a10";
+  const postId = "65939e1f2ed4d31ff83cb883";
   const { id: myId } = useMe();
   console.log("내 아이디", myId);
+  // console.log(comments);
+  console.log(likes);
 
+  const navigate = useNavigate();
   // fetch data --------------------------------------------
-  const mutation = useMutation({
+  const initMutation = useMutation({
     mutationFn: async (endPoint: string) => await _GET(endPoint),
     onSuccess(data) {
       console.log("유저의 아이디:", data?.data.author._id);
@@ -80,7 +93,9 @@ const PostDetail = () => {
       setUserName(data?.data.author.fullName);
       setImageUrl(data?.data.image);
       // setContent(JSON.parse(data?.data.title).content);
+      setContent(data?.data.title);
       setLikes(data?.data.likes);
+      console.log(data);
       setLikeCount(likes.length);
       setIsILiked(likes.some(({ user }) => user === myId));
       setComments(data?.data.comments);
@@ -89,6 +104,7 @@ const PostDetail = () => {
       console.log("API 에러: ", error);
     },
   });
+  console.log(comments);
 
   const [token, _] = useLocalStorage("token");
 
@@ -98,34 +114,38 @@ const PostDetail = () => {
       console.log("알림 api 성공", data);
     },
     onError(error) {
+      // 왜안될까요
       console.log("알림 api 통신 에러");
     },
   });
 
-  const commentMutation = useMutation({
-    mutationFn: async (formData: IComment) => await _COMMENT(formData),
+  const createCommentMutation = useMutation({
+    mutationFn: async (formData: ICreateComment) =>
+      await _CREATE_COMMENT(formData),
     onSuccess(data) {
       console.log("댓글 데이터", data);
+      const temp = [...comments, data];
+      console.log(temp);
       const newNotification: INotification = {
         notificationType: "COMMENT",
         notificationTypeId: data._id,
         // 나야 상대방이야..?
-        userId: myId,
+        userId,
         postId: data.post,
       };
 
       notificationMutation.mutate(newNotification);
-      // console.log(data);
+      setComments(temp);
     },
     onError(error) {
-      console.log("댓글 APi 통신 에러");
+      console.log("댓글 APi 통신 에러", error);
     },
   });
 
-  const likeMutation = useMutation({
-    mutationFn: async formData => await _POST("/likes/create", formData),
+  const createLikeMutation = useMutation({
+    mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
-      console.log("좋아요 api 통신 성공 ", data);
+      console.log("API: 좋아요 생성 성공 ", data);
       const newNotification: INotification = {
         notificationType: "LIKE",
         notificationTypeId: data._id,
@@ -133,14 +153,26 @@ const PostDetail = () => {
         userId: myId,
         postId: data.post,
       };
+      setLikeCount(likeCount + 1);
     },
     onError(error) {
-      console.log("좋아요 생성 에러");
+      console.log("error: 좋아요 생성 실패 ");
+    },
+  });
+
+  const deleteLikeMutation = useMutation({
+    mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
+    onSuccess(data) {
+      console.log("API: 좋아요 삭제 성공 ");
+      setLikeCount(likeCount - 1);
+    },
+    onError(error) {
+      console.log("error: 좋아요 삭제 실패 ");
     },
   });
 
   useEffect(() => {
-    mutation.mutate("/posts/65961633fc83a20c6e9c6a10");
+    initMutation.mutate(`/posts/${postId}`);
   }, []);
   // ---------------------------------------------------------
 
@@ -152,15 +184,20 @@ const PostDetail = () => {
   };
 
   const handleLike = () => {
+    setIsILiked(isILiked => !isILiked);
     if (!isShowHeart) {
-      // setIsILiked(isILiked => !isILiked);
-      likeMutation.mutate({ postId: postId });
+      if (!isILiked) {
+        createLikeMutation.mutate({ postId: postId });
+      } else {
+        deleteLikeMutation.mutate({ id: "659be80465328a2e5ec05d00" });
+      }
+
       setIsShowHeart(true);
       // TODO:  좋아요 api 통신해야함 낙관적 업데이트?
-      setLikeCount(likeCount => {
-        if (!isILiked) return likeCount + 1;
-        return likeCount - 1;
-      });
+      // setLikeCount(likeCount => {
+      //   if (!isILiked) return likeCount + 1;
+      //   return likeCount - 1;
+      // });
 
       setTimeout(() => {
         setIsShowHeart(false);
@@ -172,7 +209,10 @@ const PostDetail = () => {
     // if (userId) {
     //   해당 포스트의 작성자(id)가 현재 로그인한 나라면 자기 자신과는 채팅할 수 없다는 로직. 혹은 렌더링 시 채팅버튼 아예 안보여줘야함
     // }
-    // navigate(`/chat/${userId}`);
+    closeModal();
+    navigate(`/chat/${userId}`);
+
+    // history.replaceState(null, null, `/chat/${userId}`);
   };
 
   const handleShowComments = () => {
@@ -181,9 +221,10 @@ const PostDetail = () => {
 
   const onValid = comment => {
     // setNewComments([...newComments, comment.comment]);
-    const newComment: IComment = { comment: comment.comment, postId };
-    commentMutation.mutate(newComment);
+    const newComment: ICreateComment = { comment: comment.comment, postId };
+    createCommentMutation.mutate(newComment);
     setValue("comment", "");
+    setIsShowComments(true);
     console.log(comment);
   };
 
@@ -250,9 +291,11 @@ const PostDetail = () => {
             <StyledSpan>
               <UserNameSpan>{userName}&nbsp;&nbsp;</UserNameSpan>
               {content.slice(0, 40)}&nbsp;&nbsp;
-              <ContentDetail onClick={handleContentDetail}>
-                ...더 보기
-              </ContentDetail>
+              {content.length > 40 ? (
+                <ContentDetail onClick={handleContentDetail}>
+                  ...더 보기
+                </ContentDetail>
+              ) : null}
             </StyledSpan>
           )}
         </ContentWrapper>
@@ -261,22 +304,25 @@ const PostDetail = () => {
           {isShowComments ? (
             <ul>
               {comments.map(comment => (
-                <li key={comment._id}>
+                <StyledLi key={comment._id}>
                   <UserNameInComment>
                     {comment.author.fullName}{" "}
                   </UserNameInComment>
-                  {comment.comment}
-                </li>
+                  <CommentContent>{comment.comment}</CommentContent>
+                </StyledLi>
               ))}
 
-              {newComments.length > 0 && (
+              {/* 새 댓글의 경우 api호출하지 않고 배열 리스트에 먼저 담아두려고 했음 */}
+              {/* {newComments.length > 0 && (
                 <li key={Date.now()}>
                   <UserNameInComment>
                     {userName} {newComments[newComments.length - 1]}
                   </UserNameInComment>
                 </li>
-              )}
+              )} */}
             </ul>
+          ) : comments.length === 0 ? (
+            <NoComments>댓글이 없습니다.</NoComments>
           ) : (
             <MoreComments onClick={handleShowComments}>
               댓글 {comments.length + newComments.length}개 보기

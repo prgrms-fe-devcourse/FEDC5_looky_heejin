@@ -6,10 +6,21 @@ import styled, { keyframes } from "styled-components";
 export const PostDetailWrapper = styled.div`
   border: 1px solid white;
   width: ${APP_MAX_WIDTH}px;
-  height: 100vh;
+  height: 95vh;
   overflow-y: auto;
   border: ${({ theme }) => `0.5px solid ${theme.container_color}`};
+  // transparent 투명
+  // white 흰색
+  background-color: ${({ theme }) => `${theme.background_color}`};
   border-radius: 0.5rem;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+  }
 `;
 
 // (상) UserInfo --------------------------------------------
@@ -43,10 +54,11 @@ export const UserNameSpan = styled.span`
 export const FollowButton = styled(Button)`
   display: flex;
   width: 4.3rem;
-  height: 2rem;
+  height: 1rem;
   position: absolute;
   right: 1.5rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+  line-height: 0.5rem;
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.gray_500};
   align-items: center;
@@ -56,8 +68,11 @@ export const FollowButton = styled(Button)`
 // (중) Image ----------------------------------------
 export const ImageWrapper = styled.div`
   width: 100%;
-  height: 0;
-  padding-top: 133%;
+  height: auto;
+  padding-top: 160%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
 `;
 
@@ -66,7 +81,7 @@ export const StyledImg = styled.img`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 10 / 16;
   object-fit: cover;
   border-radius: 0.5rem;
 `;
@@ -79,7 +94,7 @@ export const CaptionWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
   /* border: 1px solid white; */
 `;
 
@@ -92,8 +107,7 @@ export const StyledSpan = styled.span`
   /* -webkit-box-orient: vertical; */
   line-height: 1.2rem;
   font-size: 0.9rem;
-  padding-left: 0.2rem;
-  margin-right: 0.3rem;
+  padding: 0.5rem;
 `;
 
 export const IconsWrapper = styled.div`
@@ -146,25 +160,42 @@ export const CommentChatWrapper = styled.div`
 
 // 댓글 --------------------------------------------
 export const CommentWrapper = styled.div`
-  font-size: 0.8rem;
-  margin-top: 1rem;
+  font-size: 0.9rem;
+  /* margin-top: 1rem;
   padding-left: 1.1rem;
   padding-top: 0.8rem;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.3rem; */
+  padding: 0.5rem;
+  box-sizing: border-box;
 
   border-top: 1px solid ${({ theme }) => theme.container_color};
   /* border: 1px solid red; */
   /* background-color: blue; */
-
-  cursor: pointer;
 `;
 
 export const UserNameInComment = styled.span`
-  font-weight: 600;
+  font-weight: bold;
   /* color: red; */
+  cursor: pointer;
+`;
+
+export const StyledLi = styled.li`
+  margin: 3px 0;
+  padding: 0 3px;
+  box-sizing: border-box;
+`;
+
+export const CommentContent = styled.span`
+  margin: 0 1px;
+  line-height: 1.2rem;
 `;
 
 export const MoreComments = styled.span`
+  cursor: pointer;
+  color: ${({ theme }) => theme.gray_500};
+`;
+
+export const NoComments = styled.span`
   color: ${({ theme }) => theme.gray_500};
 `;
 
