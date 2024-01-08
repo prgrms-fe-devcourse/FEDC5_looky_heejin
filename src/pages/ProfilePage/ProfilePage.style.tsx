@@ -4,17 +4,22 @@ import {
   POSTER_SIMPLE_CARD_WIDTH,
 } from "@/constants/uiConstants";
 import { Col, Row } from "@/styles/GlobalStyle";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 // ProfileView
-export const Profile = styled(Col)`
+export const Profile = styled(Col)<{ isMe: boolean }>`
   height: calc(100vh - ${NAV_HEIGHT * 2}rem);
   padding: 1rem;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
     url("https://picsum.photos/1500");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  ${props =>
+    props.isMe &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 export const ButtonsWrap = styled(Row)`
@@ -26,6 +31,15 @@ export const ButtonsWrap = styled(Row)`
   }
   &.others {
   }
+`;
+
+export const AvatarWrap = styled.div<{ isMe: boolean }>`
+  border-radius: 50%;
+  ${props =>
+    props.isMe &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 export const InfoWrap = styled(Col)`
