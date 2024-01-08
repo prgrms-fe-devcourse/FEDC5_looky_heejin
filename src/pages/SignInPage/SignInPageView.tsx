@@ -14,7 +14,7 @@ import {
 } from "./SignInPage.styles";
 import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
-import { Image } from "@/components/common";
+import { Image, InputLabel } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";
@@ -105,8 +105,11 @@ const SignInPage = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
+        {/* <div style={{ width: "100%" }}>
+          <InputLabel title="이메일" help={errors.email?.message} />
+        </div> */}
         <ErrorContainer>
-          <span>이메일</span>
+          <span className="font-bold">이메일</span>
           {errors.email?.message ? (
             <SpanStyle>{errors.email?.message}</SpanStyle>
           ) : (
@@ -115,11 +118,11 @@ const SignInPage = () => {
         </ErrorContainer>
         <InputContainer
           type="text"
-          placeholder="이메일"
+          placeholder="looky@example.com"
           {...register("email", SignInPageConstant.EMAIL_VALIDATION_OPTION)}
         />
         <ErrorContainer>
-          <span>닉네임</span>
+          <span className="font-bold">닉네임</span>
           {errors.fullName?.message ? (
             <SpanStyle>{errors.fullName?.message}</SpanStyle>
           ) : (
@@ -128,7 +131,7 @@ const SignInPage = () => {
         </ErrorContainer>
         <InputContainer
           type="text"
-          placeholder="닉네임"
+          placeholder="lookies"
           {...register(
             "fullName",
             SignInPageConstant.FULLNAME_VALIDATION_OPTION
@@ -136,7 +139,7 @@ const SignInPage = () => {
         />
 
         <ErrorContainer>
-          <span>비밀번호</span>
+          <span className="font-bold">비밀번호</span>
           {errors.password?.message ? (
             <SpanStyle>{errors.password?.message}</SpanStyle>
           ) : (
@@ -153,7 +156,7 @@ const SignInPage = () => {
         />
 
         <ErrorContainer>
-          <span>비밀번호 확인</span>
+          <span className="font-bold">비밀번호 확인</span>
           {errors.passwordCheck ? (
             <SpanStyle>{errors.passwordCheck.message}</SpanStyle>
           ) : (
