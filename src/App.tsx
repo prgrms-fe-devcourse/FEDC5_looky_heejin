@@ -7,6 +7,7 @@ import { useAuth } from "./hooks/useAuth";
 import useEventQuery from "./hooks/useEventQuery";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMe } from "./hooks/useMe";
+import { NotificationManager } from "./components/Notification";
 
 const App = () => {
   // const navigate = useNavigate();
@@ -58,7 +59,12 @@ const App = () => {
 
   if (isLoading) return null;
 
-  return <RouterComponent />;
+  return (
+    <>
+      <NotificationManager />
+      <RouterComponent />
+    </>
+  );
 };
 
 export default App;

@@ -26,6 +26,7 @@ const TopNavBarWrapper = styled.nav`
   height: ${NAV_HEIGHT}rem;
   max-width: ${APP_MAX_WIDTH}px;
   background-color: ${({ theme }) => theme.background_color};
+  border-bottom: ${({ theme }) => `1px solid ${theme.container_color}`};
 `;
 
 const NavBarPartition = styled.div<{ $width: string }>`
@@ -40,6 +41,7 @@ const NAV_VISIBLE_PATH = [
   PathName.CHATS,
   PathName.CHAT,
   PathName.NOTIFICATIONS,
+  PathName.NEWPOST,
   PathName.POSTDETAIL,
   PathName.TEST,
 ];
@@ -47,6 +49,7 @@ const NAV_VISIBLE_PATH = [
 const NavTitle = {
   CHANNELS: "채널 목록",
   PROFILE: "프로필",
+  NEWPOST: "새 포스트 생성",
   NOTIFICATIONS: "알림",
   CHATS: "대화 목록",
 };
@@ -116,6 +119,9 @@ const TopNavBar = () => {
           )}
           {currentPath === PathName.POSTDETAIL && (
             <PageTitle title="포스트 디테일"></PageTitle> // 데이터 붙여야 함
+          )}
+          {currentPath === PathName.NEWPOST && (
+            <PageTitle title={NavTitle.NEWPOST}></PageTitle> // 데이터 붙여야 함
           )}
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>
