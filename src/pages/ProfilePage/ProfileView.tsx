@@ -1,40 +1,11 @@
-import { NAV_HEIGHT } from "@/constants/uiConstants";
-import { Col, Row } from "@/styles/GlobalStyle";
-import { styled, useTheme } from "styled-components";
+import { useTheme } from "styled-components";
 import { useMe } from "@/hooks/useMe";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { ICON_SIZE, ICON_SIZE_SMALL } from "./ProfilePage.const";
 import Buttons, { IButtonProps } from "./Buttons";
 import { Avatar, Button, Icon } from "@/components/common";
-
-const Profile = styled(Col)`
-  height: calc(100vh - ${NAV_HEIGHT * 2}rem);
-  padding: 1rem;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("https://picsum.photos/1500");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-`;
-
-const ButtonsWrap = styled(Row)`
-  &.me {
-    justify-content: flex-end;
-    &:after {
-      content: "";
-    }
-  }
-  &.others {
-  }
-`;
-
-const InfoWrap = styled(Col)`
-  align-items: center;
-  justify-content: flex-end;
-  flex-grow: 1;
-  margin-bottom: 1rem;
-`;
+import { ButtonsWrap, InfoWrap, Profile } from "./ProfilePage.style";
 
 const buttonStyle: IButtonProps["style"] = {
   variant: "neumorp",

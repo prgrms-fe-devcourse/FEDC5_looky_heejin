@@ -1,11 +1,6 @@
 import { Image } from "@/components/common";
-import {
-  POSTER_SIMPLE_CARD_HEIGHT,
-  POSTER_SIMPLE_CARD_WIDTH,
-} from "@/constants/uiConstants";
-import { Col, Row } from "@/styles/GlobalStyle";
 import { IPost } from "@/types";
-import { styled } from "styled-components";
+import { ImageWrap, PostCard, Posts, PostsList } from "./ProfilePage.style";
 
 const DUMMY_POST: IPost[] | [] = [
   {
@@ -51,36 +46,6 @@ const DUMMY_POST: IPost[] | [] = [
     __v: 0,
   },
 ];
-
-const Posts = styled(Col)`
-  justify-content: flex-start;
-  align-items: center;
-  min-height: 576px;
-  padding: 2rem 2rem 1rem;
-`;
-
-const PostsList = styled(Row)`
-  width: 520px;
-  flex-grow: 1;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-`;
-
-const PostCard = styled.div`
-  padding-right: calc((520px - (${POSTER_SIMPLE_CARD_WIDTH} + 10) * 3px) / 2);
-  padding-bottom: 1rem;
-
-  &:nth-child(3n) {
-    padding-right: 0;
-  }
-`;
-
-const ImageWrap = styled.div`
-  position: relative;
-  width: ${POSTER_SIMPLE_CARD_WIDTH + 10}px;
-  height: ${POSTER_SIMPLE_CARD_HEIGHT + 10}px;
-`;
 
 const PostsView = () => {
   return (
