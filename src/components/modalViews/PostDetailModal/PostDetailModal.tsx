@@ -1,10 +1,10 @@
 import { _GET, _POST } from "@/api";
-import { Avatar } from "@/components/common";
+import { Avatar, ToolTip } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
 import {
@@ -30,6 +30,7 @@ import {
   StyledInput,
   StyledLi,
   StyledSpan,
+  Tag,
   UserInfoWrapper,
   UserNameInComment,
   UserNameSpan,
@@ -42,35 +43,42 @@ import {
   ICreateLike,
   IDeleteLike,
   INotification,
+  IFollow,
+  IUnfollow,
 } from "@/types";
 import { _CREATE_COMMENT } from "@/api/queries/comment";
 import { _NOTIFY } from "@/api/queries/notify";
 import { useMe } from "@/hooks/useMe";
 import { useUI } from "@/components/common/uiContext";
 import { _CREATE_LIKE, _DELETE_LIKE } from "@/api/queries/like";
+import type { ITag } from "@/types/post";
+import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 
 const PostDetail = () => {
   const { closeModal } = useUI();
-  const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
+  const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
+    mode: "onSubmit",
+  });
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [content, setContent] = useState<string>(
-    "국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 공무원인 근로자는 법률이 정하는 자에 한하여 단결권·단체교섭권 및 단체행동권을 가진다. 모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에 노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 국가는 모성의 보호를 위하여 노력하여야 한다. 선거에 관한 경비는 법률이 정하는 경우를 제외하고는 정당 또는 후보자에게 부담시킬 수 없다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될"
-  );
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState<string>("");
+  const [tags, setTags] = useState<ITag[]>([]);
   const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
+  const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
+  const [isIFollowed, setIsIFollowed] = useState(false);
   const [comments, setComments] = useState<string[]>([]);
   const [newComments, setNewComments] = useState<string[]>([]);
-
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
 
   const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
-  const postId = "65939e1f2ed4d31ff83cb883";
+  const postId = "659c00da1d725b33c1ed7a1e";
   const { id: myId } = useMe();
   console.log("내 아이디", myId);
   // console.log(comments);
@@ -81,32 +89,43 @@ const PostDetail = () => {
   const initMutation = useMutation({
     mutationFn: async (endPoint: string) => await _GET(endPoint),
     onSuccess(data) {
-      console.log("유저의 아이디:", data?.data.author._id);
+      console.log("유저의 아이디:", data?.data.author._id); // 포스트를 쓴 사람의 아이디
       // console.log("fullName:", data?.data.author.fullName);
       // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
       // console.log("좋아요 누른 사람들:", data?.data.likes);
       // console.log("comments:", data?.data.comments);
       console.log(data);
-      // console.log(data?.data.image);
+      console.log("팔로워:", data?.data.author.followers);
+      console.log("팔로잉", data?.data.author.following);
 
       setUserId(data?.data.author._id);
       setUserName(data?.data.author.fullName);
       setImageUrl(data?.data.image);
-      // setContent(JSON.parse(data?.data.title).content);
-      setContent(data?.data.title);
+      const parsedJson = JSON.parse(data?.data.title);
+      setTitle(parsedJson.title);
+      setContent(parsedJson.content);
+      setTags(parsedJson.tags);
+      console.log(parsedJson);
+      // setContent(data?.data.title);
       setLikes(data?.data.likes);
-      console.log(data);
-      setLikeCount(likes.length);
-      setIsILiked(likes.some(({ user }) => user === myId));
+      setLikeCount(data?.data.likes.length);
+      setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
+      data?.data.likes.map((value: any) => {
+        value.user === myId
+          ? setMyLikeId(value._id)
+          : console.log(`나 여기 없음!`);
+      });
+      // setIsIFollowed(data?.data.followers.some(followId => ))
+      // setMyLikeId(data?.data.likes.map(value => {console.log(value)})
       setComments(data?.data.comments);
     },
     onError(error) {
       console.log("API 에러: ", error);
     },
   });
-  console.log(comments);
+  // console.log(comments);
 
-  const [token, _] = useLocalStorage("token");
+  // const [token, _] = useLocalStorage("token");
 
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
@@ -114,8 +133,7 @@ const PostDetail = () => {
       console.log("알림 api 성공", data);
     },
     onError(error) {
-      // 왜안될까요
-      console.log("알림 api 통신 에러");
+      console.error("알림 api 통신 에러", error);
     },
   });
 
@@ -146,28 +164,52 @@ const PostDetail = () => {
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
       console.log("API: 좋아요 생성 성공 ", data);
-      const newNotification: INotification = {
-        notificationType: "LIKE",
-        notificationTypeId: data._id,
-        // 나야 상대방이야 ..?
-        userId: myId,
-        postId: data.post,
-      };
+      if (myId) {
+        const newNotification: INotification = {
+          notificationType: "LIKE",
+          notificationTypeId: data._id,
+          // 나야 상대방이야 ..?
+          userId: myId,
+          postId: data.post,
+        };
+        console.log(newNotification);
+      }
+      setMyLikeId(data._id);
       setLikeCount(likeCount + 1);
     },
     onError(error) {
-      console.log("error: 좋아요 생성 실패 ");
+      console.error("error: 좋아요 생성 실패 ", error);
     },
   });
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
     onSuccess(data) {
-      console.log("API: 좋아요 삭제 성공 ");
-      setLikeCount(likeCount - 1);
+      console.log("API: 좋아요 삭제 성공 ", data);
+      if (likeCount > 0) setLikeCount(likeCount - 1);
     },
     onError(error) {
-      console.log("error: 좋아요 삭제 실패 ");
+      console.error("error: 좋아요 삭제 실패 ", error);
+    },
+  });
+
+  const followMutation = useMutation({
+    mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
+    onSuccess(data) {
+      console.log("API: 팔로우 성공", data);
+    },
+    onError(error) {
+      console.error("error: 팔로우 실패 ", error);
+    },
+  });
+
+  const unfollowMutation = useMutation({
+    mutationFn: async (formData: IUnfollow) => await _UNFOLLOW(formData),
+    onSuccess(data) {
+      console.log("API: 언팔로우 성공", data);
+    },
+    onError(error) {
+      console.error("error: 언팔로우 실패 ", error);
     },
   });
 
@@ -177,7 +219,9 @@ const PostDetail = () => {
   // ---------------------------------------------------------
 
   // --------------------------------------
-
+  const handleFollow = () => {
+    myId !== null && followMutation.mutate({ userId });
+  };
   const handleContentDetail = () => {
     setIsContentDetail(true);
     console.log(isContentDetail);
@@ -189,7 +233,7 @@ const PostDetail = () => {
       if (!isILiked) {
         createLikeMutation.mutate({ postId: postId });
       } else {
-        deleteLikeMutation.mutate({ id: "659be80465328a2e5ec05d00" });
+        if (myLikeId) deleteLikeMutation.mutate({ id: myLikeId });
       }
 
       setIsShowHeart(true);
@@ -219,17 +263,34 @@ const PostDetail = () => {
     setIsShowComments(true);
   };
 
-  const onValid = comment => {
+  const toggleShowComments = () => {
+    setIsShowComments(!isShowComments);
+  };
+
+  interface Comment {
+    comment: string;
+  }
+
+  const onValid: SubmitHandler<Comment> = ({ comment }) => {
+    console.log(comment);
     // setNewComments([...newComments, comment.comment]);
-    const newComment: ICreateComment = { comment: comment.comment, postId };
+    const newComment: ICreateComment = { comment, postId };
     createCommentMutation.mutate(newComment);
     setValue("comment", "");
     setIsShowComments(true);
     console.log(comment);
   };
 
-  const onInvalid = error => {
+  const onInvalid = (error: any) => {
     console.log(error);
+  };
+
+  const tagClickHandler = (id: string, x?: number, y?: number) => {
+    tags.map(val => {
+      if (val.id === id) {
+        console.log(`나 존재함!`, val);
+      }
+    });
   };
 
   // console.log(likes);
@@ -242,9 +303,6 @@ const PostDetail = () => {
         <UserNameWrapper>
           <UserNameSpan>{userName}</UserNameSpan>
         </UserNameWrapper>
-        <FollowButton variant="flat" rippleColor={theme.gray_300}>
-          팔로우
-        </FollowButton>
       </UserInfoWrapper>
       <ImageWrapper>
         {isShowHeart && isILiked && (
@@ -256,7 +314,18 @@ const PostDetail = () => {
             ></Icon>
           </HeartInImage>
         )}
-
+        {tags.map(({ x, y, id, brand, product, link }) => (
+          <ToolTip
+            $direction="top"
+            $options="hover"
+            $tooltip={brand + " " + product + " " + link}
+            key={id}
+            $x={x}
+            $y={y}
+          >
+            <Tag x={x} y={y} onClick={() => tagClickHandler(id, x, y)} />
+          </ToolTip>
+        ))}
         <StyledImg src={imageUrl} />
       </ImageWrapper>
       <CaptionWrapper>
@@ -272,30 +341,36 @@ const PostDetail = () => {
             ></Icon>
             <LikeCountSpan>
               {isILiked
-                ? `회원님 외 ${likeCount}명이 좋아합니다.`
-                : `${likeCount}명이 좋아합니다.`}
+                ? likeCount !== 1
+                  ? `회원님 외 ${likeCount - 1}명이 좋아합니다.`
+                  : "회원님이 이 게시글을 좋아합니다."
+                : likeCount !== 0
+                  ? `${likeCount}명이 좋아합니다.`
+                  : `좋아요를 눌러주세요.`}
             </LikeCountSpan>
           </HeartWrapper>
           <CommentChatWrapper>
-            <Icon name={CHAT_ICON} size="2rem" onClick={handleChat} />
-            <Icon name={SEND_ICON} size="2.3rem" />
+            <Icon name={CHAT_ICON} size="2rem" onClick={toggleShowComments} />
+            <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
           </CommentChatWrapper>
         </IconsWrapper>
         <ContentWrapper>
           {isContentDetail ? (
             <StyledSpan>
-              <UserNameSpan>{userName}&nbsp;&nbsp;</UserNameSpan>
+              <UserNameSpan>{title}&nbsp;&nbsp;</UserNameSpan>
               {content}
             </StyledSpan>
           ) : (
             <StyledSpan>
-              <UserNameSpan>{userName}&nbsp;&nbsp;</UserNameSpan>
-              {content.slice(0, 40)}&nbsp;&nbsp;
+              <UserNameSpan>{title}&nbsp;&nbsp;</UserNameSpan>
+              <br />
               {content.length > 40 ? (
                 <ContentDetail onClick={handleContentDetail}>
                   ...더 보기
                 </ContentDetail>
-              ) : null}
+              ) : (
+                <span>{content.slice(0, 40)}</span>
+              )}
             </StyledSpan>
           )}
         </ContentWrapper>
@@ -303,7 +378,7 @@ const PostDetail = () => {
         <CommentWrapper>
           {isShowComments ? (
             <ul>
-              {comments.map(comment => (
+              {comments.map((comment: any) => (
                 <StyledLi key={comment._id}>
                   <UserNameInComment>
                     {comment.author.fullName}{" "}
