@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import PostsView from "./PostsView";
 import ProfileView from "./ProfileView";
+import ProfilePostsView from "./ProfilePostsView";
 
 const ProfileWrap = styled.div`
   overflow-y: scroll;
@@ -11,7 +11,7 @@ const ProfilePage = () => {
     <>
       <ProfileWrap>
         <ProfileView />
-        <PostsView />
+        <ProfilePostsView />
       </ProfileWrap>
     </>
   );

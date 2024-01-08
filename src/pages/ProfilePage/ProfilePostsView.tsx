@@ -47,7 +47,7 @@ const DUMMY_POST: IPost[] | [] = [
   },
 ];
 
-const PostsView = () => {
+const ProfilePostsView = () => {
   return (
     <Posts>
       {DUMMY_POST && DUMMY_POST.length > 0 ? (
@@ -73,4 +73,4 @@ const PostsView = () => {
   );
 };
 
-export default PostsView;
+export default ProfilePostsView;
