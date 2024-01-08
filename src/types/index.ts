@@ -43,3 +43,8 @@ export interface IPost {
   createdAt: String;
   updatedAt: String;
 }
+
+export interface IComment {
+  comment: string;
+  postId: string;
+}
