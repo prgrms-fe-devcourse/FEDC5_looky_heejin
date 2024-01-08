@@ -40,3 +40,20 @@ export const parseDate = (timeData: string | Date, lang = "ko") => {
     }).format(new Date(timeData));
   }
 };
+
+export const parseTime = (timeData: string | Date, lang = "ko") => {
+  const passed: number = +new Date() - +new Date(timeData);
+
+  if (checkTime.isOverOneDay(passed)) {
+    // yyyy년 mm월 dd일
+    return new Intl.DateTimeFormat(lang, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(new Date(timeData));
+  } else {
+    return new Intl.DateTimeFormat("ko", { timeStyle: "short" }).format(
+      new Date(timeData)
+    );
+  }
+};
