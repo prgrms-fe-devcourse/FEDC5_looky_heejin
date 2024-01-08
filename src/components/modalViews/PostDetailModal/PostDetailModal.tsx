@@ -36,6 +36,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { IComment, INotification } from "@/types";
 import { _COMMENT } from "@/api/queries/comment";
 import { _NOTIFY } from "@/api/queries/notify";
+import { useMe } from "@/hooks/useMe";
 
 const PostDetail = () => {
   const { register, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
@@ -60,18 +61,20 @@ const PostDetail = () => {
   // const navigate = useNavigate();
   const contentLength = content.length;
   const postId = "65961633fc83a20c6e9c6a10";
+  const { id: myId } = useMe();
+  console.log("내 아이디", myId);
 
   // fetch data --------------------------------------------
   const mutation = useMutation({
     mutationFn: async (endPoint: string) => await _GET(endPoint),
     onSuccess(data) {
-      // console.log("유저의 아이디:", data?.data.author._id);
+      console.log("유저의 아이디:", data?.data.author._id);
       // console.log("fullName:", data?.data.author.fullName);
       // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
       // console.log("좋아요 누른 사람들:", data?.data.likes);
-      console.log("comments:", data?.data.comments);
+      // console.log("comments:", data?.data.comments);
       console.log(data);
-      console.log(data?.data.image);
+      // console.log(data?.data.image);
 
       setUserId(data?.data.author._id);
       setUserName(data?.data.author.fullName);
@@ -79,10 +82,7 @@ const PostDetail = () => {
       // setContent(JSON.parse(data?.data.title).content);
       setLikes(data?.data.likes);
       setLikeCount(likes.length);
-      setIsILiked(
-        data?.data.author._id ===
-          likes.some(({ _id }) => _id === data?.data.author._id)
-      );
+      setIsILiked(likes.some(({ user }) => user === myId));
       setComments(data?.data.comments);
     },
     onError(error) {
@@ -109,7 +109,7 @@ const PostDetail = () => {
       const newNotification: INotification = {
         notificationType: "COMMENT",
         notificationTypeId: data._id,
-        userId,
+        userId: myId,
         postId: data.post,
       };
 
@@ -121,28 +121,20 @@ const PostDetail = () => {
     },
   });
 
+  const likeMutation = useMutation({
+    mutationFn: async formData => await _POST("/likes/create", formData),
+    onSuccess(data) {
+      console.log("좋아요 api 통신 성공 ", data);
+    },
+    onError(error) {
+      console.log("좋아요 생성 에러");
+    },
+  });
+
   useEffect(() => {
     mutation.mutate("/posts/65961633fc83a20c6e9c6a10");
   }, []);
   // ---------------------------------------------------------
-
-  // const mutation = useMutation({
-  //   mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
-  //   onSuccess({ user, token }) {
-  //     console.log("API 성공: ", user, token);
-  //     setAuth({ isLogIn: true, token });
-  //     setMe({
-  //       id: user._id,
-  //       userName: user.fullName,
-  //       profilePhoto: "",
-  //     });
-  //     storeToken(token);
-  //     navigate("/home");
-  //   },
-  //   onError(error) {
-  //     console.error("API 에러: ", error);
-  //   },
-  // });
 
   // --------------------------------------
 
@@ -153,7 +145,8 @@ const PostDetail = () => {
 
   const handleLike = () => {
     if (!isShowHeart) {
-      setIsILiked(isILiked => !isILiked);
+      // setIsILiked(isILiked => !isILiked);
+      likeMutation.mutate({ postId: postId });
       setIsShowHeart(true);
       // TODO:  좋아요 api 통신해야함 낙관적 업데이트?
       setLikeCount(likeCount => {
