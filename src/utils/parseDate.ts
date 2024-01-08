@@ -17,9 +17,7 @@ export const parseDate = (timeData: string | Date, lang = "ko") => {
     numeric: "always",
   });
 
-  const KST = 9 * 60 * 60 * 1000;
-
-  const passed: number = +new Date() - +new Date(timeData) + KST;
+  const passed: number = +new Date() - +new Date(timeData);
 
   if (checkTime.isSecond(passed)) {
     // 초 단위
