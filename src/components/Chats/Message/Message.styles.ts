@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 import tw from "twin.macro";
 
 export const MessageCard = styled.div<any>`
-  direction: ${props => (props.isMine ? "rtl" : "ltr")};
+  direction: ${props => (props.$isMine ? "rtl" : "ltr")};
+  grid-template-columns: ${props => (props.$isMine ? "1fr" : "32px 1fr")};
 
-  ${tw`grid w-full grid-cols-[40px_1fr] gap-3 mx-auto`}
+  ${tw`grid w-full gap-2 mx-auto`}
 `;
 
 export const MessageBody = styled.div`
@@ -30,13 +31,13 @@ export const MessageWrapper = styled.div`
 
 export const MessageBox = styled.div<any>`
   background-color: ${props =>
-    props.isMine ? props.theme.symbol_color : props.theme.transparent_50};
+    props.$isMine ? props.theme.symbol_color : props.theme.transparent_50};
   direction: ltr;
 
-  ${tw`p-3 grid break-all rounded-lg`}
+  ${tw`p-2 grid break-all rounded-lg text-sm`}
 
   ${props => {
-    if (props.isMine) {
+    if (props.$isMine) {
       return css`
         border-top-right-radius: 0px;
         & p {
@@ -49,5 +50,4 @@ export const MessageBox = styled.div<any>`
       `;
     }
   }}
-
 `;

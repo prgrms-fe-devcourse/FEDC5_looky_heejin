@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Avatar } from "@/components/common";
-import { parseDate } from "@/utils/parseDate";
+import { parseTime } from "@/utils/parseDate";
 import {
   MessageBody,
   MessageBox,
@@ -19,19 +19,21 @@ interface IMessageProps {
 }
 
 const Message = ({ isMine, senderName, message, createdAt }: IMessageProps) => {
+  console.log(createdAt);
+
   return (
-    <MessageCard isMine={isMine}>
-      <div>{!isMine && <Avatar size="S" />}</div>
+    <MessageCard $isMine={isMine}>
+      <div>{!isMine && <Avatar size="XS" />}</div>
       <MessageBody>
         <UserNameWrapper>
           {!isMine && <span>{senderName}</span>}
         </UserNameWrapper>
         {message && (
           <MessageWrapper>
-            <MessageBox isMine={isMine}>
+            <MessageBox $isMine={isMine}>
               <p>{message}</p>
             </MessageBox>
-            <span>{parseDate(createdAt)}</span>
+            <span>{parseTime(createdAt)}</span>
           </MessageWrapper>
         )}
       </MessageBody>
