@@ -8,13 +8,13 @@ import {
   ChannelsPage,
   ProfilePage,
   SearchPage,
-  ChatPage,
   PostDetailPage,
   NotFoundPage,
   HomePage,
   CreatePostPage,
   NotificationsPage,
   ChatsPage,
+  ChatPage,
 } from "@/pages";
 import TestPage from "@/pages/TestPage";
 import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
@@ -39,7 +39,6 @@ const RouterComponent = () => {
             }
           />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/chat/:id" element={<ChatPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route
             path="/chats"
