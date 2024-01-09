@@ -14,7 +14,7 @@ import {
 } from "./SignInPage.styles";
 import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
-import { Image, InputLabel } from "@/components/common";
+import { Image } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";

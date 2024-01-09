@@ -8,7 +8,7 @@ const ChannelsPage = () => {
   const [_, setChannel] = useLocalStorage("ViewChannel");
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["channels"],
     queryFn: async () => await _GET("/channels"),
   });
