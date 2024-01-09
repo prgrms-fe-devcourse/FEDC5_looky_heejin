@@ -16,6 +16,7 @@ import {
   TagCreateModal,
   TestModal,
 } from "@/components/modalViews";
+import EditPasswordModal from "../modalViews/EditPasswordModal";
 
 export const useUI = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const ModalView: React.FC<{
       {modalView === "TAG_CREATE_VIEW" && <TagCreateModal props={props} />}
       {modalView === "CHANNEL_SELECT_VIEW" && <ChannelSelectModal />}
       {modalView === "EDIT_NAME_VIEW" && <EditNameModal />}
+      {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
     </Modal>
   );
 };
