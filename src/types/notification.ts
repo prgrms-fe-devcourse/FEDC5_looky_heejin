@@ -1,3 +1,4 @@
+import { IComment, ILike } from "./post";
 import { IUser } from "./user";
 
 export interface INotification {
