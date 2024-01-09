@@ -16,7 +16,7 @@ export const ModalLayoutContainer = styled.div`
   background-color: ${props => props.theme.background_color};
   padding: ${MODAL_VERTICAL_PADDIND}rem ${MODAL_HORIZONTAL_PADDING}rem;
 
-  ${tw`relative shadow-md`}
+  ${tw`relative shadow-md rounded-md`}
 `;
 
 export const ModalLayoutHeader = styled.section`
