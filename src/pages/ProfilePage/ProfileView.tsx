@@ -58,7 +58,7 @@ const ProfileView = ({
 
   return (
     <Profile
-      isMe={isMe}
+      isme={isMe.toString()}
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
@@ -76,7 +76,7 @@ const ProfileView = ({
       )}
       <InfoWrap {...props}>
         <AvatarWrap
-          isMe={isMe}
+          isme={isMe.toString()}
           onClick={e => {
             isMe ? onClickAvatar(e) : null;
           }}
