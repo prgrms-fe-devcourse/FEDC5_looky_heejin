@@ -15,6 +15,11 @@ export interface IUpdatePassword {
   password: string;
 }
 
+export interface IUpdateImage {
+  isCover: boolean;
+  image: any;
+}
+
 export interface IFollowResponse {
   _id: string;
   user?: string;
