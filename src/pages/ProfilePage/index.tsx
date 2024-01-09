@@ -3,11 +3,13 @@ import ProfileView from "./ProfileView";
 import ProfilePostsView from "./ProfilePostsView";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GET_USER } from "@/constants/queryKey";
+import { GET_USER, ME } from "@/constants/queryKey";
 import { _FOLLOW, _GET_USER, _UNFOLLOW } from "@/api/queries/profile";
 import { useEffect, useState } from "react";
 import { IUser } from "@/types";
 import { IFollow, IUnFollow } from "@/types/profile";
+import { useUI } from "@/components/common/uiContext";
+import { _GET } from "@/api";
 
 const ProfileWrap = styled.div`
   overflow-y: scroll;
@@ -17,7 +19,15 @@ const ProfilePage = () => {
   const { id } = useParams();
   const [userData, setUserData] = useState<IUser>();
   const [isFollow, setIsFollow] = useState(false);
+  const [followId, setFollowId] = useState<string>();
   const [formData, setFormData] = useState<IFollow | IUnFollow>();
+
+  const { openModal, setModalView, displayModal } = useUI();
+
+  const { data: myData, refetch } = useQuery({
+    queryKey: [ME],
+    queryFn: async () => await _GET("/auth-user"),
+  });
 
   const navigate = useNavigate();
 
@@ -26,10 +36,11 @@ const ProfilePage = () => {
       return await _FOLLOW(formData);
     },
     onSuccess(data) {
-      console.log(data);
+      setIsFollow(true);
+      setFollowId(data._id);
     },
     onError(error) {
-      console.error("ERROR: ", error);
+      console.error("ERROR: 팔로우 실패", error);
     },
   });
 
@@ -37,12 +48,13 @@ const ProfilePage = () => {
     mutationFn: async (formData: IUnFollow) => {
       return await _UNFOLLOW(formData);
     },
-    onSuccess(data) {
+    onSuccess() {
       console.log("API 성공! UnFollow");
-      console.log(data);
+      setIsFollow(false);
+      setFollowId("");
     },
     onError(error) {
-      console.error("ERROR: ", error);
+      console.error("ERROR: 언팔로우 실패", error);
     },
   });
 
@@ -58,7 +70,9 @@ const ProfilePage = () => {
 
   const handleChangeName = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log("이름 변경!");
+
+    setModalView("EDIT_NAME_VIEW");
+    openModal();
   };
 
   const handleChangeImage = (e: React.MouseEvent) => {
@@ -77,8 +91,6 @@ const ProfilePage = () => {
 
   const handleClickFollow = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsFollow(!isFollow);
-
     if (id === undefined) return;
 
     setFormData({
@@ -94,7 +106,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      // 현재 프로필에 대한 data
+      console.log("첫 번째 isSuccess!! ", data);
       setUserData(data);
     }
   }, [isSuccess]);
