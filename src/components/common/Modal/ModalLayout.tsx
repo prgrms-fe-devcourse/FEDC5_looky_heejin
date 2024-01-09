@@ -9,6 +9,9 @@ import {
   ModalHeaderButton,
   ModalContantWrapper,
 } from "./Modal.styles";
+import Icon from "../Icon/Icon";
+import { CLOSE_ICON } from "@/constants/icons";
+import useTheme from "@/hooks/useTheme";
 
 // import FocusTrap from "@lib/focus-trap";
 
@@ -28,6 +31,7 @@ const ModalLayout: FC<ModalLayoutProps> = ({
 }) => {
   const ref = useRef() as React.MutableRefObject<HTMLDivElement>;
 
+  const theme = useTheme();
   const { closeModal } = useUI();
 
   const _handleClose = () => {
@@ -66,8 +70,11 @@ const ModalLayout: FC<ModalLayoutProps> = ({
         onClick={() => _handleClose()}
         aria-label="Close panel"
       >
-        {/* Close Button Icon */}
-        <div className="h-6 w-6 rounded-full bg-gray-400">X</div>
+        <Icon
+          name={CLOSE_ICON}
+          color={theme?.text_primary_color}
+          weight={300}
+        />
       </ModalHeaderButton>
       <ModalContantWrapper>{children}</ModalContantWrapper>
     </ModalLayoutContainer>
