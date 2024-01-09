@@ -4,6 +4,7 @@ import {
   IFollow,
   IFollowResponse,
   IUnFollow,
+  IUpdateImage,
   IUpdateName,
   IUpdatePassword,
 } from "@/types/profile";
@@ -35,5 +36,10 @@ export const _UPDATE_NAME = async (params: IUpdateName): Promise<IUser> => {
 
 export const _UPDATE_PASSWORD = async (params: IUpdatePassword) => {
   const results = await _PUT("settings/update-password", params);
+  return results?.data;
+};
+
+export const _UPDATE_IMAGE = async (params: IUpdateImage): Promise<IUser> => {
+  const results = await _POST("users/upload-photo", params);
   return results?.data;
 };
