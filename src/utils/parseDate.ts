@@ -17,9 +17,7 @@ export const parseDate = (timeData: string | Date, lang = "ko") => {
     numeric: "always",
   });
 
-  const KST = 9 * 60 * 60 * 1000;
-
-  const passed: number = +new Date() - +new Date(timeData) + KST;
+  const passed: number = +new Date() - +new Date(timeData);
 
   if (checkTime.isSecond(passed)) {
     // 초 단위
@@ -40,5 +38,22 @@ export const parseDate = (timeData: string | Date, lang = "ko") => {
       month: "short",
       day: "numeric",
     }).format(new Date(timeData));
+  }
+};
+
+export const parseTime = (timeData: string | Date, lang = "ko") => {
+  const passed: number = +new Date() - +new Date(timeData);
+
+  if (checkTime.isOverOneDay(passed)) {
+    // yyyy년 mm월 dd일
+    return new Intl.DateTimeFormat(lang, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(new Date(timeData));
+  } else {
+    return new Intl.DateTimeFormat("ko", { timeStyle: "short" }).format(
+      new Date(timeData)
+    );
   }
 };
