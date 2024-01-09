@@ -1,5 +1,11 @@
-import { _DELETE, _GET, _POST } from "@/api";
-import { IFollow, IFollowResponse, IUnFollow } from "@/types/profile";
+import { _DELETE, _GET, _POST, _PUT } from "@/api";
+import { IUser } from "@/types";
+import {
+  IFollow,
+  IFollowResponse,
+  IUnFollow,
+  IUpdateName,
+} from "@/types/profile";
 
 export const _GET_USER = async (userId: string) => {
   if (!userId) {
@@ -18,5 +24,10 @@ export const _UNFOLLOW = async (
   params: IUnFollow
 ): Promise<IFollowResponse> => {
   const results = await _DELETE("/follow/delete", params);
+  return results?.data;
+};
+
+export const _UPDATE_NAME = async (params: IUpdateName): Promise<IUser> => {
+  const results = await _PUT("/settings/update-user", params);
   return results?.data;
 };

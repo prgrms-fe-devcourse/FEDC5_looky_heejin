@@ -6,6 +6,11 @@ export interface IUnFollow {
   id: string;
 }
 
+export interface IUpdateName {
+  fullName: string;
+  userName?: string;
+}
+
 export interface IFollowResponse {
   _id: string;
   user?: string;
