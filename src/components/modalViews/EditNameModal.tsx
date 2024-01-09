@@ -24,13 +24,18 @@ const InputWrap = styled.div`
 
 const EditNameModal = () => {
   const { closeModal } = useUI();
-  const { register, handleSubmit } = useForm<INameFormProps>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<INameFormProps>();
 
   const mutation = useMutation({
     mutationFn: async (updatedName: string) =>
       await _UPDATE_NAME({ fullName: updatedName }),
-    onSuccess: () => {
+    onSuccess: data => {
       console.log("API UPDATE NAME 성공!");
+      console.log(data.fullName);
     },
     onError: error => console.log("Error", error),
   });
@@ -53,6 +58,9 @@ const EditNameModal = () => {
             register={register("fullName", NAME_VALIDATION)}
             required={false}
           />
+          {errors?.fullName && (
+            <span style={{ color: "red" }}>{errors.fullName.message}</span>
+          )}
         </InputWrap>
         <Button
           variant="symbol"
