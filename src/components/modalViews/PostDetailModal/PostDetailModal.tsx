@@ -36,7 +36,6 @@ import {
   UserNameSpan,
   UserNameWrapper,
 } from "./PostDetailModal.styles";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import {
   ICreateComment,
   IDeleteComment,
@@ -55,17 +54,26 @@ import type { ITag } from "@/types/post";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import { ME } from "@/constants/queryKey";
 
-const PostDetail = () => {
+interface ModalProps {
+  postId: string;
+}
+
+interface IPostDetailModalProps {
+  props: ModalProps;
+}
+
+const PostDetail = ({ props }: IPostDetailModalProps) => {
+  const { postId } = props as ModalProps;
   const { closeModal } = useUI();
   const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
     mode: "onSubmit",
   });
 
-  const [userId, setUserId] = useState<string>("");
-  const [userName, setUserName] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
   const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
@@ -74,18 +82,13 @@ const PostDetail = () => {
   const [isIFollowed, setIsIFollowed] = useState(false);
   const [followId, setFollowId] = useState("");
   const [comments, setComments] = useState<string[]>([]);
-  const [newComments, setNewComments] = useState<string[]>([]);
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
-
   const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
-  const postId = "659c00da1d725b33c1ed7a1e";
+  // const postId = "659c00da1d725b33c1ed7a1e";
   const { id: myId } = useMe();
-  console.log("내 아이디", myId);
-  console.log("comments", comments);
-  console.log(likes);
 
   const navigate = useNavigate();
 
@@ -105,16 +108,6 @@ const PostDetail = () => {
           setFollowId(followingData._id);
         }
       });
-
-      console.log("유저의 아이디:", data?.data.author._id); // 포스트를 쓴 사람의 아이디
-      // console.log("fullName:", data?.data.author.fullName);
-      // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
-      // console.log("좋아요 누른 사람들:", data?.data.likes);
-      // console.log("comments:", data?.data.comments);
-      console.log(data);
-      // console.log("팔로워:", data?.data.author.setIsIFollowed(isFollowing));
-      console.log("팔로잉", data?.data.author.following);
-
       setUserId(data?.data.author._id);
       setUserName(data?.data.author.fullName);
       setImageUrl(data?.data.image);
@@ -122,8 +115,6 @@ const PostDetail = () => {
       setTitle(parsedJson.title);
       setContent(parsedJson.content);
       setTags(parsedJson.tags);
-      console.log(parsedJson);
-      // setContent(data?.data.title);
       setLikes(data?.data.likes);
       setLikeCount(data?.data.likes.length);
       setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
@@ -132,17 +123,12 @@ const PostDetail = () => {
           ? setMyLikeId(value._id)
           : console.log(`나 여기 없음!`);
       });
-      // setIsIFollowed(data?.data.followers.some(followId => ))
-      // setMyLikeId(data?.data.likes.map(value => {console.log(value)})
       setComments(data?.data.comments);
     },
     onError(error) {
       console.log("API 에러: ", error);
     },
   });
-  // console.log(comments);
-
-  // const [token, _] = useLocalStorage("token");
 
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
@@ -158,13 +144,10 @@ const PostDetail = () => {
     mutationFn: async (formData: ICreateComment) =>
       await _CREATE_COMMENT(formData),
     onSuccess(data) {
-      console.log("댓글 데이터", data);
       const temp = [...comments, data];
-      console.log(temp);
       const newNotification: INotification = {
         notificationType: "COMMENT",
         notificationTypeId: data._id,
-        // 나야 상대방이야..?
         userId,
         postId: data.post,
       };
@@ -198,7 +181,6 @@ const PostDetail = () => {
         const newNotification: INotification = {
           notificationType: "LIKE",
           notificationTypeId: data._id,
-          // 나야 상대방이야 ..?
           userId: myId,
           postId: data.post,
         };
@@ -226,9 +208,6 @@ const PostDetail = () => {
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
     onSuccess(data) {
-      // const newNotification : INotification = {
-      //   notificationType
-      // }
       console.log("API: 팔로우 성공", data);
       setIsIFollowed(true);
       setFollowId(data._id);
@@ -253,9 +232,7 @@ const PostDetail = () => {
   useEffect(() => {
     initMutation.mutate(`/posts/${postId}`);
   }, []);
-  // ---------------------------------------------------------
 
-  // --------------------------------------
   const handleFollow = () => {
     if (!isIFollowed) {
       myId !== null && followMutation.mutate({ userId });
@@ -279,11 +256,7 @@ const PostDetail = () => {
       }
 
       setIsShowHeart(true);
-      // TODO:  좋아요 api 통신해야함 낙관적 업데이트?
-      // setLikeCount(likeCount => {
-      //   if (!isILiked) return likeCount + 1;
-      //   return likeCount - 1;
-      // });
+      // TODO: 디바운스
 
       setTimeout(() => {
         setIsShowHeart(false);
@@ -297,8 +270,6 @@ const PostDetail = () => {
     // }
     closeModal();
     navigate(`/chat/${userId}`);
-
-    // history.replaceState(null, null, `/chat/${userId}`);
   };
 
   const handleShowComments = () => {
@@ -340,7 +311,6 @@ const PostDetail = () => {
     });
   };
 
-  // console.log(likes);
   return (
     <PostDetailWrapper>
       <UserInfoWrapper>
@@ -444,21 +414,12 @@ const PostDetail = () => {
                   )}
                 </StyledLi>
               ))}
-
-              {/* 새 댓글의 경우 api호출하지 않고 배열 리스트에 먼저 담아두려고 했음 */}
-              {/* {newComments.length > 0 && (
-                <li key={Date.now()}>
-                  <UserNameInComment>
-                    {userName} {newComments[newComments.length - 1]}
-                  </UserNameInComment>
-                </li>
-              )} */}
             </ul>
           ) : comments.length === 0 ? (
             <NoComments>댓글이 없습니다.</NoComments>
           ) : (
             <MoreComments onClick={handleShowComments}>
-              댓글 {comments.length + newComments.length}개 보기
+              댓글 {comments.length}개 보기
             </MoreComments>
           )}
         </CommentWrapper>
