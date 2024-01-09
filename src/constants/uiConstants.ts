@@ -8,7 +8,7 @@ export const BORDER_BASE_WIDTH: number = 1.5; // px
 // ------------------------------------------ BORDER //
 
 // CONTAINER ------------------------------------------------------- //
-export const CONTAINER_PADDING_VERTICAL: number = 3; // 3rem
+export const CONTAINER_PADDING_VERTICAL: number = 2; // rem
 export const CONTAINER_PADDING_HORIZONTAIL: number = 2.5; // rem
 export const MOBILEABLE_CONTAINER_HORIZONTAL_SPACE: string =
   "w-[100%] sm:max-w-[420px]";

@@ -8,7 +8,7 @@ const ButtonBaseWrapper = styled.button<any>`
 
   & .ripple > span {
     background-color: ${props =>
-      props.$rippleColor ? props.$rippleColor : props.theme.white_primary + 40};
+      props.$rippleColor ? props.$rippleColor : props.theme.transparent_30};
   }
 `;
 

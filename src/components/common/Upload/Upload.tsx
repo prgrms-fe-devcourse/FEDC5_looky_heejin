@@ -125,11 +125,11 @@ const Upload = ({
           <Image
             src={file}
             fill={true}
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "cover" }}
             priority={true}
           />
         ) : (
-          "Click Icon or Drag file to this area to upload"
+          "추가 버튼을 누르거나 파일을 드롭하여 이미지를 업로드 하세요."
         )}
         {file && children}
         <div
@@ -156,6 +156,10 @@ const UploadArea = styled.div<any>`
   border: 2px dashed ${props => props.theme.gray_200};
   border-color: ${props =>
     props.$dragging ? props.theme.symbol_color : props.theme.gray_200};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Input = styled.input<any>`

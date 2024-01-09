@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
-import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
+import { APP_MAX_WIDTH, NAVIGATER, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import {
   BackButton,
@@ -27,6 +27,7 @@ const TopNavBarWrapper = styled.nav`
   max-width: ${APP_MAX_WIDTH}px;
   background-color: ${({ theme }) => theme.background_color};
   border-bottom: ${({ theme }) => `1px solid ${theme.container_color}`};
+  z-index: ${NAVIGATER};
 `;
 
 const NavBarPartition = styled.div<{ $width: string }>`

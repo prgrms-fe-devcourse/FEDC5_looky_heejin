@@ -8,7 +8,12 @@ import {
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
-import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
+import {
+  APP_MAX_WIDTH,
+  BORDER_TINE_WIDTH,
+  NAVIGATER,
+  NAV_HEIGHT,
+} from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import { Avatar, Button } from "../..";
 import { useMe } from "@/hooks/useMe";
@@ -26,7 +31,9 @@ const BottomNavBarWrapper = styled.nav`
   width: 100%;
   height: ${NAV_HEIGHT}rem;
   background-color: ${({ theme }) => theme.background_color};
-  border-top: ${({ theme }) => `1px solid ${theme.container_color}`};
+  border-top: ${({ theme }) =>
+    `${BORDER_TINE_WIDTH}px solid ${theme.transparent_50}`};
+  z-index: ${NAVIGATER};
 `;
 const IconWrapper = styled.div`
   flex-grow: 1;
@@ -34,7 +41,7 @@ const IconWrapper = styled.div`
   align-items: center;
   transition: background-color 0.5s ease;
   &:hover {
-    background-color: ${({ theme }) => theme.gray_100};
+    background-color: ${({ theme }) => theme.transparent_30};
     cursor: pointer;
   }
 `;
@@ -92,7 +99,6 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          rippleColor={theme.symbol_color}
           onClickHandler={() => handleIconClick(PathName.HOME)}
           style={ButtonChildrenSortingStyle}
         >
@@ -109,7 +115,6 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          rippleColor={theme.symbol_color}
           onClickHandler={() => handleIconClick(PathName.SEARCH)}
           style={ButtonChildrenSortingStyle}
         >
@@ -126,7 +131,6 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          rippleColor={theme.symbol_color}
           onClickHandler={() => handleIconClick(PathName.NEWPOST)}
           style={ButtonChildrenSortingStyle}
         >
@@ -143,7 +147,6 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          rippleColor={theme.symbol_color}
           onClickHandler={() => handleIconClick(PathName.CHANNELS)}
           style={ButtonChildrenSortingStyle}
         >
@@ -162,7 +165,6 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          rippleColor={theme.symbol_color}
           onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
           style={ButtonChildrenSortingStyle}
         >
