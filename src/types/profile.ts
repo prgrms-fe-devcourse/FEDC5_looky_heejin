@@ -11,6 +11,10 @@ export interface IUpdateName {
   userName?: string;
 }
 
+export interface IUpdatePassword {
+  password: string;
+}
+
 export interface IFollowResponse {
   _id: string;
   user?: string;

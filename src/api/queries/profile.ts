@@ -5,6 +5,7 @@ import {
   IFollowResponse,
   IUnFollow,
   IUpdateName,
+  IUpdatePassword,
 } from "@/types/profile";
 
 export const _GET_USER = async (userId: string) => {
@@ -29,5 +30,10 @@ export const _UNFOLLOW = async (
 
 export const _UPDATE_NAME = async (params: IUpdateName): Promise<IUser> => {
   const results = await _PUT("/settings/update-user", params);
+  return results?.data;
+};
+
+export const _UPDATE_PASSWORD = async (params: IUpdatePassword) => {
+  const results = await _PUT("settings/update-password", params);
   return results?.data;
 };
