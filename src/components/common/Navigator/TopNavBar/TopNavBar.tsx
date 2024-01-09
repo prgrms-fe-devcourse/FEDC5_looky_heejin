@@ -12,6 +12,7 @@ import {
   SearchBar,
   PageTitle,
 } from "./index";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -55,6 +56,8 @@ const NavTitle = {
 };
 
 const TopNavBar = () => {
+  const [channel, _] = useLocalStorage("ViewChannel");
+  const parsedData = JSON.parse(channel as string);
   const { pathname } = useLocation();
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
@@ -95,7 +98,9 @@ const TopNavBar = () => {
         </NavBarPartition>
         <NavBarPartition $width={CENTER_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (
-            <PageTitle title="빈티지"></PageTitle> // 데이터 붙여야함
+            <PageTitle
+              title={parsedData ? parsedData.name : "채널을 선택해주세요."}
+            ></PageTitle> // 데이터 붙여야함
           )}
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (
