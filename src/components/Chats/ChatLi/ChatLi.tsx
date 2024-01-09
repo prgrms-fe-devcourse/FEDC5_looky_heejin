@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Avatar, EllipsisText } from "@/components/common";
 import { parseDate } from "@/utils/parseDate";
 

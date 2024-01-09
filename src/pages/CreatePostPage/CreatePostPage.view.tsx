@@ -67,7 +67,7 @@ const CreatePostPageView = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    formState: {},
   } = useForm<ICreatePostFormProps>();
 
   const onValid = (data: ICreatePostFormProps) => {
