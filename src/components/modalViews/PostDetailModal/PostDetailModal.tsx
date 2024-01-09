@@ -46,7 +46,7 @@ import {
   IFollow,
   IUnfollow,
 } from "@/types";
-import { _CREATE_COMMENT } from "@/api/queries/comment";
+import { _CREATE_COMMENT, _DELETE_COMMENT } from "@/api/queries/comment";
 import { _NOTIFY } from "@/api/queries/notify";
 import { useMe } from "@/hooks/useMe";
 import { useUI } from "@/components/common/uiContext";
@@ -81,7 +81,7 @@ const PostDetail = () => {
   const postId = "659c00da1d725b33c1ed7a1e";
   const { id: myId } = useMe();
   console.log("내 아이디", myId);
-  // console.log(comments);
+  console.log("comments", comments);
   console.log(likes);
 
   const navigate = useNavigate();
@@ -157,6 +157,19 @@ const PostDetail = () => {
     },
     onError(error) {
       console.log("댓글 APi 통신 에러", error);
+    },
+  });
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: async (formData: IDeleteComment) =>
+      await _DELETE_COMMENT(formData),
+    onSuccess(data) {
+      console.log("API : 댓글 삭제 성공", data);
+      const newComments = comments.filter(({ _id }: any) => _id !== data._id);
+      setComments(newComments);
+    },
+    onError(error) {
+      console.error("댓글 삭제 API 에러", error);
     },
   });
 
@@ -270,6 +283,11 @@ const PostDetail = () => {
   interface Comment {
     comment: string;
   }
+  const handleDeleteComment = (id: string) => {
+    console.log("댓글삭제 클릭");
+    console.log(id);
+    deleteCommentMutation.mutate({ id });
+  };
 
   const onValid: SubmitHandler<Comment> = ({ comment }) => {
     console.log(comment);
@@ -384,6 +402,11 @@ const PostDetail = () => {
                     {comment.author.fullName}{" "}
                   </UserNameInComment>
                   <CommentContent>{comment.comment}</CommentContent>
+                  {comment.author._id === myId && (
+                    <button onClick={() => handleDeleteComment(comment._id)}>
+                      x
+                    </button>
+                  )}
                 </StyledLi>
               ))}
 

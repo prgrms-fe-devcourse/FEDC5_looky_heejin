@@ -1,5 +1,5 @@
 import type { ICreateComment, IDeleteComment } from "@/types";
-import { _POST } from "..";
+import { _DELETE, _POST } from "..";
 
 export const _CREATE_COMMENT = async (params: ICreateComment) => {
   const result = await _POST("/comments/create", params);
@@ -7,6 +7,6 @@ export const _CREATE_COMMENT = async (params: ICreateComment) => {
 };
 
 export const _DELETE_COMMENT = async (params: IDeleteComment) => {
-  const result = await _POST("/comments/delete", params);
+  const result = await _DELETE("/comments/delete", params);
   return result?.data;
 };
