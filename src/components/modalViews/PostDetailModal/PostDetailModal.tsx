@@ -2,7 +2,7 @@ import { _GET, _POST } from "@/api";
 import { Avatar, ToolTip } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -53,12 +53,14 @@ import { useUI } from "@/components/common/uiContext";
 import { _CREATE_LIKE, _DELETE_LIKE } from "@/api/queries/like";
 import type { ITag } from "@/types/post";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
+import { ME } from "@/constants/queryKey";
 
 const PostDetail = () => {
   const { closeModal } = useUI();
   const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
     mode: "onSubmit",
   });
+
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -70,6 +72,7 @@ const PostDetail = () => {
   const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
   const [isIFollowed, setIsIFollowed] = useState(false);
+  const [followId, setFollowId] = useState("");
   const [comments, setComments] = useState<string[]>([]);
   const [newComments, setNewComments] = useState<string[]>([]);
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
@@ -85,17 +88,31 @@ const PostDetail = () => {
   console.log(likes);
 
   const navigate = useNavigate();
+
+  const { data: myData } = useQuery({
+    queryKey: [ME],
+    queryFn: async () => await _GET("/auth-user"),
+  });
+
+  console.log("myData : ", myData);
   // fetch data --------------------------------------------
   const initMutation = useMutation({
     mutationFn: async (endPoint: string) => await _GET(endPoint),
     onSuccess(data) {
+      myData?.data.following.map((followingData: any) => {
+        if (followingData.user === data?.data.author._id) {
+          setIsIFollowed(true);
+          setFollowId(followingData._id);
+        }
+      });
+
       console.log("유저의 아이디:", data?.data.author._id); // 포스트를 쓴 사람의 아이디
       // console.log("fullName:", data?.data.author.fullName);
       // console.log("포스트 내용:", JSON.parse(data?.data.title).content);
       // console.log("좋아요 누른 사람들:", data?.data.likes);
       // console.log("comments:", data?.data.comments);
       console.log(data);
-      console.log("팔로워:", data?.data.author.followers);
+      // console.log("팔로워:", data?.data.author.setIsIFollowed(isFollowing));
       console.log("팔로잉", data?.data.author.following);
 
       setUserId(data?.data.author._id);
@@ -209,7 +226,12 @@ const PostDetail = () => {
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
     onSuccess(data) {
+      // const newNotification : INotification = {
+      //   notificationType
+      // }
       console.log("API: 팔로우 성공", data);
+      setIsIFollowed(true);
+      setFollowId(data._id);
     },
     onError(error) {
       console.error("error: 팔로우 실패 ", error);
@@ -220,6 +242,8 @@ const PostDetail = () => {
     mutationFn: async (formData: IUnfollow) => await _UNFOLLOW(formData),
     onSuccess(data) {
       console.log("API: 언팔로우 성공", data);
+      setIsIFollowed(false);
+      setFollowId("");
     },
     onError(error) {
       console.error("error: 언팔로우 실패 ", error);
@@ -233,7 +257,12 @@ const PostDetail = () => {
 
   // --------------------------------------
   const handleFollow = () => {
-    myId !== null && followMutation.mutate({ userId });
+    if (!isIFollowed) {
+      myId !== null && followMutation.mutate({ userId });
+    } else {
+      console.log("팔로잉 중", followId);
+      unfollowMutation.mutate({ id: followId });
+    }
   };
   const handleContentDetail = () => {
     setIsContentDetail(true);
@@ -321,6 +350,12 @@ const PostDetail = () => {
         <UserNameWrapper>
           <UserNameSpan>{userName}</UserNameSpan>
         </UserNameWrapper>
+        <FollowButton
+          variant={isIFollowed ? "flat" : "symbol"}
+          onClick={handleFollow}
+        >
+          {isIFollowed ? "팔로잉" : "팔로우"}
+        </FollowButton>
       </UserInfoWrapper>
       <ImageWrapper>
         {isShowHeart && isILiked && (
