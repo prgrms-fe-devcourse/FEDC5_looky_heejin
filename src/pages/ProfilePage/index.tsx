@@ -65,7 +65,9 @@ const ProfilePage = () => {
 
   const handleChangePassword = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log("비밀번호 변경!");
+
+    setModalView("EDIT_PASSWORD_VIEW");
+    openModal();
   };
 
   const handleChangeName = (e: React.MouseEvent) => {
@@ -107,6 +109,7 @@ const ProfilePage = () => {
     setFormData({
       userId: id,
     });
+    console.log(myData);
 
     if (!isFollow) {
       followMutation.mutate(formData as IFollow);
