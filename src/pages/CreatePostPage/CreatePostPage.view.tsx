@@ -51,7 +51,7 @@ const CreatePostPageView = () => {
   const mutation = useMutation({
     mutationFn: async (formData: IPostBodyData) =>
       await _POST("/posts/create", formData),
-    onSuccess: data => {
+    onSuccess: () => {
       navigate(-1);
     },
     onError: data => console.log("Error", data),
@@ -62,7 +62,7 @@ const CreatePostPageView = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    formState: {},
   } = useForm<ICreatePostFormProps>();
 
   const onValid = (data: ICreatePostFormProps) => {

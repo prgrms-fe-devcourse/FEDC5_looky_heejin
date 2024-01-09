@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-
 import { ModalLayout } from "../common/Modal";
 import { Button } from "../common";
 import { useUI } from "../common/uiContext";

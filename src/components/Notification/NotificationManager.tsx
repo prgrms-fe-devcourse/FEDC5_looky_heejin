@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import * as _ from "lodash";
 
 import { INotification } from "@/types/notification";
