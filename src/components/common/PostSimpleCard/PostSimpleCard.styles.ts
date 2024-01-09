@@ -1,5 +1,5 @@
 import { Row } from "@/styles/GlobalStyle";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
   /* 기본 */
@@ -59,6 +59,18 @@ export const CardImage = styled.img`
   border-radius: 0.375rem;
 `;
 
+export const heartbeat = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
 export const IconContainer = styled.div<{
   $icon: "send" | "comment" | "sell" | "favorite";
 }>`
@@ -96,6 +108,12 @@ export const IconContainer = styled.div<{
         `;
     }
   }};
+`;
+
+export const NewDiv = styled.div`
+  &:hover {
+    animation: ${heartbeat} 0.7s ease-in-out infinite;
+  }
 `;
 
 export const TextContainer = styled.div<{ $why?: boolean }>`

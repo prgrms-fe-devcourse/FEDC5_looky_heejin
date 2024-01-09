@@ -4,6 +4,7 @@ import {
   CardImageContainer,
   CardInfoContainer,
   IconContainer,
+  NewDiv,
   ProfileContainer,
   TextContainer,
 } from "./PostSimpleCard.styles";
@@ -172,18 +173,20 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
           </CardImageContainer>
           <CardInfoContainer>
             <IconContainer $icon="favorite" onClick={onClickFavorite}>
-              <span
-                style={{
-                  scale: "0.8",
-                  color: !favoriteClicked
-                    ? theme?.gray_100
-                    : theme?.symbol_color,
-                  fontVariationSettings: "fill",
-                }}
-                className="material-symbols-rounded"
-              >
-                favorite
-              </span>
+              <NewDiv>
+                <span
+                  style={{
+                    scale: "0.8",
+                    color: !favoriteClicked
+                      ? theme?.gray_100
+                      : theme?.symbol_color,
+                    fontVariationSettings: "fill",
+                  }}
+                  className="material-symbols-rounded"
+                >
+                  favorite
+                </span>
+              </NewDiv>
             </IconContainer>
             <ProfileContainer>
               <span
