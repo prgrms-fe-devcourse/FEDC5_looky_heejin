@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import cn from "clsx";
 import styled from "styled-components";
-import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
+import { BORDER_TINE_WIDTH } from "@/constants/uiConstants";
 
 export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -51,8 +51,8 @@ const StyledInput = styled.input<any>`
   width: 100%;
   background-color: ${props => props.theme.white_primary + 30};
   color: ${props => props.theme.text_primary_color};
-  border-width: ${BORDER_BASE_WIDTH}px;
-  border-color: transparent;
+  border-width: ${BORDER_TINE_WIDTH}px;
+  border-color: ${props => props.theme.transparent_30};
   line-height: 1rem;
 
   &:focus {

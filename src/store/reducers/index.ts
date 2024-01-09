@@ -4,12 +4,14 @@ import authReducer from "./authReducer";
 import meReducer from "./meReducer";
 import newPostReducer from "./newPostReducer";
 import searchReducer from "./searchReducer";
+import notificationReducer from "./notificationReducer";
 
 export { authActions } from "./authReducer";
 export { meActions } from "./meReducer";
 export { modalActions } from "./modalReducer";
 export { newPostActions } from "./newPostReducer";
 export { searchActions } from "./searchReducer";
+export { notificationActions } from "./notificationReducer";
 
 // 분리된 reducer 들을 하나의 reducer 로 합칩니다.
 const rootReducer = combineReducers({
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   newPost: newPostReducer,
   search: searchReducer,
+  notification: notificationReducer,
 });
 
 export default rootReducer;

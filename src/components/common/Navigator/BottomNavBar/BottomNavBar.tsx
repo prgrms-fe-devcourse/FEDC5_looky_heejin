@@ -1,16 +1,16 @@
 import styled, { useTheme } from "styled-components";
 import Icon from "../../Icon/Icon";
 import {
+  ADD_BOX_ICON,
   CHANNEL_ICON,
   HOME_ICON,
   SEARCH_ICON,
-  USER_ICON,
 } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
-import { Button } from "../..";
+import { Avatar, Button } from "../..";
 import { useMe } from "@/hooks/useMe";
 
 const BottomNavBarWrapper = styled.nav`
@@ -23,6 +23,7 @@ const BottomNavBarWrapper = styled.nav`
   width: 100%;
   height: ${NAV_HEIGHT}rem;
   background-color: ${({ theme }) => theme.background_color};
+  border-top: ${({ theme }) => `1px solid ${theme.container_color}`};
 `;
 const IconWrapper = styled.div`
   flex-grow: 1;
@@ -117,6 +118,23 @@ const BottomNavBar = () => {
           variant="flat"
           useRipple={true}
           rippleColor={theme.symbol_color}
+          onClickHandler={() => handleIconClick(PathName.NEWPOST)}
+          style={ButtonChildrenSortingStyle}
+        >
+          {
+            <Icon
+              name={ADD_BOX_ICON}
+              color={currentPath === PathName.NEWPOST ? theme.symbol_color : ""}
+              weight={currentPath === PathName.NEWPOST ? 300 : 250}
+            />
+          }
+        </Button>
+      </IconWrapper>
+      <IconWrapper>
+        <Button
+          variant="flat"
+          useRipple={true}
+          rippleColor={theme.symbol_color}
           onClickHandler={() => handleIconClick(PathName.CHANNELS)}
           style={ButtonChildrenSortingStyle}
         >
@@ -139,13 +157,7 @@ const BottomNavBar = () => {
           onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
           style={ButtonChildrenSortingStyle}
         >
-          {
-            <Icon
-              name={USER_ICON}
-              color={currentPath === PathName.PROFILE ? theme.symbol_color : ""}
-              weight={currentPath === PathName.PROFILE ? 300 : 250}
-            />
-          }
+          <Avatar size="XS" />
         </Button>
       </IconWrapper>
     </BottomNavBarWrapper>
