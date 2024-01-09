@@ -11,12 +11,13 @@ import { modalActions } from "@store/reducers";
 import { Modal } from "./Modal";
 import { MODAL_VIEWS } from "@/store/types/modalType";
 import {
+  ChangeImageModal,
   ChannelSelectModal,
   EditNameModal,
+  EditPasswordModal,
   TagCreateModal,
   TestModal,
 } from "@/components/modalViews";
-import EditPasswordModal from "../modalViews/EditPasswordModal";
 
 export const useUI = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const ModalView: React.FC<{
       {modalView === "CHANNEL_SELECT_VIEW" && <ChannelSelectModal />}
       {modalView === "EDIT_NAME_VIEW" && <EditNameModal />}
       {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
+      {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
     </Modal>
   );
 };

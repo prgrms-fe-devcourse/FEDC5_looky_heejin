@@ -90,7 +90,9 @@ const ProfilePage = () => {
 
   const handleChangeImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log("이미지 변경!");
+
+    setModalView("EDIT_IMAGE_VIEW");
+    openModal();
   };
 
   const handleChangeCover = () => {
