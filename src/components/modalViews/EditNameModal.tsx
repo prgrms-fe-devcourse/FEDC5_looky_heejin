@@ -6,6 +6,7 @@ import { useUI } from "../common/uiContext";
 import { NAME_VALIDATION } from "@/pages/ProfilePage/ProfilePage.const";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_NAME } from "@/api/queries/profile";
+import { ModalLayout } from "../common/Modal";
 
 interface INameFormProps {
   fullName: string;
@@ -43,7 +44,7 @@ const EditNameModal = () => {
   };
 
   return (
-    <>
+    <ModalLayout>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
         <InputWrap>
           <InputLabel title="변경할 닉네임" help="2글자 이상" />
@@ -61,7 +62,7 @@ const EditNameModal = () => {
           변경
         </Button>
       </Form>
-    </>
+    </ModalLayout>
   );
 };
 
