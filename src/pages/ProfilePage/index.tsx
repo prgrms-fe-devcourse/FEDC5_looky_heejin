@@ -75,6 +75,17 @@ const ProfilePage = () => {
     openModal();
   };
 
+  useEffect(() => {
+    if (displayModal) return;
+
+    const refetchData = async () => {
+      const { data: refetchData } = await refetch();
+      setUserData(refetchData?.data);
+    };
+
+    refetchData();
+  }, [displayModal]);
+
   const handleChangeImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log("이미지 변경!");
@@ -107,7 +118,7 @@ const ProfilePage = () => {
   useEffect(() => {
     if (isSuccess) {
       // 현재 프로필에 대한 data
-      console.log("첫 번째 isSuccess!! ", data);
+      console.log("첫 번째 isSuccess!!! ", data);
       setUserData(data);
     }
   }, [isSuccess]);
