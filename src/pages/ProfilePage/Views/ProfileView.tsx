@@ -1,15 +1,15 @@
 import { useTheme } from "styled-components";
 import { useMe } from "@/hooks/useMe";
 import { useEffect, useState } from "react";
-import { ICON_SIZE, ICON_SIZE_SMALL } from "./ProfilePage.const";
-import Buttons, { IButtonProps } from "./Buttons";
+import { ICON_SIZE, ICON_SIZE_SMALL } from "../ProfilePage.const";
+import Buttons, { IButtonProps } from "../Buttons";
 import { Avatar, Button } from "@/components/common";
 import {
   AvatarWrap,
   ButtonsWrap,
   InfoWrap,
   Profile,
-} from "./ProfilePage.style";
+} from "../ProfilePage.style";
 import Icon from "@/components/common/Icon/Icon";
 import { IUser } from "@/types";
 

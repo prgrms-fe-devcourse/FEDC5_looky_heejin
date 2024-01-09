@@ -1,6 +1,6 @@
 import { Image } from "@/components/common";
 import { IPost } from "@/types";
-import { ImageWrap, PostCard, Posts, PostsList } from "./ProfilePage.style";
+import { ImageWrap, PostCard, Posts, PostsList } from "../ProfilePage.style";
 
 interface PostsProps {
   posts: IPost[] | [];

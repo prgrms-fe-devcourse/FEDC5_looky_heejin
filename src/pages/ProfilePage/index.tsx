@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import ProfileView from "./ProfileView";
-import ProfilePostsView from "./ProfilePostsView";
+import ProfileView from "./Views/ProfileView";
+import ProfilePostsView from "./Views/ProfilePostsView";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { GET_USER, ME } from "@/constants/queryKey";
