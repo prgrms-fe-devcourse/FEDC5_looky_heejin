@@ -23,7 +23,7 @@ const ChannelsPage = () => {
       <>
         {data?.data.map((val: any) => {
           return (
-            <ChannelStyle key={val._id} onClick={() => handleClick(val.name)}>
+            <ChannelStyle key={val._id} onClick={() => handleClick(val._id)}>
               {val.name}
             </ChannelStyle>
           );
