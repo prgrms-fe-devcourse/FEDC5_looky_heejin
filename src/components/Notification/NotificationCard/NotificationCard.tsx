@@ -1,7 +1,9 @@
 import { CardWrapper } from "./NotificationCard.styles";
-import { Avatar, Image } from "@/components/common";
+import { Avatar } from "@/components/common";
 import { INotification } from "@/types/notification";
 import { parseDate } from "@/utils/parseDate";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface INotificationCardProps {
   key: string;
@@ -17,22 +19,32 @@ const CONTENT = {
 };
 
 const NotificationCard = ({ type, data }: INotificationCardProps) => {
+  const navigate = useNavigate();
+
+  const cardClickHandler = useCallback(
+    (target: "post" | "profile", id: string) => {
+      if (target === "profile") {
+        navigate(`/profile/${id}`);
+      } else {
+      }
+    },
+    []
+  );
+
   return (
     <CardWrapper>
-      <div>
-        <Avatar size="S" src="https://picsum.photos/100" />
+      <div
+        className="cursor-pointer"
+        onClick={() => cardClickHandler("profile", data.author._id)}
+      >
+        <Avatar size="S" src={data.author.image} />
       </div>
       <article className="flex-1 flex flex-col justify-center">
-        <p>
+        <p className="cursor-pointer">
           <strong>{data.author.fullName}</strong>님이 {CONTENT[type]}
         </p>
         <p className="text-xs">{parseDate(data.createdAt)}</p>
       </article>
-      {data.post && (
-        <div className="__util relative w-10 aspect-square rounded-sm overflow-hidden">
-          <Image fill src="" />
-        </div>
-      )}
     </CardWrapper>
   );
 };

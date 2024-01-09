@@ -38,7 +38,7 @@ export const _PATCH = async (endPoint: string, params: any) => {
   }
 };
 
-export const _PUT = async (endPoint: string, params: any) => {
+export const _PUT = async (endPoint: string, params?: any) => {
   try {
     const response = await rootAPI.put(endPoint, params);
     return response;

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { _GET } from "@/api";
 import { CHATS } from "@/constants/queryKey";
 import { useQuery } from "@tanstack/react-query";
