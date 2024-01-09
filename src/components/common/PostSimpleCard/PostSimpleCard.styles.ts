@@ -2,6 +2,8 @@ import { Row } from "@/styles/GlobalStyle";
 import styled, { css } from "styled-components";
 
 export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
+  /* 기본 */
+  font-size: 1rem;
   flex-direction: column;
   box-sizing: border-box;
   ${({ $basis }) => {
@@ -29,6 +31,7 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
   margin: 0px 5.5px 12px;
   /* 추후 삭제 예정 */
   border: 1px solid royalblue;
+  /* border-radius: 0.375rem; */
 `;
 
 export const CardInfoContainer = styled.div`
@@ -40,12 +43,20 @@ export const CardInfoContainer = styled.div`
 export const CardImageContainer = styled.div`
   min-height: 200px;
   min-width: 200px;
+  border-radius: 0.375rem;
 `;
 
 export const CardImage = styled.img`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
+  object-fit: cover; */
+  cursor: pointer;
+  width: 100%;
+  /* height: 480px; */
+  aspect-ratio: 10 / 16;
+  /* object-fit: contain; */
   object-fit: cover;
+  border-radius: 0.375rem;
 `;
 
 export const IconContainer = styled.div<{
@@ -68,17 +79,18 @@ export const IconContainer = styled.div<{
         `;
       case "sell":
         return css`
-          scale: 1.1;
-          bottom: calc(100% + 5px);
-          right: 5px;
+          scale: 1.2;
+          bottom: calc(100% + 10px);
+          right: 10px;
           border-radius: 50%;
           background-color: rgba(0, 0, 0, 0.3);
         `;
       case "favorite":
         return css`
-          scale: 1.1;
-          bottom: calc(100% + 35px);
-          right: 5px;
+          scale: 1.2;
+          top: 10px;
+          /* bottom: calc(100%); */
+          right: 10px;
           border-radius: 50%;
           background-color: rgba(0, 0, 0, 0.3);
         `;
@@ -86,13 +98,21 @@ export const IconContainer = styled.div<{
   }};
 `;
 
-export const TextContainer = styled.div`
+export const TextContainer = styled.div<{ $why?: boolean }>`
   width: calc(100% - 11px);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 2px;
   box-sizing: border-box;
+  ${props => {
+    if (props.$why) {
+      return css`
+        font-weight: bold;
+      `;
+    }
+  }}
 `;
 
 export const ProfileContainer = styled(Row)`
