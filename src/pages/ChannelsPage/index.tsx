@@ -1,5 +1,1 @@
-const ChannelsPage = () => {
-  return <div>ChannelsPage</div>;
-};
-
-export default ChannelsPage;
+export { default } from "./ChannelsPage.view";
