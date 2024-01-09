@@ -1,6 +1,4 @@
 import { useEffect, useRef } from "react";
-import styled from "styled-components";
-import tw from "twin.macro";
 import { FieldErrors, useForm } from "react-hook-form";
 
 import { useNewPost } from "@/hooks/useNewPost";
@@ -8,7 +6,14 @@ import { useNewPost } from "@/hooks/useNewPost";
 import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
 import { Button, Input, Upload } from "@/components/common";
-import { Tag, TextArea } from "./CreatePostPage.styles";
+import {
+  ChannelTag,
+  CreatePostPageContainer,
+  InputWrapper,
+  Tag,
+  TextArea,
+  UploadSection,
+} from "./CreatePostPage.styles";
 import { useMutation } from "@tanstack/react-query";
 import { _POST, rootAPI } from "@/api";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +56,7 @@ const CreatePostPageView = () => {
   const mutation = useMutation({
     mutationFn: async (formData: IPostBodyData) =>
       await _POST("/posts/create", formData),
-    onSuccess: data => {
+    onSuccess: () => {
       navigate(-1);
     },
     onError: data => console.log("Error", data),
@@ -121,13 +126,13 @@ const CreatePostPageView = () => {
   };
 
   return (
-    <div className="__container relative w-full h-full pt-[70px] pb-[70px]">
+    <CreatePostPageContainer>
       <form
         onSubmit={handleSubmit(onValid, onInvalid)}
-        className="relative w-full h-full flex flex-col"
+        className="relative w-full flex flex-col items-center mb-3"
         encType="multipart/form-data"
       >
-        <section className="__upload w-full h-[50%] relative">
+        <UploadSection>
           <Upload
             onChange={file => setValue("file", file)}
             clickable={false}
@@ -147,8 +152,8 @@ const CreatePostPageView = () => {
               />
             ))}
           </Upload>
-        </section>
-        <section className="__form pt-4 h-[45%]">
+        </UploadSection>
+        <section className="__form pt-4 w-full">
           <InputWrapper>
             <Input
               type="text"
@@ -157,46 +162,34 @@ const CreatePostPageView = () => {
               placeholder="제목을 입력해주세요."
             />
           </InputWrapper>
-          <div className="__textArea w-full h-[65%] mb-4">
-            <TextArea
-              className="w-full shadow-sm"
-              rows={6}
-              placeholder="설명을 입력해주세요"
-              {...register("content")}
-            />
-          </div>
-          <div>
-            <Button
-              variant="neumorp"
-              type="button"
-              onClick={channelSelectButtonClickHandler}
-            >
-              <span className="text-sm font-semibold">채널 선택</span>
-            </Button>
-            <Row className="mt-3 space-x-2">
-              {channelName && (
-                <div className="px-2 py-1 bg-[#B3B3B390] rounded-md text-sm">
-                  {channelName}
-                </div>
-              )}
-            </Row>
-          </div>
+          <TextArea
+            className="w-full shadow-sm"
+            rows={6}
+            placeholder="설명을 입력해주세요"
+            {...register("content")}
+          />
+          <Button
+            variant="neumorp"
+            type="button"
+            onClick={channelSelectButtonClickHandler}
+          >
+            <span className="text-sm font-semibold">채널 선택</span>
+          </Button>
+          <Row className="mt-3 space-x-2 h-[30px]">
+            {channelName && <ChannelTag>{channelName}</ChannelTag>}
+          </Row>
         </section>
       </form>
       <Button
         variant="symbol"
         className="absolute bottom-0"
         onClick={handleSubmit(onValid, onInvalid)}
-        disabled={!watch("channelId") || !watch("file")}
+        disabled={!(watch("channelId") && watch("file") && watch("title"))}
       >
         <span className="font-semibold">포스터 작성</span>
       </Button>
-    </div>
+    </CreatePostPageContainer>
   );
 };
 
 export default CreatePostPageView;
-
-const InputWrapper = styled.div`
-  ${tw`space-y-2 mb-3`}
-`;
