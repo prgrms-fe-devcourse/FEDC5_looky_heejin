@@ -16,19 +16,12 @@ const ChatsPage = () => {
   const { data, isLoading } = useQuery({
     queryKey: [CHATS],
     queryFn: async () => await _GET("/messages/conversations"),
+    refetchInterval: 5000,
   });
-
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log(data);
-  //   }
-  // }, [data]);
 
   const onClickConversation = (id: string) => {
     navigate(`/chat/${id}`);
   };
-
-  console.log(data);
 
   if (isLoading) return null;
 

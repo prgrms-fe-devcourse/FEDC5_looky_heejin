@@ -34,7 +34,7 @@ const ChatLi = ({
   return (
     <ChatLiWrapper onClick={() => onClickHandler(senderId)}>
       <ChatLiAvatarBox>
-        <Avatar size="M" src="" />
+        <Avatar size="M" />
         {senderIsOnline && <OnlineIndicator />}
       </ChatLiAvatarBox>
       <ChatLiArticle>
