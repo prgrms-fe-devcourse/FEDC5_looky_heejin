@@ -12,6 +12,9 @@ import { APP_MAX_WIDTH, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import { Avatar, Button } from "../..";
 import { useMe } from "@/hooks/useMe";
+import { useQuery } from "@tanstack/react-query";
+import { ME } from "@/constants/queryKey";
+import { _GET } from "@/api";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
@@ -55,6 +58,12 @@ const BottomNavBar = () => {
     PathName.POSTDETAIL,
     PathName.TEST,
   ];
+
+  const { data: myData } = useQuery({
+    queryKey: [ME],
+    queryFn: async () => await _GET("/auth-user"),
+  });
+  console.log(myData);
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const isShow = useMemo(
@@ -157,7 +166,7 @@ const BottomNavBar = () => {
           onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
           style={ButtonChildrenSortingStyle}
         >
-          <Avatar size="XS" />
+          <Avatar size="XS" src={myData?.data ? myData.data.image : ""} />
         </Button>
       </IconWrapper>
     </BottomNavBarWrapper>
