@@ -5,19 +5,15 @@ import tw from "twin.macro";
 
 // 전체 -----------------------------------------
 export const PostDetailWrapper = styled.div`
-  border: 1px solid white;
   width: ${APP_MAX_WIDTH}px;
   height: 95vh;
-  overflow-y: auto;
-  border: ${({ theme }) => `0.5px solid ${theme.container_color}`};
-  // transparent 투명
-  // white 흰색
   background-color: ${({ theme }) => `${theme.background_color}`};
+  border: ${({ theme }) => `0.5px solid ${theme.container_color}`};
   border-radius: 0.5rem;
+  overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
   }
-
   & {
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
     scrollbar-width: none; /* 파이어폭스 */
@@ -30,21 +26,18 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* height: 7rem; */
-  /* border: 1px solid red; */
 `;
+
 export const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 12%;
-  /* padding-top: 0.5rem; */
-  /* border: 1px solid white; */
 `;
 
 export const UserNameWrapper = styled.div`
   display: flex;
-  height: 3.75rem;
   justify-content: center;
+  height: 3.75rem;
 `;
 
 export const UserNameSpan = styled.span`
@@ -53,28 +46,28 @@ export const UserNameSpan = styled.span`
 `;
 
 export const FollowButton = styled(Button)`
+  position: absolute;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 1.5rem;
   width: 4.3rem;
   height: 1rem;
-  position: absolute;
-  right: 1.5rem;
   font-size: 0.7rem;
   line-height: 0.5rem;
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.gray_500};
-  align-items: center;
-  justify-content: center;
 `;
 
 // (중) Image ----------------------------------------
 export const ImageWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  padding-top: 160%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 160%;
 `;
 
 export const StyledImg = styled.img`
@@ -96,37 +89,28 @@ export const CaptionWrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   /* padding: 0 1rem; */
-  /* border: 1px solid white; */
 `;
 
 export const StyledSpan = styled.span`
-  overflow: hidden;
-  /* text-overflow: ellipsis; */
-  word-wrap: break-word;
   display: -webkit-box;
+  overflow: hidden;
+  word-wrap: break-word;
   -webkit-line-clamp: 5;
-  /* -webkit-box-orient: vertical; */
-  line-height: 1.2rem;
   font-size: 0.9rem;
+  line-height: 1.2rem;
   padding: 0.5rem;
 `;
 
 export const IconsWrapper = styled.div`
-  /* position: absolute; */
-  /* top: 0.7rem; */
-  /* right: 1rem; */
-  width: 100%;
-  height: 2.8rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  width: 100%;
+  height: 2.8rem;
   & > * {
     cursor: pointer;
   }
-
-  /* border: 1px solid blue; */
 `;
 
 export const HeartWrapper = styled.div`
@@ -139,12 +123,9 @@ export const HeartWrapper = styled.div`
 `;
 
 export const LikeCountSpan = styled.span`
-  margin: auto auto;
   font-size: 0.9rem;
-
+  margin: auto auto;
   padding-left: 0.3rem;
-
-  /* border: 1px solid blue; */
 `;
 
 export const CommentChatWrapper = styled.div`
@@ -156,27 +137,18 @@ export const CommentChatWrapper = styled.div`
     margin-top: 0.3rem;
     margin-right: 0.3rem;
   }
-  /* padding-right: 1rem; */
 `;
 
 // 댓글 --------------------------------------------
 export const CommentWrapper = styled.div`
   font-size: 0.9rem;
-  /* margin-top: 1rem;
-  padding-left: 1.1rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.3rem; */
   padding: 0.5rem;
-  box-sizing: border-box;
-
   border-top: 1px solid ${({ theme }) => theme.container_color};
-  /* border: 1px solid red; */
-  /* background-color: blue; */
+  box-sizing: border-box;
 `;
 
 export const UserNameInComment = styled.span`
   font-weight: bold;
-  /* color: red; */
   cursor: pointer;
 `;
 
@@ -203,16 +175,15 @@ export const NoComments = styled.span`
 // 댓글입력창 --------------------------------------------
 export const InputWrapper = styled.div`
   position: relative;
-  /* border: 1px solid red; */
   height: 2.8rem;
 `;
 
 export const StyledInput = styled(Input)`
-  border-radius: 1rem;
+  width: 97%;
   height: 2rem;
   font-size: 0.85rem;
-  width: 97%;
   margin: auto auto;
+  border-radius: 1rem;
 `;
 
 export const ReplyButton = styled.span`
