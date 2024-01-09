@@ -32,7 +32,10 @@ const Home = () => {
   useEffect(() => {
     // 궁금증
     // channel을 받아오고 실행해야 하는것이 아닌지?
-    if (channel) initMutation.mutate(`/posts/channel/${channel}`);
+    if (channel) {
+      const parsedData = JSON.parse(channel);
+      initMutation.mutate(`/posts/channel/${parsedData._id}`);
+    }
   }, []);
 
   if (data)
