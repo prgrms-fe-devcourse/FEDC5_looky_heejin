@@ -8,6 +8,7 @@ import { ModalLayout } from "../common/Modal";
 import PasswordConst from "@/pages/SignInPage/SignInPage.const";
 import { useUI } from "../common/uiContext";
 import { useEffect } from "react";
+import { sha256Encrypt } from "@/utils/crypto";
 
 interface IPasswordForm {
   password: string;
@@ -38,7 +39,15 @@ const EditPasswordModal = () => {
   const mutation = useMutation({
     mutationFn: async (updatedValue: string) =>
       await _UPDATE_PASSWORD({ password: updatedValue }),
-    onError: error => console.log("Error", error),
+    onSuccess: data => {
+      if (data === "Password updated successfully.") {
+        alert(`비밀번호 변경 성공!`);
+      }
+    },
+    onError: error => {
+      alert(`비밀번호 변경 실패`);
+      console.log("Error", error);
+    },
   });
 
   useEffect(() => {
@@ -56,7 +65,9 @@ const EditPasswordModal = () => {
   }, [watch("password"), watch("passwordCheck")]);
 
   const onValid = (data: IPasswordForm) => {
-    mutation.mutate(data?.password);
+    const encryptionPassword = sha256Encrypt(data.password);
+    console.log(data, encryptionPassword);
+    mutation.mutate(encryptionPassword);
     closeModal();
   };
   const onInvalid = (errors: FieldErrors) => {
