@@ -16,9 +16,8 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const [channel, _] = useLocalStorage("ViewChannel");
+  const [channel, _] = useLocalStorage("ViewChannelObj");
   const [data, setData] = useState<any[]>([]);
-
   const initMutation = useMutation({
     mutationFn: async (endPoint: string) => await _GET(endPoint),
     onSuccess(data) {

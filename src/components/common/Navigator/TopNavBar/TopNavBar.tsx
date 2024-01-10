@@ -50,14 +50,15 @@ const NAV_VISIBLE_PATH = [
 const NavTitle = {
   CHANNELS: "채널 목록",
   PROFILE: "프로필",
-  NEWPOST: "새 포스트 생성",
+  NEWPOST: "새 포스트 작성",
   NOTIFICATIONS: "알림",
   CHATS: "대화 목록",
 };
 
 const TopNavBar = () => {
-  const [channel, _] = useLocalStorage("ViewChannel");
-  const parsedData = JSON.parse(channel as string);
+  const [channel, _] = useLocalStorage("ViewChannelObj");
+  const parsedData = channel ? JSON.parse(channel as string) : null;
+
   const { pathname } = useLocation();
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);

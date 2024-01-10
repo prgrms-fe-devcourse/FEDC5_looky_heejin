@@ -3,13 +3,14 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { ChannelStyle } from "./ChannelsPage.styles";
+import { GET_CHANNELS } from "@/constants/queryKey";
 
 const ChannelsPage = () => {
-  const [channel, setChannel] = useLocalStorage("ViewChannel");
+  const [channel, setChannel] = useLocalStorage("ViewChannelObj");
   const navigate = useNavigate();
 
   const { data } = useQuery({
-    queryKey: ["channels"],
+    queryKey: [GET_CHANNELS],
     queryFn: async () => await _GET("/channels"),
   });
 
