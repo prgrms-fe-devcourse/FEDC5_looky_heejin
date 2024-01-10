@@ -11,6 +11,7 @@ import {
   SearchBar,
   PageTitle,
 } from "./index";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -49,12 +50,15 @@ const NAV_VISIBLE_PATH = [
 const NavTitle = {
   CHANNELS: "채널 목록",
   PROFILE: "프로필",
-  NEWPOST: "새 포스트 생성",
+  NEWPOST: "새 포스트 작성",
   NOTIFICATIONS: "알림",
   CHATS: "대화 목록",
 };
 
 const TopNavBar = () => {
+  const [channel, _] = useLocalStorage("ViewChannelObj");
+  const parsedData = channel ? JSON.parse(channel as string) : null;
+
   const { pathname } = useLocation();
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
@@ -95,7 +99,9 @@ const TopNavBar = () => {
         </NavBarPartition>
         <NavBarPartition $width={CENTER_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (
-            <PageTitle title="빈티지"></PageTitle> // 데이터 붙여야함
+            <PageTitle
+              title={parsedData ? parsedData.name : "채널을 선택해주세요."}
+            ></PageTitle> // 데이터 붙여야함
           )}
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (
