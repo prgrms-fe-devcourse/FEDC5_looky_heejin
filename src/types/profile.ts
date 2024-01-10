@@ -17,7 +17,7 @@ export interface IUpdatePassword {
 
 export interface IUpdateImage {
   isCover: boolean;
-  image: any;
+  image: File;
 }
 
 export interface IFollowResponse {

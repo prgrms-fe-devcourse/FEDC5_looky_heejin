@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { IUser } from "@/types";
 import { IFollow, IUnFollow } from "@/types/profile";
 import { useUI } from "@/components/common/uiContext";
-import { _GET } from "@/api";
+import { _GET, rootAPI } from "@/api";
 
 const ProfileWrap = styled.div`
   overflow-y: scroll;
@@ -30,6 +30,14 @@ const ProfilePage = () => {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
+    return () => {
+      rootAPI.defaults.headers["Content-Type"] =
+        "application/x-www-form-urlencoded";
+    };
+  }, []);
 
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => {
