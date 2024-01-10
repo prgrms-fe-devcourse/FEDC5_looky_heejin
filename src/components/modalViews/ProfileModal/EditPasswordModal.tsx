@@ -1,29 +1,23 @@
+import { useEffect } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
-import { Button, Input, InputLabel } from "../common";
-import styled from "styled-components";
-import { Col } from "@/styles/GlobalStyle";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_PASSWORD } from "@/api/queries/profile";
-import { ModalLayout } from "../common/Modal";
-import PasswordConst from "@/pages/SignInPage/SignInPage.const";
-import { useUI } from "../common/uiContext";
-import { useEffect } from "react";
+import { Button, Input } from "@/components/common";
+import { ModalLayout } from "@/components/common/Modal";
+import { useUI } from "@/components/common/uiContext";
 import { sha256Encrypt } from "@/utils/crypto";
+import PasswordConst from "@/pages/SignInPage/SignInPage.const";
+import {
+  Form,
+  InputWrap,
+  ErrorContainer,
+  SpanStyle,
+} from "./ProfileModal.style";
 
 interface IPasswordForm {
   password: string;
   passwordCheck: string;
 }
-
-const Form = styled(Col)`
-  justify-content: center;
-  width: 300px;
-  height: 300px;
-`;
-
-const InputWrap = styled.div`
-  padding-bottom: 1rem;
-`;
 
 const EditPasswordModal = () => {
   const { closeModal } = useUI();
@@ -77,8 +71,14 @@ const EditPasswordModal = () => {
   return (
     <ModalLayout>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
+        {/* <InputLabel title="변경할 비밀번호" help="8글자 이상" /> */}
+        <ErrorContainer>
+          <span className="font-bold">비밀번호 변경</span>
+          {errors.password?.message && (
+            <SpanStyle>{errors.password?.message}</SpanStyle>
+          )}
+        </ErrorContainer>
         <InputWrap>
-          <InputLabel title="변경할 비밀번호" help="8글자 이상" />
           <Input
             type="password"
             register={register(
@@ -87,12 +87,14 @@ const EditPasswordModal = () => {
             )}
             required={false}
           />
-          {errors.password ? (
-            <span style={{ color: "red" }}>{errors.password.message}</span>
-          ) : null}
         </InputWrap>
+        <ErrorContainer>
+          <span className="font-bold">비밀번호 확인</span>
+          {errors.passwordCheck?.message && (
+            <SpanStyle>{errors.passwordCheck?.message}</SpanStyle>
+          )}
+        </ErrorContainer>
         <InputWrap>
-          <InputLabel title="변경할 비밀번호 확인" />
           <Input
             type="password"
             register={register(
@@ -101,9 +103,6 @@ const EditPasswordModal = () => {
             )}
             required={false}
           />
-          {errors.passwordCheck ? (
-            <span style={{ color: "red" }}>{errors.passwordCheck.message}</span>
-          ) : null}
         </InputWrap>
         <Button
           variant="symbol"

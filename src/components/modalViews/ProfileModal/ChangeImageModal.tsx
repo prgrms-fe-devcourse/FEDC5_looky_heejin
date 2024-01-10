@@ -1,18 +1,13 @@
-import { styled } from "styled-components";
 import { useState } from "react";
 import { rootAPI } from "@/api";
-import { Button, Upload } from "../common";
-import { ModalLayout } from "../common/Modal";
-import { useUI } from "../common/uiContext";
+import { Button, Upload } from "@/components/common";
+import { ModalLayout } from "@/components/common/Modal";
+import { useUI } from "@/components/common/uiContext";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
 import { useProfile } from "@/hooks/useProfile";
-
-const UploadWrap = styled.div<{ $iscover: string }>`
-  width: 300px;
-  aspect-ratio: ${props => (props.$iscover === "true" ? 10 / 16 : 1 / 1)};
-`;
+import { UploadWrap } from "./ProfileModal.style";
 
 const ChangeImageModal = () => {
   const { setProfileImage, setProfileCover } = useProfile();

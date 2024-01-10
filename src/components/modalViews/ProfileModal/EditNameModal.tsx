@@ -1,28 +1,22 @@
-import styled from "styled-components";
 import { FieldErrors, useForm } from "react-hook-form";
-import { Button, Input, InputLabel } from "../common";
-import { Col } from "@/styles/GlobalStyle";
-import { useUI } from "../common/uiContext";
-import { ModalLayout } from "../common/Modal";
+import { Button, Input } from "@/components/common";
+import { useUI } from "@/components/common/uiContext";
+import { ModalLayout } from "@components/common/Modal";
 import { NAME_VALIDATION } from "@/pages/ProfilePage/ProfilePage.const";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_NAME } from "@/api/queries/profile";
 import { useProfile } from "@/hooks/useProfile";
+import {
+  Form,
+  InputWrap,
+  ErrorContainer,
+  SpanStyle,
+} from "./ProfileModal.style";
 
 interface INameFormProps {
   fullName: string;
   username?: string | null;
 }
-
-const Form = styled(Col)`
-  justify-content: center;
-  width: 300px;
-  height: 300px;
-`;
-
-const InputWrap = styled.div`
-  padding-bottom: 1rem;
-`;
 
 const EditNameModal = () => {
   const { setProfileName } = useProfile();
@@ -58,16 +52,18 @@ const EditNameModal = () => {
   return (
     <ModalLayout>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
+        <ErrorContainer>
+          <span className="font-bold">닉네임 변경</span>
+          {errors.fullName?.message && (
+            <SpanStyle>{errors.fullName?.message}</SpanStyle>
+          )}
+        </ErrorContainer>
         <InputWrap>
-          <InputLabel title="변경할 닉네임" help="2글자 이상" />
           <Input
             type="text"
             register={register("fullName", NAME_VALIDATION)}
             required={false}
           />
-          {errors?.fullName && (
-            <span style={{ color: "red" }}>{errors.fullName.message}</span>
-          )}
         </InputWrap>
         <Button
           variant="symbol"
