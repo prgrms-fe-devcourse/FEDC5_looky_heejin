@@ -15,7 +15,7 @@ export interface IButtonProps {
 const ButtonWrap = styled.div<{ key: string }>``;
 
 // children은 Icon을 받는다.
-const Buttons = ({ children, style }: IButtonProps) => {
+const ButtonSet = ({ children, style }: IButtonProps) => {
   return (
     <>
       {Array.isArray(children) ? (
@@ -35,4 +35,4 @@ const Buttons = ({ children, style }: IButtonProps) => {
   );
 };
 
-export default Buttons;
+export default ButtonSet;

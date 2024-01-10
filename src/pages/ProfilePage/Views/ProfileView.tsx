@@ -2,8 +2,8 @@ import { useTheme } from "styled-components";
 import { useMe } from "@/hooks/useMe";
 import { useEffect, useState } from "react";
 import { ICON_SIZE, ICON_SIZE_SMALL } from "../ProfilePage.const";
-import Buttons, { IButtonProps } from "../Buttons";
 import { Avatar, Button } from "@/components/common";
+import { ButtonSet } from "@/components";
 import {
   AvatarWrap,
   ButtonsWrap,
@@ -12,6 +12,7 @@ import {
 } from "../ProfilePage.style";
 import Icon from "@/components/common/Icon/Icon";
 import { IUser } from "@/types";
+import { IButtonProps } from "@/components/ButtonSet";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -66,13 +67,13 @@ const ProfileView = ({
     >
       {isMe && (
         <ButtonsWrap className="me">
-          <Buttons style={buttonStyle}>
+          <ButtonSet style={buttonStyle}>
             <Icon
               name="Password"
               size={ICON_SIZE_SMALL}
               onClick={onClickPassword}
             />
-          </Buttons>
+          </ButtonSet>
         </ButtonsWrap>
       )}
       <InfoWrap {...props}>
@@ -112,14 +113,14 @@ const ProfileView = ({
         )}
         {!isMe && (
           <ButtonsWrap className="others">
-            <Buttons style={buttonStyle}>
+            <ButtonSet style={buttonStyle}>
               <Icon name="chat_bubble" onClick={e => onClickChat(e, _id)} />
               <Icon
                 name={!isFollow ? "person_add" : "person_check"}
                 color={isFollow ? theme.symbol_color : undefined}
                 onClick={onClickFollow}
               />
-            </Buttons>
+            </ButtonSet>
           </ButtonsWrap>
         )}
       </InfoWrap>
