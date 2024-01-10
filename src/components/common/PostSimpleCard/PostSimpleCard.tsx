@@ -196,9 +196,7 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
             <CardImage
               onClick={onClickImage}
               src={
-                postData.image
-                  ? postData.image
-                  : "https://cdn.pixabay.com/photo/2022/01/17/22/20/subtract-6945896_1280.png"
+                postData.image ? postData.image : "/src/assets/image_alt.png"
               }
               alt="포스팅 이미지"
             />
