@@ -80,3 +80,18 @@ export const ImageWrap = styled.div`
   width: ${POSTER_SIMPLE_CARD_WIDTH + 10}px;
   height: ${POSTER_SIMPLE_CARD_HEIGHT + 10}px;
 `;
+
+export const Container = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0px -5.5px;
+  width: calc(100% + 11px);
+  padding-bottom: 3rem;
+`;
+
+export const EmptyPost = styled.div`
+  flex-grow: 1;
+  justify-content: center;
+`;
