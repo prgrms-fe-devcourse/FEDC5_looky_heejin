@@ -50,9 +50,9 @@ const ProfileView = ({
   onClickChat,
   ...props
 }: IProfileProps) => {
-  const { _id, email, fullName, image, coverImage } = userInfo;
-  const { id } = useMe();
-  const [isMe, setIsMe] = useState(id === _id);
+  const { _id: userId, email, fullName, image, coverImage } = userInfo;
+  const { id: myId } = useMe();
+  const [isMe, setIsMe] = useState(myId === userId);
   const [isFollow, setIsFollow] = useState(false);
   const [followId, setFollowId] = useState<string>();
   const [formData, setFormData] = useState<IFollow | IUnFollow>();
@@ -71,9 +71,8 @@ const ProfileView = ({
   });
 
   useEffect(() => {
-    setIsMe(id === _id);
-    console.log(userInfo.fullName);
-  }, [_id]);
+    setIsMe(myId === userId);
+  }, [userId]);
 
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => {
@@ -94,8 +93,7 @@ const ProfileView = ({
 
     const refetchData = async () => {
       const { data: refetchData } = await refetch();
-      console.log(refetchData);
-      // setUserData(refetchData?.data);
+      console.log(refetchData?.data);
     };
 
     refetchData();
@@ -118,10 +116,10 @@ const ProfileView = ({
   const handleClickFollow = (e: React.MouseEvent) => {
     e.stopPropagation();
     // 현재 프로필 id
-    if (id === undefined) return;
+    if (userId === undefined) return;
 
     if (!isFollow) {
-      id && setFormData({ userId: id });
+      userId && setFormData({ userId });
 
       followMutation.mutate(formData as IFollow);
     } else {
@@ -192,7 +190,7 @@ const ProfileView = ({
         {!isMe && (
           <ButtonsWrap className="others">
             <ButtonSet style={buttonStyle}>
-              <Icon name="chat_bubble" onClick={e => onClickChat(e, _id)} />
+              <Icon name="chat_bubble" onClick={e => onClickChat(e, userId)} />
               <Icon
                 name={!isFollow ? "person_add" : "person_check"}
                 color={isFollow ? theme.symbol_color : undefined}
