@@ -8,7 +8,7 @@ import { _UPDATE_IMAGE } from "@/api/queries/profile";
 
 interface IFileProps {
   isCover: boolean;
-  image: any;
+  image: File;
 }
 
 const UploadWrap = styled.div`
@@ -18,7 +18,7 @@ const UploadWrap = styled.div`
 `;
 
 const ChangeImageModal = () => {
-  const [image, setImage] = useState<string | ArrayBuffer>();
+  const [image, setImage] = useState<File>();
   const { closeModal } = useUI();
 
   const mutation = useMutation({
@@ -31,43 +31,8 @@ const ChangeImageModal = () => {
     },
   });
 
-  // const convertFileToBinary = (file: File): Promise<string | ArrayBuffer> => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-
-  //     reader.readAsBinaryString(file);
-
-  //     reader.onloadend = () => {
-  //       const binaryString = reader.result;
-  //       if (binaryString) {
-  //         resolve(binaryString);
-  //       }
-  //     };
-
-  //     reader.onerror = reject;
-  //   });
-  // };
-
-  const convertFileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-
-      reader.onloadend = () => {
-        if (reader.result && typeof reader.result === "string") {
-          const base64String = reader.result?.split(",")[1];
-          resolve(base64String);
-        }
-      };
-
-      reader.onerror = reject;
-    });
-  };
-
   const handleChangeFile = async (file: File) => {
-    const converted = await convertFileToBase64(file);
-    setImage(converted);
+    setImage(file);
   };
 
   const handleSubmit = () => {
