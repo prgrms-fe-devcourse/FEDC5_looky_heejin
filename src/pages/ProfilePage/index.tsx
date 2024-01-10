@@ -1,16 +1,14 @@
 import styled from "styled-components";
 import ProfileView from "./Views/ProfileView";
 import ProfilePostsView from "./Views/ProfilePostsView";
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { GET_USER, ME } from "@/constants/queryKey";
 import { _FOLLOW, _GET_USER, _UNFOLLOW } from "@/api/queries/profile";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { GET_USER } from "@/constants/queryKey";
 import { IUser } from "@/types";
-
-import { useUI } from "@/components/common/uiContext";
 import { _GET } from "@/api";
-import useEventQuery from "@/hooks/useEventQuery";
+import { useUI } from "@/components/common/uiContext";
 import { useProfile } from "@/hooks/useProfile";
 
 const ProfileWrap = styled.div`
@@ -19,34 +17,12 @@ const ProfileWrap = styled.div`
 
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover } = useProfile();
-  const { displayModal } = useUI();
-  // console.log(displayModal, modalProps, modalView);
-  const { id: paramsId } = useParams();
   const [userData, setUserData] = useState<IUser>();
-  const [modalState, setModalState] = useState(displayModal);
-  // console.log(modalState);
 
+  const { id: paramsId } = useParams();
   const { openModal, setModalView } = useUI();
-
   const navigate = useNavigate();
 
-  // 나
-  const { refetch: myRefetch } = useEventQuery({
-    key: ME,
-    endPoint: "/auth-user",
-  });
-
-  const fetchUser = async (id: string) => {
-    try {
-      const res = await _GET_USER(id);
-      console.log(res);
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // 이 프로필 주인
   const {
     data,
     isLoading,
@@ -61,6 +37,13 @@ const ProfilePage = () => {
   useEffect(() => {
     const updateUserData = async () => {
       const data = await refetchUser();
+      setProfileName(data?.data.fullName);
+      if (data?.data.image) {
+        setProfileImage(data?.data.image);
+      }
+      if (data?.data.coverImage) {
+        setProfileCover(data?.data.coverImage);
+      }
       setUserData(data?.data);
     };
 
