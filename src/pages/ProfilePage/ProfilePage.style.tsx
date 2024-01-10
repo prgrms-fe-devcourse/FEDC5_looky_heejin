@@ -7,11 +7,11 @@ import { Col, Row } from "@/styles/GlobalStyle";
 import { css, styled } from "styled-components";
 
 // ProfileView
-export const Profile = styled(Col)<{ isme: string }>`
+export const Profile = styled(Col)<{ isme: string; coverImage: string }>`
   height: calc(100vh - ${NAV_HEIGHT * 2}rem);
   padding: 1rem;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
-    url("https://picsum.photos/1500");
+    url(${props => props.coverImage});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

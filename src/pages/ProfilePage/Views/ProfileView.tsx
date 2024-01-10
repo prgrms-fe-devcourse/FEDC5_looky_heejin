@@ -46,8 +46,8 @@ const ProfileView = ({
   onClickFollow,
   ...props
 }: IProfileProps) => {
-  const { _id, email, fullName } = userInfo;
-  const { id, profilePhoto } = useMe();
+  const { _id, email, fullName, image, coverImage } = userInfo;
+  const { id } = useMe();
   const [isMe, setIsMe] = useState(id === _id);
 
   const theme = useTheme();
@@ -59,6 +59,7 @@ const ProfileView = ({
   return (
     <Profile
       isme={isMe.toString()}
+      coverImage={coverImage ?? ""}
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
@@ -81,7 +82,7 @@ const ProfileView = ({
             isMe ? onClickAvatar(e) : null;
           }}
         >
-          <Avatar src={profilePhoto ?? undefined} size="XL" />
+          <Avatar src={image ?? ""} size="XL" />
         </AvatarWrap>
         <div style={{ color: theme.white_primary, paddingTop: "1rem" }}>
           {email}
