@@ -20,6 +20,7 @@ import { ME } from "@/constants/queryKey";
 import useEventQuery from "@/hooks/useEventQuery";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
 import { useUI } from "@/components/common/uiContext";
+import { useProfile } from "@/hooks/useProfile";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -50,7 +51,9 @@ const ProfileView = ({
   onClickChat,
   ...props
 }: IProfileProps) => {
+  const { profileName, profileImage, profileCover } = useProfile();
   const { _id: userId, email, fullName, image, coverImage } = userInfo;
+  console.log(`나 여기 하위 컴포넌트임!`, userInfo);
   const { id: myId } = useMe();
   const [isMe, setIsMe] = useState(myId === userId);
   const [isFollow, setIsFollow] = useState(false);
@@ -76,19 +79,6 @@ const ProfileView = ({
       console.error("ERROR: 팔로우 실패", error);
     },
   });
-
-  // 모달이 닫히면 refetch
-  useEffect(() => {
-    if (displayModal || (!displayModal && !isMe)) return;
-
-    const refetchData = async () => {
-      const { data: refetchData } = await refetch();
-      console.log("리패칭!");
-      console.log(refetchData?.data);
-    };
-
-    refetchData();
-  }, [displayModal]);
 
   const unfollowMutation = useMutation({
     mutationFn: async (formData: IUnFollow) => {
@@ -123,7 +113,7 @@ const ProfileView = ({
   return (
     <Profile
       $isMe={isMe.toString()}
-      $coverImage={coverImage ?? ""}
+      $coverImage={profileCover ?? ""}
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
@@ -146,13 +136,13 @@ const ProfileView = ({
             isMe ? onClickAvatar(e) : null;
           }}
         >
-          <Avatar src={image ?? ""} size="XL" />
+          <Avatar src={profileImage ?? ""} size="XL" />
         </AvatarWrap>
         <div style={{ color: theme.white_primary, paddingTop: "1rem" }}>
           {email}
         </div>
         <span style={{ color: theme.white_primary, padding: "0.5rem 0" }}>
-          {fullName}
+          {profileName}
         </span>
         {/* 닉네임 수정 버튼 */}
         {isMe && (
