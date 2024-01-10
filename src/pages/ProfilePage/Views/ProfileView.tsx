@@ -13,11 +13,11 @@ import {
 import Icon from "@/components/common/Icon/Icon";
 import { _GET } from "@/api";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useProfile } from "@/hooks/useProfile";
-import { IFollow, IUnFollow } from "@/types/profile";
 import { IButtonProps } from "@/components/ButtonSet";
 import { IUser } from "@/types";
+import { ME } from "@/constants/queryKey";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -51,22 +51,39 @@ const ProfileView = ({
   const { profileName, profileImage, profileCover } = useProfile();
   const { _id: userId, email } = userInfo;
   const { id: myId } = useMe();
-  const [formData, setFormData] = useState<IFollow | IUnFollow>();
   const [isFollow, setIsFollow] = useState(false);
   const [followId, setFollowId] = useState<string>();
   const [isMe, setIsMe] = useState(myId === userId);
 
   const theme = useTheme();
+  const { data: myData } = useQuery({
+    queryKey: [ME],
+    queryFn: async () => await _GET("/auth-user"),
+  });
+
+  const init = async () => {
+    myData?.data.following.map((followingData: any) => {
+      if (followingData.user === userInfo._id) {
+        setIsFollow(true);
+        setFollowId(followingData._id);
+      }
+    });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   useEffect(() => {
     setIsMe(myId === userId);
   }, [userId]);
 
   const followMutation = useMutation({
-    mutationFn: async (formData: IFollow) => {
-      return await _FOLLOW(formData);
+    mutationFn: async (id: string) => {
+      return await _FOLLOW({ userId: id });
     },
     onSuccess(data) {
+      console.log(data);
       setIsFollow(true);
       setFollowId(data._id);
     },
@@ -76,10 +93,13 @@ const ProfileView = ({
   });
 
   const unfollowMutation = useMutation({
-    mutationFn: async (formData: IUnFollow) => {
-      return await _UNFOLLOW(formData);
+    mutationFn: async (followId: string) => {
+      if (followId) {
+        return await _UNFOLLOW({ id: followId });
+      }
     },
-    onSuccess() {
+    onSuccess(data) {
+      console.log(data);
       console.log("API 성공! UnFollow");
       setIsFollow(false);
       setFollowId("");
@@ -95,13 +115,9 @@ const ProfileView = ({
     if (userId === undefined) return;
 
     if (!isFollow) {
-      userId && setFormData({ userId });
-
-      followMutation.mutate(formData as IFollow);
+      followMutation.mutate(userId);
     } else {
-      followId && setFormData({ id: followId });
-
-      unfollowMutation.mutate(formData as IUnFollow);
+      if (followId) unfollowMutation.mutate(followId);
     }
   };
 
