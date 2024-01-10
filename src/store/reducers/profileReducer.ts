@@ -27,28 +27,24 @@ const profileSlice = createSlice({
     profileReducer: (state, action: PayloadAction<PROFILE_ACTION>) => {
       switch (action.payload.type) {
         case "SET_IS_ME": {
-          console.log(state);
           return {
             ...state,
             isMe: action.payload.isMe,
           };
         }
         case "SET_NAME": {
-          console.log(state);
           return {
             ...state,
             profileName: action.payload.profileName,
           };
         }
         case "SET_IMAGE": {
-          console.log(state);
           return {
             ...state,
             profileImage: action.payload.profileImage,
           };
         }
         case "SET_COVER": {
-          console.log(state);
           return {
             ...state,
             profileCover: action.payload.profileCover,

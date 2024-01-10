@@ -111,7 +111,6 @@ const ProfileView = ({
 
   const handleClickFollow = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // 현재 프로필의 id
     if (userId === undefined) return;
 
     if (!isFollow) {
@@ -155,7 +154,6 @@ const ProfileView = ({
         <span style={{ color: theme.white_primary, padding: "0.5rem 0" }}>
           {profileName}
         </span>
-        {/* 닉네임 수정 버튼 */}
         {isMe && (
           <ButtonsWrap className="me">
             <Button

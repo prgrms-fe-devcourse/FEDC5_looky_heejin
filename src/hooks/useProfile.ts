@@ -1,20 +1,7 @@
 import { RootState } from "@/store";
-import { profileActions } from "@/store/reducers/profileReducer";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-export type TProfileState = {
-  isMe: boolean;
-  profileName: string;
-  profileImage: string;
-  profileCover: string;
-};
-
-export type PROFILE_ACTION =
-  | { type: "SET_IS_ME"; isMe: boolean }
-  | { type: "SET_NAME"; profileName: string }
-  | { type: "SET_IMAGE"; profileImage: string }
-  | { type: "SET_COVER"; profileCover: string };
+import { profileActions } from "@/store/reducers/profileReducer";
 
 export const useProfile = () => {
   const dispatch = useDispatch();
@@ -25,7 +12,6 @@ export const useProfile = () => {
 
   const setIsMe = useCallback(
     (isMe: boolean) => {
-      console.log(isMe);
       dispatch(profileActions.profileReducer({ type: "SET_IS_ME", isMe }));
     },
     [dispatch]
@@ -33,7 +19,6 @@ export const useProfile = () => {
 
   const setProfileName = useCallback(
     (profileName: string) => {
-      console.log(profileName);
       dispatch(
         profileActions.profileReducer({ type: "SET_NAME", profileName })
       );
@@ -43,7 +28,6 @@ export const useProfile = () => {
 
   const setProfileImage = useCallback(
     (profileImage: string) => {
-      console.log(profileImage);
       dispatch(
         profileActions.profileReducer({ type: "SET_IMAGE", profileImage })
       );
@@ -53,7 +37,6 @@ export const useProfile = () => {
 
   const setProfileCover = useCallback(
     (profileCover: string) => {
-      console.log(profileCover);
       dispatch(
         profileActions.profileReducer({ type: "SET_COVER", profileCover })
       );

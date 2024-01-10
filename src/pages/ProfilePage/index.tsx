@@ -80,8 +80,6 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      // 현재 프로필에 대한 data
-      console.log("첫 번째 isSuccess!!! ", data);
       setProfileName(data.fullName);
       if (data.image) {
         setProfileImage(data.image);
