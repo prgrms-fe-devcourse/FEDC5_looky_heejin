@@ -21,6 +21,7 @@ const AvatarsWrapper = styled.div`
 `;
 
 const AvatarWrapper = styled.div`
+  z-index: 99;
   & :first-child {
     margin-right: -0.8rem;
   }
@@ -41,10 +42,9 @@ const ChatAvatars = ({
     <ChatAvatarsWrapper>
       <AvatarsWrapper>
         <AvatarWrapper>
-          <Avatar size="XS" shape="circle" src={myAvatarSrc} />
+          <Avatar size="XS" shape="circle" src={partnerAvatarSrc} />
         </AvatarWrapper>
-
-        <Avatar size="XS" shape="circle" src={partnerAvatarSrc} />
+        <Avatar size="XS" shape="circle" src={myAvatarSrc} />
       </AvatarsWrapper>
       <PartnerName>{partnerName}</PartnerName>
     </ChatAvatarsWrapper>
