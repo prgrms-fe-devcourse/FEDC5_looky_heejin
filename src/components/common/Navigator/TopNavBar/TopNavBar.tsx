@@ -12,6 +12,7 @@ import {
   PageTitle,
 } from "./index";
 import useEventQuery from "@/hooks/useEventQuery";
+import { useMe } from "@/hooks/useMe";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -58,7 +59,11 @@ const NavTitle = {
 const TopNavBar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [partnerFullName, setPartnerFullName] = useState("");
+  const { profilePhoto: myProfileImage } = useMe();
+  const [partnerData, setPartnerData] = useState({
+    fullName: "",
+    profileImage: null,
+  });
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const showNavBar = useMemo(
@@ -74,7 +79,10 @@ const TopNavBar = () => {
     });
     const getPartnerFullName = async () => {
       const data = (await refetch()).data;
-      setPartnerFullName(data !== null ? data?.data.fullName : "상대방");
+      setPartnerData({
+        fullName: data?.data.fullName !== null ? data?.data.fullName : "상대방",
+        profileImage: data?.data.image,
+      });
     };
     useEffect(() => {
       getPartnerFullName();
@@ -94,10 +102,6 @@ const TopNavBar = () => {
     navigate(-1);
   };
 
-  // DUMMY_DATA --> 데이터 붙여야함
-  const myAvatarSrc = "https://picsum.photos/100";
-  const partnerAvatarSrc = "https://picsum.photos/200";
-
   return (
     showNavBar && (
       <TopNavBarWrapper>
@@ -115,9 +119,9 @@ const TopNavBar = () => {
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (
             <ChatAvatars
-              myAvatarSrc={myAvatarSrc}
-              partnerAvatarSrc={partnerAvatarSrc}
-              partnerName={partnerFullName}
+              myAvatarSrc={myProfileImage || undefined}
+              partnerAvatarSrc={partnerData.profileImage || undefined}
+              partnerName={partnerData.fullName}
             />
           )}
           {currentPath === PathName.CHANNELS && (

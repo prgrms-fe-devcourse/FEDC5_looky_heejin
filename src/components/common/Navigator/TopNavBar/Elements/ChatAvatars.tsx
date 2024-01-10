@@ -2,8 +2,8 @@ import { Avatar } from "../../..";
 import { styled } from "styled-components";
 
 interface IChatAvatarsProps {
-  myAvatarSrc: string;
-  partnerAvatarSrc: string;
+  myAvatarSrc: string | undefined;
+  partnerAvatarSrc: string | undefined;
   partnerName: string;
 }
 
