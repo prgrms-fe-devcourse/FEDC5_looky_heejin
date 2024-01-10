@@ -17,8 +17,6 @@ interface IMessageProps {
 }
 
 const Message = ({ isMine, senderName, message, createdAt }: IMessageProps) => {
-  console.log(createdAt);
-
   return (
     <MessageCard $isMine={isMine}>
       <div>{!isMine && <Avatar size="XS" />}</div>

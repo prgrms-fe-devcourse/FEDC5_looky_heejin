@@ -17,6 +17,7 @@ import {
 import { PathName } from "@/constants/pathNameConstants";
 import { Avatar, Button } from "../..";
 import { useMe } from "@/hooks/useMe";
+import { _GET } from "@/api";
 
 const BottomNavBarWrapper = styled.nav`
   position: fixed;
@@ -50,7 +51,7 @@ const ButtonChildrenSortingStyle = {
 };
 
 const BottomNavBar = () => {
-  const { id } = useMe();
+  const { id, profilePhoto } = useMe();
   const { pathname } = useLocation();
   const NAV_VISIBLE_PATH = [
     PathName.HOME,
@@ -59,6 +60,7 @@ const BottomNavBar = () => {
     PathName.SEARCH,
     PathName.CHATS,
     PathName.NOTIFICATIONS,
+    PathName.NEWPOST,
     PathName.POSTDETAIL,
     PathName.TEST,
   ];
@@ -156,10 +158,18 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
+          onClickHandler={
+            id
+              ? () => handleIconClick(`${PathName.PROFILE}/${id}`)
+              : () => handleIconClick(`login`)
+          }
           style={ButtonChildrenSortingStyle}
         >
-          <Avatar size="XS" />
+          {id ? (
+            <Avatar size="XS" src={profilePhoto ? profilePhoto : ""} />
+          ) : (
+            <Avatar size="XS" />
+          )}
         </Button>
       </IconWrapper>
     </BottomNavBarWrapper>

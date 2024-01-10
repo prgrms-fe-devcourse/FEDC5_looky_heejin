@@ -1,16 +1,24 @@
-import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
-const InputLabel: React.FC<{ title: string; help?: string }> = ({
+interface IInputLabelProps {
+  title: string;
+  help?: string;
+  titleColor?: string;
+  helpColor?: string;
+}
+
+const InputLabel = ({
   title,
   help,
-}) => {
+  titleColor,
+  helpColor,
+}: IInputLabelProps) => {
   return (
     <label>
       <div className={`${help && "flex flex-row justify-between"}`}>
-        <span>{title}</span>
-        {help && <HelpSpan>{help}</HelpSpan>}
+        <TitleSpan $titleColor={titleColor}>{title}</TitleSpan>
+        {help && <HelpSpan $helpColor={helpColor}>{help}</HelpSpan>}
       </div>
     </label>
   );
@@ -18,7 +26,14 @@ const InputLabel: React.FC<{ title: string; help?: string }> = ({
 
 export default InputLabel;
 
-const HelpSpan = styled.span`
-  color: ${props => props.theme.gray_primary};
+const TitleSpan = styled.span<{ $titleColor?: string }>`
+  color: ${props =>
+    props.$titleColor ? props.$titleColor : props.theme.text_primary_color};
+`;
+
+const HelpSpan = styled.span<{ $helpColor?: string }>`
+  color: ${props =>
+    props.$helpColor ? props.$helpColor : props.theme.gray_primary};
+
   ${tw`text-xs pl-4`};
 `;

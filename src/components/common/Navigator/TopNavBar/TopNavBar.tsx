@@ -13,6 +13,7 @@ import {
 } from "./index";
 import useEventQuery from "@/hooks/useEventQuery";
 import { useMe } from "@/hooks/useMe";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -27,7 +28,7 @@ const TopNavBarWrapper = styled.nav`
   height: ${NAV_HEIGHT}rem;
   max-width: ${APP_MAX_WIDTH}px;
   background-color: ${({ theme }) => theme.background_color};
-  border-bottom: ${({ theme }) => `1px solid ${theme.container_color}`};
+  border-bottom: ${({ theme }) => `1px solid ${theme.transparent_50}`};
   z-index: ${NAVIGATER};
 `;
 
@@ -51,12 +52,15 @@ const NAV_VISIBLE_PATH = [
 const NavTitle = {
   CHANNELS: "채널 목록",
   PROFILE: "프로필",
-  NEWPOST: "새 포스트 생성",
+  NEWPOST: "새 포스트 작성",
   NOTIFICATIONS: "알림",
   CHATS: "대화 목록",
 };
 
 const TopNavBar = () => {
+  const [channel, _] = useLocalStorage("ViewChannelObj");
+  const parsedData = channel ? JSON.parse(channel as string) : null;
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { profilePhoto: myProfileImage } = useMe();
@@ -114,7 +118,9 @@ const TopNavBar = () => {
         </NavBarPartition>
         <NavBarPartition $width={CENTER_PARTITION_WIDTH}>
           {currentPath === PathName.HOME && (
-            <PageTitle title="빈티지"></PageTitle> // 데이터 붙여야함
+            <PageTitle
+              title={parsedData ? parsedData.name : "채널을 선택해주세요."}
+            ></PageTitle> // 데이터 붙여야함
           )}
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (

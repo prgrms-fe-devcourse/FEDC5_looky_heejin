@@ -57,7 +57,7 @@ const SignInPage = () => {
       setMe({
         id: user._id,
         userName: user.fullName,
-        profilePhoto: "",
+        profilePhoto: user.image,
       });
       storeToken(token);
       navigate("/home");

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Layout from "@/components/common/Layout";
 import {
@@ -23,7 +23,7 @@ import AuthRoute from "./AuthRoute";
 
 const RouterComponent = () => {
   return (
-    <Router>
+    <>
       <TopNavBar />
       <Layout>
         <Routes>
@@ -32,12 +32,7 @@ const RouterComponent = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/channels" element={<ChannelsPage />} />
-          <Route
-            path="/profile/:id"
-            element={
-              <AuthRoute path="/profile/:id" element={<ProfilePage />} />
-            }
-          />
+          <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route
@@ -64,7 +59,7 @@ const RouterComponent = () => {
         </Routes>
       </Layout>
       <BottomNavBar />
-    </Router>
+    </>
   );
 };
 export default RouterComponent;
