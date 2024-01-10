@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ProfileView from "./Views/ProfileView";
 import ProfilePostsView from "./Views/ProfilePostsView";
-import { _FOLLOW, _GET_USER, _UNFOLLOW } from "@/api/queries/profile";
+import { _GET_USER } from "@/api/queries/profile";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
