@@ -48,12 +48,12 @@ const ProfileView = ({
   onClickChat,
   ...props
 }: IProfileProps) => {
-  const { profileName, profileImage, profileCover } = useProfile();
-  const { _id: userId, email } = userInfo;
+  const { isMe, profileName, profileImage, profileCover, setIsMe } =
+    useProfile();
   const { id: myId } = useMe();
+  const { _id: userId, email } = userInfo;
   const [isFollow, setIsFollow] = useState(false);
   const [followId, setFollowId] = useState<string>();
-  const [isMe, setIsMe] = useState(myId === userId);
 
   const theme = useTheme();
   const { data: myData } = useQuery({
