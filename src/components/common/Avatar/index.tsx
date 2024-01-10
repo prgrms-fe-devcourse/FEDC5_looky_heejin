@@ -32,8 +32,7 @@ const AvatarWrapper = styled.div<IAvatarProps>`
   height: ${({ size }) => SizeToStyle[size]};
   border: ${({ border, theme }) =>
     border === "solid" ? `1px solid ${theme.gray_300}` : "none"};
-  background-image: ${({ src }) =>
-    src ? `url(${src})` : "url(/src/assets/profile.png)"};
+  background-image: ${({ src }) => (src ? `url(${src})` : "url(/profile.png)")};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
