@@ -153,13 +153,27 @@ export const UserNameInComment = styled.span`
 `;
 
 export const StyledLi = styled.li`
+  display: flex;
+  align-items: center;
   margin: 3px 0;
   padding: 0 3px;
   box-sizing: border-box;
 `;
 
+export const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: -0.2rem;
+  &:last-child {
+    font-size: 0.6rem;
+
+    color: ${({ theme }) => theme.gray_500};
+  }
+`;
+
 export const CommentContent = styled.span`
-  margin: 0 1px;
+  margin: 0 8px;
   line-height: 1.2rem;
 `;
 

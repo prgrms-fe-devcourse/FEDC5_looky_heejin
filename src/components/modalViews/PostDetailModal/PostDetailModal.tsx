@@ -11,8 +11,6 @@ import {
   AvatarWrapper,
   CaptionWrapper,
   CommentChatWrapper,
-  CommentContent,
-  CommentWrapper,
   ContentDetail,
   ContentWrapper,
   FollowButton,
@@ -22,17 +20,13 @@ import {
   ImageWrapper,
   InputWrapper,
   LikeCountSpan,
-  MoreComments,
-  NoComments,
   PostDetailWrapper,
   ReplyButton,
   StyledImg,
   StyledInput,
-  StyledLi,
   StyledSpan,
   Tag,
   UserInfoWrapper,
-  UserNameInComment,
   UserNameSpan,
   UserNameWrapper,
 } from "./PostDetailModal.styles";
@@ -53,6 +47,7 @@ import { _CREATE_LIKE, _DELETE_LIKE } from "@/api/queries/like";
 import type { ITag } from "@/types/post";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import { ME } from "@/constants/queryKey";
+import Comments from "./Comments";
 
 interface ModalProps {
   postId: string;
@@ -272,10 +267,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     navigate(`/chat/${userId}`);
   };
 
-  const handleShowComments = () => {
-    setIsShowComments(true);
-  };
-
   const toggleShowComments = () => {
     setIsShowComments(!isShowComments);
   };
@@ -283,11 +274,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   interface Comment {
     comment: string;
   }
-  const handleDeleteComment = (id: string) => {
-    console.log("댓글삭제 클릭");
-    console.log(id);
-    deleteCommentMutation.mutate({ id });
-  };
 
   const onValid: SubmitHandler<Comment> = ({ comment }) => {
     console.log(comment);
@@ -398,31 +384,13 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           )}
         </ContentWrapper>
 
-        <CommentWrapper>
-          {isShowComments ? (
-            <ul>
-              {comments.map((comment: any) => (
-                <StyledLi key={comment._id}>
-                  <UserNameInComment>
-                    {comment.author.fullName}{" "}
-                  </UserNameInComment>
-                  <CommentContent>{comment.comment}</CommentContent>
-                  {comment.author._id === myId && (
-                    <button onClick={() => handleDeleteComment(comment._id)}>
-                      x
-                    </button>
-                  )}
-                </StyledLi>
-              ))}
-            </ul>
-          ) : comments.length === 0 ? (
-            <NoComments>댓글이 없습니다.</NoComments>
-          ) : (
-            <MoreComments onClick={handleShowComments}>
-              댓글 {comments.length}개 보기
-            </MoreComments>
-          )}
-        </CommentWrapper>
+        <Comments
+          myId={myId}
+          comments={comments}
+          setComments={setComments}
+          isShowComments={isShowComments}
+          setIsShowComments={setIsShowComments}
+        ></Comments>
 
         <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <InputWrapper>
