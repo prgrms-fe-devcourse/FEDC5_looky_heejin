@@ -15,7 +15,7 @@ const UploadWrap = styled.div`
 
 const ChangeImageModal = () => {
   const [image, setImage] = useState<File>();
-  const { closeModal } = useUI();
+  const { closeModal, modalView } = useUI();
 
   const mutation = useMutation({
     mutationFn: async (formData: IUpdateImage) => await _UPDATE_IMAGE(formData),
@@ -32,9 +32,16 @@ const ChangeImageModal = () => {
   };
 
   const handleSubmit = () => {
-    if (image) {
+    if (!image) return;
+
+    if (modalView === "EDIT_IMAGE_VIEW") {
       mutation.mutate({
         isCover: false,
+        image,
+      });
+    } else if (modalView === "EDIT_COVERIMAGE_VIEW") {
+      mutation.mutate({
+        isCover: true,
         image,
       });
     }
