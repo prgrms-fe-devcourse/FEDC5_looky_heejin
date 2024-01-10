@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { ICON_SIZE, ICON_SIZE_SMALL } from "../ProfilePage.const";
 import { Avatar, Button } from "@/components/common";
 import { ButtonSet } from "@/components";
-import { IFollow, IUnFollow } from "@/types/profile";
 import {
   AvatarWrap,
   ButtonsWrap,
@@ -12,15 +11,13 @@ import {
   Profile,
 } from "../ProfilePage.style";
 import Icon from "@/components/common/Icon/Icon";
-import { IUser } from "@/types";
-import { IButtonProps } from "@/components/ButtonSet";
 import { _GET } from "@/api";
-import { useMutation } from "@tanstack/react-query";
-import { ME } from "@/constants/queryKey";
-import useEventQuery from "@/hooks/useEventQuery";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
-import { useUI } from "@/components/common/uiContext";
+import { useMutation } from "@tanstack/react-query";
 import { useProfile } from "@/hooks/useProfile";
+import { IFollow, IUnFollow } from "@/types/profile";
+import { IButtonProps } from "@/components/ButtonSet";
+import { IUser } from "@/types";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -52,15 +49,13 @@ const ProfileView = ({
   ...props
 }: IProfileProps) => {
   const { profileName, profileImage, profileCover } = useProfile();
-  const { _id: userId, email, fullName, image, coverImage } = userInfo;
-  console.log(`나 여기 하위 컴포넌트임!`, userInfo);
+  const { _id: userId, email } = userInfo;
   const { id: myId } = useMe();
-  const [isMe, setIsMe] = useState(myId === userId);
+  const [formData, setFormData] = useState<IFollow | IUnFollow>();
   const [isFollow, setIsFollow] = useState(false);
   const [followId, setFollowId] = useState<string>();
-  const [formData, setFormData] = useState<IFollow | IUnFollow>();
+  const [isMe, setIsMe] = useState(myId === userId);
 
-  const { displayModal } = useUI();
   const theme = useTheme();
 
   useEffect(() => {
@@ -96,7 +91,7 @@ const ProfileView = ({
 
   const handleClickFollow = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // 현재 프로필 id
+    // 현재 프로필의 id
     if (userId === undefined) return;
 
     if (!isFollow) {

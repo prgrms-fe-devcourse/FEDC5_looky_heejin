@@ -1,12 +1,12 @@
+import styled from "styled-components";
 import { FieldErrors, useForm } from "react-hook-form";
 import { Button, Input, InputLabel } from "../common";
-import styled from "styled-components";
 import { Col } from "@/styles/GlobalStyle";
 import { useUI } from "../common/uiContext";
+import { ModalLayout } from "../common/Modal";
 import { NAME_VALIDATION } from "@/pages/ProfilePage/ProfilePage.const";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_NAME } from "@/api/queries/profile";
-import { ModalLayout } from "../common/Modal";
 import { useProfile } from "@/hooks/useProfile";
 
 interface INameFormProps {
@@ -39,7 +39,6 @@ const EditNameModal = () => {
     onSuccess: data => {
       console.log("API UPDATE NAME 성공!");
       setProfileName(data.fullName);
-      console.log(data.fullName);
     },
     onError: error => console.log("Error", error),
   });
@@ -49,7 +48,6 @@ const EditNameModal = () => {
       fullName: data.fullName,
       username: null,
     };
-    console.log(formData, data);
     mutation.mutate(formData);
     closeModal();
   };

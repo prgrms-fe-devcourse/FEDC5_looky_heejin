@@ -38,9 +38,6 @@ const EditPasswordModal = () => {
   const mutation = useMutation({
     mutationFn: async (updatedValue: string) =>
       await _UPDATE_PASSWORD({ password: updatedValue }),
-    onSuccess: data => {
-      console.log(data);
-    },
     onError: error => console.log("Error", error),
   });
 

@@ -1,12 +1,12 @@
+import { styled } from "styled-components";
+import { useState } from "react";
+import { rootAPI } from "@/api";
 import { Button, Upload } from "../common";
 import { ModalLayout } from "../common/Modal";
-import { styled } from "styled-components";
 import { useUI } from "../common/uiContext";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
-import { rootAPI } from "@/api";
 import { useProfile } from "@/hooks/useProfile";
 
 const UploadWrap = styled.div<{ $iscover: string }>`
