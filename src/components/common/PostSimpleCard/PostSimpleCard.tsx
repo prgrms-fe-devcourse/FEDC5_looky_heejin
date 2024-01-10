@@ -195,9 +195,7 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
               onClick={onClickImage}
-              src={
-                postData.image ? postData.image : "/src/assets/image_alt.png"
-              }
+              src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
             />
           </CardImageContainer>
