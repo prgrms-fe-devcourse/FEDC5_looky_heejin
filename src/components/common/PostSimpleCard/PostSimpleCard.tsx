@@ -15,7 +15,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Avatar } from "..";
 import useTheme from "@/hooks/useTheme";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
 import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
@@ -58,6 +58,7 @@ const IsJsonString = (str: string) => {
 
 // todo, 타입 충돌로 인해서 추후 타입 명시
 const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
+  const { pathname } = useLocation();
   // console.log(postData);
   const { data: myData } = useQuery({
     queryKey: [ME],
@@ -88,12 +89,25 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
       // console.log("나다 ", myData);
       // console.log("포스트 데이터다", postData);
       // console.log("작성자 데이터다", data);
-      postData.likes.map((val: any) => {
-        if (val.user === myData?.data._id) {
-          setFavoriteClicked(true);
-          setFavoriteId(val._id);
+      if (typeof postData.likes[0] === "object") {
+        postData.likes.map((val: any) => {
+          if (val.user === myData?.data._id) {
+            setFavoriteClicked(true);
+            setFavoriteId(val._id);
+          }
+        });
+      } else if (typeof postData.likes[0] === "string") {
+        for (let i = 0; i < postData.likes.length; i++) {
+          for (let j = 0; j < myData?.data.likes.length; j++) {
+            if (postData.likes[i] === myData?.data.likes[j]._id) {
+              setFavoriteClicked(true);
+              setFavoriteId(postData.likes[i]);
+              break;
+            }
+          }
         }
-      });
+      }
+
       setimageUrl(data.image);
       setUserName(data.fullName);
     },
@@ -109,7 +123,11 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   };
 
   const onClickProfile = () => {
-    navigate(`/profile/${postData.author._id}`);
+    if (pathname.includes("profile")) {
+      alert(`Easter Egg!!!`);
+    } else {
+      navigate(`/profile/${postData.author._id}`);
+    }
   };
 
   const onClickFavorite = () => {
@@ -144,7 +162,11 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   });
 
   useEffect(() => {
-    mutation.mutate(postData.author._id);
+    if (postData.author._id) {
+      mutation.mutate(postData.author._id);
+    } else {
+      mutation.mutate(postData.author);
+    }
   }, []);
 
   if (mutation.isError) {
