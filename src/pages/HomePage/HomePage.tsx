@@ -10,7 +10,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0px -5.5px;
+  margin-top: 10px;
+  margin-left: -5.5px;
+  margin-right: -5.5px;
   width: calc(100% + 11px);
   padding-bottom: 3rem;
 `;
@@ -33,16 +35,16 @@ const Home = () => {
     }
   }, []);
 
-  if (data)
-    return (
-      <>
-        <Container>
-          {data.map((value, index) => (
-            <PostSimpleCard key={index} postData={value} />
-          ))}
-        </Container>
-      </>
-    );
+  if (data) console.log(data);
+  return (
+    <>
+      <Container>
+        {data.map((value, index) => (
+          <PostSimpleCard key={index} postData={value} />
+        ))}
+      </Container>
+    </>
+  );
 };
 
 export default Home;
