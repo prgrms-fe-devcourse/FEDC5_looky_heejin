@@ -7,13 +7,15 @@ import { useState } from "react";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
 import { rootAPI } from "@/api";
+import { useProfile } from "@/hooks/useProfile";
 
-const UploadWrap = styled.div<{ iscover: string }>`
+const UploadWrap = styled.div<{ $iscover: string }>`
   width: 300px;
-  aspect-ratio: ${props => (props.iscover === "true" ? 10 / 16 : 1 / 1)};
+  aspect-ratio: ${props => (props.$iscover === "true" ? 10 / 16 : 1 / 1)};
 `;
 
 const ChangeImageModal = () => {
+  const { setProfileImage, setProfileCover } = useProfile();
   const [image, setImage] = useState<File>();
 
   const { closeModal, modalView } = useUI();
@@ -25,6 +27,12 @@ const ChangeImageModal = () => {
       console.log("API 데이터: ", data);
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
+      if (data.image) {
+        setProfileImage(data.image);
+      }
+      if (data.coverImage) {
+        setProfileCover(data.coverImage);
+      }
     },
     onError(error) {
       console.error("API 에러: ", error);
@@ -57,7 +65,7 @@ const ChangeImageModal = () => {
   return (
     <ModalLayout>
       <section>
-        <UploadWrap iscover={isCover.toString()}>
+        <UploadWrap $iscover={isCover.toString()}>
           <Upload
             onChange={handleChangeFile}
             style={{ position: "relative", width: "100%", height: "100%" }}

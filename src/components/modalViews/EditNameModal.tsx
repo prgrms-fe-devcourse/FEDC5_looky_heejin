@@ -7,6 +7,7 @@ import { NAME_VALIDATION } from "@/pages/ProfilePage/ProfilePage.const";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_NAME } from "@/api/queries/profile";
 import { ModalLayout } from "../common/Modal";
+import { useProfile } from "@/hooks/useProfile";
 
 interface INameFormProps {
   fullName: string;
@@ -24,6 +25,7 @@ const InputWrap = styled.div`
 `;
 
 const EditNameModal = () => {
+  const { setProfileName } = useProfile();
   const { closeModal } = useUI();
   const {
     register,
@@ -36,6 +38,7 @@ const EditNameModal = () => {
       await _UPDATE_NAME(formData),
     onSuccess: data => {
       console.log("API UPDATE NAME 성공!");
+      setProfileName(data.fullName);
       console.log(data.fullName);
     },
     onError: error => console.log("Error", error),
