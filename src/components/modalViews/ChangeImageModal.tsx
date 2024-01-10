@@ -5,10 +5,10 @@ import { useUI } from "../common/uiContext";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
+import { IUpdateImage } from "@/types/profile";
 
-interface IFileProps {
-  isCover: boolean;
-  image: File;
+interface IModalProps {
+  onSubmit: (image: File) => void;
 }
 
 const UploadWrap = styled.div`
@@ -17,12 +17,12 @@ const UploadWrap = styled.div`
   aspect-ratio: 10 / 16;
 `;
 
-const ChangeImageModal = () => {
+const ChangeImageModal = ({ onSubmit }: IModalProps) => {
   const [image, setImage] = useState<File>();
   const { closeModal } = useUI();
 
   const mutation = useMutation({
-    mutationFn: async (formData: IFileProps) => await _UPDATE_IMAGE(formData),
+    mutationFn: async (formData: IUpdateImage) => await _UPDATE_IMAGE(formData),
     onSuccess(data) {
       console.log("API 데이터: ", data);
     },
@@ -41,6 +41,8 @@ const ChangeImageModal = () => {
         isCover: false,
         image,
       });
+
+      onSubmit(image);
     }
 
     closeModal();
