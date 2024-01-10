@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { _PUT } from "@/api";
 
 const NotificationsPage = () => {
-  const { common } = useNotification();
+  const { common, initCommonCount } = useNotification();
 
   const mutation = useMutation({
     mutationFn: async () => await _PUT("/notifications/seen"),
@@ -15,8 +15,12 @@ const NotificationsPage = () => {
 
   useEffect(() => {
     mutation.mutate();
+    initCommonCount();
 
-    return () => mutation.mutate();
+    return () => {
+      mutation.mutate();
+      initCommonCount();
+    };
   }, []);
 
   const getType = useCallback(

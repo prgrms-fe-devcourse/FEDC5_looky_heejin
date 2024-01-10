@@ -26,7 +26,7 @@ const TopNavBarWrapper = styled.nav`
   height: ${NAV_HEIGHT}rem;
   max-width: ${APP_MAX_WIDTH}px;
   background-color: ${({ theme }) => theme.background_color};
-  border-bottom: ${({ theme }) => `1px solid ${theme.container_color}`};
+  border-bottom: ${({ theme }) => `1px solid ${theme.transparent_50}`};
   z-index: ${NAVIGATER};
 `;
 

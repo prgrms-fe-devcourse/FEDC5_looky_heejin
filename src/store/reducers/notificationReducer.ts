@@ -34,6 +34,18 @@ const notificationSlice = createSlice({
         .get("true", 0)
         .value();
     },
+    initCommonCount: state => {
+      return {
+        ...state,
+        commonUnseenCount: 0,
+      };
+    },
+    initMessageCount: state => {
+      return {
+        ...state,
+        messageUnseenCount: 0,
+      };
+    },
   },
 });
 
