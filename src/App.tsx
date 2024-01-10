@@ -21,9 +21,12 @@ const App = () => {
     endPoint: "/auth-user",
   });
 
+  if (token !== null) {
+    rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
+  }
+
   const preload = async () => {
     if (token !== null) {
-      rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
       const data = (await refetch()).data?.data ?? null;
 
       if (!data) {
@@ -61,7 +64,7 @@ const App = () => {
 
   return (
     <>
-      <NotificationManager />
+      {isLogIn && <NotificationManager />}
       <RouterComponent />
     </>
   );
