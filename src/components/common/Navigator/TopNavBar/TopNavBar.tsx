@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { APP_MAX_WIDTH, NAVIGATER, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import {
@@ -11,6 +11,7 @@ import {
   SearchBar,
   PageTitle,
 } from "./index";
+import useEventQuery from "@/hooks/useEventQuery";
 
 const LEFT_PARTITION_WIDTH = "20%";
 const CENTER_PARTITION_WIDTH = "60%";
@@ -56,6 +57,8 @@ const NavTitle = {
 
 const TopNavBar = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const [partnerFullName, setPartnerFullName] = useState("");
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const showNavBar = useMemo(
@@ -63,7 +66,20 @@ const TopNavBar = () => {
     [currentPath]
   );
 
-  const navigate = useNavigate();
+  if (currentPath === PathName.CHAT) {
+    const partnerId = pathname.split("/")[2];
+    const { refetch } = useEventQuery({
+      key: `partnerId-${partnerId}`,
+      endPoint: `/users/${partnerId}`,
+    });
+    const getPartnerFullName = async () => {
+      const data = (await refetch()).data;
+      setPartnerFullName(data !== null ? data?.data.fullName : "상대방");
+    };
+    useEffect(() => {
+      getPartnerFullName();
+    }, [partnerId]);
+  }
 
   const handleIconClick = useCallback(
     (path: string) => {
@@ -81,7 +97,6 @@ const TopNavBar = () => {
   // DUMMY_DATA --> 데이터 붙여야함
   const myAvatarSrc = "https://picsum.photos/100";
   const partnerAvatarSrc = "https://picsum.photos/200";
-  const parterName = "누군가";
 
   return (
     showNavBar && (
@@ -102,7 +117,7 @@ const TopNavBar = () => {
             <ChatAvatars
               myAvatarSrc={myAvatarSrc}
               partnerAvatarSrc={partnerAvatarSrc}
-              partnerName={parterName}
+              partnerName={partnerFullName}
             />
           )}
           {currentPath === PathName.CHANNELS && (
