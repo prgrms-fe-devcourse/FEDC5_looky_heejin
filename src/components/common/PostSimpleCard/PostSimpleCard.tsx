@@ -6,6 +6,8 @@ import {
   IconContainer,
   NewDiv,
   ProfileContainer,
+  SkeletonFail,
+  SkeletonImage,
   TextContainer,
 } from "./PostSimpleCard.styles";
 import { _USERDATA } from "@/api/queries/userData";
@@ -147,12 +149,20 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
 
   if (mutation.isError) {
     // 에러문구 todo
-    return <div>실패요 수고</div>;
+    return (
+      <CardContainer $basis="half">
+        <SkeletonFail>데이터를 불러오는 데에 실패했어요!</SkeletonFail>
+      </CardContainer>
+    );
   }
 
   if (mutation.isPending) {
     // 스켈레톤 todo
-    return <div>기다리셈</div>;
+    return (
+      <CardContainer $basis="half">
+        <SkeletonImage />
+      </CardContainer>
+    );
   }
 
   if (mutation.isSuccess) {
@@ -178,7 +188,7 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
                   style={{
                     scale: "0.8",
                     color: !favoriteClicked
-                      ? theme?.gray_100
+                      ? theme?.gray_300
                       : theme?.symbol_color,
                     fontVariationSettings: "fill",
                   }}

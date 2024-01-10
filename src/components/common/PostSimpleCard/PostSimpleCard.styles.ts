@@ -30,8 +30,8 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
   box-sizing: border-box;
   margin: 0px 5.5px 12px;
   /* 추후 삭제 예정 */
-  border: 1px solid royalblue;
-  /* border-radius: 0.375rem; */
+  border: 1px solid ${props => props.theme.container_color};
+  border-radius: 0.375rem;
 `;
 
 export const CardInfoContainer = styled.div`
@@ -47,14 +47,9 @@ export const CardImageContainer = styled.div`
 `;
 
 export const CardImage = styled.img`
-  /* width: 100%;
-  height: 100%;
-  object-fit: cover; */
   cursor: pointer;
   width: 100%;
-  /* height: 480px; */
   aspect-ratio: 10 / 16;
-  /* object-fit: contain; */
   object-fit: cover;
   border-radius: 0.375rem;
 `;
@@ -99,12 +94,14 @@ export const IconContainer = styled.div<{
         `;
       case "favorite":
         return css`
+          color: ${props => props.theme.symbol_color};
           scale: 1.2;
           top: 10px;
           /* bottom: calc(100%); */
           right: 10px;
           border-radius: 50%;
-          background-color: rgba(0, 0, 0, 0.3);
+          background-color: ${props => props.theme.background_color};
+          /* background-color: rgba(0, 0, 0, 0.3); */
         `;
     }
   }};
@@ -137,4 +134,31 @@ export const ProfileContainer = styled(Row)`
   width: auto;
   align-items: center;
   margin: 5px;
+`;
+
+export const skeletonImageLoading = keyframes`
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 0.3;
+  }
+`;
+
+export const SkeletonImage = styled.div`
+  width: 100%;
+  aspect-ratio: 10 / 16;
+  border-radius: 0.375rem;
+  background-color: #aaa;
+  animation: ${skeletonImageLoading} 1s infinite alternate;
+`;
+
+export const SkeletonFail = styled.div`
+  width: 100%;
+  display: flex;
+  aspect-ratio: 10 / 16;
+  border-radius: 0.375rem;
+  background-color: #aaa;
+  align-items: center;
+  justify-content: center;
 `;

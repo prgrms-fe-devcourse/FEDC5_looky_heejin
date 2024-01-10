@@ -32,12 +32,7 @@ const RouterComponent = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/channels" element={<ChannelsPage />} />
-          <Route
-            path="/profile/:id"
-            element={
-              <AuthRoute path="/profile/:id" element={<ProfilePage />} />
-            }
-          />
+          <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route

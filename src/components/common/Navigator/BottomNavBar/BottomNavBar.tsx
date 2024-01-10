@@ -157,10 +157,18 @@ const BottomNavBar = () => {
         <Button
           variant="flat"
           useRipple={true}
-          onClickHandler={() => handleIconClick(`${PathName.PROFILE}/${id}`)}
+          onClickHandler={
+            id
+              ? () => handleIconClick(`${PathName.PROFILE}/${id}`)
+              : () => handleIconClick(`login`)
+          }
           style={ButtonChildrenSortingStyle}
         >
-          <Avatar size="XS" src={profilePhoto ? profilePhoto : ""} />
+          {id ? (
+            <Avatar size="XS" src={profilePhoto ? profilePhoto : ""} />
+          ) : (
+            <Avatar size="XS" />
+          )}
         </Button>
       </IconWrapper>
     </BottomNavBarWrapper>
