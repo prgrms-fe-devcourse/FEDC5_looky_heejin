@@ -20,6 +20,12 @@ interface IMessageBodyData {
   receiver: string;
 }
 
+interface INotificationBodyData {
+  notificationType: "MESSAGE";
+  notificationTypeId: string;
+  userId: string;
+}
+
 const ChatPage = () => {
   const { pathname } = useLocation();
   const userId = pathname.split("/")[2];
@@ -28,46 +34,60 @@ const ChatPage = () => {
 
   const chatEndPointRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: [`${CHAT}-${userId}`],
     queryFn: async () => await _GET(`/messages?userId=${userId}`),
     enabled: !!userId,
     refetchInterval: 1000,
   });
 
-  const mutation = useMutation({
+  const sendMutation = useMutation({
     mutationFn: async (formData: IMessageBodyData) =>
       await _POST("/messages/create", formData),
+    onSuccess: async data => {
+      await refetch();
+
+      setTimeout(() => {
+        scrollToBottom(true);
+      }, 100);
+
+      notificationMutation.mutate({
+        notificationType: "MESSAGE",
+        notificationTypeId: data?.data._id,
+        userId,
+      });
+    },
+  });
+
+  const notificationMutation = useMutation({
+    mutationFn: async (param: INotificationBodyData) =>
+      await _POST("/notifications/create", param),
   });
 
   const seenUpdateMutation = useMutation({
-    mutationFn: async () => await _PUT("/messages/update-seen", { sender: id }),
+    mutationFn: async () =>
+      await _PUT("/messages/update-seen", { sender: userId }),
   });
 
   const { register, handleSubmit, reset } = useForm<IMessageForm>({});
 
   const onValid = (data: IMessageForm) => {
-    console.log(data);
-    mutation.mutate({ message: data.message, receiver: userId });
-    scrollToBottom(true);
+    sendMutation.mutate({ message: data.message, receiver: userId });
     reset();
   };
 
   const scrollToBottom = (useSmooth?: boolean) => {
-    chatEndPointRef?.current?.scrollIntoView({
+    chatEndPointRef.current?.scrollIntoView({
       behavior: useSmooth ? "smooth" : "instant",
     });
   };
 
   useEffect(() => {
-    scrollToBottom();
     seenUpdateMutation.mutate();
+    scrollToBottom();
 
     return () => seenUpdateMutation.mutate();
   }, []);
-
-  if (isLoading) return <div>loading...</div>;
-  if (isError) return <div>Error...</div>;
 
   return (
     <div className="w-full h-full relative">

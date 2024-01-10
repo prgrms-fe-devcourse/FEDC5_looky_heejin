@@ -21,9 +21,12 @@ const App = () => {
     endPoint: "/auth-user",
   });
 
+  if (token !== null) {
+    rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
+  }
+
   const preload = async () => {
     if (token !== null) {
-      rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
       const data = (await refetch()).data?.data ?? null;
 
       if (!data) {
@@ -34,8 +37,8 @@ const App = () => {
       } else {
         setMe({
           id: data._id,
-          profilePhoto: data.profilePhoto,
-          userName: data.userName,
+          profilePhoto: data.image,
+          userName: data.fullName,
         });
         // 토큰 값을 redux에도 저장해서. 매번 Storage에서 get하지 않도록.
         setAuth({ isLogIn: true, token: token });
@@ -61,7 +64,7 @@ const App = () => {
 
   return (
     <>
-      <NotificationManager />
+      {isLogIn && <NotificationManager />}
       <RouterComponent />
     </>
   );

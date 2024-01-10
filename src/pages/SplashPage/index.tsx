@@ -10,7 +10,7 @@ const SplashPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
-      token ? navigate("/home") : navigate("/login");
+      token && token !== "null" ? navigate("/home") : navigate("/login");
     }, 2000);
     return () => clearTimeout(redirectTimeout);
   }, [navigate]);

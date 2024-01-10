@@ -15,6 +15,7 @@ import {
   ChannelSelectModal,
   EditNameModal,
   EditPasswordModal,
+  PostDetailModal,
   TagCreateModal,
   TestModal,
 } from "@/components/modalViews";
@@ -74,6 +75,7 @@ const ModalView: React.FC<{
       {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
       {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
       {modalView === "EDIT_COVERIMAGE_VIEW" && <ChangeImageModal />}
+      {modalView === "POST_DETAIL_VIEW" && <PostDetailModal props={props} />}
     </Modal>
   );
 };

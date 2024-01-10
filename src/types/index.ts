@@ -44,3 +44,34 @@ export interface IPost {
   updatedAt: string;
   __v?: number;
 }
+
+export interface ICreateComment {
+  comment: string;
+  postId: string;
+}
+export interface IDeleteComment {
+  id: string;
+}
+
+export interface ICreateLike {
+  postId: string;
+}
+
+export interface IDeleteLike {
+  id: string;
+}
+
+export interface IFollow {
+  userId: string;
+}
+
+export interface IUnfollow {
+  id: string;
+}
+
+export interface INotification {
+  notificationType: "COMMENT" | "FOLLOW" | "LIKE" | "MESSAGE";
+  notificationTypeId: string;
+  userId: string;
+  postId: string | null;
+}

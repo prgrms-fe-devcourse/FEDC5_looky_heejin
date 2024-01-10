@@ -14,6 +14,7 @@ interface IChatLiProps {
   senderName: string;
   senderId: string;
   senderIsOnline: boolean;
+  senderProfile?: string;
   message: string;
   seen: boolean;
   createdAt: string;
@@ -24,6 +25,7 @@ const ChatLi = ({
   senderName,
   senderId,
   senderIsOnline,
+  senderProfile,
   message,
   createdAt,
   seen,
@@ -32,7 +34,7 @@ const ChatLi = ({
   return (
     <ChatLiWrapper onClick={() => onClickHandler(senderId)}>
       <ChatLiAvatarBox>
-        <Avatar size="M" />
+        <Avatar size="M" src={senderProfile} />
         {senderIsOnline && <OnlineIndicator />}
       </ChatLiAvatarBox>
       <ChatLiArticle>
