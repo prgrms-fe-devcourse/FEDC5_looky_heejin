@@ -104,7 +104,8 @@ const ProfilePage = () => {
   };
 
   const handleChangeCover = () => {
-    console.log("커버이미지 변경!");
+    setModalView("EDIT_COVERIMAGE_VIEW");
+    openModal();
   };
 
   const handleClickChat = (e: React.MouseEvent, id: string) => {
