@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle<any>`
         color: ${props => props.theme.text_primary_color};
         /* font-family: sans-serif; */
         &::-webkit-scrollbar {
-          width: 0.6vw;
+          width: 0.4rem;
         }
         &::-webkit-scrollbar-thumb {
           background-color: hsla(0, 0%, 42%, 0.29);
