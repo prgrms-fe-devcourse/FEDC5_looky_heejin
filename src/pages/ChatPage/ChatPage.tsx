@@ -20,6 +20,12 @@ interface IMessageBodyData {
   receiver: string;
 }
 
+interface INotificationBodyData {
+  notificationType: "MESSAGE";
+  notificationTypeId: string;
+  userId: string;
+}
+
 const ChatPage = () => {
   const { pathname } = useLocation();
   const userId = pathname.split("/")[2];
@@ -38,6 +44,19 @@ const ChatPage = () => {
   const mutation = useMutation({
     mutationFn: async (formData: IMessageBodyData) =>
       await _POST("/messages/create", formData),
+    onSuccess: data => {
+      notificationMutation.mutate({
+        notificationType: "MESSAGE",
+        notificationTypeId: data?.data._id,
+        userId,
+      });
+      scrollToBottom(true);
+    },
+  });
+
+  const notificationMutation = useMutation({
+    mutationFn: async (param: INotificationBodyData) =>
+      await _POST("/notifications/create", param),
   });
 
   const seenUpdateMutation = useMutation({
@@ -47,9 +66,7 @@ const ChatPage = () => {
   const { register, handleSubmit, reset } = useForm<IMessageForm>({});
 
   const onValid = (data: IMessageForm) => {
-    console.log(data);
     mutation.mutate({ message: data.message, receiver: userId });
-    scrollToBottom(true);
     reset();
   };
 

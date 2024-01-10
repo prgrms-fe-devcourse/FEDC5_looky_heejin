@@ -32,7 +32,20 @@ const notificationSlice = createSlice({
       state.messageUnseenCount = _.chain(action.payload.message)
         .countBy(data => !data.seem)
         .get("true", 0)
+        .tap(data => console.log(data))
         .value();
+    },
+    initCommonCount: state => {
+      return {
+        ...state,
+        commonUnseenCount: 0,
+      };
+    },
+    initMessageCount: state => {
+      return {
+        ...state,
+        messageUnseenCount: 0,
+      };
     },
   },
 });

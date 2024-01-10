@@ -21,6 +21,16 @@ export const useNotification = () => {
     [dispatch]
   );
 
+  const initCommonCount = useCallback(
+    () => dispatch(notificationActions.initCommonCount()),
+    [dispatch]
+  );
+
+  const initMessageCount = useCallback(
+    () => dispatch(notificationActions.initMessageCount()),
+    [dispatch]
+  );
+
   const context = {
     common,
     message,
@@ -30,6 +40,8 @@ export const useNotification = () => {
       common: INotification[];
       message: INotification[];
     }) => setNotification(param),
+    initCommonCount: () => initCommonCount,
+    initMessageCount: () => initMessageCount,
   };
 
   return context;
