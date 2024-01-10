@@ -77,7 +77,7 @@ const TopNavBar = () => {
       key: `partnerId-${partnerId}`,
       endPoint: `/users/${partnerId}`,
     });
-    const getPartnerFullName = async () => {
+    const getPartnerData = async () => {
       const data = (await refetch()).data;
       setPartnerData({
         fullName: data?.data.fullName !== null ? data?.data.fullName : "상대방",
@@ -85,7 +85,7 @@ const TopNavBar = () => {
       });
     };
     useEffect(() => {
-      getPartnerFullName();
+      getPartnerData();
     }, [partnerId]);
   }
 
