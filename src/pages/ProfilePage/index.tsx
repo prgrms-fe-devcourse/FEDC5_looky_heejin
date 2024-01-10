@@ -3,13 +3,14 @@ import ProfileView from "./Views/ProfileView";
 import ProfilePostsView from "./Views/ProfilePostsView";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { GET_USER } from "@/constants/queryKey";
+import { GET_USER, ME } from "@/constants/queryKey";
 import { _FOLLOW, _GET_USER, _UNFOLLOW } from "@/api/queries/profile";
 import { useEffect, useState } from "react";
 import { IUser } from "@/types";
 
 import { useUI } from "@/components/common/uiContext";
-import { _GET, rootAPI } from "@/api";
+import { _GET } from "@/api";
+import useEventQuery from "@/hooks/useEventQuery";
 
 const ProfileWrap = styled.div`
   overflow-y: scroll;
@@ -23,22 +24,31 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
-    return () => {
-      rootAPI.defaults.headers["Content-Type"] =
-        "application/x-www-form-urlencoded";
-    };
-  }, []);
+  const handleSuccess = (data: any) => {
+    console.log("handleSuccess 성공 : ", data);
+    myRefetch();
+  };
 
-  const { data, isLoading, error, isSuccess, refetch } = useQuery({
+  const { refetch: myRefetch } = useEventQuery({
+    key: ME,
+    endPoint: "/auth-user",
+    onSuccessFn: handleSuccess,
+  });
+
+  const {
+    data,
+    isLoading,
+    error,
+    isSuccess,
+    refetch: refetchUser,
+  } = useQuery({
     queryKey: [GET_USER, paramsId],
     queryFn: async () => await _GET_USER(paramsId as string),
   });
 
   useEffect(() => {
     const updateUserData = async () => {
-      const data = await refetch();
+      const data = await refetchUser();
       setUserData(data?.data);
     };
 

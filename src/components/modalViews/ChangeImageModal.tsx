@@ -6,10 +6,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
+import { rootAPI } from "@/api";
 
-const UploadWrap = styled.div<{ iscover: boolean }>`
+const UploadWrap = styled.div<{ iscover: string }>`
   width: 300px;
-  aspect-ratio: ${props => (props.iscover ? 10 / 16 : 1 / 1)};
+  aspect-ratio: ${props => (props.iscover === "true" ? 10 / 16 : 1 / 1)};
 `;
 
 const ChangeImageModal = () => {
@@ -22,6 +23,8 @@ const ChangeImageModal = () => {
     mutationFn: async (formData: IUpdateImage) => await _UPDATE_IMAGE(formData),
     onSuccess(data) {
       console.log("API 데이터: ", data);
+      rootAPI.defaults.headers["Content-Type"] =
+        "application/x-www-form-urlencoded";
     },
     onError(error) {
       console.error("API 에러: ", error);
@@ -34,6 +37,7 @@ const ChangeImageModal = () => {
 
   const handleSubmit = () => {
     if (!image) return;
+    rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
 
     if (modalView === "EDIT_IMAGE_VIEW") {
       mutation.mutate({
@@ -53,7 +57,7 @@ const ChangeImageModal = () => {
   return (
     <ModalLayout>
       <section>
-        <UploadWrap iscover={isCover}>
+        <UploadWrap iscover={isCover.toString()}>
           <Upload
             onChange={handleChangeFile}
             style={{ position: "relative", width: "100%", height: "100%" }}

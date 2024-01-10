@@ -10,7 +10,7 @@ import { ModalLayout } from "../common/Modal";
 
 interface INameFormProps {
   fullName: string;
-  username?: string;
+  username?: string | null;
 }
 
 const Form = styled(Col)`
@@ -43,8 +43,10 @@ const EditNameModal = () => {
 
   const onValid = (data: INameFormProps) => {
     const formData = {
-      fullName: data?.fullName,
+      fullName: data.fullName,
+      username: null,
     };
+    console.log(formData, data);
     mutation.mutate(formData);
     closeModal();
   };

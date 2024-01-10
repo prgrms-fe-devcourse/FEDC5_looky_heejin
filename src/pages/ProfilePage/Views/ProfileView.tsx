@@ -60,16 +60,6 @@ const ProfileView = ({
   const { displayModal } = useUI();
   const theme = useTheme();
 
-  const handleSuccess = (data: any) => {
-    console.log("데이터 가져오기 성공 : ", data);
-  };
-
-  const { isLoading, refetch } = useEventQuery({
-    key: ME,
-    endPoint: "/auth-user",
-    onSuccessFn: handleSuccess,
-  });
-
   useEffect(() => {
     setIsMe(myId === userId);
   }, [userId]);
@@ -89,10 +79,11 @@ const ProfileView = ({
 
   // 모달이 닫히면 refetch
   useEffect(() => {
-    if (displayModal) return;
+    if (displayModal || (!displayModal && !isMe)) return;
 
     const refetchData = async () => {
       const { data: refetchData } = await refetch();
+      console.log("리패칭!");
       console.log(refetchData?.data);
     };
 
@@ -128,10 +119,6 @@ const ProfileView = ({
       unfollowMutation.mutate(formData as IUnFollow);
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <Profile
