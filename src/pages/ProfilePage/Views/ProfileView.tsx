@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ICON_SIZE, ICON_SIZE_SMALL } from "../ProfilePage.const";
 import { Avatar, Button } from "@/components/common";
 import { ButtonSet } from "@/components";
+import { IFollow, IUnFollow } from "@/types/profile";
 import {
   AvatarWrap,
   ButtonsWrap,
@@ -13,16 +14,20 @@ import {
 import Icon from "@/components/common/Icon/Icon";
 import { IUser } from "@/types";
 import { IButtonProps } from "@/components/ButtonSet";
+import { _GET } from "@/api";
+import { useMutation } from "@tanstack/react-query";
+import { ME } from "@/constants/queryKey";
+import useEventQuery from "@/hooks/useEventQuery";
+import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
+import { useUI } from "@/components/common/uiContext";
 
 interface IProfileProps {
   userInfo: IUser;
-  isFollow: boolean;
   onClickPassword: (e: React.MouseEvent) => void;
   onClickEdit: (e: React.MouseEvent) => void;
   onClickAvatar: (e: React.MouseEvent) => void;
   onClickCover: (e: React.MouseEvent) => void;
   onClickChat: (e: React.MouseEvent, paramsId: string) => void;
-  onClickFollow: (e: React.MouseEvent) => void;
   [key: string]: any;
 }
 
@@ -38,25 +43,97 @@ const buttonStyle: IButtonProps["style"] = {
 
 const ProfileView = ({
   userInfo,
-  isFollow,
   onClickPassword,
   onClickEdit,
   onClickAvatar,
   onClickCover,
   onClickChat,
-  onClickFollow,
   ...props
 }: IProfileProps) => {
   const { _id, email, fullName, image, coverImage } = userInfo;
   const { id } = useMe();
   const [isMe, setIsMe] = useState(id === _id);
+  const [isFollow, setIsFollow] = useState(false);
+  const [followId, setFollowId] = useState<string>();
+  const [formData, setFormData] = useState<IFollow | IUnFollow>();
 
+  const { displayModal } = useUI();
   const theme = useTheme();
+
+  const handleSuccess = (data: any) => {
+    console.log("데이터 가져오기 성공 : ", data);
+  };
+
+  const { isLoading, refetch } = useEventQuery({
+    key: ME,
+    endPoint: "/auth-user",
+    onSuccessFn: handleSuccess,
+  });
 
   useEffect(() => {
     setIsMe(id === _id);
     console.log(userInfo.fullName);
   }, [_id]);
+
+  const followMutation = useMutation({
+    mutationFn: async (formData: IFollow) => {
+      return await _FOLLOW(formData);
+    },
+    onSuccess(data) {
+      setIsFollow(true);
+      setFollowId(data._id);
+    },
+    onError(error) {
+      console.error("ERROR: 팔로우 실패", error);
+    },
+  });
+
+  // 모달이 닫히면 refetch
+  useEffect(() => {
+    if (displayModal) return;
+
+    const refetchData = async () => {
+      const { data: refetchData } = await refetch();
+      console.log(refetchData);
+      // setUserData(refetchData?.data);
+    };
+
+    refetchData();
+  }, [displayModal]);
+
+  const unfollowMutation = useMutation({
+    mutationFn: async (formData: IUnFollow) => {
+      return await _UNFOLLOW(formData);
+    },
+    onSuccess() {
+      console.log("API 성공! UnFollow");
+      setIsFollow(false);
+      setFollowId("");
+    },
+    onError(error) {
+      console.error("ERROR: 언팔로우 실패", error);
+    },
+  });
+
+  const handleClickFollow = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // 현재 프로필 id
+    if (id === undefined) return;
+
+    if (!isFollow) {
+      id && setFormData({ userId: id });
+
+      followMutation.mutate(formData as IFollow);
+    } else {
+      followId && setFormData({ id: followId });
+
+      unfollowMutation.mutate(formData as IUnFollow);
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Profile
@@ -119,7 +196,7 @@ const ProfileView = ({
               <Icon
                 name={!isFollow ? "person_add" : "person_check"}
                 color={isFollow ? theme.symbol_color : undefined}
-                onClick={onClickFollow}
+                onClick={handleClickFollow}
               />
             </ButtonSet>
           </ButtonsWrap>
