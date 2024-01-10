@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { _GET } from "@/api";
 import { useMutation } from "@tanstack/react-query";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { _CHANNEL_POSTS } from "@/api/queries/channelPosts";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -18,22 +19,18 @@ const Container = styled.div`
 const Home = () => {
   const [channel, _] = useLocalStorage("ViewChannelObj");
   const [data, setData] = useState<any[]>([]);
-  const initMutation = useMutation({
-    mutationFn: async (endPoint: string) => await _GET(endPoint),
-    onSuccess(data) {
-      if (data) setData(data.data);
-    },
-    onError(error) {
-      console.log("API 에러: ", error);
-    },
-  });
+
+  const fetchData = async (query: string) => {
+    const res = await _CHANNEL_POSTS(query);
+    if (res) setData(res);
+  };
 
   useEffect(() => {
     // 궁금증
     // channel을 받아오고 실행해야 하는것이 아닌지?
     if (channel) {
       const parsedData = JSON.parse(channel);
-      initMutation.mutate(`/posts/channel/${parsedData._id}`);
+      fetchData(parsedData._id);
     }
   }, []);
 
