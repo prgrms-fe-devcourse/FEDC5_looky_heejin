@@ -8,7 +8,7 @@ export interface IUnFollow {
 
 export interface IUpdateName {
   fullName: string;
-  userName?: string;
+  username?: string;
 }
 
 export interface IUpdatePassword {
