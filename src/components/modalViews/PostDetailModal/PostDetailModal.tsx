@@ -32,7 +32,6 @@ import {
 } from "./PostDetailModal.styles";
 import {
   ICreateComment,
-  IDeleteComment,
   ICreateLike,
   IDeleteLike,
   INotification,
@@ -48,6 +47,7 @@ import type { ITag } from "@/types/post";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import { ME } from "@/constants/queryKey";
 import Comments from "./Comments";
+import useEventQuery from "@/hooks/useEventQuery";
 
 interface ModalProps {
   postId: string;
@@ -55,6 +55,10 @@ interface ModalProps {
 
 interface IPostDetailModalProps {
   props: ModalProps;
+}
+
+interface Comment {
+  comment: string;
 }
 
 const PostDetail = ({ props }: IPostDetailModalProps) => {
@@ -70,7 +74,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
-  const [likes, setLikes] = useState<string[]>([]);
+  // const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
@@ -92,39 +96,35 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     queryFn: async () => await _GET("/auth-user"),
   });
 
-  console.log("myData : ", myData);
-  // fetch data --------------------------------------------
-  const initMutation = useMutation({
-    mutationFn: async (endPoint: string) => await _GET(endPoint),
-    onSuccess(data) {
-      myData?.data.following.map((followingData: any) => {
-        if (followingData.user === data?.data.author._id) {
-          setIsIFollowed(true);
-          setFollowId(followingData._id);
-        }
-      });
-      setUserId(data?.data.author._id);
-      setUserName(data?.data.author.fullName);
-      setImageUrl(data?.data.image);
-      const parsedJson = JSON.parse(data?.data.title);
-      setTitle(parsedJson.title);
-      setContent(parsedJson.content);
-      setTags(parsedJson.tags);
-      setLikes(data?.data.likes);
-      setLikeCount(data?.data.likes.length);
-      setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
-      data?.data.likes.map((value: any) => {
-        value.user === myId
-          ? setMyLikeId(value._id)
-          : console.log(`나 여기 없음!`);
-      });
-      setComments(data?.data.comments);
-    },
-    onError(error) {
-      console.log("API 에러: ", error);
-    },
+  // init fetch--------------------------------------------
+  const { isLoading, refetch } = useEventQuery({
+    key: `postId-${postId}`,
+    endPoint: `/posts/${postId}`,
   });
-
+  const getPostData = async () => {
+    const data = (await refetch()).data;
+    myData?.data.following.map((followingData: any) => {
+      if (followingData.user === data?.data.author._id) {
+        setIsIFollowed(true);
+        setFollowId(followingData._id);
+      }
+    });
+    setUserId(data?.data.author._id);
+    setUserName(data?.data.author.fullName);
+    setImageUrl(data?.data.image);
+    const parsedJson = JSON.parse(data?.data.title);
+    setTitle(parsedJson.title);
+    setContent(parsedJson.content);
+    setTags(parsedJson.tags);
+    // setLikes(data?.data.likes);
+    setLikeCount(data?.data.likes.length);
+    setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
+    data?.data.likes.map((value: any) => {
+      value.user === myId ? setMyLikeId(value._id) : setMyLikeId("");
+    });
+    setComments(data?.data.comments);
+  };
+  // --------------------------------------------------------------------------
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
     onSuccess(data) {
@@ -155,23 +155,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     },
   });
 
-  const deleteCommentMutation = useMutation({
-    mutationFn: async (formData: IDeleteComment) =>
-      await _DELETE_COMMENT(formData),
-    onSuccess(data) {
-      console.log("API : 댓글 삭제 성공", data);
-      const newComments = comments.filter(({ _id }: any) => _id !== data._id);
-      setComments(newComments);
-    },
-    onError(error) {
-      console.error("댓글 삭제 API 에러", error);
-    },
-  });
-
   const createLikeMutation = useMutation({
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
-      console.log("API: 좋아요 생성 성공 ", data);
       if (myId) {
         const newNotification: INotification = {
           notificationType: "LIKE",
@@ -179,7 +165,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           userId: myId,
           postId: data.post,
         };
-        console.log(newNotification);
+        notificationMutation.mutate(newNotification);
       }
       setMyLikeId(data._id);
       setLikeCount(likeCount + 1);
@@ -191,8 +177,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
-    onSuccess(data) {
-      console.log("API: 좋아요 삭제 성공 ", data);
+    onSuccess() {
       if (likeCount > 0) setLikeCount(likeCount - 1);
     },
     onError(error) {
@@ -203,19 +188,17 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
     onSuccess(data) {
-      console.log("API: 팔로우 성공", data);
       setIsIFollowed(true);
       setFollowId(data._id);
     },
     onError(error) {
-      console.error("error: 팔로우 실패 ", error);
+      console.error("error: 팔로우 실패", error);
     },
   });
 
   const unfollowMutation = useMutation({
     mutationFn: async (formData: IUnfollow) => await _UNFOLLOW(formData),
-    onSuccess(data) {
-      console.log("API: 언팔로우 성공", data);
+    onSuccess() {
       setIsIFollowed(false);
       setFollowId("");
     },
@@ -225,14 +208,13 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   });
 
   useEffect(() => {
-    initMutation.mutate(`/posts/${postId}`);
+    getPostData();
   }, []);
 
   const handleFollow = () => {
     if (!isIFollowed) {
       myId !== null && followMutation.mutate({ userId });
     } else {
-      console.log("팔로잉 중", followId);
       unfollowMutation.mutate({ id: followId });
     }
   };
@@ -271,18 +253,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     setIsShowComments(!isShowComments);
   };
 
-  interface Comment {
-    comment: string;
-  }
-
   const onValid: SubmitHandler<Comment> = ({ comment }) => {
-    console.log(comment);
-    // setNewComments([...newComments, comment.comment]);
     const newComment: ICreateComment = { comment, postId };
     createCommentMutation.mutate(newComment);
     setValue("comment", "");
     setIsShowComments(true);
-    console.log(comment);
   };
 
   const onInvalid = (error: any) => {
@@ -292,11 +267,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const tagClickHandler = (id: string, x?: number, y?: number) => {
     tags.map(val => {
       if (val.id === id) {
-        console.log(`나 존재함!`, val);
+        console.log(`나 존재함!`, val, x, y);
       }
     });
   };
 
+  if (isLoading) return <div>루키 svg</div>;
   return (
     <PostDetailWrapper>
       <UserInfoWrapper>
