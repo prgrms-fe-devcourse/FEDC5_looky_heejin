@@ -25,7 +25,9 @@ export const _FOLLOW = async (params: IFollow): Promise<IFollowResponse> => {
 export const _UNFOLLOW = async (
   params: IUnFollow
 ): Promise<IFollowResponse> => {
-  const results = await _DELETE("/follow/delete", params);
+  const results = await _DELETE("/follow/delete", {
+    data: params,
+  });
   return results?.data;
 };
 
