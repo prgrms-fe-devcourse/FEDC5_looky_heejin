@@ -49,7 +49,7 @@ export const useProfile = () => {
     profileName,
     profileImage,
     profileCover,
-    setProfileIsMe: (isMe: boolean) => setIsMe(isMe),
+    setIsMe: (isMe: boolean) => setIsMe(isMe),
     setProfileName: (profileName: string) => setProfileName(profileName),
     setProfileImage: (profileImage: string) => setProfileImage(profileImage),
     setProfileCover: (profileCover: string) => setProfileCover(profileCover),
