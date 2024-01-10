@@ -10,3 +10,4 @@ export const ADD_BOX_ICON: string = "add_box";
 export const CLOSE_ICON: string = "close";
 export const BACK_ICON: string = "chevron_left";
 export const SEND_ICON: string = "send";
+export const HEART_ICON: string = "favorite";
