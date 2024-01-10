@@ -1,23 +1,14 @@
 import { IPost } from "@/types";
-import { Posts } from "../ProfilePage.style";
+import { Container, EmptyPost, Posts } from "../ProfilePage.style";
 import PostSimpleCard from "@/components/common/PostSimpleCard";
-import { styled } from "styled-components";
-
+import { useProfile } from "@/hooks/useProfile";
 interface PostsProps {
   posts: IPost[] | [];
 }
 
-const Container = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0px -5.5px;
-  width: calc(100% + 11px);
-  padding-bottom: 3rem;
-`;
-
 const ProfilePostsView = ({ posts }: PostsProps) => {
+  const { isMe } = useProfile();
+
   return (
     <Posts>
       {posts && posts.length > 0 ? (
@@ -26,10 +17,10 @@ const ProfilePostsView = ({ posts }: PostsProps) => {
             <PostSimpleCard key={index} postData={post} />
           ))}
         </Container>
+      ) : isMe ? (
+        <EmptyPost>포스트를 추가해 보세요!</EmptyPost>
       ) : (
-        <div style={{ flexGrow: "1", justifyContent: "center" }}>
-          포스트를 추가해보세요!
-        </div>
+        <EmptyPost>포스트가 없습니다</EmptyPost>
       )}
     </Posts>
   );
