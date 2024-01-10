@@ -73,6 +73,7 @@ const ModalView: React.FC<{
       {modalView === "EDIT_NAME_VIEW" && <EditNameModal />}
       {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
       {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
+      {modalView === "EDIT_COVERIMAGE_VIEW" && <ChangeImageModal />}
     </Modal>
   );
 };
