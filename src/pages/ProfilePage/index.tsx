@@ -3,7 +3,7 @@ import ProfileView from "./Views/ProfileView";
 import ProfilePostsView from "./Views/ProfilePostsView";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { GET_USER, ME } from "@/constants/queryKey";
+import { GET_USER } from "@/constants/queryKey";
 import { _FOLLOW, _GET_USER, _UNFOLLOW } from "@/api/queries/profile";
 import { useEffect, useState } from "react";
 import { IUser } from "@/types";
@@ -16,7 +16,7 @@ const ProfileWrap = styled.div`
 `;
 
 const ProfilePage = () => {
-  const { id } = useParams();
+  const { id: paramsId } = useParams();
   const [userData, setUserData] = useState<IUser>();
 
   const { openModal, setModalView } = useUI();
@@ -31,10 +31,19 @@ const ProfilePage = () => {
     };
   }, []);
 
-  const { data, isLoading, error, isSuccess } = useQuery({
-    queryKey: [GET_USER, id],
-    queryFn: async () => await _GET_USER(id as string),
+  const { data, isLoading, error, isSuccess, refetch } = useQuery({
+    queryKey: [GET_USER, paramsId],
+    queryFn: async () => await _GET_USER(paramsId as string),
   });
+
+  useEffect(() => {
+    const updateUserData = async () => {
+      const data = await refetch();
+      setUserData(data?.data);
+    };
+
+    updateUserData();
+  }, [paramsId]);
 
   const handleChangePassword = (e: React.MouseEvent) => {
     e.stopPropagation();
