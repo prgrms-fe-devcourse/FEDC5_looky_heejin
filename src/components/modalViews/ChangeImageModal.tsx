@@ -7,17 +7,13 @@ import { useState } from "react";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
 
-interface IModalProps {
-  onSubmit: (image: File) => void;
-}
-
 const UploadWrap = styled.div`
   width: 300px;
   height: 300px;
   aspect-ratio: 10 / 16;
 `;
 
-const ChangeImageModal = ({ onSubmit }: IModalProps) => {
+const ChangeImageModal = () => {
   const [image, setImage] = useState<File>();
   const { closeModal } = useUI();
 
@@ -41,8 +37,6 @@ const ChangeImageModal = ({ onSubmit }: IModalProps) => {
         isCover: false,
         image,
       });
-
-      onSubmit(image);
     }
 
     closeModal();
