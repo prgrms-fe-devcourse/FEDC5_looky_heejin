@@ -55,12 +55,13 @@ const ProfileView = ({
 
   useEffect(() => {
     setIsMe(id === _id);
+    console.log(userInfo.fullName);
   }, [_id]);
 
   return (
     <Profile
-      isme={isMe.toString()}
-      coverImage={coverImage ?? ""}
+      $isMe={isMe.toString()}
+      $coverImage={coverImage ?? ""}
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
@@ -78,7 +79,7 @@ const ProfileView = ({
       )}
       <InfoWrap {...props}>
         <AvatarWrap
-          isme={isMe.toString()}
+          $isMe={isMe.toString()}
           onClick={e => {
             isMe ? onClickAvatar(e) : null;
           }}
