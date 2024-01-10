@@ -2,7 +2,6 @@ import PostSimpleCard from "@/components/common/PostSimpleCard";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { _GET } from "@/api";
-import { useMutation } from "@tanstack/react-query";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { _CHANNEL_POSTS } from "@/api/queries/channelPosts";
 
