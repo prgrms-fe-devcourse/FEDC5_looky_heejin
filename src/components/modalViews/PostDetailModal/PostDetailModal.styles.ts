@@ -41,7 +41,6 @@ export const UserNameWrapper = styled.div`
 `;
 
 export const UserNameSpan = styled.span`
-  font-size: 1rem;
   font-weight: 500;
 `;
 
