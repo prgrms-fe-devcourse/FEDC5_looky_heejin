@@ -44,6 +44,7 @@ const ChatsPage = () => {
               message={conversation.message}
               seen={conversation.seen}
               senderName={partner.fullName}
+              senderProfile={partner.image}
               senderIsOnline={partner.isOnline}
               onClickHandler={onClickConversation}
             />
