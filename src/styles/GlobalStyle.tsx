@@ -10,6 +10,13 @@ export const GlobalStyle = createGlobalStyle<any>`
     *{
         color: ${props => props.theme.text_primary_color};
         /* font-family: sans-serif; */
+        &::-webkit-scrollbar {
+          width: 1vw;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: hsla(0, 0%, 42%, 0.29);
+          border-radius: 100px;
+        }
     }
     body {
         /* min-width: 420px;
