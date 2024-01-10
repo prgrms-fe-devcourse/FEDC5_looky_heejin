@@ -60,7 +60,7 @@ const ChatPage = () => {
   });
 
   const seenUpdateMutation = useMutation({
-    mutationFn: async () => await _PUT("/messages/update-seen", { sender: id }),
+    mutationFn: async () => await _PUT("/messages/update-seen", { sender: userId }),
   });
 
   const { register, handleSubmit, reset } = useForm<IMessageForm>({});
