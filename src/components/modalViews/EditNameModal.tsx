@@ -10,6 +10,7 @@ import { ModalLayout } from "../common/Modal";
 
 interface INameFormProps {
   fullName: string;
+  username?: string;
 }
 
 const Form = styled(Col)`
@@ -31,8 +32,8 @@ const EditNameModal = () => {
   } = useForm<INameFormProps>();
 
   const mutation = useMutation({
-    mutationFn: async (updatedName: string) =>
-      await _UPDATE_NAME({ fullName: updatedName }),
+    mutationFn: async (formData: INameFormProps) =>
+      await _UPDATE_NAME(formData),
     onSuccess: data => {
       console.log("API UPDATE NAME 성공!");
       console.log(data.fullName);
@@ -41,7 +42,10 @@ const EditNameModal = () => {
   });
 
   const onValid = (data: INameFormProps) => {
-    mutation.mutate(data.fullName);
+    const formData = {
+      fullName: data?.fullName,
+    };
+    mutation.mutate(formData);
     closeModal();
   };
   const onInvalid = (errors: FieldErrors) => {
