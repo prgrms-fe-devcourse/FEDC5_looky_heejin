@@ -7,15 +7,16 @@ import { useState } from "react";
 import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
 
-const UploadWrap = styled.div`
+const UploadWrap = styled.div<{ iscover: boolean }>`
   width: 300px;
-  height: 300px;
-  aspect-ratio: 10 / 16;
+  aspect-ratio: ${props => (props.iscover ? 10 / 16 : 1 / 1)};
 `;
 
 const ChangeImageModal = () => {
   const [image, setImage] = useState<File>();
+
   const { closeModal, modalView } = useUI();
+  const [isCover] = useState(modalView === "EDIT_COVERIMAGE_VIEW");
 
   const mutation = useMutation({
     mutationFn: async (formData: IUpdateImage) => await _UPDATE_IMAGE(formData),
@@ -52,7 +53,7 @@ const ChangeImageModal = () => {
   return (
     <ModalLayout>
       <section>
-        <UploadWrap>
+        <UploadWrap iscover={isCover}>
           <Upload
             onChange={handleChangeFile}
             style={{ position: "relative", width: "100%", height: "100%" }}
