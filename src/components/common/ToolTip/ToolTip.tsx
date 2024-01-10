@@ -5,13 +5,21 @@ const TooltipWrapper = styled.div<{
   $clicked?: boolean;
   $tooltip: string;
   $options: "focus" | "hover" | "all";
+  key?: string;
+  $x?: number;
+  $y?: number;
 }>`
-  position: relative;
   z-index: 2;
+
+  ${props => {
+    console.log(props.$x, props.$y);
+    return css``;
+  }}
 
   &:before,
   &:after {
     ${({ $clicked }) => {
+      console.log($clicked);
       if ($clicked) {
         return css`
           visibility: visible;

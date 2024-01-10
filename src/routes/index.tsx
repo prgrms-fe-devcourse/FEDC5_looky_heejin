@@ -23,7 +23,7 @@ import AuthRoute from "./AuthRoute";
 
 const RouterComponent = () => {
   return (
-    <Router>
+    <>
       <TopNavBar />
       <Layout>
         <Routes>
@@ -64,7 +64,7 @@ const RouterComponent = () => {
         </Routes>
       </Layout>
       <BottomNavBar />
-    </Router>
+    </>
   );
 };
 export default RouterComponent;
