@@ -51,7 +51,12 @@ const ProfileView = ({
   const { isMe, profileName, profileImage, profileCover, setIsMe } =
     useProfile();
   const { id: myId } = useMe();
-  const { _id: userId, email } = userInfo;
+  const {
+    _id: userId,
+    email,
+    image: userImage,
+    coverImage: userCover,
+  } = userInfo;
   const [isFollow, setIsFollow] = useState(false);
   const [followId, setFollowId] = useState<string>();
 
@@ -123,7 +128,7 @@ const ProfileView = ({
   return (
     <Profile
       $isMe={isMe.toString()}
-      $coverImage={profileCover ?? ""}
+      $coverImage={isMe ? profileCover : userImage ?? ""}
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
@@ -146,7 +151,7 @@ const ProfileView = ({
             isMe ? onClickAvatar(e) : null;
           }}
         >
-          <Avatar src={profileImage ?? ""} size="XL" />
+          <Avatar src={isMe ? profileImage : userCover ?? ""} size="XL" />
         </AvatarWrap>
         <div style={{ color: theme.white_primary, paddingTop: "1rem" }}>
           {email}
