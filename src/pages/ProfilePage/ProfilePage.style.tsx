@@ -6,10 +6,10 @@ import {
 import { Col, Row } from "@/styles/GlobalStyle";
 import { css, styled } from "styled-components";
 
-// ProfileView
 export const Profile = styled(Col)<{ $isMe: string; $coverImage: string }>`
-  height: calc(100vh - ${NAV_HEIGHT * 2}rem);
-  border-radius: 0.375rem;
+  height: calc(100vh - ${NAV_HEIGHT * 2}rem - 10px);
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
   padding: 1rem;
   margin-top: 10px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
@@ -51,7 +51,6 @@ export const InfoWrap = styled(Col)`
   margin-bottom: 1rem;
 `;
 
-// PostsView
 export const Posts = styled(Col)`
   justify-content: flex-start;
   align-items: center;
