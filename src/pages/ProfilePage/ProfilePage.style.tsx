@@ -9,7 +9,9 @@ import { css, styled } from "styled-components";
 // ProfileView
 export const Profile = styled(Col)<{ $isMe: string; $coverImage: string }>`
   height: calc(100vh - ${NAV_HEIGHT * 2}rem);
+  border-radius: 0.375rem;
   padding: 1rem;
+  margin-top: 10px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
     url(${props => props.$coverImage});
   background-repeat: no-repeat;
@@ -54,7 +56,7 @@ export const Posts = styled(Col)`
   justify-content: flex-start;
   align-items: center;
   min-height: 576px;
-  padding: 2rem 2rem 1rem;
+  padding-top: 2rem;
 `;
 
 export const PostsList = styled(Row)`
