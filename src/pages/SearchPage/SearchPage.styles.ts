@@ -68,7 +68,7 @@ export const IconWrap = styled.div`
 export const Form = styled.form`
   flex-grow: 1;
   align-self: center;
-  padding-right: 1rem;
+  padding-right: 0.5rem;
 `;
 
 export const InputWrap = styled(Row)`
