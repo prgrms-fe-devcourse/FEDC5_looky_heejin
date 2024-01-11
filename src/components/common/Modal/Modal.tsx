@@ -20,6 +20,12 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
     [onClose]
   );
 
+  const backgroundClickHandler = (event: Event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onClose();
+  };
+
   useEffect(() => {
     const modal = ref.current;
 
@@ -33,7 +39,11 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
     };
   }, [handleKey]);
 
-  return <ModalBackground ref={ref}>{children}</ModalBackground>;
+  return (
+    <ModalBackground ref={ref} onClick={backgroundClickHandler}>
+      {children}
+    </ModalBackground>
+  );
 };
 
 export default Modal;

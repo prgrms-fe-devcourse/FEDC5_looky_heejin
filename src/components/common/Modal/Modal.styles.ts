@@ -7,7 +7,7 @@ import {
 import styled from "styled-components";
 import tw from "twin.macro";
 
-export const ModalBackground = styled.div`
+export const ModalBackground = styled.div<any>`
   z-index: ${MODAL};
   ${tw`fixed bg-black bg-opacity-10 flex items-center inset-0 justify-center backdrop-blur-[1.2px]`}
 `;
