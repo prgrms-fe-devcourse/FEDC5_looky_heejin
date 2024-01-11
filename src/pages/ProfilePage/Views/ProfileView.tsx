@@ -58,7 +58,7 @@ const ProfileView = ({
     coverImage: userCover,
   } = userInfo;
   const [isFollow, setIsFollow] = useState(false);
-  const [followId, setFollowId] = useState<string>();
+  const [followId, setFollowId] = useState<string>("");
 
   const theme = useTheme();
   const { data: myData } = useQuery({
@@ -67,12 +67,14 @@ const ProfileView = ({
   });
 
   const init = async () => {
-    myData?.data.following.map((followingData: any) => {
-      if (followingData.user === userInfo._id) {
-        setIsFollow(true);
-        setFollowId(followingData._id);
-      }
-    });
+    if (myData?.data) {
+      myData?.data.following.map((followingData: any) => {
+        if (followingData.user === userInfo._id) {
+          setIsFollow(true);
+          setFollowId(followingData._id);
+        }
+      });
+    }
   };
 
   useEffect(() => {
