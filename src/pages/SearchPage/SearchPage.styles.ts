@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { Col, Row } from "@/styles/GlobalStyle";
 import { NAV_HEIGHT } from "@/constants/uiConstants";
 

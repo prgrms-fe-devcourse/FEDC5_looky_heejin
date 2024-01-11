@@ -1,9 +1,10 @@
-import PostSimpleCard from "@/components/common/PostSimpleCard";
-import styled from "styled-components";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
 import { _GET } from "@/api";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { _CHANNEL_POSTS } from "@/api/queries/channelPosts";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import PostSimpleCard from "@/components/common/PostSimpleCard";
 
 const Container = styled.div`
   box-sizing: border-box;

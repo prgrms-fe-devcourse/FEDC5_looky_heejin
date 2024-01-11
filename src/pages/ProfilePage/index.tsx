@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import ProfileView from "./Views/ProfileView";
 import ProfilePostsView from "./Views/ProfilePostsView";
 import { _GET_USER } from "@/api/queries/profile";
@@ -10,10 +9,6 @@ import { IUser } from "@/types";
 import { _GET } from "@/api";
 import { useUI } from "@/components/common/uiContext";
 import { useProfile } from "@/hooks/useProfile";
-
-const ProfileWrap = styled.div`
-  overflow-y: scroll;
-`;
 
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover } = useProfile();
@@ -100,21 +95,19 @@ const ProfilePage = () => {
 
   return (
     <>
-      <ProfileWrap>
-        {userData && (
-          <>
-            <ProfileView
-              userInfo={userData}
-              onClickPassword={handleChangePassword}
-              onClickEdit={handleChangeName}
-              onClickAvatar={handleChangeImage}
-              onClickCover={handleChangeCover}
-              onClickChat={handleClickChat}
-            />
-            <ProfilePostsView posts={userData ? userData.posts : []} />
-          </>
-        )}
-      </ProfileWrap>
+      {userData && (
+        <>
+          <ProfileView
+            userInfo={userData}
+            onClickPassword={handleChangePassword}
+            onClickEdit={handleChangeName}
+            onClickAvatar={handleChangeImage}
+            onClickCover={handleChangeCover}
+            onClickChat={handleClickChat}
+          />
+          <ProfilePostsView posts={userData ? userData.posts : []} />
+        </>
+      )}
     </>
   );
 };
