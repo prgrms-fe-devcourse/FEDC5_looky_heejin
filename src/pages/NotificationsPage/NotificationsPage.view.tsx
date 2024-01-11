@@ -32,7 +32,7 @@ const NotificationsPage = () => {
       if (data.comment) return "comment";
       else if (data.follow) return "follow";
       else if (data.like) return "like";
-      return "post";
+      return null;
     },
     [common]
   );

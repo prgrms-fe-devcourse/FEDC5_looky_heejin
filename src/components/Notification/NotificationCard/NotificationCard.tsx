@@ -6,7 +6,7 @@ import React from "react";
 
 interface INotificationCardProps {
   key: string;
-  type: "comment" | "like" | "post" | "follow";
+  type: "comment" | "like" | "follow" | null;
   onClickHandler: (data: INotification, isProfile?: boolean) => void;
   data: INotification;
 }
@@ -14,7 +14,6 @@ interface INotificationCardProps {
 const CONTENT = {
   comment: "회원님의 포스터에 댓글을 남겼습니다.",
   like: "회원님의 포스터를 좋아합니다.",
-  post: "포스터를 작성했습니다.",
   follow: "회원님을 팔로우하기 시작했습니다.",
 };
 
@@ -23,6 +22,8 @@ const NotificationCard = ({
   data,
   onClickHandler,
 }: INotificationCardProps) => {
+  if (!type) return;
+
   return (
     <CardWrapper>
       <div
