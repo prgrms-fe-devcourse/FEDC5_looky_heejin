@@ -74,7 +74,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
-  // const [likes, setLikes] = useState<string[]>([]);
+  const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
@@ -83,6 +83,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [comments, setComments] = useState<string[]>([]);
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
   const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
+  const [animationKey, setAnimationKey] = useState(0);
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
@@ -118,19 +119,27 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     setTitle(parsedJson.title);
     setContent(parsedJson.content);
     setTags(parsedJson.tags);
-    // setLikes(data?.data.likes);
+    setLikes(data?.data.likes);
     setLikeCount(data?.data.likes.length);
     setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
-    data?.data.likes.map((value: any) => {
-      value.user === myId ? setMyLikeId(value._id) : setMyLikeId("");
+    data?.data.likes.map((likeData: any) => {
+      if (likeData.user === myId) {
+        setMyLikeId(likeData._id);
+      }
     });
     setComments(data?.data.comments);
   };
   // --------------------------------------------------------------------------
+
+  console.log("좋아요 개수 :", likeCount);
+  console.log("내가 좋아요 했나? :", isILiked);
+  console.log("좋아요 데이터들: ", likes);
+  // console.log("나:", myId);
+  // console.log("좋아요ID:", myLikeId);
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
     onSuccess(data) {
-      console.log("알림 api 성공", data);
+      // console.log("알림 api 성공", data);
     },
     onError(error) {
       console.error("알림 api 통신 에러", error);
@@ -171,8 +180,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         };
         notificationMutation.mutate(newNotification);
       }
+      console.log("API 좋아요 생성");
       setMyLikeId(data._id);
-      setLikeCount(likeCount + 1);
+      // setLikeCount(likeCount + 1);
     },
     onError(error) {
       console.error("error: 좋아요 생성 실패 ", error);
@@ -182,7 +192,8 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
     onSuccess() {
-      if (likeCount > 0) setLikeCount(likeCount - 1);
+      // if (likeCount > 0) setLikeCount(likeCount - 1);
+      console.log("API 좋아요 취소");
     },
     onError(error) {
       console.error("error: 좋아요 삭제 실패 ", error);
@@ -236,22 +247,79 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     console.log(isContentDetail);
   };
 
+  let likeTimer: any = null;
+  let unLikeTimer: any = null;
   const handleLike = () => {
-    setIsILiked(isILiked => !isILiked);
-    if (!isShowHeart) {
-      if (!isILiked) {
-        createLikeMutation.mutate({ postId: postId });
-      } else {
-        if (myLikeId) deleteLikeMutation.mutate({ id: myLikeId });
+    if (isILiked === true) {
+      // setIsShowHeart(false);
+      setIsILiked(false);
+      setLikeCount(likeCount - 1);
+      if (unLikeTimer !== null) {
+        clearTimeout(unLikeTimer);
       }
-
-      setIsShowHeart(true);
-      // TODO: 디바운스
-
-      setTimeout(() => {
-        setIsShowHeart(false);
-      }, 900);
+      // unLikeTimer = setTimeout(() => {
+      //   deleteLikeMutation.mutate({ id: myLikeId });
+      // }, 2000);
+      deleteLikeMutation.mutate({ id: myLikeId });
     }
+    if (isILiked === false) {
+      setIsShowHeart(true);
+      setAnimationKey(key => key + 1);
+      setIsILiked(true);
+      setLikeCount(likeCount + 1);
+      if (likeTimer !== null) {
+        clearTimeout(likeTimer);
+      }
+      // likeTimer = setTimeout(() => {
+      //   createLikeMutation.mutate({ postId: postId });
+      // }, 2000);
+      createLikeMutation.mutate({ postId: postId });
+      // setTimeout(() => {
+      //   setIsShowHeart(false);
+      // }, 900);
+    }
+
+    // timer = setTimeout(() => {
+    //   if (!isILiked) {
+    //     createLikeMutation.mutate({ postId: postId });
+    //   } else {
+    //     if (myLikeId) deleteLikeMutation.mutate({ id: myLikeId });
+    //   }
+    // }, 1000);
+    // if (timer !== null) {
+    //   clearTimeout(timer);
+    // }
+    // timer = setTimeout(() => {
+    //   setIsILiked(isILiked => !isILiked);
+    //   if (!isILiked) {
+    //     createLikeMutation.mutate({ postId: postId });
+    //   } else {
+    //     if (myLikeId) deleteLikeMutation.mutate({ id: myLikeId });
+    //   }
+    // }, 1000);
+    // setIsILiked(isILiked => !isILiked);
+
+    // if (!isShowHeart) {
+    //   if (!isILiked) {
+    //     createLikeMutation.mutate({ postId: postId });
+    //   } else {
+    //     if (myLikeId) deleteLikeMutation.mutate({ id: myLikeId });
+    //   }
+
+    //   setIsShowHeart(true);
+    //   // TODO: 디바운스
+
+    //   setTimeout(() => {
+    //     setIsShowHeart(false);
+    //   }, 900);
+    // }
+    // setIsILiked(!isILiked);
+
+    // if (!isILiked) {
+    //   createLikeMutation.mutate({ postId: postId });
+    // } else {
+    //   if (myLikeId) deleteLikeMutation.mutate({ id: myLikeId });
+    // }
   };
 
   const handleChat = () => {
@@ -303,8 +371,8 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         </FollowButton>
       </UserInfoWrapper>
       <ImageWrapper>
-        {isShowHeart && isILiked && (
-          <HeartInImage>
+        {isShowHeart && (
+          <HeartInImage key={animationKey}>
             <Icon
               name={HEART_ICON}
               fill={true}
@@ -338,13 +406,14 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
               size="2.3rem"
             ></Icon>
             <LikeCountSpan>
-              {isILiked
+              {/* {isILiked
                 ? likeCount !== 1
                   ? `회원님 외 ${likeCount - 1}명이 좋아합니다.`
                   : "회원님이 이 게시글을 좋아합니다."
                 : likeCount !== 0
                   ? `${likeCount}명이 좋아합니다.`
-                  : `좋아요를 눌러주세요.`}
+                  : `좋아요를 눌러주세요.`} */}
+              {`${likeCount}명이 좋아합니다`}
             </LikeCountSpan>
           </HeartWrapper>
           <CommentChatWrapper>
