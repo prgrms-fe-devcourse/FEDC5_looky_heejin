@@ -16,8 +16,9 @@ import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useProfile } from "@/hooks/useProfile";
 import { IButtonProps } from "@/components/ButtonSet";
-import { IUser } from "@/types";
+import { INotification, IUser } from "@/types";
 import { ME } from "@/constants/queryKey";
+import { _NOTIFY } from "@/api/queries/notify";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -85,6 +86,16 @@ const ProfileView = ({
     setIsMe(myId === userId);
   }, [userId]);
 
+  const notificationMutation = useMutation({
+    mutationFn: async (param: INotification) => await _NOTIFY(param),
+    onSuccess(data) {
+      console.log("알림완료 : ", data);
+    },
+    onError(error) {
+      console.error("ERROR: 알림 실패", error);
+    },
+  });
+
   const followMutation = useMutation({
     mutationFn: async (id: string) => {
       return await _FOLLOW({ userId: id });
@@ -93,6 +104,15 @@ const ProfileView = ({
       console.log(data);
       setIsFollow(true);
       setFollowId(data._id);
+
+      if (myId) {
+        notificationMutation.mutate({
+          notificationType: "FOLLOW",
+          notificationTypeId: data._id,
+          userId,
+          postId: null,
+        });
+      }
     },
     onError(error) {
       console.error("ERROR: 팔로우 실패", error);
