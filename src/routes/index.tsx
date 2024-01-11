@@ -46,7 +46,12 @@ const RouterComponent = () => {
               element={<AuthRoute path="/chat/:id" element={<ChatPage />} />}
             />
             <Route path="/postdetail/:id" element={<PostDetailPage />} />
-            <Route path="/newPost" element={<CreatePostPage />} />
+            <Route
+              path="/newPost"
+              element={
+                <AuthRoute path="/newPost" element={<CreatePostPage />} />
+              }
+            />
             <Route
               path="/notifications"
               element={
