@@ -5,6 +5,7 @@ import meReducer from "./meReducer";
 import newPostReducer from "./newPostReducer";
 import searchReducer from "./searchReducer";
 import notificationReducer from "./notificationReducer";
+import profileReducer from "./profileReducer";
 
 export { authActions } from "./authReducer";
 export { meActions } from "./meReducer";
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   newPost: newPostReducer,
   search: searchReducer,
   notification: notificationReducer,
+  profile: profileReducer,
 });
 
 export default rootReducer;

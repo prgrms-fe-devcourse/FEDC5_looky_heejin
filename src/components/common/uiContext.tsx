@@ -11,7 +11,10 @@ import { modalActions } from "@store/reducers";
 import { Modal } from "./Modal";
 import { MODAL_VIEWS } from "@/store/types/modalType";
 import {
+  ChangeImageModal,
   ChannelSelectModal,
+  EditNameModal,
+  EditPasswordModal,
   PostDetailModal,
   TagCreateModal,
   TestModal,
@@ -68,6 +71,10 @@ const ModalView: React.FC<{
       {modalView === "INIT_VIEW" && <TestModal />}
       {modalView === "TAG_CREATE_VIEW" && <TagCreateModal props={props} />}
       {modalView === "CHANNEL_SELECT_VIEW" && <ChannelSelectModal />}
+      {modalView === "EDIT_NAME_VIEW" && <EditNameModal />}
+      {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
+      {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
+      {modalView === "EDIT_COVERIMAGE_VIEW" && <ChangeImageModal />}
       {modalView === "POST_DETAIL_VIEW" && <PostDetailModal props={props} />}
     </Modal>
   );

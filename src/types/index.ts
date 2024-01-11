@@ -39,9 +39,10 @@ export interface IPost {
   imagePublicId?: string;
   title: string;
   channel: {};
-  author: IUser;
-  createdAt: String;
-  updatedAt: String;
+  author: string;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
 }
 
 export interface ICreateComment {
