@@ -21,6 +21,8 @@ import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
 import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
+import { INotification } from "@/types";
+import { _NOTIFY } from "@/api/queries/notify";
 
 export interface ITitle {
   title: string;
@@ -61,6 +63,7 @@ const IsJsonString = (str: string) => {
 
 // todo, 타입 충돌로 인해서 추후 타입 명시
 const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
+  const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
   const { pathname } = useLocation();
@@ -87,6 +90,16 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   const [userName, setUserName] = useState<string>();
   const [favoriteId, setFavoriteId] = useState("");
   const [favoriteClicked, setFavoriteClicked] = useState<boolean>(false);
+
+  const notificationMutation = useMutation({
+    mutationFn: async (formData: INotification) => await _NOTIFY(formData),
+    onSuccess(data) {
+      console.log("알림 api 성공", data);
+    },
+    onError(error) {
+      console.error("알림 api 통신 에러", error);
+    },
+  });
 
   const mutation = useMutation({
     // 고민사항..
@@ -119,6 +132,7 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
 
       setimageUrl(data.image);
       setUserName(data.fullName);
+      setUserId(data._id);
     },
     onError(error) {
       console.error("API 에러: ", error);
@@ -150,8 +164,18 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
       console.log("API: 좋아요 생성 성공 ", data);
-      setFavoriteId(data._id);
-      setFavoriteClicked(!favoriteClicked);
+      if (id) {
+        const newNotification: INotification = {
+          notificationType: "LIKE",
+          notificationTypeId: data._id,
+          userId,
+          postId: data.post,
+        };
+
+        notificationMutation.mutate(newNotification);
+        setFavoriteId(data._id);
+        setFavoriteClicked(!favoriteClicked);
+      }
     },
     onError(error) {
       console.error("error: 좋아요 생성 실패 ", error);
