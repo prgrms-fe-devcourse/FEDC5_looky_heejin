@@ -166,7 +166,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         const newNotification: INotification = {
           notificationType: "LIKE",
           notificationTypeId: data._id,
-          userId: myId,
+          userId,
           postId: data.post,
         };
         notificationMutation.mutate(newNotification);
@@ -196,7 +196,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         const newNotification: INotification = {
           notificationType: "FOLLOW",
           notificationTypeId: data._id,
-          userId: myId,
+          userId,
           postId: null,
         };
         notificationMutation.mutate(newNotification);
