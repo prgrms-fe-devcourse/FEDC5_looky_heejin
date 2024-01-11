@@ -75,23 +75,25 @@ const TopNavBar = () => {
     [currentPath]
   );
 
-  if (currentPath === PathName.CHAT) {
-    const partnerId = pathname.split("/")[2];
-    const { refetch } = useEventQuery({
-      key: `partnerId-${partnerId}`,
-      endPoint: `/users/${partnerId}`,
-    });
-    const getPartnerData = async () => {
-      const data = (await refetch()).data;
-      setPartnerData({
-        fullName: data?.data.fullName !== null ? data?.data.fullName : "상대방",
-        profileImage: data?.data.image,
-      });
-    };
-    useEffect(() => {
+  const partnerId = pathname.split("/")[2];
+  const { refetch } = useEventQuery({
+    key: `partnerId-${partnerId}`,
+    endPoint: `/users/${partnerId}`,
+  });
+
+  useEffect(() => {
+    if (currentPath === PathName.CHAT) {
+      const getPartnerData = async () => {
+        const data = (await refetch()).data;
+        setPartnerData({
+          fullName:
+            data?.data.fullName !== null ? data?.data.fullName : "상대방",
+          profileImage: data?.data.image,
+        });
+      };
       getPartnerData();
-    }, [partnerId]);
-  }
+    }
+  }, [partnerId]);
 
   const handleIconClick = useCallback(
     (path: string) => {
