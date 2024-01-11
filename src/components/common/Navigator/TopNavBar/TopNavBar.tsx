@@ -40,7 +40,7 @@ const NAV_VISIBLE_PATH = [
   PathName.HOME,
   PathName.CHANNELS,
   PathName.PROFILE,
-  PathName.SEARCH,
+  // PathName.SEARCH,
   PathName.CHATS,
   PathName.CHAT,
   PathName.NOTIFICATIONS,
