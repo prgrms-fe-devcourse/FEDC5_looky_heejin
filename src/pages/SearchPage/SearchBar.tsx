@@ -53,6 +53,7 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
       </IconWrap>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
         <Input
+          className="shadow"
           type="text"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요"
