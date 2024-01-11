@@ -141,16 +141,18 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     mutationFn: async (formData: ICreateComment) =>
       await _CREATE_COMMENT(formData),
     onSuccess(data) {
-      const temp = [...comments, data];
-      const newNotification: INotification = {
-        notificationType: "COMMENT",
-        notificationTypeId: data._id,
-        userId,
-        postId: data.post,
-      };
+      if (myId) {
+        const temp = [...comments, data];
+        const newNotification: INotification = {
+          notificationType: "COMMENT",
+          notificationTypeId: data._id,
+          userId,
+          postId: data.post,
+        };
 
-      notificationMutation.mutate(newNotification);
-      setComments(temp);
+        notificationMutation.mutate(newNotification);
+        setComments(temp);
+      }
     },
     onError(error) {
       console.log("댓글 APi 통신 에러", error);
@@ -190,6 +192,15 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
     onSuccess(data) {
+      if (myId) {
+        const newNotification: INotification = {
+          notificationType: "FOLLOW",
+          notificationTypeId: data._id,
+          userId: myId,
+          postId: null,
+        };
+        notificationMutation.mutate(newNotification);
+      }
       setIsIFollowed(true);
       setFollowId(data._id);
     },
