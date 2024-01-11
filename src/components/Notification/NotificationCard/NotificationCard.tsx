@@ -2,12 +2,12 @@ import { CardWrapper } from "./NotificationCard.styles";
 import { Avatar } from "@/components/common";
 import { INotification } from "@/types/notification";
 import { parseDate } from "@/utils/parseDate";
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 interface INotificationCardProps {
   key: string;
   type: "comment" | "like" | "post" | "follow";
+  onClickHandler: (data: INotification, isProfile?: boolean) => void;
   data: INotification;
 }
 
@@ -18,28 +18,23 @@ const CONTENT = {
   follow: "회원님을 팔로우하기 시작했습니다.",
 };
 
-const NotificationCard = ({ type, data }: INotificationCardProps) => {
-  const navigate = useNavigate();
-
-  const cardClickHandler = useCallback(
-    (target: "post" | "profile", id: string) => {
-      if (target === "profile") {
-        navigate(`/profile/${id}`);
-      } else {
-      }
-    },
-    []
-  );
-
+const NotificationCard = ({
+  type,
+  data,
+  onClickHandler,
+}: INotificationCardProps) => {
   return (
     <CardWrapper>
       <div
         className="cursor-pointer"
-        onClick={() => cardClickHandler("profile", data.author._id)}
+        onClick={() => onClickHandler(data, true)}
       >
         <Avatar size="S" src={data.author.image} />
       </div>
-      <article className="flex-1 flex flex-col justify-center">
+      <article
+        className="flex-1 flex flex-col justify-center"
+        onClick={() => onClickHandler(data)}
+      >
         <p className="cursor-pointer">
           <strong>{data.author.fullName}</strong>님이 {CONTENT[type]}
         </p>
@@ -49,4 +44,4 @@ const NotificationCard = ({ type, data }: INotificationCardProps) => {
   );
 };
 
-export default NotificationCard;
+export default React.memo(NotificationCard);
