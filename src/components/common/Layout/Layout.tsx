@@ -1,5 +1,6 @@
-import { NAV_HEIGHT } from "@/constants/uiConstants";
 import { ReactNode } from "react";
+
+import { NAV_HEIGHT } from "@/constants/uiConstants";
 
 interface ILayoutProps {
   children: ReactNode;

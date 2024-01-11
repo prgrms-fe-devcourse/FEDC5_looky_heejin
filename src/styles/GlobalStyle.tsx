@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
-import tw from "twin.macro";
+
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 
 export const GlobalStyle = createGlobalStyle<any>`
@@ -41,6 +41,7 @@ export const GlobalStyle = createGlobalStyle<any>`
       /* position: relative;
       min-height: 100%;
       margin: 0; */
+      overflow-y: scroll;
     }
 
     #root {
@@ -67,9 +68,4 @@ export const Col = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const TestH1 = styled.div`
-  padding: 1rem;
-  ${tw`font-bold text-2xl bg-orange-400`}
 `;
