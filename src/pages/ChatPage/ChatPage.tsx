@@ -103,6 +103,7 @@ const ChatPage = () => {
               message={message.message}
               createdAt={message.createdAt}
               senderName={message.sender.fullName}
+              senderProfile={message.sender.image}
             />
           ))}
         <div ref={chatEndPointRef} />

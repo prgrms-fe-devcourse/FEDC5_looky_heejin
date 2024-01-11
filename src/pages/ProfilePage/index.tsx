@@ -9,11 +9,18 @@ import { IUser } from "@/types";
 import { _GET } from "@/api";
 import { useUI } from "@/components/common/uiContext";
 import { useProfile } from "@/hooks/useProfile";
+import { useAuth } from "@/hooks/useAuth";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMe } from "@/hooks/useMe";
 
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover } = useProfile();
+  const { setMe } = useMe();
+  const [_, setToken] = useLocalStorage("token");
+
   const [userData, setUserData] = useState<IUser>();
 
+  const { setAuth } = useAuth();
   const { id: paramsId } = useParams();
   const { openModal, setModalView } = useUI();
   const navigate = useNavigate();
@@ -73,6 +80,15 @@ const ProfilePage = () => {
     navigate(`/chat/${id}`);
   };
 
+  const handleLogout = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAuth({ isLogIn: false, token: null });
+    setMe({ id: "", profilePhoto: "", userName: "" });
+    setToken(null);
+    alert(`로그아웃!!`);
+    navigate(`/login`);
+  };
+
   useEffect(() => {
     if (isSuccess) {
       setProfileName(data.fullName);
@@ -99,6 +115,7 @@ const ProfilePage = () => {
         <>
           <ProfileView
             userInfo={userData}
+            onClickLogout={handleLogout}
             onClickPassword={handleChangePassword}
             onClickEdit={handleChangeName}
             onClickAvatar={handleChangeImage}

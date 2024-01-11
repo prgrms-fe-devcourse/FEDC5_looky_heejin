@@ -7,6 +7,7 @@ import { Col, Row } from "@/styles/GlobalStyle";
 import { css, styled } from "styled-components";
 
 export const Profile = styled(Col)<{ $isMe: string; $coverImage: string }>`
+  min-height: calc(100vh - ${NAV_HEIGHT * 2}rem - 10px);
   height: calc(100vh - ${NAV_HEIGHT * 2}rem - 10px);
   border-top-left-radius: 0.375rem;
   border-top-right-radius: 0.375rem;

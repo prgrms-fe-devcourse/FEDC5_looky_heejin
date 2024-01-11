@@ -49,10 +49,13 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
   return (
     <>
       <IconWrap onClick={onClick}>
-        <Icon name="arrow_back_ios" />
+        <div style={{ scale: "0.6" }}>
+          <Icon name="arrow_back_ios" />
+        </div>
       </IconWrap>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
         <Input
+          className="shadow"
           type="text"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요"

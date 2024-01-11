@@ -119,22 +119,26 @@ const BottomNavBar = () => {
           }
         </Button>
       </IconWrapper>
-      <IconWrapper>
-        <Button
-          variant="flat"
-          useRipple={true}
-          onClickHandler={() => handleIconClick(PathName.NEWPOST)}
-          style={ButtonChildrenSortingStyle}
-        >
-          {
-            <Icon
-              name={ADD_BOX_ICON}
-              color={currentPath === PathName.NEWPOST ? theme.symbol_color : ""}
-              weight={currentPath === PathName.NEWPOST ? 300 : 250}
-            />
-          }
-        </Button>
-      </IconWrapper>
+      {id ? (
+        <IconWrapper>
+          <Button
+            variant="flat"
+            useRipple={true}
+            onClickHandler={() => handleIconClick(PathName.NEWPOST)}
+            style={ButtonChildrenSortingStyle}
+          >
+            {
+              <Icon
+                name={ADD_BOX_ICON}
+                color={
+                  currentPath === PathName.NEWPOST ? theme.symbol_color : ""
+                }
+                weight={currentPath === PathName.NEWPOST ? 300 : 250}
+              />
+            }
+          </Button>
+        </IconWrapper>
+      ) : null}
       <IconWrapper>
         <Button
           variant="flat"

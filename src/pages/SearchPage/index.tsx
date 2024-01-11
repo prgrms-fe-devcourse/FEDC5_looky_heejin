@@ -69,26 +69,24 @@ const SearchPage = () => {
   }, []);
 
   return (
-    <>
-      <SearchWrap>
-        <SearchBarWrap>
-          <SearchBar
-            onClick={handleGoBack}
-            onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
+    <SearchWrap>
+      <SearchBarWrap>
+        <SearchBar
+          onClick={handleGoBack}
+          onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
+        />
+      </SearchBarWrap>
+      <SearchViewWrap style={{ overflow: "hidden" }}>
+        {!showResults ? (
+          <SearchRecentView
+            recentKeywords={recentKeywords || "[]"}
+            onItemClick={handleKeywordClick}
           />
-        </SearchBarWrap>
-        <SearchViewWrap style={{ overflow: "hidden" }}>
-          {!showResults ? (
-            <SearchRecentView
-              recentKeywords={recentKeywords || "[]"}
-              onItemClick={handleKeywordClick}
-            />
-          ) : (
-            <SearchResultsView />
-          )}
-        </SearchViewWrap>
-      </SearchWrap>
-    </>
+        ) : (
+          <SearchResultsView />
+        )}
+      </SearchViewWrap>
+    </SearchWrap>
   );
 };
 

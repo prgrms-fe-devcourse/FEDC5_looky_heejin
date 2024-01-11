@@ -22,6 +22,7 @@ import { _NOTIFY } from "@/api/queries/notify";
 
 interface IProfileProps {
   userInfo: IUser;
+  onClickLogout: (e: React.MouseEvent) => void;
   onClickPassword: (e: React.MouseEvent) => void;
   onClickEdit: (e: React.MouseEvent) => void;
   onClickAvatar: (e: React.MouseEvent) => void;
@@ -42,6 +43,7 @@ const buttonStyle: IButtonProps["style"] = {
 
 const ProfileView = ({
   userInfo,
+  onClickLogout,
   onClickPassword,
   onClickEdit,
   onClickAvatar,
@@ -150,7 +152,7 @@ const ProfileView = ({
   return (
     <Profile
       $isMe={isMe.toString()}
-      $coverImage={isMe ? profileCover : userImage ?? ""}
+      $coverImage={isMe ? profileCover : userCover ?? ""}
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
@@ -163,6 +165,11 @@ const ProfileView = ({
               size={ICON_SIZE_SMALL}
               onClick={onClickPassword}
             />
+            <Icon
+              name="logout"
+              size={ICON_SIZE_SMALL}
+              onClick={onClickLogout}
+            />
           </ButtonSet>
         </ButtonsWrap>
       )}
@@ -173,7 +180,7 @@ const ProfileView = ({
             isMe ? onClickAvatar(e) : null;
           }}
         >
-          <Avatar src={isMe ? profileImage : userCover ?? ""} size="XL" />
+          <Avatar src={isMe ? profileImage : userImage ?? ""} size="XL" />
         </AvatarWrap>
         <div style={{ color: theme.white_primary, paddingTop: "1rem" }}>
           {email}

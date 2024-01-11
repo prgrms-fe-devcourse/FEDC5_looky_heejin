@@ -6,7 +6,8 @@ interface IPageTitleProps {
 
 const StyledSpan = styled.span`
   margin: auto auto;
-  font-size: 0.9rem;
+  font-weight: bold;
+  font-size: 1.2rem;
 `;
 
 const PageTitle = ({ title }: IPageTitleProps) => {

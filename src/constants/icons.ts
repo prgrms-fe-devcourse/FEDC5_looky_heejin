@@ -11,3 +11,5 @@ export const CLOSE_ICON: string = "close";
 export const BACK_ICON: string = "chevron_left";
 export const SEND_ICON: string = "send";
 export const HEART_ICON: string = "favorite";
+export const LIGHTMODE_ICON: string = "light_mode";
+export const DARKMODE_ICON: string = "dark_mode";

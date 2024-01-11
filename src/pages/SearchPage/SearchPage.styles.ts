@@ -1,12 +1,16 @@
 import styled from "styled-components";
 
 import { Col, Row } from "@/styles/GlobalStyle";
-import { NAV_HEIGHT } from "@/constants/uiConstants";
+import {
+  BORDER_BASE_WIDTH,
+  NAV_HEIGHT,
+  SEARCH_BAR,
+} from "@/constants/uiConstants";
 
 // SearchPage
 export const SearchWrap = styled(Col)`
+  position: relative;
   height: 100vh;
-  border: 1px solid black;
   justify-content: space-between;
 `;
 
@@ -16,7 +20,12 @@ export const SearchViewWrap = styled.div`
   padding-right: 1rem;
 `;
 
-export const SearchBarWrap = styled(Row)``;
+export const SearchBarWrap = styled(Row)`
+  position: absolute;
+  top: -${NAV_HEIGHT}rem;
+  width: 100%;
+  z-index: ${SEARCH_BAR};
+`;
 
 export const IconWrap = styled.div`
   display: inline-flex;
@@ -32,10 +41,34 @@ export const IconWrap = styled.div`
 `;
 
 // SearchBar
+// export const StyledForm = styled.form`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+// `;
+
+// export const StyledInput = styled(Input)`
+//   position: relative;
+//   width: 100rem;
+//   height: 65%;
+//   font-size: 0.85rem;
+//   background-color: ${({ theme }) => theme.container_color};
+//   border-radius: 2rem;
+//   padding-left: 2.7rem;
+
+//   &:focus {
+//     outline: none;
+//   }
+//   &::placeholder {
+//     font-size: 0.85rem;
+//   }
+// `;
+
 export const Form = styled.form`
   flex-grow: 1;
   align-self: center;
-  padding-right: 1rem;
+  padding-right: 0.5rem;
 `;
 
 export const InputWrap = styled(Row)`
@@ -46,9 +79,16 @@ export const InputWrap = styled(Row)`
 
 export const Input = styled.input`
   width: 100%;
+  font-size: 0.85rem;
+  color: ${props => props.theme.text_primary_color};
+  background-color: ${props => props.theme.container_color};
   padding: 0.5rem;
-  border: 1px solid ${props => props.theme.gray_300};
   box-sizing: border-box;
+  padding-left: 5px;
+  font-size: 1.15rem;
+  border-width: ${BORDER_BASE_WIDTH}px;
+  border-color: transparent;
+  border-radius: 0.375rem;
 `;
 
 // SearchRecentView

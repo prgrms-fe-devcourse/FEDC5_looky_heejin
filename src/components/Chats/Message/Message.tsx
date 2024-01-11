@@ -13,13 +13,20 @@ interface IMessageProps {
   isMine: boolean;
   message: string;
   senderName: string;
+  senderProfile?: string;
   createdAt: string;
 }
 
-const Message = ({ isMine, senderName, message, createdAt }: IMessageProps) => {
+const Message = ({
+  isMine,
+  senderName,
+  senderProfile,
+  message,
+  createdAt,
+}: IMessageProps) => {
   return (
     <MessageCard $isMine={isMine}>
-      <div>{!isMine && <Avatar size="XS" />}</div>
+      <div>{!isMine && <Avatar size="XS" src={senderProfile} />}</div>
       <MessageBody>
         <UserNameWrapper>
           {!isMine && <span>{senderName}</span>}

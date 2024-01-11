@@ -44,6 +44,10 @@ export const useProfile = () => {
     [dispatch]
   );
 
+  const profileInit = () => {
+    dispatch(profileActions.profileReducer({ type: "SET_INIT" }));
+  };
+
   const context = {
     isMe,
     profileName,
@@ -53,6 +57,7 @@ export const useProfile = () => {
     setProfileName: (profileName: string) => setProfileName(profileName),
     setProfileImage: (profileImage: string) => setProfileImage(profileImage),
     setProfileCover: (profileCover: string) => setProfileCover(profileCover),
+    profileInit: () => profileInit(),
   };
 
   return context;

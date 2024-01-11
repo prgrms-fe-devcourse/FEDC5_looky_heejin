@@ -16,6 +16,7 @@ const Transition = () => {
   return (
     <PageLayout>
       <motion.div
+        style={{ width: "100%", height: "100%" }}
         key={pathname}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
