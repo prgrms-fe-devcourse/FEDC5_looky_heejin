@@ -60,7 +60,6 @@ const EditPasswordModal = () => {
 
   const onValid = (data: IPasswordForm) => {
     const encryptionPassword = sha256Encrypt(data.password);
-    console.log(data, encryptionPassword);
     mutation.mutate(encryptionPassword);
     closeModal();
   };
