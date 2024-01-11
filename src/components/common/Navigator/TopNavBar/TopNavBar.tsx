@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { APP_MAX_WIDTH, NAVIGATER, NAV_HEIGHT } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
 import {
@@ -11,6 +11,8 @@ import {
   SearchBar,
   PageTitle,
 } from "./index";
+import useEventQuery from "@/hooks/useEventQuery";
+import { useMe } from "@/hooks/useMe";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const LEFT_PARTITION_WIDTH = "20%";
@@ -60,6 +62,12 @@ const TopNavBar = () => {
   const parsedData = channel ? JSON.parse(channel as string) : null;
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { profilePhoto: myProfileImage } = useMe();
+  const [partnerData, setPartnerData] = useState({
+    fullName: "",
+    profileImage: null,
+  });
 
   const currentPath = useMemo(() => "/" + pathname.split("/")[1], [pathname]);
   const showNavBar = useMemo(
@@ -67,7 +75,23 @@ const TopNavBar = () => {
     [currentPath]
   );
 
-  const navigate = useNavigate();
+  if (currentPath === PathName.CHAT) {
+    const partnerId = pathname.split("/")[2];
+    const { refetch } = useEventQuery({
+      key: `partnerId-${partnerId}`,
+      endPoint: `/users/${partnerId}`,
+    });
+    const getPartnerData = async () => {
+      const data = (await refetch()).data;
+      setPartnerData({
+        fullName: data?.data.fullName !== null ? data?.data.fullName : "상대방",
+        profileImage: data?.data.image,
+      });
+    };
+    useEffect(() => {
+      getPartnerData();
+    }, [partnerId]);
+  }
 
   const handleIconClick = useCallback(
     (path: string) => {
@@ -81,11 +105,6 @@ const TopNavBar = () => {
   const handleBackClick = () => {
     navigate(-1);
   };
-
-  // DUMMY_DATA --> 데이터 붙여야함
-  const myAvatarSrc = "https://picsum.photos/100";
-  const partnerAvatarSrc = "https://picsum.photos/200";
-  const parterName = "누군가";
 
   return (
     showNavBar && (
@@ -106,9 +125,9 @@ const TopNavBar = () => {
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (
             <ChatAvatars
-              myAvatarSrc={myAvatarSrc}
-              partnerAvatarSrc={partnerAvatarSrc}
-              partnerName={parterName}
+              myAvatarSrc={myProfileImage || undefined}
+              partnerAvatarSrc={partnerData.profileImage || undefined}
+              partnerName={partnerData.fullName}
             />
           )}
           {currentPath === PathName.CHANNELS && (
