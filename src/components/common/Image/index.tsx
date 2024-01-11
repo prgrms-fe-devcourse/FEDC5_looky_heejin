@@ -36,14 +36,12 @@ const Image = ({
   useEffect(() => {
     if (typeof src === "string" || !src) {
       if (typeof src === "string" && src.startsWith("data:image")) {
-        // 이미 Base64 형식인 경우
         setWebpImageUrl(src);
         setPngImageUrl(src);
       }
       return;
     }
 
-    // ArrayBufferLike 형식을 사용하지 않는 경우 제거 예정
     const arrayBufferView = new Uint8Array(src);
     const webpBlob = new Blob([arrayBufferView], { type: "image/webp" });
     const pngBlob = new Blob([arrayBufferView], { type: "image/png" });

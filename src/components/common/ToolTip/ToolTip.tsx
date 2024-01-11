@@ -11,15 +11,9 @@ const TooltipWrapper = styled.div<{
 }>`
   z-index: 2;
 
-  ${props => {
-    console.log(props.$x, props.$y);
-    return css``;
-  }}
-
   &:before,
   &:after {
     ${({ $clicked }) => {
-      console.log($clicked);
       if ($clicked) {
         return css`
           visibility: visible;

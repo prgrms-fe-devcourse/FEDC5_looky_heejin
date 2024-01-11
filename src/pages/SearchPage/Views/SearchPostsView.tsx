@@ -7,8 +7,6 @@ interface IPostsProps {
 }
 
 const SearchPostsView = ({ postsData }: IPostsProps) => {
-  // Todo: 슬라이드뷰
-
   return (
     <section>
       <PostWrap>

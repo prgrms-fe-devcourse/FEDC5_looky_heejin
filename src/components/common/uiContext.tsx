@@ -23,14 +23,12 @@ import {
 export const useUI = () => {
   const dispatch = useDispatch();
 
-  // reducers state //
   const {
     displayModal,
     modalView,
     props: modalProps,
   } = useSelector(({ modal }: RootState) => modal);
 
-  // reducers action //
   const openModal = useCallback(
     (props?: any) =>
       dispatch(modalActions.modalReducer({ type: "OPEN_MODAL", props })),
@@ -60,7 +58,6 @@ export const useUI = () => {
   return context;
 };
 
-// Modal ================================================================= //
 const ModalView: React.FC<{
   modalView: MODAL_VIEWS;
   closeModal(): any;
@@ -91,7 +88,6 @@ const ModalUI: React.FC<{ [key: string]: any }> = (...rest) => {
     />
   ) : null;
 };
-// ================================================================= Modal //
 
 export const ManagedUIContext: FC<any> = ({ children }) => {
   const [localTheme, _] = useLocalStorage("theme");

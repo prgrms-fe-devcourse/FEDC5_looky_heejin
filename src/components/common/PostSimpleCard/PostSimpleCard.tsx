@@ -30,8 +30,6 @@ export interface ITitle {
   tags: ITag[] | null;
 }
 
-// ========================================
-// 충돌 방지를 위한 로직 모음, 추후 삭제 예정
 export interface ICreateLike {
   postId: string;
 }
@@ -50,8 +48,6 @@ export const _DELETE_LIKE = async (params: IDeleteLike) => {
   return result?.data;
 };
 
-// ========================================
-
 const IsJsonString = (str: string) => {
   try {
     let json = JSON.parse(str);
@@ -61,18 +57,15 @@ const IsJsonString = (str: string) => {
   }
 };
 
-// todo, 타입 충돌로 인해서 추후 타입 명시
 const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
   const { pathname } = useLocation();
-  // console.log(postData);
   const { data: myData } = useQuery({
     queryKey: [ME],
     queryFn: async () => await _GET("/auth-user"),
   });
-  // console.log(myData);
 
   let parsedData: ITitle = {
     title: "",
@@ -102,13 +95,8 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   });
 
   const mutation = useMutation({
-    // 고민사항..
-    // 목적에 맞지 않는다.
     mutationFn: async (params: string) => await _USERDATA(params),
     onSuccess(data) {
-      // console.log("나다 ", myData);
-      // console.log("포스트 데이터다", postData);
-      // console.log("작성자 데이터다", data);
       if (id) {
         if (typeof postData.likes[0] === "object") {
           postData.likes.map((val: any) => {
@@ -202,7 +190,6 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   }, []);
 
   if (mutation.isError) {
-    // 에러문구 todo
     return (
       <CardContainer $basis="half">
         <SkeletonFail>데이터를 불러오는 데에 실패했어요!</SkeletonFail>
@@ -211,7 +198,6 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   }
 
   if (mutation.isPending) {
-    // 스켈레톤 todo
     return (
       <CardContainer $basis="half">
         <SkeletonImage />
@@ -224,7 +210,6 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
       <>
         <CardContainer $basis="half">
           <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
-            {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
               onClick={onClickImage}
               src={postData.image ? postData.image : "/image_alt.png"}
@@ -289,7 +274,6 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
                 {parsedData === null ? postData.title : parsedData.content}
               </TextContainer>
             </div>
-            {/* todo, 태그 정보 */}
           </CardInfoContainer>
         </CardContainer>
       </>

@@ -25,8 +25,8 @@ export interface IPost {
 
 export interface ILike {
   _id: string;
-  user: string; // 사용자 id
-  post: string; // 포스트 id
+  user: string;
+  post: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -35,7 +35,7 @@ export interface IComment {
   _id: string;
   comment: string;
   author: IUser;
-  post: string; // 포스트 id
+  post: string;
   createdAt: string;
   updatedAt: string;
 }

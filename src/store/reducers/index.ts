@@ -14,7 +14,6 @@ export { newPostActions } from "./newPostReducer";
 export { searchActions } from "./searchReducer";
 export { notificationActions } from "./notificationReducer";
 
-// 분리된 reducer 들을 하나의 reducer 로 합칩니다.
 const rootReducer = combineReducers({
   auth: authReducer,
   me: meReducer,

@@ -18,8 +18,6 @@ const NotFoundPageView = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // TODO:
-  // 이전 페이지가 splash 라면 home 으로 이동
   if (delay === 0) navigate(-1);
 
   return (

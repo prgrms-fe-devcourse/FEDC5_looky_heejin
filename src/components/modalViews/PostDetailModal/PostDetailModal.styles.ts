@@ -3,7 +3,6 @@ import { APP_MAX_WIDTH, MODAL_LAYOUT } from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 
-// 전체 -----------------------------------------
 export const PostDetailWrapper = styled.div`
   width: ${APP_MAX_WIDTH}px;
   height: 95vh;
@@ -16,12 +15,11 @@ export const PostDetailWrapper = styled.div`
     display: none;
   }
   & {
-    -ms-overflow-style: none; /* 인터넷 익스플로러 */
-    scrollbar-width: none; /* 파이어폭스 */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 `;
 
-// (상) UserInfo --------------------------------------------
 export const UserInfoWrapper = styled.div`
   position: relative;
   display: flex;
@@ -59,7 +57,6 @@ export const FollowButton = styled(Button)`
   background-color: ${({ theme }) => theme.gray_500};
 `;
 
-// (중) Image ----------------------------------------
 export const ImageWrapper = styled.div`
   position: relative;
   display: flex;
@@ -80,16 +77,13 @@ export const StyledImg = styled.img`
   border-radius: 0.5rem;
 `;
 
-// (하) UserInfo, Image 제외한 Content, Comments 등..
 export const CaptionWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 `;
 
-export const ContentWrapper = styled.div`
-  /* padding: 0 1rem; */
-`;
+export const ContentWrapper = styled.div``;
 
 export const StyledSpan = styled.span`
   display: -webkit-box;
@@ -131,7 +125,6 @@ export const LikeCountSpan = styled.span`
 export const CommentChatWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  // TODO : 리팩토링 - 공통으로 빼기
   margin-right: 0.8rem;
   & :first-child {
     margin-top: 0.3rem;
@@ -139,7 +132,6 @@ export const CommentChatWrapper = styled.div`
   }
 `;
 
-// 댓글 --------------------------------------------
 export const CommentWrapper = styled.div`
   font-size: 0.9rem;
   padding: 0.5rem;
@@ -186,7 +178,6 @@ export const NoComments = styled.span`
   color: ${({ theme }) => theme.gray_500};
 `;
 
-// 댓글입력창 --------------------------------------------
 export const InputWrapper = styled.div`
   position: relative;
   height: 2.8rem;
@@ -214,7 +205,6 @@ export const ContentDetail = styled.span`
   color: ${({ theme }) => theme.gray_500};
 `;
 
-// 애니메이션
 const heartAnimation = keyframes`
   0% {
     opacity: 1;

@@ -7,7 +7,6 @@ import {
   SEARCH_BAR,
 } from "@/constants/uiConstants";
 
-// SearchPage
 export const SearchWrap = styled(Col)`
   position: relative;
   height: 100vh;
@@ -40,31 +39,6 @@ export const IconWrap = styled.div`
   }
 `;
 
-// SearchBar
-// export const StyledForm = styled.form`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-// `;
-
-// export const StyledInput = styled(Input)`
-//   position: relative;
-//   width: 100rem;
-//   height: 65%;
-//   font-size: 0.85rem;
-//   background-color: ${({ theme }) => theme.container_color};
-//   border-radius: 2rem;
-//   padding-left: 2.7rem;
-
-//   &:focus {
-//     outline: none;
-//   }
-//   &::placeholder {
-//     font-size: 0.85rem;
-//   }
-// `;
-
 export const Form = styled.form`
   flex-grow: 1;
   align-self: center;
@@ -91,7 +65,6 @@ export const Input = styled.input`
   border-radius: 0.375rem;
 `;
 
-// SearchRecentView
 export const LiContainer = styled.li`
   width: 300px;
   color: ${props => props.theme.gray_500};
@@ -104,12 +77,10 @@ export const LiContainer = styled.li`
   }
 `;
 
-// SearchResultsView
 export const ViewWrap = styled(Col)`
   flex-basis: 100vh;
 `;
 
-// SearchUsersView
 export const ListWrap = styled(Col)``;
 
 export const ListItem = styled(Row)`
@@ -129,7 +100,6 @@ export const UserInfo = styled(Col)`
   justify-content: center;
 `;
 
-// SearchPostView
 export const PostWrap = styled(Row)`
   justify-content: space-between;
   flex-wrap: wrap;

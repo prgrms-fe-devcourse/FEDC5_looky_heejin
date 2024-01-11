@@ -74,7 +74,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
-  // const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
@@ -86,7 +85,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
-  // const postId = "659c00da1d725b33c1ed7a1e";
   const { id: myId } = useMe();
 
   const navigate = useNavigate();
@@ -96,7 +94,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     queryFn: async () => await _GET("/auth-user"),
   });
 
-  // init fetch--------------------------------------------
   const { isLoading, refetch } = useEventQuery({
     key: `postId-${postId}`,
     endPoint: `/posts/${postId}`,
@@ -118,7 +115,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     setTitle(parsedJson.title);
     setContent(parsedJson.content);
     setTags(parsedJson.tags);
-    // setLikes(data?.data.likes);
     setLikeCount(data?.data.likes.length);
     setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
     data?.data.likes.map((value: any) => {
@@ -126,7 +122,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     });
     setComments(data?.data.comments);
   };
-  // --------------------------------------------------------------------------
+
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
     onSuccess(data) {
@@ -233,7 +229,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
   const handleContentDetail = () => {
     setIsContentDetail(true);
-    console.log(isContentDetail);
   };
 
   const handleLike = () => {
@@ -246,7 +241,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       }
 
       setIsShowHeart(true);
-      // TODO: 디바운스
 
       setTimeout(() => {
         setIsShowHeart(false);
@@ -255,9 +249,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
 
   const handleChat = () => {
-    // if (userId) {
-    //   해당 포스트의 작성자(id)가 현재 로그인한 나라면 자기 자신과는 채팅할 수 없다는 로직. 혹은 렌더링 시 채팅버튼 아예 안보여줘야함
-    // }
     closeModal();
     navigate(`/chat/${userId}`);
   };
@@ -328,7 +319,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       </ImageWrapper>
       <CaptionWrapper>
         <IconsWrapper>
-          {/* 추후 refactor 포인트 : className으로 바꾸기  */}
           <HeartWrapper>
             <Icon
               name={HEART_ICON}

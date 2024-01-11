@@ -39,8 +39,6 @@ const Comments = ({
   };
 
   const handleDeleteComment = (id: string) => {
-    console.log("댓글삭제 클릭");
-    console.log(id);
     deleteCommentMutation.mutate({ id });
   };
 
