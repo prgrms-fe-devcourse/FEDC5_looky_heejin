@@ -19,6 +19,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
 import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
+import { useUI } from "../uiContext";
+import { useMe } from "@/hooks/useMe";
+
 export interface ITitle {
   title: string;
   content: string;
@@ -58,6 +61,8 @@ const IsJsonString = (str: string) => {
 
 // todo, 타입 충돌로 인해서 추후 타입 명시
 const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
+  const { setModalView, openModal } = useUI();
+  const { id } = useMe();
   const { pathname } = useLocation();
   // console.log(postData);
   const { data: myData } = useQuery({
@@ -84,25 +89,29 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   const [favoriteClicked, setFavoriteClicked] = useState<boolean>(false);
 
   const mutation = useMutation({
+    // 고민사항..
+    // 목적에 맞지 않는다.
     mutationFn: async (params: string) => await _USERDATA(params),
     onSuccess(data) {
       // console.log("나다 ", myData);
       // console.log("포스트 데이터다", postData);
       // console.log("작성자 데이터다", data);
-      if (typeof postData.likes[0] === "object") {
-        postData.likes.map((val: any) => {
-          if (val.user === myData?.data._id) {
-            setFavoriteClicked(true);
-            setFavoriteId(val._id);
-          }
-        });
-      } else if (typeof postData.likes[0] === "string") {
-        for (let i = 0; i < postData.likes.length; i++) {
-          for (let j = 0; j < myData?.data.likes.length; j++) {
-            if (postData.likes[i] === myData?.data.likes[j]._id) {
+      if (id) {
+        if (typeof postData.likes[0] === "object") {
+          postData.likes.map((val: any) => {
+            if (val.user === myData?.data._id) {
               setFavoriteClicked(true);
-              setFavoriteId(postData.likes[i]);
-              break;
+              setFavoriteId(val._id);
+            }
+          });
+        } else if (typeof postData.likes[0] === "string") {
+          for (let i = 0; i < postData.likes.length; i++) {
+            for (let j = 0; j < myData?.data.likes.length; j++) {
+              if (postData.likes[i] === myData?.data.likes[j]._id) {
+                setFavoriteClicked(true);
+                setFavoriteId(postData.likes[i]);
+                break;
+              }
             }
           }
         }
@@ -117,9 +126,8 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   });
 
   const onClickImage = () => {
-    alert(`오픈 모달로 변경 예정!`);
-    // todo
-    // 오픈 모달로 변경 예정
+    setModalView("POST_DETAIL_VIEW");
+    openModal({ postId: postData._id });
   };
 
   const onClickProfile = () => {

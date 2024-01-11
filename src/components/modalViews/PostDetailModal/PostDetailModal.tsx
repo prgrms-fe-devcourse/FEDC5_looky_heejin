@@ -103,12 +103,14 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   });
   const getPostData = async () => {
     const data = (await refetch()).data;
-    myData?.data.following.map((followingData: any) => {
-      if (followingData.user === data?.data.author._id) {
-        setIsIFollowed(true);
-        setFollowId(followingData._id);
-      }
-    });
+    if (myId) {
+      myData?.data.following.map((followingData: any) => {
+        if (followingData.user === data?.data.author._id) {
+          setIsIFollowed(true);
+          setFollowId(followingData._id);
+        }
+      });
+    }
     setUserId(data?.data.author._id);
     setUserName(data?.data.author.fullName);
     setImageUrl(data?.data.image);
@@ -311,7 +313,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             <Tag x={x} y={y} onClick={() => tagClickHandler(id, x, y)} />
           </ToolTip>
         ))}
-        <StyledImg src={imageUrl} />
+        <StyledImg src={imageUrl ? imageUrl : "/image_alt.png"} />
       </ImageWrapper>
       <CaptionWrapper>
         <IconsWrapper>
