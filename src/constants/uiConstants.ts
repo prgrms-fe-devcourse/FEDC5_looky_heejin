@@ -49,4 +49,6 @@ export const MODAL_HEADER_MARGIN: number = 1.5; // rem
 // Zindex //
 export const SEARCH_BAR = 30;
 export const NAVIGATER = 50;
-export const MODAL = 9999;
+export const MODAL = 888;
+export const MODAL_BACKGROUND = 888;
+export const MODAL_LAYOUT = 999;

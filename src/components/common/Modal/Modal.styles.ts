@@ -1,20 +1,29 @@
 import {
   MODAL,
+  MODAL_BACKGROUND,
   MODAL_HEADER_MARGIN,
   MODAL_HORIZONTAL_PADDING,
+  MODAL_LAYOUT,
   MODAL_VERTICAL_PADDIND,
 } from "@/constants/uiConstants";
 import styled from "styled-components";
 import tw from "twin.macro";
 
-export const ModalBackground = styled.div<any>`
+export const ModalContainer = styled.div`
   z-index: ${MODAL};
+  ${tw`fixed flex items-center inset-0 justify-center`}
+`;
+
+export const ModalBackground = styled.div<any>`
+  z-index: ${MODAL_BACKGROUND};
+
   ${tw`fixed bg-black bg-opacity-10 flex items-center inset-0 justify-center backdrop-blur-[1.2px]`}
 `;
 
 export const ModalLayoutContainer = styled.div`
   background-color: ${props => props.theme.background_color};
   padding: ${MODAL_VERTICAL_PADDIND}rem ${MODAL_HORIZONTAL_PADDING}rem;
+  z-index: ${MODAL_LAYOUT};
 
   ${tw`relative shadow-md rounded-md`}
 `;

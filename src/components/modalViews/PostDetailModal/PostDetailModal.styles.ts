@@ -1,5 +1,5 @@
 import { Button, Input } from "@/components/common";
-import { APP_MAX_WIDTH } from "@/constants/uiConstants";
+import { APP_MAX_WIDTH, MODAL_LAYOUT } from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 
@@ -11,6 +11,7 @@ export const PostDetailWrapper = styled.div`
   border: ${({ theme }) => `0.5px solid ${theme.container_color}`};
   border-radius: 0.5rem;
   overflow-y: auto;
+  z-index: ${MODAL_LAYOUT};
   &::-webkit-scrollbar {
     display: none;
   }
