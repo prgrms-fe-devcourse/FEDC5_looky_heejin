@@ -38,7 +38,7 @@ export const _PATCH = async (endPoint: string, params: any) => {
   }
 };
 
-export const _PUT = async (endPoint: string, params: any) => {
+export const _PUT = async (endPoint: string, params?: any) => {
   try {
     const response = await rootAPI.put(endPoint, params);
     return response;
@@ -47,9 +47,11 @@ export const _PUT = async (endPoint: string, params: any) => {
   }
 };
 
-export const _DELETE = async (endPoint: string) => {
+export const _DELETE = async (endPoint: string, params: any) => {
   try {
-    const response = await rootAPI.delete(endPoint);
+    const response = await rootAPI.delete(endPoint, {
+      data: params,
+    });
     return response;
   } catch (error) {
     console.error(error);

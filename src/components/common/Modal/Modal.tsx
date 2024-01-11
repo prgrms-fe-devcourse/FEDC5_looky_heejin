@@ -1,6 +1,6 @@
 import { FC, useRef, useEffect, useCallback, ReactNode } from "react";
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
-import { ModalBackground } from "./Modal.styles";
+import { ModalBackground, ModalContainer } from "./Modal.styles";
 
 interface ModalProps {
   children: ReactNode;
@@ -20,11 +20,17 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
     [onClose]
   );
 
-  useEffect(() => {
-    const modal = ref.current;
+  const backgroundClickHandler = (event: Event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onClose();
+  };
 
-    if (modal) {
-      disableBodyScroll(modal, { reserveScrollBarGap: false });
+  useEffect(() => {
+    const modalBackground = ref.current;
+
+    if (modalBackground) {
+      disableBodyScroll(modalBackground, { reserveScrollBarGap: true });
       window.addEventListener("keydown", handleKey);
     }
     return () => {
@@ -33,7 +39,12 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
     };
   }, [handleKey]);
 
-  return <ModalBackground ref={ref}>{children}</ModalBackground>;
+  return (
+    <ModalContainer>
+      <ModalBackground ref={ref} onClick={backgroundClickHandler} />
+      {children}
+    </ModalContainer>
+  );
 };
 
 export default Modal;

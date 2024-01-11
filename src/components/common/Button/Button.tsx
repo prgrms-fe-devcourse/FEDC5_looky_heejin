@@ -51,7 +51,7 @@ const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
     active,
     width,
     loading = false,
-    disabled = variant === "disabled",
+    disabled,
     useRipple = true,
     rippleColor,
     style = {},
@@ -60,8 +60,10 @@ const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
     handlerDelay = 0,
     ...rest
   } = props;
-  // HTMLButtonElement 에 정의된 속성 이외에 추가적인 속성을 부여하기 위함 <$buttonColor, $textColor>
-  const ButtonWrapper: React.ComponentType<any> = ButtonType[variant];
+
+  const ButtonWrapper: React.ComponentType<any> = disabled
+    ? ButtonType["disabled"]
+    : ButtonType[variant];
 
   const ref = useRef<typeof ButtonWrapper>(null);
   const rippleRef = useRef<HTMLSpanElement>(null);

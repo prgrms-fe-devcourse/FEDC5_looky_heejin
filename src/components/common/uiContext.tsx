@@ -8,21 +8,30 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 import { RootState } from "@/store";
 import { modalActions } from "@store/reducers";
-import { MODAL_VIEWS } from "@/store/modalType";
-import { Modal, ModalLayout } from "./Modal";
-import { TestModal } from "../modalViews";
+import { Modal } from "./Modal";
+import { MODAL_VIEWS } from "@/store/types/modalType";
+import {
+  ChangeImageModal,
+  ChannelSelectModal,
+  EditNameModal,
+  EditPasswordModal,
+  PostDetailModal,
+  TagCreateModal,
+  TestModal,
+} from "@/components/modalViews";
 
 export const useUI = () => {
   const dispatch = useDispatch();
 
-  // reducers state //
-  const { displayModal, modalView } = useSelector(
-    ({ modal }: RootState) => modal
-  );
+  const {
+    displayModal,
+    modalView,
+    props: modalProps,
+  } = useSelector(({ modal }: RootState) => modal);
 
-  // reducers action //
   const openModal = useCallback(
-    () => dispatch(modalActions.modalReducer({ type: "OPEN_MODAL" })),
+    (props?: any) =>
+      dispatch(modalActions.modalReducer({ type: "OPEN_MODAL", props })),
     [dispatch]
   );
 
@@ -40,7 +49,8 @@ export const useUI = () => {
   const context = {
     displayModal,
     modalView,
-    openModal: () => openModal(),
+    modalProps,
+    openModal: (props?: any) => openModal(props),
     closeModal: () => closeModal(),
     setModalView: (view: MODAL_VIEWS) => setModalView(view),
   };
@@ -48,29 +58,36 @@ export const useUI = () => {
   return context;
 };
 
-// Modal ================================================================= //
-const ModalView: React.FC<{ modalView: string; closeModal(): any }> = ({
-  modalView,
-  closeModal,
-}) => {
+const ModalView: React.FC<{
+  modalView: MODAL_VIEWS;
+  closeModal(): any;
+  props?: any;
+}> = ({ modalView, closeModal, props }) => {
   return (
     <Modal onClose={closeModal}>
-      {modalView === "INIT_VIEW" && (
-        <ModalLayout>
-          <TestModal />
-        </ModalLayout>
-      )}
+      {modalView === "INIT_VIEW" && <TestModal />}
+      {modalView === "TAG_CREATE_VIEW" && <TagCreateModal props={props} />}
+      {modalView === "CHANNEL_SELECT_VIEW" && <ChannelSelectModal />}
+      {modalView === "EDIT_NAME_VIEW" && <EditNameModal />}
+      {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
+      {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
+      {modalView === "EDIT_COVERIMAGE_VIEW" && <ChangeImageModal />}
+      {modalView === "POST_DETAIL_VIEW" && <PostDetailModal props={props} />}
     </Modal>
   );
 };
 
-const ModalUI: React.FC = () => {
-  const { displayModal, closeModal, modalView } = useUI();
+const ModalUI: React.FC<{ [key: string]: any }> = (...rest) => {
+  const { displayModal, closeModal, modalView, modalProps } = useUI();
   return displayModal ? (
-    <ModalView modalView={modalView} closeModal={closeModal} />
+    <ModalView
+      modalView={modalView}
+      closeModal={closeModal}
+      props={modalProps}
+      {...rest}
+    />
   ) : null;
 };
-// ================================================================= Modal //
 
 export const ManagedUIContext: FC<any> = ({ children }) => {
   const [localTheme, _] = useLocalStorage("theme");

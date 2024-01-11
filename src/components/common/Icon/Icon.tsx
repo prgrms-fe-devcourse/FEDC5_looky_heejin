@@ -14,6 +14,7 @@ export interface IIconProps {
   fill?: boolean;
   weight?: number;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 export interface IIconStyle {

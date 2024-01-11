@@ -1,15 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled, { createGlobalStyle } from "styled-components";
 import { normalize } from "styled-normalize";
-import tw, { GlobalStyles as BaseStyles } from "twin.macro";
+
 import { APP_MAX_WIDTH } from "@/constants/uiConstants";
 
-const CustomStyles = createGlobalStyle<any>`
+export const GlobalStyle = createGlobalStyle<any>`
     ${normalize}
 
     *{
-        /* color: ${props => props.theme.text_primary_color};
-        font-family: sans-serif; */
+        color: ${props => props.theme.text_primary_color};
+        /* font-family: sans-serif; */
+        &::-webkit-scrollbar {
+          width: 0.4rem;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: hsla(0, 0%, 42%, 0.29);
+          border-radius: 100px;
+        }
     }
     body {
         /* min-width: 420px;
@@ -34,6 +41,7 @@ const CustomStyles = createGlobalStyle<any>`
       /* position: relative;
       min-height: 100%;
       margin: 0; */
+      overflow-y: scroll;
     }
 
     #root {
@@ -52,13 +60,6 @@ const CustomStyles = createGlobalStyle<any>`
     }
 `;
 
-export const GlobalStyle = () => (
-  <>
-    <BaseStyles />
-    <CustomStyles />
-  </>
-);
-
 export const Col = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,9 +68,4 @@ export const Col = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const TestH1 = styled.div`
-  padding: 1rem;
-  ${tw`font-bold text-2xl bg-orange-400`}
 `;

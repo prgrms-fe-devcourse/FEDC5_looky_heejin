@@ -8,7 +8,7 @@ export const BORDER_BASE_WIDTH: number = 1.5; // px
 // ------------------------------------------ BORDER //
 
 // CONTAINER ------------------------------------------------------- //
-export const CONTAINER_PADDING_VERTICAL: number = 3; // 3rem
+export const CONTAINER_PADDING_VERTICAL: number = 2; // rem
 export const CONTAINER_PADDING_HORIZONTAIL: number = 2.5; // rem
 export const MOBILEABLE_CONTAINER_HORIZONTAL_SPACE: string =
   "w-[100%] sm:max-w-[420px]";
@@ -31,7 +31,7 @@ export const TABLET_LIMIT = 1025; // 655 + 370px
 export const DESKTOP_VIEW_WIDTH = 655; // 655px
 // ------------------------------------------ SCREEN //
 
-export const NAV_HEIGHT: number = 3.75; // 3.75 rem
+export const NAV_HEIGHT: number = 3; // 3.75 rem
 
 // CARDS -------------------------------------------------------- //
 export const POSTER_SIMPLE_CARD_HEIGHT: number = 150; // 150px
@@ -49,4 +49,6 @@ export const MODAL_HEADER_MARGIN: number = 1.5; // rem
 // Zindex //
 export const SEARCH_BAR = 30;
 export const NAVIGATER = 50;
-export const MODAL = 9999;
+export const MODAL = 888;
+export const MODAL_BACKGROUND = 888;
+export const MODAL_LAYOUT = 999;
