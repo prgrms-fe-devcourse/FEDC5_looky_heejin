@@ -11,7 +11,8 @@ export type PROFILE_ACTION =
   | { type: "SET_IS_ME"; isMe: boolean }
   | { type: "SET_NAME"; profileName: string }
   | { type: "SET_IMAGE"; profileImage: string }
-  | { type: "SET_COVER"; profileCover: string };
+  | { type: "SET_COVER"; profileCover: string }
+  | { type: "SET_INIT" };
 
 const initialState: TProfileState = {
   isMe: false,
@@ -48,6 +49,12 @@ const profileSlice = createSlice({
           return {
             ...state,
             profileCover: action.payload.profileCover,
+          };
+        }
+        case "SET_INIT": {
+          return {
+            ...state,
+            ...initialState,
           };
         }
       }
