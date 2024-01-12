@@ -56,8 +56,13 @@ const SearchResultsView = () => {
     }
   }, [data]);
 
-  const handleTabClick = () => {
-    setShowUsers(!showUsers);
+  const handleTabClick = (tabOption: string) => {
+    console.log(tabOption);
+    if (tabOption === "user") {
+      setShowUsers(true);
+    } else {
+      setShowUsers(false);
+    }
   };
 
   const handleUserClick = (userId: string) => {
