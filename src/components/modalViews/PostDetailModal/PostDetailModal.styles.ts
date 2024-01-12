@@ -12,6 +12,7 @@ export const PostDetailWrapper = styled.div`
   border-radius: 0.5rem;
   overflow-y: auto;
   z-index: ${MODAL_LAYOUT};
+  margin-right: 0.4rem;
   &::-webkit-scrollbar {
     display: none;
   }
