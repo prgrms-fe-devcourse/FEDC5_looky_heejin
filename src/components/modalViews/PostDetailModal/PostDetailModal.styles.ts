@@ -3,6 +3,28 @@ import { APP_MAX_WIDTH, MODAL_LAYOUT } from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 
+export const zoomin = keyframes`
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+`;
+
+export const heartbeat = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
 // 전체 -----------------------------------------
 export const PostDetailWrapper = styled.div`
   width: ${APP_MAX_WIDTH}px;
@@ -77,6 +99,15 @@ export const CloseIconWrapper = styled.div`
   }
 `;
 
+export const TrashIconWrapper = styled.div`
+  margin-left: 0.3rem;
+
+  &:hover {
+    cursor: pointer;
+    animation: ${zoomin} 0.4s ease-in-out forwards;
+  }
+`;
+
 // (중) Image ----------------------------------------
 export const ImageWrapper = styled.div`
   position: relative;
@@ -134,17 +165,6 @@ export const HeartWrapper = styled.div`
   margin-left: 0.8rem;
 `;
 
-export const heartbeat = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
-`;
 export const HeartIconWrapper = styled.div`
   & :first-child {
     margin-top: 0.2rem;
@@ -193,15 +213,6 @@ export const StyledLi = styled.li`
   box-sizing: border-box;
 `;
 
-export const zoomin = keyframes`
-  0% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(1.1);
-  }
-`;
 export const IconWrapper = styled.div`
   & > * {
     margin-bottom: 0.3rem;

@@ -6,6 +6,7 @@ import {
   CLOSE_ICON,
   HEART_ICON,
   SEND_ICON,
+  TRASH_ICON,
 } from "@/constants/icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -34,6 +35,7 @@ import {
   StyledInput,
   StyledSpan,
   Tag,
+  TrashIconWrapper,
   UserInfo,
   UserInfoWrapper,
   UserNameSpan,
@@ -338,15 +340,26 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             <UserNameSpan>{userName}</UserNameSpan>
           </UserNameWrapper>
         </UserInfo>
+        {userId === myId ? (
+          <TrashIconWrapper>
+            <Icon name={TRASH_ICON} size="1.8rem" />
+          </TrashIconWrapper>
+        ) : (
+          <FollowButton
+            variant={isIFollowed ? "flat" : "symbol"}
+            onClick={handleFollow}
+          >
+            {isIFollowed ? "팔로잉" : "팔로우"}
+          </FollowButton>
+        )}
 
-        <FollowButton
-          variant={isIFollowed ? "flat" : "symbol"}
-          onClick={handleFollow}
-        >
-          {isIFollowed ? "팔로잉" : "팔로우"}
-        </FollowButton>
         <CloseIconWrapper>
-          <Icon name={CLOSE_ICON} weight={250} onClick={handleClose} />
+          <Icon
+            name={CLOSE_ICON}
+            size="1.8rem"
+            weight={250}
+            onClick={handleClose}
+          />
         </CloseIconWrapper>
       </UserInfoWrapper>
       <ImageWrapper>
