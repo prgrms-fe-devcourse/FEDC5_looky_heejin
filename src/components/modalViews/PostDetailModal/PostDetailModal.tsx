@@ -278,9 +278,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
 
   const handleChat = () => {
-    // if (userId) {
-    //   해당 포스트의 작성자(id)가 현재 로그인한 나라면 자기 자신과는 채팅할 수 없다는 로직. 혹은 렌더링 시 채팅버튼 아예 안보여줘야함
-    // }
+    if (!myId) {
+      if (confirm(`로그인이 필요합니다. 로그인 페이지로 이동할까요?`)) {
+        closeModal();
+        navigate("/login");
+      }
+    }
     closeModal();
     navigate(`/chat/${userId}`);
   };
@@ -378,9 +381,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             <IconWrapper>
               <Icon name={CHAT_ICON} size="2rem" onClick={toggleShowComments} />
             </IconWrapper>
-            <IconWrapper>
-              <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
-            </IconWrapper>
+            {userId !== myId ? (
+              <IconWrapper>
+                <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
+              </IconWrapper>
+            ) : null}
           </CommentChatWrapper>
         </IconsWrapper>
         <ContentWrapper>
