@@ -82,8 +82,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [followId, setFollowId] = useState("");
   const [comments, setComments] = useState<string[]>([]);
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
-  const [isShowHeart, setIsShowHeart] = useState<boolean>(false);
-  const [animationKey, setAnimationKey] = useState(0);
+  const [heartAnimation, setHeartAnimation] = useState({
+    isShow: false,
+    key: 0,
+  });
+
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
@@ -261,8 +264,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       deleteLikeMutation.mutate({ id: myLikeId });
     }
     if (isILiked === false) {
-      setIsShowHeart(true);
-      setAnimationKey(key => key + 1);
+      // setIsShowHeart(true);
+      // setAnimationKey(key => key + 1);
+      setHeartAnimation(previousState => ({
+        isShow: true,
+        key: previousState.key + 1,
+      }));
       createLikeMutation.mutate({ postId: postId });
     }
   };
@@ -316,8 +323,8 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         </FollowButton>
       </UserInfoWrapper>
       <ImageWrapper>
-        {isShowHeart && (
-          <HeartInImage key={animationKey}>
+        {heartAnimation.isShow && (
+          <HeartInImage key={heartAnimation.key}>
             <Icon
               name={HEART_ICON}
               fill={true}
