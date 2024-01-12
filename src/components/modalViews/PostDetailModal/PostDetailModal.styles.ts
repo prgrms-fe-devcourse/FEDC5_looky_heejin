@@ -34,12 +34,18 @@ export const AvatarWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 12%;
+  & :hover {
+    cursor: pointer;
+  }
 `;
 
 export const UserNameWrapper = styled.div`
   display: flex;
   justify-content: center;
   height: 3.75rem;
+  & :hover {
+    cursor: pointer;
+  }
 `;
 
 export const UserNameSpan = styled.span`

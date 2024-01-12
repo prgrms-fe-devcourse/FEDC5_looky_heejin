@@ -244,6 +244,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     getPostData();
   }, []);
 
+  const handleProfile = () => {
+    closeModal();
+    navigate(`/profile/${userId}`);
+  };
+
   const handleFollow = () => {
     if (!isIFollowed) {
       myId !== null && followMutation.mutate({ userId });
@@ -315,10 +320,10 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   return (
     <PostDetailWrapper>
       <UserInfoWrapper>
-        <AvatarWrapper>
+        <AvatarWrapper onClick={handleProfile}>
           <Avatar size="S" />
         </AvatarWrapper>
-        <UserNameWrapper>
+        <UserNameWrapper onClick={handleProfile}>
           <UserNameSpan>{userName}</UserNameSpan>
         </UserNameWrapper>
         <FollowButton
