@@ -20,6 +20,7 @@ import { sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
+import { notify } from "@/utils/toast";
 
 interface ISigninModify extends ISignIn {
   passwordCheck: string;
@@ -53,6 +54,14 @@ const SignInPage = () => {
     mutationFn: async (formData: ISignIn) => await _SIGNIN(formData),
     onSuccess({ user, token }) {
       console.log("API 성공: ", user);
+      notify({
+        type: "success",
+        text: "회원가입 성공!",
+      });
+      notify({
+        type: "default",
+        text: "looky에 오신 것을 환영합니다!",
+      });
       setAuth({ isLogIn: true, token });
       setMe({
         id: user._id,
@@ -63,8 +72,11 @@ const SignInPage = () => {
       navigate("/home");
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "현재 사용중인 이메일이거나 서버 오류에요!",
+      });
       console.error("API 에러: ", error);
-      alert(`API 호출 실패!`);
     },
   });
 
