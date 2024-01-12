@@ -24,44 +24,46 @@ export const PostDetailWrapper = styled.div`
 
 // (상) UserInfo --------------------------------------------
 export const UserInfoWrapper = styled.div`
-  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-export const AvatarWrapper = styled.div`
+export const UserInfo = styled.div`
   display: flex;
-  align-items: center;
-  width: 12%;
+  flex-direction: row;
+`;
+
+export const AvatarWrapper = styled.div`
+  margin: auto auto;
+  padding-left: 1.5rem;
   & :hover {
     cursor: pointer;
   }
 `;
 
 export const UserNameWrapper = styled.div`
-  display: flex;
-  justify-content: center;
   height: 3.75rem;
+  padding-left: 1rem;
   & :hover {
     cursor: pointer;
   }
 `;
 
 export const UserNameSpan = styled.span`
+  margin: auto auto;
   font-weight: 500;
 `;
 
 export const FollowButton = styled(Button)`
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  right: 1.5rem;
   width: 4.3rem;
-  height: 1rem;
+  height: 1rem; // 왜 안줄어들지
   font-size: 0.7rem;
   line-height: 0.5rem;
+  margin-left: 1rem;
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.gray_500};
 `;

@@ -28,6 +28,7 @@ import {
   StyledInput,
   StyledSpan,
   Tag,
+  UserInfo,
   UserInfoWrapper,
   UserNameSpan,
   UserNameWrapper,
@@ -320,12 +321,15 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   return (
     <PostDetailWrapper>
       <UserInfoWrapper>
-        <AvatarWrapper onClick={handleProfile}>
-          <Avatar size="S" />
-        </AvatarWrapper>
-        <UserNameWrapper onClick={handleProfile}>
-          <UserNameSpan>{userName}</UserNameSpan>
-        </UserNameWrapper>
+        <UserInfo>
+          <AvatarWrapper onClick={handleProfile}>
+            <Avatar size="S" />
+          </AvatarWrapper>
+          <UserNameWrapper onClick={handleProfile}>
+            <UserNameSpan>{userName}</UserNameSpan>
+          </UserNameWrapper>
+        </UserInfo>
+
         <FollowButton
           variant={isIFollowed ? "flat" : "symbol"}
           onClick={handleFollow}
