@@ -12,7 +12,11 @@ interface FilteredData {
   posts: IPost[];
 }
 
-const SearchResultsView = () => {
+const SearchResultsView = ({
+  onTagClick,
+}: {
+  onTagClick: (clickedKeyword: string) => void;
+}) => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
   const [postsData, setPostsData] = useState<IPost[]>([]);
   const [showUsers, setShowUsers] = useState(true);
@@ -96,7 +100,11 @@ const SearchResultsView = () => {
           <SearchTab option="post" onClick={handleTabClick}></SearchTab>
         )}
         {showUsers ? (
-          <SearchUsersView usersData={usersData} onClick={handleUserClick} />
+          <SearchUsersView
+            usersData={usersData}
+            onTagClick={onTagClick}
+            onClick={handleUserClick}
+          />
         ) : (
           <SearchPostsView postsData={postsData} onClick={handlePostClick} />
         )}

@@ -83,7 +83,7 @@ const SearchPage = () => {
             onItemClick={handleKeywordClick}
           />
         ) : (
-          <SearchResultsView />
+          <SearchResultsView onTagClick={handleKeywordClick} />
         )}
       </SearchViewWrap>
     </SearchWrap>
