@@ -60,8 +60,10 @@ const LoginPageView = () => {
       navigate("/home");
     },
     onError(error) {
-      // todo toast 관련 라이브러리로 대체 예정
-      alert(`가입되지 않은 계정이거나 비밀번호 오류입니다!`);
+      notify({
+        type: "error",
+        text: "가입되지 않은 계정이거나 비밀번호 오류입니다!",
+      });
       console.error("API 에러: ", error);
     },
   });
