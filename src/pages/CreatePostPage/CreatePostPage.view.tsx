@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 
+import { _GET, _POST, rootAPI } from "@/api";
+import { ITag } from "@/types/post";
 import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
 import { Button, Input, Upload } from "@/components/common";
@@ -12,10 +16,6 @@ import {
   TextArea,
   UploadSection,
 } from "./CreatePostPage.styles";
-import { useMutation } from "@tanstack/react-query";
-import { _GET, _POST, rootAPI } from "@/api";
-import { useNavigate } from "react-router-dom";
-import { ITag } from "@/types/post";
 
 interface ICreatePostFormProps {
   title: string;
