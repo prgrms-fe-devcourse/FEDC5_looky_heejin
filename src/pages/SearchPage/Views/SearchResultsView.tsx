@@ -25,19 +25,16 @@ const SearchResultsView = () => {
     staleTime: 0,
   });
 
-  // useEffect할때마다 fetch << 초간단 해결책
-
   const navigate = useNavigate();
 
   // 사용자, 게시글 데이터를 분리
   useEffect(() => {
     if (isSuccess) {
-      // 역시 CTO...오..
-      // 감탄하는 CFO...COO..
       const copy = [...data];
-      console.log(data);
-      console.log(copy, copy.length);
-      if (copy.length < 1) return;
+      if (copy.length === 0) {
+        setUsersData([]);
+        setPostsData([]);
+      }
 
       const filteredData = copy?.reduce<FilteredData>(
         (results, item) => {
