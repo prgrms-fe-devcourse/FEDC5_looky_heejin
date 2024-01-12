@@ -257,7 +257,10 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   const handleLike = () => {
     if (!myId) {
-      alert("로그인 해주세요.");
+      if (confirm(`로그인이 필요합니다. 로그인 페이지로 이동할까요?`)) {
+        closeModal();
+        navigate("/login");
+      }
       return;
     }
     if (isILiked === true) {
