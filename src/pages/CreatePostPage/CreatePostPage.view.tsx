@@ -16,7 +16,6 @@ import { useMutation } from "@tanstack/react-query";
 import { _GET, _POST, rootAPI } from "@/api";
 import { useNavigate } from "react-router-dom";
 import { ITag } from "@/types/post";
-import { isPending } from "@reduxjs/toolkit";
 
 interface ICreatePostFormProps {
   title: string;
