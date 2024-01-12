@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SearchPostsView, SearchUsersView } from ".";
 import { useQuery } from "@tanstack/react-query";
 import { _SEARCH, _SEARCH_USERS } from "@/api/queries/search";
@@ -27,16 +27,17 @@ const SearchResultsView = () => {
 
   const navigate = useNavigate();
 
-  // 사용자, 게시글 데이터를 분리
-  useEffect(() => {
+  const filteredData = useMemo(() => {
     if (isSuccess) {
+      if (!data) return { users: [], posts: [] };
+
       const copy = [...data];
       if (copy.length === 0) {
         setUsersData([]);
         setPostsData([]);
       }
 
-      const filteredData = copy?.reduce<FilteredData>(
+      const filtered = copy?.reduce<FilteredData>(
         (results, item) => {
           if (item.title) {
             results.posts = results.posts.concat(item);
@@ -48,16 +49,21 @@ const SearchResultsView = () => {
         { users: [], posts: [] }
       );
 
-      const filteredUsers = filteredData.users;
-      const filteredPosts = filteredData.posts;
-
-      setUsersData(filteredUsers);
-      setPostsData(filteredPosts);
+      return filtered;
     }
   }, [data]);
 
+  useEffect(() => {
+    if (!filteredData) return;
+
+    const filteredUsers = filteredData?.users;
+    const filteredPosts = filteredData?.posts;
+
+    setUsersData(filteredUsers);
+    setPostsData(filteredPosts);
+  }, [filteredData]);
+
   const handleTabClick = (tabOption: string) => {
-    console.log(tabOption);
     if (tabOption === "user") {
       setShowUsers(true);
     } else {
