@@ -14,8 +14,10 @@ import {
   ContentDetail,
   ContentWrapper,
   FollowButton,
+  HeartIconWrapper,
   HeartInImage,
   HeartWrapper,
+  IconWrapper,
   IconsWrapper,
   ImageWrapper,
   InputWrapper,
@@ -267,8 +269,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       deleteLikeMutation.mutate({ id: myLikeId });
     }
     if (isILiked === false) {
-      // setIsShowHeart(true);
-      // setAnimationKey(key => key + 1);
       setHeartAnimation(previousState => ({
         isShow: true,
         key: previousState.key + 1,
@@ -353,13 +353,16 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         <IconsWrapper>
           {/* 추후 refactor 포인트 : className으로 바꾸기  */}
           <HeartWrapper>
-            <Icon
-              name={HEART_ICON}
-              onClick={handleLike}
-              fill={isILiked ? true : false}
-              color={isILiked ? theme.symbol_color : ""}
-              size="2.3rem"
-            ></Icon>
+            <HeartIconWrapper>
+              <Icon
+                name={HEART_ICON}
+                onClick={handleLike}
+                fill={isILiked ? true : false}
+                color={isILiked ? theme.symbol_color : ""}
+                size="2.3rem"
+              ></Icon>
+            </HeartIconWrapper>
+
             <LikeCountSpan>
               {isILiked
                 ? likeCount !== 1
@@ -372,8 +375,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             </LikeCountSpan>
           </HeartWrapper>
           <CommentChatWrapper>
-            <Icon name={CHAT_ICON} size="2rem" onClick={toggleShowComments} />
-            <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
+            <IconWrapper>
+              <Icon name={CHAT_ICON} size="2rem" onClick={toggleShowComments} />
+            </IconWrapper>
+            <IconWrapper>
+              <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
+            </IconWrapper>
           </CommentChatWrapper>
         </IconsWrapper>
         <ContentWrapper>

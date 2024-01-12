@@ -109,17 +109,32 @@ export const IconsWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 2.8rem;
-  & > * {
-    cursor: pointer;
-  }
 `;
 
 export const HeartWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: 0.8rem;
+`;
+
+export const heartbeat = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+export const HeartIconWrapper = styled.div`
   & :first-child {
     margin-top: 0.2rem;
+  }
+  &:hover {
+    cursor: pointer;
+    animation: ${heartbeat} 0.7s ease-in-out infinite;
   }
 `;
 
@@ -133,10 +148,10 @@ export const CommentChatWrapper = styled.div`
   display: flex;
   flex-direction: row;
   // TODO : 리팩토링 - 공통으로 빼기
-  margin-right: 0.8rem;
+  margin-right: 0.5rem;
   & :first-child {
-    margin-top: 0.3rem;
-    margin-right: 0.3rem;
+    margin-top: 0.25rem;
+    margin-right: 0.2rem;
   }
 `;
 
@@ -161,15 +176,22 @@ export const StyledLi = styled.li`
   box-sizing: border-box;
 `;
 
-export const IconWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-left: -0.2rem;
-  &:last-child {
-    font-size: 0.6rem;
+export const zoomin = keyframes`
+  0% {
+    transform: scale(1);
+  }
 
-    color: ${({ theme }) => theme.gray_500};
+  100% {
+    transform: scale(1.1);
+  }
+`;
+export const IconWrapper = styled.div`
+  & > * {
+    margin-bottom: 0.3rem;
+  }
+  &:hover {
+    cursor: pointer;
+    animation: ${zoomin} 0.4s ease-in-out forwards;
   }
 `;
 
