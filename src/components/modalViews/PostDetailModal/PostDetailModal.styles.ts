@@ -24,6 +24,7 @@ export const PostDetailWrapper = styled.div`
 
 // (상) UserInfo --------------------------------------------
 export const UserInfoWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -66,6 +67,14 @@ export const FollowButton = styled(Button)`
   margin-left: 1rem;
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.gray_500};
+`;
+
+export const CloseIconWrapper = styled.div`
+  position: absolute;
+  right: 1rem;
+  & :hover {
+    cursor: pointer;
+  }
 `;
 
 // (중) Image ----------------------------------------

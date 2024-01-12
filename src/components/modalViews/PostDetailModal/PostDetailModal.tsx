@@ -1,7 +1,12 @@
 import { _GET, _POST } from "@/api";
 import { Avatar, ToolTip } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
-import { CHAT_ICON, HEART_ICON, SEND_ICON } from "@/constants/icons";
+import {
+  CHAT_ICON,
+  CLOSE_ICON,
+  HEART_ICON,
+  SEND_ICON,
+} from "@/constants/icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -10,6 +15,7 @@ import { useTheme } from "styled-components";
 import {
   AvatarWrapper,
   CaptionWrapper,
+  CloseIconWrapper,
   CommentChatWrapper,
   ContentDetail,
   ContentWrapper,
@@ -250,6 +256,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     navigate(`/profile/${userId}`);
   };
 
+  const handleClose = () => {
+    closeModal();
+  };
   const handleFollow = () => {
     if (!isIFollowed) {
       myId !== null && followMutation.mutate({ userId });
@@ -336,6 +345,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         >
           {isIFollowed ? "팔로잉" : "팔로우"}
         </FollowButton>
+        <CloseIconWrapper>
+          <Icon name={CLOSE_ICON} weight={250} onClick={handleClose} />
+        </CloseIconWrapper>
       </UserInfoWrapper>
       <ImageWrapper>
         {heartAnimation.isShow && (
