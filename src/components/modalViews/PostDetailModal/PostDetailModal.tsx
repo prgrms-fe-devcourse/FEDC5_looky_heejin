@@ -87,7 +87,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
-  const [likes, setLikes] = useState<string[]>([]);
+  // const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
@@ -135,7 +135,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     setTitle(parsedJson.title);
     setContent(parsedJson.content);
     setTags(parsedJson.tags);
-    setLikes(data?.data.likes);
+    // setLikes(data?.data.likes);
     setLikeCount(data?.data.likes.length);
     setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
     data?.data.likes.map((likeData: any) => {
@@ -147,16 +147,8 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
   // --------------------------------------------------------------------------
 
-  console.log("좋아요 개수 :", likeCount);
-  console.log("내가 좋아요 했나? :", isILiked);
-  console.log("좋아요 데이터들: ", likes);
-  // console.log("나:", myId);
-  // console.log("좋아요ID:", myLikeId);
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
-    onSuccess() {
-      // console.log("알림 api 성공", data);
-    },
     onError(error) {
       console.error("알림 api 통신 에러", error);
     },
@@ -180,7 +172,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       }
     },
     onError(error) {
-      console.log("댓글 APi 통신 에러", error);
+      console.error("댓글 APi 통신 에러", error);
     },
   });
 
@@ -254,9 +246,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const deletePostMutation = useMutation({
     mutationFn: async (formData: IDeletePost) =>
       await _DELETE("/posts/delete", formData),
-    onSuccess() {
-      console.log("API : 포스트 삭제 성공");
-    },
     onError(error) {
       console.error("error: 포스트 삭제 실패", error);
     },
@@ -291,9 +280,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
   const handleContentDetail = () => {
     setIsContentDetail(true);
-    console.log(isContentDetail);
   };
-  console.log("내 아이디 있나?", myId);
 
   const handleLike = () => {
     if (!myId) {
@@ -338,13 +325,13 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
 
   const onInvalid = (error: any) => {
-    console.log(error);
+    console.error(error);
   };
 
   const tagClickHandler = (id: string, x?: number, y?: number) => {
     tags.map(val => {
       if (val.id === id) {
-        console.log(`나 존재함!`, val, x, y);
+        // console.log(`나 존재함!`, val, x, y);
       }
     });
   };
