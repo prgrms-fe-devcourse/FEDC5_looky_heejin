@@ -11,7 +11,6 @@ import { VIEW_HEIGHT } from "./SearchPage.const";
 // SearchPage
 export const SearchWrap = styled(Col)`
   position: relative;
-  height: 100vh;
   justify-content: space-between;
 `;
 
@@ -19,6 +18,7 @@ export const SearchViewWrap = styled.div`
   flex-grow: 1;
   padding-left: 1rem;
   padding-right: 1rem;
+  padding-bottom: ${NAV_HEIGHT}rem;
 `;
 
 export const SearchBarWrap = styled(Row)`
