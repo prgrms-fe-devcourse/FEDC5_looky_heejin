@@ -86,7 +86,7 @@ const ProfilePage = () => {
 
   const handleLogout = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const isLogout = window.confirm("로그아웃을 하시겠습니까?");
+    const isLogout = confirm("로그아웃을 하시겠습니까?");
     if (isLogout) {
       setAuth({ isLogIn: false, token: null });
       setMe({ id: "", profilePhoto: "", userName: "" });
