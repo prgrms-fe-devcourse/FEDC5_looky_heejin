@@ -1,33 +1,4 @@
-import { Col, Row } from "@/styles/GlobalStyle";
-import styled from "styled-components";
-
-const Wrapper = styled(Col)`
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Text = styled.div`
-  margin-bottom: 1rem;
-  &:first-child {
-    margin-bottom: 2rem;
-  }
-`;
-
-const TagWrap = styled(Row)`
-  justify-content: center;
-`;
-
-const Tag = styled.div`
-  padding: 0.2rem 1rem;
-  border-radius: 15rem;
-  background-color: ${props => props.theme.gray_200};
-  margin-right: 0.7rem;
-  &:hover {
-    background-color: ${props => props.theme.gray_300};
-    cursor: pointer;
-  }
-`;
+import { Tag, TagWrap, Text, Wrapper } from "../SearchPage.styles";
 
 interface SearchEmptyProps {
   children: React.ReactNode;

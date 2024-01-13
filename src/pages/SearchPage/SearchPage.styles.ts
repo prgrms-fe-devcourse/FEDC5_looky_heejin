@@ -6,6 +6,7 @@ import {
   NAV_HEIGHT,
   SEARCH_BAR,
 } from "@/constants/uiConstants";
+import { VIEW_HEIGHT } from "./SearchPage.const";
 
 // SearchPage
 export const SearchWrap = styled(Col)`
@@ -40,31 +41,7 @@ export const IconWrap = styled.div`
   }
 `;
 
-// SearchBar
-// export const StyledForm = styled.form`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-// `;
-
-// export const StyledInput = styled(Input)`
-//   position: relative;
-//   width: 100rem;
-//   height: 65%;
-//   font-size: 0.85rem;
-//   background-color: ${({ theme }) => theme.container_color};
-//   border-radius: 2rem;
-//   padding-left: 2.7rem;
-
-//   &:focus {
-//     outline: none;
-//   }
-//   &::placeholder {
-//     font-size: 0.85rem;
-//   }
-// `;
-
+//SearchBar;
 export const Form = styled.form`
   flex-grow: 1;
   align-self: center;
@@ -79,16 +56,14 @@ export const InputWrap = styled(Row)`
 
 export const Input = styled.input`
   width: 100%;
-  font-size: 0.85rem;
   color: ${props => props.theme.text_primary_color};
   background-color: ${props => props.theme.container_color};
   padding: 0.5rem;
   box-sizing: border-box;
   padding-left: 5px;
-  font-size: 1.15rem;
   border-width: ${BORDER_BASE_WIDTH}px;
   border-color: transparent;
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
 `;
 
 // SearchRecentView
@@ -106,14 +81,17 @@ export const LiContainer = styled.li`
 
 // SearchResultsView
 export const ViewWrap = styled(Col)`
-  flex-basis: 100vh;
+  flex-basis: calc(${VIEW_HEIGHT});
 `;
 
 // SearchUsersView
-export const ListWrap = styled(Col)``;
+export const ListWrap = styled.section`
+  flex-grow: 1;
+`;
 
 export const ListItem = styled(Row)`
   margin-top: 1rem;
+  padding: 1rem;
   align-items: center;
   cursor: pointer;
 
@@ -131,6 +109,7 @@ export const UserInfo = styled(Col)`
 
 // SearchPostView
 export const PostWrap = styled(Row)`
+  flex-grow: 1;
   justify-content: space-between;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -151,4 +130,34 @@ export const Post = styled.div<{ src: string }>`
 
 export const PostInfo = styled.div`
   height: 50px;
+`;
+
+// SearchEmptyView
+export const Wrapper = styled(Col)`
+  flex-grow: 1;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Text = styled.div`
+  margin-bottom: 1rem;
+  &:first-child {
+    margin-bottom: 2rem;
+  }
+`;
+
+export const TagWrap = styled(Row)`
+  justify-content: center;
+`;
+
+export const Tag = styled.div`
+  padding: 0.2rem 1rem;
+  border-radius: 15rem;
+  background-color: ${props => props.theme.gray_200};
+  margin-right: 0.7rem;
+  &:hover {
+    background-color: ${props => props.theme.gray_300};
+    cursor: pointer;
+  }
 `;
