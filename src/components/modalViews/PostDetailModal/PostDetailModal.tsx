@@ -153,7 +153,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   // console.log("좋아요ID:", myLikeId);
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
-    onSuccess(data) {
+    onSuccess() {
       // console.log("알림 api 성공", data);
     },
     onError(error) {
