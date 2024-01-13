@@ -79,11 +79,6 @@ const SearchResultsView = ({
     navigate(`/profile/${userId}`);
   };
 
-  const handlePostClick = (postId: string) => {
-    //Todo: detailPostCard 모달 연결
-    console.log(postId);
-  };
-
   if (isLoading) {
     return <div>Loading</div>;
   }
@@ -107,11 +102,7 @@ const SearchResultsView = ({
             onClick={handleUserClick}
           />
         ) : (
-          <SearchPostsView
-            postsData={postsData}
-            onTagClick={onTagClick}
-            onClick={handlePostClick}
-          />
+          <SearchPostsView postsData={postsData} onTagClick={onTagClick} />
         )}
       </ViewWrap>
     </section>
