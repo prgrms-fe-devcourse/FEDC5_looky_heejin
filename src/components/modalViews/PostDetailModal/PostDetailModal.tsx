@@ -1,4 +1,4 @@
-import { _GET, _POST } from "@/api";
+import { _DELETE, _GET, _POST } from "@/api";
 import { Avatar, ToolTip } from "@/components/common";
 import Icon from "@/components/common/Icon/Icon";
 import {
@@ -48,6 +48,7 @@ import {
   INotification,
   IFollow,
   IUnfollow,
+  IDeletePost,
 } from "@/types";
 import { _CREATE_COMMENT, _DELETE_COMMENT } from "@/api/queries/comment";
 import { _NOTIFY } from "@/api/queries/notify";
@@ -249,6 +250,17 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     },
   });
 
+  const deletePostMutation = useMutation({
+    mutationFn: async (formData: IDeletePost) =>
+      await _DELETE("/posts/delete", formData),
+    onSuccess() {
+      console.log("API : 포스트 삭제 성공");
+    },
+    onError(error) {
+      console.error("error: 포스트 삭제 실패", error);
+    },
+  });
+
   useEffect(() => {
     getPostData();
   }, []);
@@ -256,6 +268,14 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const handleProfile = () => {
     closeModal();
     navigate(`/profile/${userId}`);
+  };
+
+  const handleDelete = () => {
+    if (confirm("포스트를 삭제할까요? 삭제 후에는 되돌릴 수 없습니다.")) {
+      deletePostMutation.mutate({ id: postId });
+      closeModal();
+      // TODO : 포스트 삭제 api통신 후 홈 화면이 리렌더링될 수 있도록 해야함
+    }
   };
 
   const handleClose = () => {
@@ -342,7 +362,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         </UserInfo>
         {userId === myId ? (
           <TrashIconWrapper>
-            <Icon name={TRASH_ICON} size="1.8rem" />
+            <Icon name={TRASH_ICON} size="1.8rem" onClick={handleDelete} />
           </TrashIconWrapper>
         ) : (
           <FollowButton
