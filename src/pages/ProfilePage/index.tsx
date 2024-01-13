@@ -12,17 +12,21 @@ import { useProfile } from "@/hooks/useProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
+import { useNotification } from "@/hooks/useNotification";
 
 const ProfilePage = () => {
-  const { setProfileName, setProfileImage, setProfileCover } = useProfile();
+  const { setProfileName, setProfileImage, setProfileCover, profileInit } =
+    useProfile();
+  const [, setToken] = useLocalStorage("token");
+  const [, setKeywords] = useLocalStorage("keywords");
+  const { setNotification } = useNotification();
   const { setMe } = useMe();
-  const [_, setToken] = useLocalStorage("token");
+  const { setAuth } = useAuth();
+  const { openModal, setModalView } = useUI();
 
   const [userData, setUserData] = useState<IUser>();
 
-  const { setAuth } = useAuth();
   const { id: paramsId } = useParams();
-  const { openModal, setModalView } = useUI();
   const navigate = useNavigate();
 
   const {
@@ -82,11 +86,21 @@ const ProfilePage = () => {
 
   const handleLogout = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setAuth({ isLogIn: false, token: null });
-    setMe({ id: "", profilePhoto: "", userName: "" });
-    setToken(null);
-    alert(`로그아웃!!`);
-    navigate(`/login`);
+    const isLogout = window.confirm("로그아웃을 하시겠습니까?");
+    if (isLogout) {
+      setAuth({ isLogIn: false, token: null });
+      setMe({ id: "", profilePhoto: "", userName: "" });
+      setToken(null);
+      setKeywords(null);
+      setNotification({
+        common: [],
+        message: [],
+      });
+      profileInit();
+
+      alert("정상적으로 로그아웃되었습니다");
+      navigate(`/login`);
+    }
   };
 
   useEffect(() => {
