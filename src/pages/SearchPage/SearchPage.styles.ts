@@ -26,12 +26,20 @@ export const SearchBarWrap = styled(Row)`
   top: -${NAV_HEIGHT}rem;
   width: 100%;
   z-index: ${SEARCH_BAR};
+  background-color: ${({ theme }) => theme.background_color};
+  border-bottom: ${({ theme }) => `1px solid ${theme.transparent_50}`};
 `;
 
-export const IconWrap = styled.div`
+export const SearchIconWrap = styled.div`
+  position: absolute;
+  top: 0.9rem;
+  right: 1.1rem;
+`;
+
+export const BackIconWrap = styled.div`
   display: inline-flex;
-  width: 50px;
-  height: 50px;
+  width: 59px;
+  height: ${NAV_HEIGHT}rem;
   padding-left: 5px;
   justify-content: center;
   align-items: center;
@@ -49,21 +57,23 @@ export const Form = styled.form`
 `;
 
 export const InputWrap = styled(Row)`
+  background-color: peru;
   margin: 1rem;
   height: ${`${NAV_HEIGHT}rem`};
   flex-grow: 0;
 `;
 
 export const Input = styled.input`
+  position: relative;
   width: 100%;
   color: ${props => props.theme.text_primary_color};
   background-color: ${props => props.theme.container_color};
   padding: 0.5rem;
   box-sizing: border-box;
-  padding-left: 5px;
+  padding-left: 1rem;
   border-width: ${BORDER_BASE_WIDTH}px;
   border-color: transparent;
-  border-radius: 0.5rem;
+  border-radius: ${NAV_HEIGHT / 2}rem;
 `;
 
 // SearchRecentView
