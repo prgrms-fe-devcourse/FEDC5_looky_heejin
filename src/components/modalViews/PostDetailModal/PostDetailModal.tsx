@@ -318,6 +318,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   };
 
   const onValid: SubmitHandler<Comment> = ({ comment }) => {
+    if (comment.trim().length === 0) return;
     const newComment: ICreateComment = { comment, postId };
     createCommentMutation.mutate(newComment);
     setValue("comment", "");

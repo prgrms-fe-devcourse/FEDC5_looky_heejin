@@ -206,6 +206,10 @@ export const CommentChatWrapper = styled.div`
 `;
 
 // 댓글 --------------------------------------------
+export const CommentAvatarBox = styled.div`
+  position: absolute;
+  top: 0;
+`;
 export const CommentWrapper = styled.div`
   font-size: 0.9rem;
   padding: 0.5rem;
@@ -213,17 +217,38 @@ export const CommentWrapper = styled.div`
   box-sizing: border-box;
 `;
 
+export const CommentAvatarWrapper = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const UserNameInComment = styled.span`
   font-weight: bold;
+
   cursor: pointer;
 `;
+
+export const CommentDate = styled.span`
+  color: ${({ theme }) => theme.gray_300};
+  margin-left: 0.4rem;
+`;
+
+export const DeleteCommentIconWrapper = styled.div``;
 
 export const StyledLi = styled.li`
   display: flex;
   align-items: center;
   margin: 3px 0;
   padding: 0 3px;
+  margin-bottom: 1rem;
   box-sizing: border-box;
+  /* border: 1px solid white; */
+  position: relative;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const IconWrapper = styled.div`
@@ -236,9 +261,24 @@ export const IconWrapper = styled.div`
   }
 `;
 
+export const CommentContentBox = styled.div`
+  padding-left: 40px;
+  margin-top: 4px;
+`;
+
+export const CommentUserInformationWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.2rem;
+`;
+
 export const CommentContent = styled.span`
   margin: 0 8px;
   line-height: 1.2rem;
+  overflow-wrap: break-word;
+  word-break: break-all;
 `;
 
 export const MoreComments = styled.span`
@@ -261,6 +301,7 @@ export const StyledInput = styled(Input)`
   height: 2rem;
   font-size: 0.85rem;
   margin: auto auto;
+  padding-right: 3rem;
   border-radius: 1rem;
 `;
 
