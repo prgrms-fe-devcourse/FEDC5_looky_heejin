@@ -101,7 +101,7 @@ export const ListItem = styled(Row)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background-color: ${props => props.theme.gray_200};
+    background-color: ${props => props.theme.transparent_30};
   }
 `;
 
@@ -141,10 +141,17 @@ export const TagWrap = styled(Row)`
 export const Tag = styled.div`
   padding: 0.2rem 1rem;
   border-radius: 15rem;
-  background-color: ${props => props.theme.gray_200};
+  background-color: ${props =>
+    props.theme.theme_mode === "light"
+      ? props.theme.transparent_30
+      : props.theme.transparent_50};
+  color: ${props => props.theme.text_primary_color};
   margin-right: 0.7rem;
   &:hover {
-    background-color: ${props => props.theme.gray_300};
+    background-color: ${props =>
+      props.theme.theme_mode === "light"
+        ? props.theme.transparent_50
+        : props.theme.transparent_30};
     cursor: pointer;
   }
 `;
