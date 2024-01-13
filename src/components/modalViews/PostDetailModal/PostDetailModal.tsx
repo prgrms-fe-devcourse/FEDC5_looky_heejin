@@ -9,7 +9,7 @@ import {
   TRASH_ICON,
 } from "@/constants/icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
@@ -77,6 +77,7 @@ interface Comment {
 
 const PostDetail = ({ props }: IPostDetailModalProps) => {
   const { postId } = props as ModalProps;
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const { closeModal } = useUI();
   const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
     mode: "onSubmit",
@@ -164,7 +165,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       await _CREATE_COMMENT(formData),
     onSuccess(data) {
       if (myId) {
-        const temp = [...comments, data];
+        const newComments = [...comments, data];
         const newNotification: INotification = {
           notificationType: "COMMENT",
           notificationTypeId: data._id,
@@ -173,7 +174,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         };
 
         notificationMutation.mutate(newNotification);
-        setComments(temp);
+        setComments(newComments);
       }
     },
     onError(error) {
@@ -326,6 +327,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     if (comment.trim().length === 0) return;
     const newComment: ICreateComment = { comment, postId };
     createCommentMutation.mutate(newComment);
+    setTimeout(() => {
+      if (modalRef.current) {
+        modalRef.current.scrollTop = modalRef.current.scrollHeight;
+      }
+    }, 200);
     setValue("comment", "");
     setIsShowComments(true);
   };
@@ -349,7 +355,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       </SpinnerWrapper>
     );
   return (
-    <PostDetailWrapper>
+    <PostDetailWrapper ref={modalRef}>
       <UserInfoWrapper>
         <UserInfo>
           <AvatarWrapper onClick={handleProfile}>
