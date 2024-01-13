@@ -33,6 +33,9 @@ export const SearchIconWrap = styled.div`
   position: absolute;
   top: 0.9rem;
   right: 1.1rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const BackIconWrap = styled.div`
