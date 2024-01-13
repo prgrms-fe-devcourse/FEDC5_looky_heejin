@@ -72,7 +72,7 @@ export const UserInfo = styled.div`
 
 export const AvatarWrapper = styled.div`
   margin: auto auto;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
   & :hover {
     cursor: pointer;
   }
@@ -80,7 +80,7 @@ export const AvatarWrapper = styled.div`
 
 export const UserNameWrapper = styled.div`
   height: 3.75rem;
-  padding-left: 1rem;
+  padding-left: 0.9rem;
   & :hover {
     cursor: pointer;
   }

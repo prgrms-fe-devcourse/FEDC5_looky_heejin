@@ -83,6 +83,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -130,6 +131,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     }
     setUserId(data?.data.author._id);
     setUserName(data?.data.author.fullName);
+    if (data?.data.author.hasOwnProperty("image")) {
+      setProfileImage(data?.data.author.image);
+    }
     setImageUrl(data?.data.image);
     const parsedJson = JSON.parse(data?.data.title);
     setTitle(parsedJson.title);
@@ -348,7 +352,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
       <UserInfoWrapper>
         <UserInfo>
           <AvatarWrapper onClick={handleProfile}>
-            <Avatar size="S" />
+            {profileImage ? (
+              <Avatar src={profileImage} size="S" />
+            ) : (
+              <Avatar size="S"></Avatar>
+            )}
           </AvatarWrapper>
           <UserNameWrapper onClick={handleProfile}>
             <UserNameSpan>{userName}</UserNameSpan>
