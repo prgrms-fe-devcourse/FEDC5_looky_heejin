@@ -21,6 +21,7 @@ import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar/BottomNavBar";
 import AuthRoute from "./AuthRoute";
 import Transition from "./Transition";
+import Toast from "@/utils/toast";
 
 const RouterComponent = () => {
   return (
@@ -66,6 +67,7 @@ const RouterComponent = () => {
         </Routes>
       </Layout>
       <BottomNavBar />
+      <Toast />
     </>
   );
 };

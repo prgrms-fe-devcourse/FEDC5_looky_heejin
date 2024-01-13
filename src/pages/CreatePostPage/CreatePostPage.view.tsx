@@ -16,6 +16,8 @@ import {
   TextArea,
   UploadSection,
 } from "./CreatePostPage.styles";
+import { notify } from "@/utils/toast";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface ICreatePostFormProps {
   title: string;
@@ -31,6 +33,7 @@ interface IPostBodyData {
 }
 
 const CreatePostPageView = () => {
+  const [_, setChannel] = useLocalStorage("ViewChannelObj");
   const { openModal, setModalView } = useUI();
   const [channelName, setChannelName] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
@@ -52,10 +55,21 @@ const CreatePostPageView = () => {
   const mutation = useMutation({
     mutationFn: async (formData: IPostBodyData) =>
       await _POST("/posts/create", formData),
-    onSuccess: () => {
+    onSuccess: data => {
+      setChannel(JSON.stringify(data?.data.channel));
+      notify({
+        type: "success",
+        text: "포스트를 성공적으로 생성했어요!",
+      });
       navigate(-1);
     },
-    onError: data => console.log("Error", data),
+    onError: data => {
+      notify({
+        type: "error",
+        text: "포스트 생성에 실패했어요!",
+      });
+      console.log("Error", data);
+    },
   });
 
   const {
