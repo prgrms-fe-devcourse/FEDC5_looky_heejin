@@ -208,11 +208,29 @@ export const CommentChatWrapper = styled.div`
 `;
 
 export const TitleSpan = styled.span`
+  position: relative;
   display: inline-block;
   font-size: 1.05rem;
   font-weight: 600;
   line-height: 1.4rem;
   margin-bottom: 0.5rem;
+  padding: 0 0.15rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 1.3rem;
+    border-radius: 5px;
+    bottom: 0;
+    left: 0;
+    opacity: 0.15;
+    background-color: ${({ theme }) => theme.symbol_color};
+    transition: width 1s;
+  }
+  &:hover::after {
+    width: 100%;
+  }
 `;
 
 // 댓글 --------------------------------------------
@@ -293,10 +311,12 @@ export const CommentContent = styled.span`
 
 export const MoreComments = styled.span`
   cursor: pointer;
+  margin-left: 0.6rem;
   color: ${({ theme }) => theme.gray_500};
 `;
 
 export const NoComments = styled.span`
+  margin-left: 0.6rem;
   color: ${({ theme }) => theme.gray_500};
 `;
 
