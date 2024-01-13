@@ -22,7 +22,6 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
   });
   const [searchParams] = useSearchParams();
 
-  // 최근 검색어 클릭 시 쿼리스트링 변경에 따라 Input setValue
   useEffect(() => {
     const keyword = searchParams.get("keyword") || "";
     setValue("searchQuery", keyword);

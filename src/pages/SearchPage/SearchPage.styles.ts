@@ -8,7 +8,6 @@ import {
 } from "@/constants/uiConstants";
 import { VIEW_HEIGHT } from "./SearchPage.const";
 
-// SearchPage
 export const SearchWrap = styled(Col)`
   position: relative;
   justify-content: space-between;
@@ -49,7 +48,6 @@ export const BackIconWrap = styled.div`
   }
 `;
 
-//SearchBar;
 export const Form = styled.form`
   flex-grow: 1;
   align-self: center;
@@ -76,7 +74,6 @@ export const Input = styled.input`
   border-radius: ${NAV_HEIGHT / 2}rem;
 `;
 
-// SearchRecentView
 export const LiContainer = styled.li`
   width: 300px;
   color: ${props => props.theme.gray_500};
@@ -89,12 +86,10 @@ export const LiContainer = styled.li`
   }
 `;
 
-// SearchResultsView
 export const ViewWrap = styled(Col)`
   flex-basis: calc(${VIEW_HEIGHT});
 `;
 
-// SearchUsersView
 export const ListWrap = styled.div`
   flex-grow: 1;
   padding-top: 1rem;
@@ -117,7 +112,6 @@ export const UserInfo = styled(Col)`
   justify-content: center;
 `;
 
-// SearchPostView
 export const PostWrap = styled(Row)`
   flex-grow: 1;
   padding-top: 1rem;
@@ -126,7 +120,6 @@ export const PostWrap = styled(Row)`
   align-content: flex-start;
 `;
 
-// SearchEmptyView
 export const Wrapper = styled(Col)`
   flex-grow: 1;
   height: 100%;

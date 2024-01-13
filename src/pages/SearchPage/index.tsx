@@ -42,7 +42,6 @@ const SearchPage = () => {
     [addRecentHistory]
   );
 
-  // 최근 검색어 클릭하면 Search
   const handleKeywordClick = useCallback((clickedKeyword: string) => {
     handleSearch({ keyword: clickedKeyword });
   }, []);
