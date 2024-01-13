@@ -3,7 +3,7 @@ import { useCallback, useEffect } from "react";
 import Icon from "@/components/common/Icon/Icon";
 import { Form, Input, IconWrap } from "./SearchPage.styles";
 import { useSearchParams } from "react-router-dom";
-import SearchBarConst from "./SearchPage.const";
+import { SEARCH_VALIDATION_OPTION } from "./SearchPage.const";
 
 interface ISearchBar {
   onSearch: (searchQuery: string) => void;
@@ -59,7 +59,7 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
           type="text"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요. ex) 캐주얼"
-          {...register("searchQuery", SearchBarConst.SEARCH_VALIDATION_OPTION)}
+          {...register("searchQuery", SEARCH_VALIDATION_OPTION)}
         />
       </Form>
     </>
