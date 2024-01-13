@@ -5,7 +5,7 @@ import {
   ListWrap,
   UserInfo,
 } from "@/pages/SearchPage/SearchPage.styles";
-import SearchEmptyView from "./SearchEmptyView";
+import { SearchEmptyView } from ".";
 
 interface IUsersProps {
   usersData: IUser[];
