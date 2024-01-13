@@ -87,15 +87,14 @@ export const ViewWrap = styled(Col)`
 // SearchUsersView
 export const ListWrap = styled.div`
   flex-grow: 1;
+  padding-top: 1rem;
 `;
 
 export const ListItem = styled(Row)`
-  margin-top: 1rem;
   padding: 0.7rem;
   border-radius: 5px;
   align-items: center;
   cursor: pointer;
-
   &:hover {
     background-color: ${props => props.theme.gray_200};
   }
@@ -111,26 +110,10 @@ export const UserInfo = styled(Col)`
 // SearchPostView
 export const PostWrap = styled(Row)`
   flex-grow: 1;
+  padding-top: 1rem;
   justify-content: space-between;
   flex-wrap: wrap;
   align-content: flex-start;
-`;
-
-export const Post = styled.div<{ src: string }>`
-  width: calc(50% - 0.2rem);
-  height: 265px;
-  margin-top: 0.5rem;
-  border-radius: 5px;
-  background-image: ${props => `url(${props.src})`};
-  background-size: cover;
-  cursor: pointer;
-  &:hover {
-    filter: brightness(85%);
-  }
-`;
-
-export const PostInfo = styled.div`
-  height: 50px;
 `;
 
 // SearchEmptyView
