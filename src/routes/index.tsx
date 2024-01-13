@@ -21,6 +21,7 @@ import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar/BottomNavBar";
 import AuthRoute from "./AuthRoute";
 import Transition from "./Transition";
+import Toast from "@/utils/toast";
 
 const RouterComponent = () => {
   return (
@@ -36,7 +37,6 @@ const RouterComponent = () => {
             <Route path="/channels" element={<ChannelsPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/search" element={<SearchPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
             <Route
               path="/chats"
               element={<AuthRoute path="/chats" element={<ChatsPage />} />}
@@ -67,6 +67,7 @@ const RouterComponent = () => {
         </Routes>
       </Layout>
       <BottomNavBar />
+      <Toast />
     </>
   );
 };
