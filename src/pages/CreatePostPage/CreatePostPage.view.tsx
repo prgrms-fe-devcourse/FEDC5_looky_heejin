@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 
-import { useNewPost } from "@/hooks/useNewPost";
-
+import { _GET, _POST, rootAPI } from "@/api";
+import { ITag } from "@/types/post";
 import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
 import { Button, Input, Upload } from "@/components/common";
@@ -14,9 +16,6 @@ import {
   TextArea,
   UploadSection,
 } from "./CreatePostPage.styles";
-import { useMutation } from "@tanstack/react-query";
-import { _POST, rootAPI } from "@/api";
-import { useNavigate } from "react-router-dom";
 
 interface ICreatePostFormProps {
   title: string;
@@ -33,7 +32,8 @@ interface IPostBodyData {
 
 const CreatePostPageView = () => {
   const { openModal, setModalView } = useUI();
-  const { tags, channelId, channelName, init: initNewPostData } = useNewPost();
+  const [channelName, setChannelName] = useState("");
+  const [tags, setTags] = useState<ITag[]>([]);
 
   const navigate = useNavigate();
 
@@ -43,15 +43,11 @@ const CreatePostPageView = () => {
     rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
 
     return () => {
-      initNewPostData();
+      // initNewPostData();
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
     };
   }, []);
-
-  useEffect(() => {
-    setValue("channelId", channelId);
-  }, [channelId]);
 
   const mutation = useMutation({
     mutationFn: async (formData: IPostBodyData) =>
@@ -106,6 +102,8 @@ const CreatePostPageView = () => {
       openModal({
         x: (nativeEvent.offsetX / objectWidth) * 100,
         y: (nativeEvent.offsetY / objectHeight) * 100,
+        tags,
+        setTags,
       });
     }
   };
@@ -117,12 +115,17 @@ const CreatePostPageView = () => {
       id: id,
       x,
       y,
+      tags,
+      setTags,
     });
   };
 
   const channelSelectButtonClickHandler = () => {
     setModalView("CHANNEL_SELECT_VIEW");
-    openModal();
+    openModal({
+      setChannelId: (data: string) => setValue("channelId", data),
+      setChannelName: setChannelName,
+    });
   };
 
   return (
@@ -184,7 +187,11 @@ const CreatePostPageView = () => {
         variant="symbol"
         className="absolute bottom-0"
         onClick={handleSubmit(onValid, onInvalid)}
-        disabled={!(watch("channelId") && watch("file") && watch("title"))}
+        disabled={
+          !(watch("channelId") && watch("file") && watch("title")) ||
+          mutation.isPending
+        }
+        loading={mutation.isPending}
       >
         <span className="font-semibold">포스터 작성</span>
       </Button>

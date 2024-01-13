@@ -36,7 +36,6 @@ const RouterComponent = () => {
             <Route path="/channels" element={<ChannelsPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/search" element={<SearchPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
             <Route
               path="/chats"
               element={<AuthRoute path="/chats" element={<ChatsPage />} />}
