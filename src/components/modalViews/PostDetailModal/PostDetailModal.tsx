@@ -36,6 +36,7 @@ import {
   StyledInput,
   StyledSpan,
   Tag,
+  TitleSpan,
   TrashIconWrapper,
   UserInfo,
   UserInfoWrapper,
@@ -336,7 +337,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const tagClickHandler = (id: string, x?: number, y?: number) => {
     tags.map(val => {
       if (val.id === id) {
-        // console.log(`나 존재함!`, val, x, y);
+        console.log(`나 존재함!`, val, x, y);
       }
     });
   };
@@ -447,19 +448,23 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         <ContentWrapper>
           {isContentDetail ? (
             <StyledSpan>
-              <UserNameSpan>{title}&nbsp;&nbsp;</UserNameSpan>
+              <TitleSpan>{title}</TitleSpan>
+              <br />
               {content}
             </StyledSpan>
           ) : (
             <StyledSpan>
-              <UserNameSpan>{title}&nbsp;&nbsp;</UserNameSpan>
+              <TitleSpan>{title}</TitleSpan>
               <br />
-              {content.length > 40 ? (
-                <ContentDetail onClick={handleContentDetail}>
-                  ...더 보기
-                </ContentDetail>
+              {content.length > 50 ? (
+                <>
+                  <span>{content.slice(0, 50)}</span>
+                  <ContentDetail onClick={handleContentDetail}>
+                    ...더 보기
+                  </ContentDetail>
+                </>
               ) : (
-                <span>{content.slice(0, 40)}</span>
+                <span>{content.slice(0, 50)}</span>
               )}
             </StyledSpan>
           )}

@@ -88,7 +88,7 @@ export const UserNameWrapper = styled.div`
 
 export const UserNameSpan = styled.span`
   margin: auto auto;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 export const FollowButton = styled(Button)`
@@ -159,8 +159,8 @@ export const StyledSpan = styled.span`
   word-wrap: break-word;
   -webkit-line-clamp: 5;
   font-size: 0.9rem;
-  line-height: 1.2rem;
-  padding: 0.5rem;
+  line-height: 1.4rem;
+  padding: 0 1rem 0.5rem 1rem;
 `;
 
 export const IconsWrapper = styled.div`
@@ -170,12 +170,13 @@ export const IconsWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 2.8rem;
+  /* border: 1px solid white; */
 `;
 
 export const HeartWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 0.8rem;
+  margin-left: 0.6rem;
 `;
 
 export const HeartIconWrapper = styled.div`
@@ -190,6 +191,7 @@ export const HeartIconWrapper = styled.div`
 
 export const LikeCountSpan = styled.span`
   font-size: 0.9rem;
+  font-weight: 500;
   margin: auto auto;
   padding-left: 0.3rem;
 `;
@@ -203,6 +205,14 @@ export const CommentChatWrapper = styled.div`
     margin-top: 0.25rem;
     margin-right: 0.2rem;
   }
+`;
+
+export const TitleSpan = styled.span`
+  display: inline-block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4rem;
+  margin-bottom: 0.5rem;
 `;
 
 // 댓글 --------------------------------------------
