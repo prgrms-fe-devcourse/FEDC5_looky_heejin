@@ -220,7 +220,7 @@ export const TitleSpan = styled.span`
     content: "";
     position: absolute;
     width: 0;
-    height: 1.3rem;
+    height: 1.4rem;
     border-radius: 5px;
     bottom: 0;
     left: 0;
