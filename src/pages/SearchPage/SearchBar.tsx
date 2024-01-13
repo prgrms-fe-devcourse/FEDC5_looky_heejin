@@ -9,14 +9,14 @@ import { BackButton } from "@/components/common/Navigator/TopNavBar";
 
 interface ISearchBar {
   onSearch: (searchQuery: string) => void;
-  onClick: () => void;
+  onClickBack: () => void;
 }
 
 export interface IInput {
   searchQuery: string;
 }
 
-const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
+const SearchBar = ({ onSearch, onClickBack }: ISearchBar) => {
   const { register, handleSubmit, setValue } = useForm<IInput>({
     mode: "onSubmit",
   });
@@ -50,7 +50,7 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
   return (
     <>
       <BackIconWrap>
-        <BackButton onClick={onClick} />
+        <BackButton onClick={onClickBack} />
       </BackIconWrap>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
         <Input
@@ -61,7 +61,12 @@ const SearchBar = ({ onSearch, onClick }: ISearchBar) => {
           {...register("searchQuery", SEARCH_VALIDATION_OPTION)}
         />
         <SearchIconWrap>
-          <Icon name={SEARCH_ICON} size="1.3rem" weight={300}></Icon>
+          <Icon
+            name={SEARCH_ICON}
+            size="1.3rem"
+            weight={300}
+            onClick={handleSubmit(onValid, onInvalid)}
+          ></Icon>
         </SearchIconWrap>
       </Form>
     </>

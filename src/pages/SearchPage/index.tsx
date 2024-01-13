@@ -71,7 +71,7 @@ const SearchPage = () => {
     <SearchWrap>
       <SearchBarWrap>
         <SearchBar
-          onClick={handleGoBack}
+          onClickBack={handleGoBack}
           onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
         />
       </SearchBarWrap>
