@@ -240,7 +240,7 @@ export const CommentAvatarBox = styled.div`
 `;
 export const CommentWrapper = styled.div`
   font-size: 0.9rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.2rem 0.5rem;
   border-top: 1px solid ${({ theme }) => theme.container_color};
   box-sizing: border-box;
 `;
@@ -327,7 +327,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const StyledInput = styled(Input)`
-  width: 97%;
+  width: 98%;
   height: 2rem;
   font-size: 0.85rem;
   margin: auto auto;
