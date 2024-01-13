@@ -85,13 +85,14 @@ export const ViewWrap = styled(Col)`
 `;
 
 // SearchUsersView
-export const ListWrap = styled.section`
+export const ListWrap = styled.div`
   flex-grow: 1;
 `;
 
 export const ListItem = styled(Row)`
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 0.7rem;
+  border-radius: 5px;
   align-items: center;
   cursor: pointer;
 
