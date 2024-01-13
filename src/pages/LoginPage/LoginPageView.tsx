@@ -14,13 +14,14 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { sha256Encrypt } from "@/utils/crypto";
+import { aesDecrypt, sha256Encrypt } from "@/utils/crypto";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import LoginPageConst from "./LoginPage.const";
 import { useMe } from "@/hooks/useMe";
 import { notify } from "@/utils/toast";
+import { aesEncrypt } from "@/utils/crypto";
 
 const LoginPageView = () => {
   const { VITE_ADMIN_EMAIL, VITE_ADMIN_PASSWORD } = import.meta.env;
@@ -56,6 +57,11 @@ const LoginPageView = () => {
         userName: user.fullName,
         profilePhoto: user.image,
       });
+      console.log(token);
+      const aes = aesEncrypt(token);
+      console.log(aes);
+      const dec = aesDecrypt(aes);
+      console.log(dec);
       storeToken(token);
       navigate("/home");
     },

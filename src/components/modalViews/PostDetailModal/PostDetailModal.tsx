@@ -313,16 +313,20 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           </HeartInImage>
         )}
         {tags.map(({ x, y, id, brand, product, link }) => (
-          <ToolTip
-            $direction="top"
-            $options="hover"
-            $tooltip={brand + " " + product + " " + link}
-            key={id}
-            $x={x}
-            $y={y}
+          <Tag
+            key={String(x) + String(y)}
+            x={x}
+            y={y}
+            onClick={() => tagClickHandler(id, x, y)}
           >
-            <Tag x={x} y={y} onClick={() => tagClickHandler(id, x, y)} />
-          </ToolTip>
+            <ToolTip
+              $direction="top"
+              $options="hover"
+              $tooltip={brand + " " + product + " " + link}
+            >
+              <Tag x={50} y={50} />
+            </ToolTip>
+          </Tag>
         ))}
         <StyledImg src={imageUrl ? imageUrl : "/image_alt.png"} />
       </ImageWrapper>

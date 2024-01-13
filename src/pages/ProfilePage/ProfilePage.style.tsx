@@ -87,8 +87,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0px -5.5px;
-  width: calc(100% + 11px);
+  margin-top: 10px;
+  width: 100%;
   padding-bottom: 3rem;
 `;
 

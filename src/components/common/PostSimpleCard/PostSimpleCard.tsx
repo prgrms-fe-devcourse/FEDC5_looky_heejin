@@ -63,7 +63,12 @@ const IsJsonString = (str: string) => {
 };
 
 // todo, 타입 충돌로 인해서 추후 타입 명시
-const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
+const PostSimpleCard = ({
+  postData,
+}: {
+  key: number | string;
+  postData: any;
+}) => {
   const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
@@ -266,7 +271,11 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
                       : theme?.symbol_color,
                     fontVariationSettings: "fill",
                   }}
-                  className="material-symbols-rounded"
+                  className={
+                    favoriteClicked
+                      ? "material-icons"
+                      : "material-symbols-rounded"
+                  }
                 >
                   favorite
                 </span>

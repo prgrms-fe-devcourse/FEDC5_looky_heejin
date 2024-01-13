@@ -33,6 +33,11 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
   /* 추후 삭제 예정 */
   border: 1px solid ${props => props.theme.card_container_color};
   border-radius: 0.375rem;
+
+  &:hover {
+    transform: scale(1.02);
+    border-color: ${props => props.theme.symbol_color};
+  }
 `;
 
 export const CardInfoContainer = styled.div`
@@ -57,13 +62,13 @@ export const CardImage = styled.img`
 
 export const heartbeat = keyframes`
   0% {
-    transform: scale(1);
+    transform: scale(0.999);
   }
   50% {
-    transform: scale(1.15);
+    transform: scale(1.13);
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.999);
   }
 `;
 
@@ -98,11 +103,8 @@ export const IconContainer = styled.div<{
           color: ${props => props.theme.symbol_color};
           scale: 1.2;
           top: 10px;
-          /* bottom: calc(100%); */
           right: 10px;
           border-radius: 50%;
-          background-color: ${props => props.theme.background_color};
-          /* background-color: rgba(0, 0, 0, 0.3); */
         `;
     }
   }};

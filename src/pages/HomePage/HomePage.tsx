@@ -14,9 +14,10 @@ const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 10px;
-  margin-left: -5.5px;
+  width: 100%;
+  /* margin-left: -5.5px;
   margin-right: -5.5px;
-  width: calc(100% + 11px);
+  width: calc(100% + 11px); */
   padding-bottom: 3rem;
 `;
 
