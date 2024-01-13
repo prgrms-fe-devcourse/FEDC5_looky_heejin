@@ -1,5 +1,5 @@
 import { Button, Input } from "@/components/common";
-import { APP_MAX_WIDTH, MODAL_LAYOUT } from "@/constants/uiConstants";
+import { APP_MAX_WIDTH, MODAL_LAYOUT, SPINNER } from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 
@@ -23,6 +23,19 @@ export const heartbeat = keyframes`
   100% {
     transform: scale(1);
   }
+`;
+
+export const spin = keyframes`
+  0% {transform: rotate(0deg)}
+  100% {transform: rotate(360deg)}
+`;
+
+// 스피너 ---------------------------------------
+export const SpinnerWrapper = styled.div`
+  width: 12rem;
+  height: 12rem;
+  animation: ${spin} 8s linear infinite;
+  z-index: ${SPINNER};
 `;
 
 // 전체 -----------------------------------------

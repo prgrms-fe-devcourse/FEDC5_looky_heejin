@@ -31,6 +31,7 @@ import {
   LikeCountSpan,
   PostDetailWrapper,
   ReplyButton,
+  SpinnerWrapper,
   StyledImg,
   StyledInput,
   StyledSpan,
@@ -348,7 +349,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     });
   };
 
-  if (isLoading) return <div>루키 svg</div>;
+  if (isLoading)
+    return (
+      <SpinnerWrapper>
+        <img src="/looky_spinner.png" alt="looky_spinner" />
+      </SpinnerWrapper>
+    );
   return (
     <PostDetailWrapper>
       <UserInfoWrapper>
