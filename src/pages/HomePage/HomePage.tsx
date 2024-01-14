@@ -67,7 +67,6 @@ const Home = () => {
     return (
       <>
         <LoadingContainer>멋진 사진들을 가져오고 있어요!</LoadingContainer>
-        <div>Spinner</div>
       </>
     );
   } else if (!channel && !data.length) {
