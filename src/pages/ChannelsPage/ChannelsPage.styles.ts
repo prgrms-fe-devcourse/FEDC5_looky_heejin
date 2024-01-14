@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
+export const ContainDiv = styled.div`
+  padding-bottom: 3rem;
+  box-sizing: border-box;
+`;
+
 export const ChannelStyle = styled.div`
   box-sizing: border-box;
-  margin: 2rem 1rem;
-  padding: 1rem 0;
+  margin: 1rem 0;
   font-size: 2rem;
   font-style: italic;
   width: 100%;
@@ -12,7 +16,6 @@ export const ChannelStyle = styled.div`
   cursor: pointer;
 
   &:hover {
-    outline: none;
-    border: 1px solid ${props => props.theme.symbol_color};
+    transform: scale(1.05);
   }
 `;
