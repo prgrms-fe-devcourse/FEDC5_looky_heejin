@@ -32,6 +32,30 @@ const IconWrapper = styled.div`
   }
 `;
 
+const NotificationIconWrapper = styled(IconWrapper)`
+  & > :last-child {
+    cursor: pointer;
+  }
+  position: relative;
+`;
+
+const NotificationCounter = styled.div`
+  position: absolute;
+  left: 0.9rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: ${({ theme }) => theme.symbol_color};
+  border-radius: 50%;
+  border: ${({ theme }) => `1px solid ${theme.background_color}`};
+`;
+
+const NotificationCounterSpan = styled.span`
+  margin: auto auto;
+  font-size: 0.45rem;
+  font-weight: 500;
+  color: #ffffff;
+`;
+
 const ChatNotificationIconsBox = ({
   onClick,
 }: IChatNotificationIconsBoxProps) => {
@@ -57,9 +81,14 @@ const ChatNotificationIconsBox = ({
           <IconWrapper onClick={() => onClick(PathName.CHATS)}>
             <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
           </IconWrapper>
-          <IconWrapper onClick={() => onClick(PathName.NOTIFICATIONS)}>
+          <NotificationIconWrapper
+            onClick={() => onClick(PathName.NOTIFICATIONS)}
+          >
             <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
-          </IconWrapper>
+            <NotificationCounter>
+              <NotificationCounterSpan>20</NotificationCounterSpan>
+            </NotificationCounter>
+          </NotificationIconWrapper>
         </>
       ) : null}
     </IconsBox>
