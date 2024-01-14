@@ -9,6 +9,7 @@ import {
 import { PathName } from "@/constants/pathNameConstants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
+import { useNotification } from "@/hooks/useNotification";
 
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;
@@ -33,10 +34,22 @@ const IconWrapper = styled.div`
 `;
 
 const NotificationIconWrapper = styled(IconWrapper)`
-  & > :last-child {
+  margin: auto 0.25rem;
+  & > * {
     cursor: pointer;
   }
   position: relative;
+`;
+
+const ChatNotificationCounter = styled.div`
+  position: absolute;
+  left: 0.9rem;
+  top: 0.1rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: ${({ theme }) => theme.symbol_color};
+  border-radius: 50%;
+  border: ${({ theme }) => `1px solid ${theme.background_color}`};
 `;
 
 const NotificationCounter = styled.div`
@@ -60,6 +73,7 @@ const ChatNotificationIconsBox = ({
   onClick,
 }: IChatNotificationIconsBoxProps) => {
   const { id } = useMe();
+  const { commonUnseenCount, common, messageUnseenCount } = useNotification();
   const theme = useTheme();
   const [_, setLocalTheme] = useLocalStorage("theme");
 
@@ -67,6 +81,7 @@ const ChatNotificationIconsBox = ({
     setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
   };
 
+  console.log(common, commonUnseenCount, messageUnseenCount);
   return (
     <IconsBox>
       <IconWrapper onClick={handleTheme}>
@@ -78,16 +93,27 @@ const ChatNotificationIconsBox = ({
       </IconWrapper>
       {id ? (
         <>
-          <IconWrapper onClick={() => onClick(PathName.CHATS)}>
+          <NotificationIconWrapper onClick={() => onClick(PathName.CHATS)}>
             <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
-          </IconWrapper>
+            {messageUnseenCount > 0 ? (
+              <ChatNotificationCounter>
+                <NotificationCounterSpan>
+                  {Math.min(messageUnseenCount, 99)}
+                </NotificationCounterSpan>
+              </ChatNotificationCounter>
+            ) : null}
+          </NotificationIconWrapper>
           <NotificationIconWrapper
             onClick={() => onClick(PathName.NOTIFICATIONS)}
           >
             <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
-            <NotificationCounter>
-              <NotificationCounterSpan>20</NotificationCounterSpan>
-            </NotificationCounter>
+            {commonUnseenCount > 0 ? (
+              <NotificationCounter>
+                <NotificationCounterSpan>
+                  {Math.min(commonUnseenCount, 99)}
+                </NotificationCounterSpan>
+              </NotificationCounter>
+            ) : null}
           </NotificationIconWrapper>
         </>
       ) : null}
