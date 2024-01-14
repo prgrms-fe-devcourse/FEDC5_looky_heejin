@@ -9,6 +9,7 @@ import { FieldErrors, useForm } from "react-hook-form";
 import { Button } from "../common";
 import { Row } from "@/styles/GlobalStyle";
 import { BORDER_BASE_WIDTH } from "@/constants/uiConstants";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const FormContainer = styled.form`
   display: flex;
@@ -50,6 +51,7 @@ const SpanStyle = styled.span`
 `;
 
 const ChannelCreateModal = () => {
+  const [_, setChannel] = useLocalStorage("ViewChannelObj");
   const { closeModal } = useUI();
 
   const {
@@ -62,7 +64,7 @@ const ChannelCreateModal = () => {
     mutationFn: async (formData: ICreateChannelParams) =>
       await _CREATE_CHANNEL(formData),
     onSuccess(data) {
-      console.log(data);
+      setChannel(JSON.stringify(data));
       notify({ type: "success", text: "채널 생성 성공!" });
       closeModal();
     },
