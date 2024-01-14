@@ -7,6 +7,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import PostSimpleCard from "@/components/common/PostSimpleCard";
 import { Button } from "@/components/common";
 import { useNavigate } from "react-router-dom";
+import { Admin } from "@/components/Admin";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -24,10 +25,15 @@ const Home = () => {
   const navigate = useNavigate();
   const [channel, _] = useLocalStorage("ViewChannelObj");
   const [data, setData] = useState<any[]>([]);
+  const [fetch, setFetch] = useState(false);
 
   const fetchData = async (query: string) => {
     const res = await _CHANNEL_POSTS(query);
-    if (res) setData(res);
+    console.log(res);
+    if (res) {
+      setFetch(true);
+      setData(res);
+    }
   };
 
   const handleClick = () => {
@@ -43,9 +49,10 @@ const Home = () => {
     }
   }, []);
 
-  if (channel && !data.length) {
+  if (channel && !data.length && !fetch) {
     return (
       <>
+        <Admin />
         <div
           style={{
             width: "100%",
@@ -74,6 +81,7 @@ const Home = () => {
             height: "100%",
           }}
         >
+          <Admin />
           <span style={{ fontSize: "2rem", marginBottom: "1rem" }}>
             채널을 선택해보세요!
           </span>
@@ -89,16 +97,39 @@ const Home = () => {
     );
   }
 
-  if (data) console.log(data);
-  return (
-    <>
-      <Container>
-        {data.map((value, index) => (
-          <PostSimpleCard key={index} postData={value} />
-        ))}
-      </Container>
-    </>
-  );
+  if (data && fetch) {
+    return (
+      <>
+        <Admin />
+        {data.length ? (
+          <Container>
+            {data.map((value, index) => (
+              <PostSimpleCard key={index} postData={value} />
+            ))}
+          </Container>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: "3rem",
+              paddingBottom: "3rem",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <span style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+              포스트가 없네요!
+            </span>
+            <span style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
+              첫 포스트를 생성해보세요!
+            </span>
+          </div>
+        )}
+      </>
+    );
+  }
 };
 
 export default Home;
