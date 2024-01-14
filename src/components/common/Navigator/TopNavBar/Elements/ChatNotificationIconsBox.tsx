@@ -9,6 +9,7 @@ import {
 import { PathName } from "@/constants/pathNameConstants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
+import { ToolTip } from "@/components/common";
 
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;
@@ -26,6 +27,7 @@ const IconsBox = styled.div`
 `;
 
 const IconWrapper = styled.div`
+  position: relative;
   margin: auto 0.25rem;
   & > :first-child {
     cursor: pointer;
@@ -46,11 +48,18 @@ const ChatNotificationIconsBox = ({
   return (
     <IconsBox>
       <IconWrapper onClick={handleTheme}>
-        <Icon
-          name={theme.theme_mode === "light" ? LIGHTMODE_ICON : DARKMODE_ICON}
-          size="1.6rem"
-          weight={250}
-        ></Icon>
+        <ToolTip
+          $direction="bottom"
+          $options="hover"
+          $tooltip={theme.theme_mode === "light" ? "어둡게" : "밝게"}
+          $size={0.8}
+        >
+          <Icon
+            name={theme.theme_mode === "light" ? LIGHTMODE_ICON : DARKMODE_ICON}
+            size="1.6rem"
+            weight={250}
+          ></Icon>
+        </ToolTip>
       </IconWrapper>
       {id ? (
         <>

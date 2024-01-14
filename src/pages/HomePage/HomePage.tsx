@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { _GET } from "@/api";
 import { _CHANNEL_POSTS } from "@/api/queries/channelPosts";
@@ -19,6 +19,25 @@ const Container = styled.div`
   margin-right: -5.5px;
   width: calc(100% + 11px); */
   padding-bottom: 3rem;
+`;
+
+const LoadingDiff = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.6;
+  }
+`;
+
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-style: italic;
+  animation: ${LoadingDiff} 1s infinite alternate;
 `;
 
 const Home = () => {
@@ -47,18 +66,8 @@ const Home = () => {
   if (channel && !data.length) {
     return (
       <>
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "2rem",
-            fontStyle: "italic",
-          }}
-        >
-          멋진 사진들을 가져오고 있어요!
-        </div>
+        <LoadingContainer>멋진 사진들을 가져오고 있어요!</LoadingContainer>
+        <div>Spinner</div>
       </>
     );
   } else if (!channel && !data.length) {
@@ -90,16 +99,17 @@ const Home = () => {
     );
   }
 
-  if (data) console.log(data);
-  return (
-    <>
-      <Container>
-        {data.map((value, index) => (
-          <PostSimpleCard key={index} postData={value} />
-        ))}
-      </Container>
-    </>
-  );
+  if (data) {
+    return (
+      <>
+        <Container>
+          {data.map((value, index) => (
+            <PostSimpleCard key={index} postData={value} />
+          ))}
+        </Container>
+      </>
+    );
+  }
 };
 
 export default Home;

@@ -51,6 +51,7 @@ import useEventQuery from "@/hooks/useEventQuery";
 
 interface ModalProps {
   postId: string;
+  likeDataBinding: (data: any) => void;
 }
 
 interface IPostDetailModalProps {
@@ -62,7 +63,7 @@ interface Comment {
 }
 
 const PostDetail = ({ props }: IPostDetailModalProps) => {
-  const { postId } = props as ModalProps;
+  const { postId, likeDataBinding } = props as ModalProps;
   const { closeModal } = useUI();
   const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
     mode: "onSubmit",
@@ -171,6 +172,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         };
         notificationMutation.mutate(newNotification);
       }
+      likeDataBinding(data);
       setMyLikeId(data._id);
       setLikeCount(likeCount + 1);
     },
@@ -181,8 +183,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
-    onSuccess() {
-      if (likeCount > 0) setLikeCount(likeCount - 1);
+    onSuccess(data) {
+      if (likeCount > 0) {
+        setLikeCount(likeCount - 1);
+        setMyLikeId("");
+      }
+      likeDataBinding(data);
     },
     onError(error) {
       console.error("error: 좋아요 삭제 실패 ", error);
@@ -277,12 +283,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     console.log(error);
   };
 
-  const tagClickHandler = (id: string, x?: number, y?: number) => {
-    tags.map(val => {
-      if (val.id === id) {
-        console.log(`나 존재함!`, val, x, y);
-      }
-    });
+  const tagClickHandler = (link?: string) => {
+    window.open(
+      link?.includes("https://") ? link : "https://" + link,
+      "_blank",
+      "noopener, noreferrer"
+    );
   };
 
   if (isLoading) return <div>루키 svg</div>;
@@ -314,15 +320,25 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         )}
         {tags.map(({ x, y, id, brand, product, link }) => (
           <Tag
-            key={String(x) + String(y)}
+            style={{ cursor: "pointer" }}
+            key={id}
             x={x}
             y={y}
-            onClick={() => tagClickHandler(id, x, y)}
+            onClick={() => tagClickHandler(link)}
           >
             <ToolTip
               $direction="top"
               $options="hover"
-              $tooltip={brand + " " + product + " " + link}
+              $tooltip={
+                "브랜드: " +
+                brand +
+                "\\A" +
+                "제품 명: " +
+                product +
+                "\\A" +
+                "링크: " +
+                link
+              }
             >
               <Tag x={50} y={50} />
             </ToolTip>
