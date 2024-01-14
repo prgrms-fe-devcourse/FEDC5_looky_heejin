@@ -43,7 +43,7 @@ const NotificationIconWrapper = styled(IconWrapper)`
 
 const ChatNotificationCounter = styled.div`
   position: absolute;
-  left: 0.9rem;
+  left: 0.95rem;
   top: 0.1rem;
   width: 1rem;
   height: 1rem;
@@ -73,7 +73,7 @@ const ChatNotificationIconsBox = ({
   onClick,
 }: IChatNotificationIconsBoxProps) => {
   const { id } = useMe();
-  const { commonUnseenCount, common, messageUnseenCount } = useNotification();
+  const { commonUnseenCount, messageUnseenCount } = useNotification();
   const theme = useTheme();
   const [_, setLocalTheme] = useLocalStorage("theme");
 
@@ -81,7 +81,6 @@ const ChatNotificationIconsBox = ({
     setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
   };
 
-  console.log(common, commonUnseenCount, messageUnseenCount);
   return (
     <IconsBox>
       <IconWrapper onClick={handleTheme}>
