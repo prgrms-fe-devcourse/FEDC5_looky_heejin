@@ -18,7 +18,7 @@ const TooltipWrapper = styled.div<{
       if ($clicked) {
         return css`
           visibility: visible;
-          opacity: 1;
+          opacity: 0.99;
         `;
       } else {
         return css`
@@ -136,7 +136,7 @@ const TooltipWrapper = styled.div<{
               &:hover:before,
               &:hover:after {
                 visibility: visible;
-                opacity: 1;
+                opacity: 0.99;
               }
 
               &:focus-within:before,
@@ -150,13 +150,13 @@ const TooltipWrapper = styled.div<{
               &:hover:before,
               &:hover:after {
                 visibility: visible;
-                opacity: 1;
+                opacity: 0.99;
               }
 
               &:focus-within:before,
               &:focus-within:after {
                 visibility: visible;
-                opacity: 1;
+                opacity: 0.99;
               }
             `;
         }
@@ -175,7 +175,7 @@ const TooltipWrapper = styled.div<{
               &:focus-within:before,
               &:focus-within:after {
                 visibility: visible;
-                opacity: 1;
+                opacity: 0.99;
               }
             `;
         }
@@ -184,7 +184,7 @@ const TooltipWrapper = styled.div<{
           &:hover:before,
           &:hover:after {
             visibility: visible;
-            opacity: 1;
+            opacity: 0.99;
           }
         `;
       default:
