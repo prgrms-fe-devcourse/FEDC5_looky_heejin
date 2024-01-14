@@ -1,4 +1,4 @@
-import styled, { useTheme } from "styled-components";
+import styled, { keyframes, useTheme } from "styled-components";
 import Icon from "../../../Icon/Icon";
 import {
   CHAT_ICON,
@@ -14,6 +14,15 @@ import { useNotification } from "@/hooks/useNotification";
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;
 }
+
+export const zoomin = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+`;
 
 const IconsBox = styled.div`
   display: flex;
@@ -31,6 +40,9 @@ const IconWrapper = styled.div<{ $marginLeft: string }>`
   margin-left: ${({ $marginLeft }) => $marginLeft && $marginLeft};
   & > :first-child {
     cursor: pointer;
+  }
+  &:hover > :first-child {
+    animation: ${zoomin} 0.4s ease-in-out forwards;
   }
 `;
 
