@@ -18,8 +18,8 @@ const IconsBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 5px;
-  margin: auto 0;
+  gap: 2px;
+  margin: auto 1rem auto 0;
   & > :nth-child(2) {
     padding-top: 0.3rem;
   }
