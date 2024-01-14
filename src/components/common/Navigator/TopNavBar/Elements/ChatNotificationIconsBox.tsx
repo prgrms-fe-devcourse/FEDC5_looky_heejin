@@ -26,8 +26,9 @@ const IconsBox = styled.div`
   }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.div<{ $marginLeft: string }>`
   margin: auto 0.25rem;
+  margin-left: ${({ $marginLeft }) => $marginLeft && $marginLeft};
   & > :first-child {
     cursor: pointer;
   }
@@ -83,7 +84,7 @@ const ChatNotificationIconsBox = ({
 
   return (
     <IconsBox>
-      <IconWrapper onClick={handleTheme}>
+      <IconWrapper onClick={handleTheme} $marginLeft={id ? "" : "4.5rem"}>
         <Icon
           name={theme.theme_mode === "light" ? LIGHTMODE_ICON : DARKMODE_ICON}
           size="1.6rem"
@@ -92,7 +93,10 @@ const ChatNotificationIconsBox = ({
       </IconWrapper>
       {id ? (
         <>
-          <NotificationIconWrapper onClick={() => onClick(PathName.CHATS)}>
+          <NotificationIconWrapper
+            $marginLeft={""}
+            onClick={() => onClick(PathName.CHATS)}
+          >
             <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
             {messageUnseenCount > 0 ? (
               <ChatNotificationCounter>
@@ -103,6 +107,7 @@ const ChatNotificationIconsBox = ({
             ) : null}
           </NotificationIconWrapper>
           <NotificationIconWrapper
+            $marginLeft={""}
             onClick={() => onClick(PathName.NOTIFICATIONS)}
           >
             <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
