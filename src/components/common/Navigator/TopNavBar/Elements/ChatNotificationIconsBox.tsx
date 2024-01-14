@@ -8,6 +8,7 @@ import {
 } from "@/constants/icons";
 import { PathName } from "@/constants/pathNameConstants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMe } from "@/hooks/useMe";
 
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;
@@ -34,6 +35,7 @@ const IconWrapper = styled.div`
 const ChatNotificationIconsBox = ({
   onClick,
 }: IChatNotificationIconsBoxProps) => {
+  const { id } = useMe();
   const theme = useTheme();
   const [_, setLocalTheme] = useLocalStorage("theme");
 
@@ -50,12 +52,16 @@ const ChatNotificationIconsBox = ({
           weight={250}
         ></Icon>
       </IconWrapper>
-      <IconWrapper onClick={() => onClick(PathName.CHATS)}>
-        <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
-      </IconWrapper>
-      <IconWrapper onClick={() => onClick(PathName.NOTIFICATIONS)}>
-        <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
-      </IconWrapper>
+      {id ? (
+        <>
+          <IconWrapper onClick={() => onClick(PathName.CHATS)}>
+            <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
+          </IconWrapper>
+          <IconWrapper onClick={() => onClick(PathName.NOTIFICATIONS)}>
+            <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
+          </IconWrapper>
+        </>
+      ) : null}
     </IconsBox>
   );
 };

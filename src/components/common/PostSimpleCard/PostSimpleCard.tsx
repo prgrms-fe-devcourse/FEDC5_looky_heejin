@@ -23,6 +23,7 @@ import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
 import { INotification } from "@/types";
 import { _NOTIFY } from "@/api/queries/notify";
+import { notify } from "@/utils/toast";
 
 export interface ITitle {
   title: string;
@@ -163,8 +164,8 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   const createLikeMutation = useMutation({
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
-      console.log("API: 좋아요 생성 성공 ", data);
       if (id) {
+        console.log("API: 좋아요 생성 성공 ", data);
         const newNotification: INotification = {
           notificationType: "LIKE",
           notificationTypeId: data._id,
@@ -172,12 +173,27 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
           postId: data.post,
         };
 
+        notify({
+          type: "success",
+          text: "좋아요를 눌렀어요!",
+        });
+
         notificationMutation.mutate(newNotification);
         setFavoriteId(data._id);
         setFavoriteClicked(!favoriteClicked);
       }
+      if (!id) {
+        notify({
+          type: "warning",
+          text: "로그인이 필요한 기능이에요",
+        });
+      }
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "좋아요 요청에 실패했어요.",
+      });
       console.error("error: 좋아요 생성 실패 ", error);
     },
   });
@@ -186,9 +202,17 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
     onSuccess(data) {
       console.log("API: 좋아요 삭제 성공 ", data);
+      notify({
+        type: "default",
+        text: "좋아요를 취소했어요.",
+      });
       setFavoriteClicked(!favoriteClicked);
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "좋아요 삭제 요청에 실패했어요.",
+      });
       console.error("error: 좋아요 삭제 실패 ", error);
     },
   });

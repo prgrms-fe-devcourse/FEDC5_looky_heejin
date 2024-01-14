@@ -14,11 +14,12 @@ export const lightTheme: object = {
   gray_100: "#EFEFEF",
   transparent_10: "#B3B3B310",
   transparent_30: "#B3B3B330",
-  transparent_50: "#B3B3B350", 
+  transparent_50: "#B3B3B350",
   transparent_90: "#B3B3B390",
   red_100: "#FF6878",
   red_300: "#EB2F06",
   blue_300: "#3897F0",
+  card_container_color: "#909090",
 };
 
 export const darkTheme: object = {
@@ -42,6 +43,7 @@ export const darkTheme: object = {
   red_100: "#FF6878",
   red_300: "#EB2F06",
   blue_300: "#3897F0",
+  card_container_color: "#FEFEFE50",
 };
 
 const Theme = {

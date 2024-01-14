@@ -3,14 +3,23 @@ import { Button } from "../common";
 import { useUI } from "../common/uiContext";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { useNewPost } from "@/hooks/useNewPost";
 import { useQuery } from "@tanstack/react-query";
 import { _GET } from "@/api";
 import { IChannel } from "@/types/channel";
 
-const ChannelSelectModal = () => {
+interface ModalProps {
+  setChannelId: Function;
+  setChannelName: Function;
+}
+
+interface IChannelSelectModalProps {
+  props?: ModalProps;
+}
+
+const ChannelSelectModal = ({ props }: IChannelSelectModalProps) => {
+  const { setChannelId, setChannelName } = props as ModalProps;
+
   const { closeModal } = useUI();
-  const { setChannel } = useNewPost();
 
   const { data, isLoading } = useQuery({
     queryKey: ["channels"],
@@ -18,7 +27,8 @@ const ChannelSelectModal = () => {
   });
 
   const handleChannelSelectClick = (channelId: string, channelName: string) => {
-    setChannel(channelId, channelName);
+    setChannelId(channelId);
+    setChannelName(channelName);
     closeModal();
   };
 
