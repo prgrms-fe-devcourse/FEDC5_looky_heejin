@@ -14,8 +14,9 @@ export const ChannelStyle = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  transform: scale(0.97);
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(0.98);
   }
 `;
