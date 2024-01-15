@@ -12,7 +12,7 @@ import { aesDecrypt } from "./utils/crypto";
 import { Spinner } from "./components/common/Spinner";
 
 const App = () => {
-  const [token, setToken] = useLocalStorage("token");
+  const [token, setToken] = useLocalStorage("auth_token");
   const { isLogIn, setAuth } = useAuth();
   const { setMe } = useMe();
 

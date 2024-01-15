@@ -26,7 +26,7 @@ const LoginPageView = () => {
   const { VITE_ADMIN_EMAIL, VITE_ADMIN_PASSWORD } = import.meta.env;
   const { setMe } = useMe();
   const { setAuth } = useAuth();
-  const [_, storeToken] = useLocalStorage("token");
+  const [_, storeToken] = useLocalStorage("auth_token");
   const {
     register,
     getValues,
