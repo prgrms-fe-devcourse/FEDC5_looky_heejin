@@ -340,12 +340,10 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     console.error(error);
   };
 
-  const tagClickHandler = (id: string, x?: number, y?: number) => {
-    tags.map(val => {
-      if (val.id === id) {
-        console.log(`나 존재함!`, val, x, y);
-      }
-    });
+  const tagClickHandler = (link?: string) => {
+    if (link?.includes("https://")) {
+      window.open(link, "_blank", "noopener, noreferrer");
+    }
   };
 
   if (isLoading) return <Spinner />;
@@ -397,16 +395,21 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           </HeartInImage>
         )}
         {tags.map(({ x, y, id, brand, product, link }) => (
-          <ToolTip
-            $direction="top"
-            $options="hover"
-            $tooltip={brand + " " + product + " " + link}
+          <Tag
+            style={{ cursor: "pointer" }}
             key={id}
-            $x={x}
-            $y={y}
+            x={x}
+            y={y}
+            onClick={() => tagClickHandler(link)}
           >
-            <Tag x={x} y={y} onClick={() => tagClickHandler(id, x, y)} />
-          </ToolTip>
+            <ToolTip
+              $direction="top"
+              $options="hover"
+              $tooltip={"브랜드: " + brand + "\\A" + "제품 명: " + product}
+            >
+              <Tag x={50} y={50} />
+            </ToolTip>
+          </Tag>
         ))}
         <StyledImg src={imageUrl ? imageUrl : "/image_alt.png"} />
       </ImageWrapper>
@@ -451,7 +454,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             <StyledSpan>
               <TitleSpan>{title}</TitleSpan>
               <br />
-              {content}
+              <p style={{ whiteSpace: "pre" }}>{content}</p>
             </StyledSpan>
           ) : (
             <StyledSpan>
@@ -465,7 +468,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
                   </ContentDetail>
                 </>
               ) : (
-                <span>{content.slice(0, 50)}</span>
+                <span>
+                  <p style={{ whiteSpace: "pre" }}>{content.slice(0, 50)}</p>
+                </span>
               )}
             </StyledSpan>
           )}
