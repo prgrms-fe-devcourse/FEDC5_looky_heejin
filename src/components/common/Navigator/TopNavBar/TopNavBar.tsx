@@ -82,7 +82,7 @@ const TopNavBar = () => {
   });
 
   useEffect(() => {
-    if (currentPath === PathName.CHAT) {
+    if (currentPath === PathName.CHAT || currentPath === PathName.PROFILE) {
       const getPartnerData = async () => {
         const data = (await refetch()).data;
         setPartnerData({
