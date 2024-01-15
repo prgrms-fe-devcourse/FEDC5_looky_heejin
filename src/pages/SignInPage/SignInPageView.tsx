@@ -116,9 +116,6 @@ const SignInPage = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
-        {/* <div style={{ width: "100%" }}>
-          <InputLabel title="이메일" help={errors.email?.message} />
-        </div> */}
         <ErrorContainer>
           <span className="font-bold">이메일</span>
           {errors.email?.message ? (

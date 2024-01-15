@@ -77,7 +77,6 @@ const EditPasswordModal = () => {
   return (
     <ModalLayout>
       <Form onSubmit={handleSubmit(onValid, onInvalid)}>
-        {/* <InputLabel title="변경할 비밀번호" help="8글자 이상" /> */}
         <ErrorContainer>
           <span className="font-bold">비밀번호 변경</span>
           {errors.password?.message && (
