@@ -14,7 +14,7 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { sha256Encrypt } from "@/utils/crypto";
+import { aesEncrypt, sha256Encrypt } from "@/utils/crypto";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -56,7 +56,9 @@ const LoginPageView = () => {
         userName: user.fullName,
         profilePhoto: user.image,
       });
-      storeToken(token);
+      const encrypted = aesEncrypt(token);
+      console.log(encrypted);
+      storeToken(encrypted);
       navigate("/home");
     },
     onError(error) {

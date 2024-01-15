@@ -8,6 +8,8 @@ import useEventQuery from "./hooks/useEventQuery";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMe } from "./hooks/useMe";
 import { NotificationManager } from "./components/Notification";
+import { aesDecrypt } from "./utils/crypto";
+import { Spinner } from "./components/common/Spinner";
 
 const App = () => {
   // const navigate = useNavigate();
@@ -22,7 +24,8 @@ const App = () => {
   });
 
   if (token !== null) {
-    rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
+    rootAPI.defaults.headers.common["Authorization"] =
+      "Bearer " + aesDecrypt(token);
   }
 
   const preload = async () => {
@@ -41,7 +44,7 @@ const App = () => {
           userName: data.fullName,
         });
         // 토큰 값을 redux에도 저장해서. 매번 Storage에서 get하지 않도록.
-        setAuth({ isLogIn: true, token: token });
+        setAuth({ isLogIn: true, token: aesDecrypt(token) });
         // navigate("/home");
       }
     }
@@ -60,7 +63,7 @@ const App = () => {
     prepare();
   }, [isLogIn, token]);
 
-  if (isLoading) return null;
+  if (isLoading) return <Spinner />;
 
   return (
     <>

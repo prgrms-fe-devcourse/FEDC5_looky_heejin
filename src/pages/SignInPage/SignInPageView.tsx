@@ -16,7 +16,7 @@ import SignInPageConstant from "./SignInPage.const";
 import { useEffect } from "react";
 import { Image } from "@/components/common";
 import { useNavigate } from "react-router-dom";
-import { sha256Encrypt } from "@/utils/crypto";
+import { aesEncrypt, sha256Encrypt } from "@/utils/crypto";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
@@ -68,7 +68,7 @@ const SignInPage = () => {
         userName: user.fullName,
         profilePhoto: user.image,
       });
-      storeToken(token);
+      storeToken(aesEncrypt(token));
       navigate("/home");
     },
     onError(error) {
