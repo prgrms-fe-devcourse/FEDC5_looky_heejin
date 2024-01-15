@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import tw from "twin.macro";
 
+import { BORDER_TINE_WIDTH } from "@/constants/uiConstants";
+
 const ButtonBaseWrapper = styled.button<any>`
   position: relative;
   overflow: hidden;
@@ -38,8 +40,10 @@ export const Flat = styled(ButtonBaseWrapper)<any>`
 
 export const Neumorp = styled(ButtonBaseWrapper)<any>`
   background-color: ${props => props.theme.white_primary + 30};
+  border-width: ${BORDER_TINE_WIDTH}px;
+  border-color: ${props => props.theme.transparent_30};
   color: ${props =>
-    props.$textColor ? props.$textColor : props.theme.text_primary_color}; 
+    props.$textColor ? props.$textColor : props.theme.text_primary_color};
 
   ${tw`flex justify-center items-center shadow-md hover:shadow-inner transition-shadow`}
 `;

@@ -1,11 +1,16 @@
-import PostSimpleCard from "@/components/common/PostSimpleCard";
-import styled from "styled-components";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
 import { _GET } from "@/api";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { _CHANNEL_POSTS } from "@/api/queries/channelPosts";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import PostSimpleCard from "@/components/common/PostSimpleCard";
 import { Button } from "@/components/common";
 import { useNavigate } from "react-router-dom";
+import { Admin } from "@/components/Admin";
+import { useMe } from "@/hooks/useMe";
+import { Spinner } from "@/components/common/Spinner";
+const { VITE_ADMIN_ID } = import.meta.env;
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -13,20 +18,23 @@ const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 10px;
-  margin-left: -5.5px;
-  margin-right: -5.5px;
-  width: calc(100% + 11px);
+  width: 100%;
   padding-bottom: 3rem;
 `;
 
 const Home = () => {
   const navigate = useNavigate();
   const [channel, _] = useLocalStorage("ViewChannelObj");
-  const [data, setData] = useState<any[] | null>(null);
+  const [data, setData] = useState<any[]>([]);
+  const [fetch, setFetch] = useState(false);
+  const { id } = useMe();
 
   const fetchData = async (query: string) => {
     const res = await _CHANNEL_POSTS(query);
-    if (res) setData(res);
+    if (res) {
+      setFetch(true);
+      setData(res);
+    }
   };
 
   const handleClick = () => {
@@ -40,7 +48,26 @@ const Home = () => {
     }
   }, []);
 
-  if (channel === null) {
+  if (channel && !data.length && !fetch) {
+    return (
+      <>
+        {id === VITE_ADMIN_ID ? <Admin /> : null}
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "2rem",
+            fontStyle: "italic",
+          }}
+        >
+          <span>멋진 사진들을 가져오고 있어요!</span>
+          <Spinner />
+        </div>
+      </>
+    );
+  } else if (!channel && !data.length) {
     return (
       <>
         <div
@@ -54,6 +81,7 @@ const Home = () => {
             height: "100%",
           }}
         >
+          {id === VITE_ADMIN_ID ? <Admin /> : null}
           <span style={{ fontSize: "2rem", marginBottom: "1rem" }}>
             채널을 선택해보세요!
           </span>
@@ -69,14 +97,36 @@ const Home = () => {
     );
   }
 
-  if (data && data.length > 0) {
+  if (data && fetch) {
     return (
       <>
-        <Container>
-          {data.map((value, index) => (
-            <PostSimpleCard key={index} postData={value} />
-          ))}
-        </Container>
+        {id === VITE_ADMIN_ID ? <Admin /> : null}
+        {data.length ? (
+          <Container>
+            {data.map(value => (
+              <PostSimpleCard key={value._id} postData={value} />
+            ))}
+          </Container>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: "3rem",
+              paddingBottom: "3rem",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <span style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+              포스트가 없네요!
+            </span>
+            <span style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
+              첫 포스트를 생성해보세요!
+            </span>
+          </div>
+        )}
       </>
     );
   }

@@ -6,12 +6,14 @@ import { NAME_VALIDATION } from "@/pages/ProfilePage/ProfilePage.const";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_NAME } from "@/api/queries/profile";
 import { useProfile } from "@/hooks/useProfile";
+import { useMe } from "@/hooks/useMe";
 import {
   Form,
   InputWrap,
   ErrorContainer,
   SpanStyle,
 } from "./ProfileModal.style";
+import { notify } from "@/utils/toast";
 
 interface INameFormProps {
   fullName: string;
@@ -26,15 +28,28 @@ const EditNameModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<INameFormProps>();
+  const { id, profilePhoto, setMe } = useMe();
 
   const mutation = useMutation({
     mutationFn: async (formData: INameFormProps) =>
       await _UPDATE_NAME(formData),
     onSuccess: data => {
-      console.log("API UPDATE NAME 성공!");
+      if (id && profilePhoto)
+        setMe({ id, profilePhoto, userName: data.fullName });
       setProfileName(data.fullName);
+
+      notify({
+        type: "success",
+        text: "닉네임을 성공적으로 변경했습니다.",
+      });
     },
-    onError: error => console.log("Error", error),
+    onError: error => {
+      notify({
+        type: "error",
+        text: "닉네임 변경에 실패했습니다.",
+      });
+      console.log("Error", error);
+    },
   });
 
   const onValid = (data: INameFormProps) => {

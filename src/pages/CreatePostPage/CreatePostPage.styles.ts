@@ -1,5 +1,5 @@
 import {
-  BORDER_BASE_WIDTH,
+  BORDER_TINE_WIDTH,
   CONTAINER_PADDING_VERTICAL,
 } from "@/constants/uiConstants";
 import styled from "styled-components";
@@ -40,8 +40,8 @@ export const TextArea = styled.textarea`
   box-sizing: border-box;
   background-color: ${props => props.theme.white_primary + 30};
   color: ${props => props.theme.text_primary_color};
-  border-width: ${BORDER_BASE_WIDTH}px;
-  border-color: transparent;
+  border-width: ${BORDER_TINE_WIDTH}px;
+  border-color: ${props => props.theme.transparent_30};
   line-height: 1.5rem;
   resize: none;
 

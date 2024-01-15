@@ -23,6 +23,7 @@ import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
 import { INotification } from "@/types";
 import { _NOTIFY } from "@/api/queries/notify";
+import { notify } from "@/utils/toast";
 
 export interface ITitle {
   title: string;
@@ -30,6 +31,8 @@ export interface ITitle {
   tags: ITag[] | null;
 }
 
+// ========================================
+// 충돌 방지를 위한 로직 모음, 추후 삭제 예정
 export interface ICreateLike {
   postId: string;
 }
@@ -48,6 +51,8 @@ export const _DELETE_LIKE = async (params: IDeleteLike) => {
   return result?.data;
 };
 
+// ========================================
+
 const IsJsonString = (str: string) => {
   try {
     let json = JSON.parse(str);
@@ -57,7 +62,12 @@ const IsJsonString = (str: string) => {
   }
 };
 
-const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
+const PostSimpleCard = ({
+  postData,
+}: {
+  key: number | string;
+  postData: any;
+}) => {
   const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
@@ -86,12 +96,6 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
 
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
-    onSuccess(data) {
-      console.log("알림 api 성공", data);
-    },
-    onError(error) {
-      console.error("알림 api 통신 에러", error);
-    },
   });
 
   const mutation = useMutation({
@@ -127,9 +131,14 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
     },
   });
 
+  const likeDataBinding = (data: any) => {
+    setFavoriteId(data._id);
+    setFavoriteClicked(!favoriteClicked);
+  };
+
   const onClickImage = () => {
     setModalView("POST_DETAIL_VIEW");
-    openModal({ postId: postData._id });
+    openModal({ postId: postData._id, likeDataBinding });
   };
 
   const onClickProfile = () => {
@@ -151,7 +160,6 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
   const createLikeMutation = useMutation({
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
-      console.log("API: 좋아요 생성 성공 ", data);
       if (id) {
         const newNotification: INotification = {
           notificationType: "LIKE",
@@ -160,23 +168,45 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
           postId: data.post,
         };
 
+        notify({
+          type: "success",
+          text: "좋아요를 눌렀어요!",
+        });
+
         notificationMutation.mutate(newNotification);
         setFavoriteId(data._id);
         setFavoriteClicked(!favoriteClicked);
       }
+      if (!id) {
+        notify({
+          type: "warning",
+          text: "로그인이 필요한 기능이에요",
+        });
+      }
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "좋아요 요청에 실패했어요.",
+      });
       console.error("error: 좋아요 생성 실패 ", error);
     },
   });
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
-    onSuccess(data) {
-      console.log("API: 좋아요 삭제 성공 ", data);
+    onSuccess() {
+      notify({
+        type: "default",
+        text: "좋아요를 취소했어요.",
+      });
       setFavoriteClicked(!favoriteClicked);
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "좋아요 삭제 요청에 실패했어요.",
+      });
       console.error("error: 좋아요 삭제 실패 ", error);
     },
   });
@@ -210,6 +240,7 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
       <>
         <CardContainer $basis="half">
           <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
+            {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
               onClick={onClickImage}
               src={postData.image ? postData.image : "/image_alt.png"}
@@ -227,7 +258,11 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
                       : theme?.symbol_color,
                     fontVariationSettings: "fill",
                   }}
-                  className="material-symbols-rounded"
+                  className={
+                    favoriteClicked
+                      ? "material-icons"
+                      : "material-symbols-rounded"
+                  }
                 >
                   favorite
                 </span>
@@ -274,6 +309,7 @@ const PostSimpleCard = ({ postData }: { key: number; postData: any }) => {
                 {parsedData === null ? postData.title : parsedData.content}
               </TextContainer>
             </div>
+            {/* todo, 태그 정보 */}
           </CardInfoContainer>
         </CardContainer>
       </>

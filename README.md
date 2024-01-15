@@ -4,7 +4,9 @@
 
 ![logo](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/ceb789a7-3811-4231-b705-1016345d7fbb)
 
-### [서비스 주소](https://www.looky.kr/)
+### [메인 서비스 주소](https://www.looky.kr/)
+
+##### [도메인 만료 시 서비스 주소](https://looky-working.vercel.app/)
 
 ---
 
@@ -18,8 +20,10 @@
 
 ## 팀원 소개
 
-| [김석주](https://github.com/SoJuSo) | [신수영](https://github.com/joyswim) | [오원주](https://github.com/OhWonJu) | [황민호](https://github.com/hellosonic-r) |
+| 팀장 & COO | CKO | CTO | CAO |
 | :-: | :-: | :-: | :-: |
+| **✨최고 운영 책임자** | **✨최고 지식경영 책임자** | **✨최고 기술 책임자** | **✨최고 관리 책임자** |
+| [김석주](https://github.com/SoJuSo) | [신수영](https://github.com/joyswim) | [오원주](https://github.com/OhWonJu) | [황민호](https://github.com/hellosonic-r) |
 | asdfg7123@gmail.com | joyswim.dev@gmail.com | reopard506@gmail.com | hellommmh@gmail.com |
 | <img src="https://github.com/SoJuSo.png" /> | <img src="https://github.com/joyswim.png" /> | <img src="https://github.com/OhWonJu.png" /> | <img src="https://github.com/hellosonic-r.png" /> |
 
@@ -31,6 +35,16 @@
 git clone https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin.git && cd FEDC5_looky_heejin
 npm install
 npm run dev
+```
+
+## 환경 변수 목록
+
+```
+VITE_BASE_URL=
+VITE_CRYPTO_KEY=
+VITE_ADMIN_ID=
+VITE_ADMIN_EMAIL=
+VITE_ADMIN_PASSWORD=
 ```
 
 ## 팀 문화 & 컨벤션

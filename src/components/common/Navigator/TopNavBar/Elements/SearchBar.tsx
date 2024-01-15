@@ -57,7 +57,7 @@ const SearchBar = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: {},
   } = useForm({ mode: "onSubmit" });
 
   const onValid = (inputValue: FieldValues) => {
@@ -66,7 +66,6 @@ const SearchBar = () => {
 
   const onInvalid = (error: FieldErrors) => {
     console.log("에러 :", error);
-    console.log(errors);
   };
 
   const handleRemoveValue = () => {

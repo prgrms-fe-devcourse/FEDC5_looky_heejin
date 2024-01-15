@@ -27,7 +27,15 @@ const SearchRecentView = ({
 
   return (
     <section>
-      <p style={{ margin: "1rem 0 1rem", fontWeight: "bold" }}>최근 검색어</p>
+      <p
+        style={{
+          margin: "1rem 0 1rem",
+          fontWeight: "bold",
+          paddingTop: "1rem",
+        }}
+      >
+        최근 검색어
+      </p>
       <ul>
         {reversedKeywords && reversedKeywords.length > 0 ? (
           reversedKeywords.map((item, index) => (

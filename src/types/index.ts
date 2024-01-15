@@ -68,6 +68,10 @@ export interface IUnfollow {
   id: string;
 }
 
+export interface IDeletePost {
+  id: string;
+}
+
 export interface INotification {
   notificationType: "COMMENT" | "FOLLOW" | "LIKE" | "MESSAGE";
   notificationTypeId: string;

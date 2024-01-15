@@ -1,30 +1,32 @@
 import { IPost } from "@/types";
-import { Post, PostInfo, PostWrap } from "@/pages/SearchPage/SearchPage.styles";
+import { PostWrap } from "@/pages/SearchPage/SearchPage.styles";
+import { SearchEmptyView } from ".";
+import PostSimpleCard from "@/components/common/PostSimpleCard";
 
 interface IPostsProps {
   postsData: IPost[];
-  onClick: (postId: string) => void;
+  onTagClick: (clickedKeyword: string) => void;
 }
 
-const SearchPostsView = ({ postsData }: IPostsProps) => {
+const SearchPostsView = ({ onTagClick, postsData }: IPostsProps) => {
   return (
-    <section>
+    <>
       <PostWrap>
         {Array.isArray(postsData) && postsData.length > 0 ? (
           postsData
             .filter(post => post.image !== undefined)
-            .map(post => {
+            .map((post, index) => {
               return (
-                <Post key={post._id} src={post.image!}>
-                  <PostInfo>{post.title}</PostInfo>
-                </Post>
+                <PostSimpleCard key={index} postData={post}></PostSimpleCard>
               );
             })
         ) : (
-          <div>포스트가 없습니다</div>
+          <SearchEmptyView onTagClick={onTagClick}>
+            <strong>찾는 포스트가 없습니다.</strong>
+          </SearchEmptyView>
         )}
       </PostWrap>
-    </section>
+    </>
   );
 };
 

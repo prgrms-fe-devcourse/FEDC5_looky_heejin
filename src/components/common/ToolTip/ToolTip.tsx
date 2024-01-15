@@ -8,6 +8,7 @@ const TooltipWrapper = styled.div<{
   key?: string;
   $x?: number;
   $y?: number;
+  $size?: number;
 }>`
   z-index: 2;
 
@@ -43,18 +44,19 @@ const TooltipWrapper = styled.div<{
         `;
       }
     }}
-    font-size: 1.2rem;
+    font-size: "${props => (props.$size ? props.$size : 1)}rem";
   }
 
   &:before {
+    color: ${props => props.theme.text_primary_color};
     content: "${props => `${props.$tooltip}`}";
     height: auto;
     position: absolute;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1.2rem;
+    font-size: "${props => (props.$size ? props.$size : 1)}rem";
     font-weight: 550;
-    color: ${props => props.theme.white_primary};
+    white-space: pre;
     background: ${props => props.theme.symbol_color};
   }
 

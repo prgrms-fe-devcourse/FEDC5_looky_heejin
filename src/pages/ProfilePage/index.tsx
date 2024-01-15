@@ -12,17 +12,23 @@ import { useProfile } from "@/hooks/useProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
+import { useNotification } from "@/hooks/useNotification";
+import { notify } from "@/utils/toast";
+import { Spinner } from "@/components/common/Spinner";
 
 const ProfilePage = () => {
-  const { setProfileName, setProfileImage, setProfileCover } = useProfile();
+  const { setProfileName, setProfileImage, setProfileCover, profileInit } =
+    useProfile();
+  const [, setToken] = useLocalStorage("token");
+  const [, setKeywords] = useLocalStorage("keywords");
+  const { setNotification } = useNotification();
   const { setMe } = useMe();
-  const [_, setToken] = useLocalStorage("token");
+  const { setAuth } = useAuth();
+  const { openModal, setModalView } = useUI();
 
   const [userData, setUserData] = useState<IUser>();
 
-  const { setAuth } = useAuth();
   const { id: paramsId } = useParams();
-  const { openModal, setModalView } = useUI();
   const navigate = useNavigate();
 
   const {
@@ -82,11 +88,24 @@ const ProfilePage = () => {
 
   const handleLogout = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setAuth({ isLogIn: false, token: null });
-    setMe({ id: "", profilePhoto: "", userName: "" });
-    setToken(null);
-    alert(`로그아웃!!`);
-    navigate(`/login`);
+    const isLogout = confirm("로그아웃을 하시겠습니까?");
+    if (isLogout) {
+      setAuth({ isLogIn: false, token: null });
+      setMe({ id: "", profilePhoto: "", userName: "" });
+      setToken(null);
+      setKeywords([]);
+      setNotification({
+        common: [],
+        message: [],
+      });
+      profileInit();
+
+      notify({
+        type: "success",
+        text: "정상적으로 로그아웃됐습니다.",
+      });
+      navigate(`/login`);
+    }
   };
 
   useEffect(() => {
@@ -102,7 +121,7 @@ const ProfilePage = () => {
   }, [isSuccess]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (error) {

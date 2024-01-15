@@ -1,16 +1,30 @@
-import { ModalLayout } from "../common/Modal";
-import { Button } from "../common";
-import { useUI } from "../common/uiContext";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { useNewPost } from "@/hooks/useNewPost";
-import { useQuery } from "@tanstack/react-query";
+
 import { _GET } from "@/api";
 import { IChannel } from "@/types/channel";
+import useTheme from "@/hooks/useTheme";
 
-const ChannelSelectModal = () => {
+import { Button } from "../common";
+import { ModalLayout } from "../common/Modal";
+import { useUI } from "../common/uiContext";
+import { Spinner } from "../common/Spinner";
+
+interface ModalProps {
+  setChannelId: Function;
+  setChannelName: Function;
+}
+
+interface IChannelSelectModalProps {
+  props?: ModalProps;
+}
+
+const ChannelSelectModal = ({ props }: IChannelSelectModalProps) => {
+  const { setChannelId, setChannelName } = props as ModalProps;
+
+  const theme = useTheme();
   const { closeModal } = useUI();
-  const { setChannel } = useNewPost();
 
   const { data, isLoading } = useQuery({
     queryKey: ["channels"],
@@ -18,12 +32,13 @@ const ChannelSelectModal = () => {
   });
 
   const handleChannelSelectClick = (channelId: string, channelName: string) => {
-    setChannel(channelId, channelName);
+    setChannelId(channelId);
+    setChannelName(channelName);
     closeModal();
   };
 
   if (isLoading) {
-    return null;
+    return <Spinner />;
   }
 
   return (
@@ -33,9 +48,11 @@ const ChannelSelectModal = () => {
           {data?.data.map(({ _id, name }: IChannel) => (
             <ChannelItem key={_id}>
               <Button
-                variant="flat"
-                style={{ padding: "0.3rem 1rem" }}
-                className="bg-[#B3B3B390]"
+                variant="neumorp"
+                style={{
+                  padding: "0.3rem 1rem",
+                  backgroundColor: theme?.white_primary + 30,
+                }}
                 onClick={() => handleChannelSelectClick(_id, name)}
               >
                 <span>{name}</span>
@@ -56,5 +73,7 @@ const ChannelSelectModal = () => {
 export default ChannelSelectModal;
 
 const ChannelItem = styled.li`
-  ${tw`rounded-md bg-gray-400`}
+  background-color: ${props => props.theme.white_primary + 30};
+  color: ${props => props.theme.text_primary_color};
+  ${tw`rounded-md`}
 `;

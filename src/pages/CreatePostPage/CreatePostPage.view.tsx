@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 
-import { useNewPost } from "@/hooks/useNewPost";
-
+import { _GET, _POST, rootAPI } from "@/api";
+import { ITag } from "@/types/post";
 import { Row } from "@/styles/GlobalStyle";
 import { useUI } from "@/components/common/uiContext";
 import { Button, Input, Upload } from "@/components/common";
@@ -14,9 +16,8 @@ import {
   TextArea,
   UploadSection,
 } from "./CreatePostPage.styles";
-import { useMutation } from "@tanstack/react-query";
-import { _POST, rootAPI } from "@/api";
-import { useNavigate } from "react-router-dom";
+import { notify } from "@/utils/toast";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface ICreatePostFormProps {
   title: string;
@@ -32,8 +33,10 @@ interface IPostBodyData {
 }
 
 const CreatePostPageView = () => {
+  const [_, setChannel] = useLocalStorage("ViewChannelObj");
   const { openModal, setModalView } = useUI();
-  const { tags, channelId, channelName, init: initNewPostData } = useNewPost();
+  const [channelName, setChannelName] = useState("");
+  const [tags, setTags] = useState<ITag[]>([]);
 
   const navigate = useNavigate();
 
@@ -43,23 +46,29 @@ const CreatePostPageView = () => {
     rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
 
     return () => {
-      initNewPostData();
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
     };
   }, []);
 
-  useEffect(() => {
-    setValue("channelId", channelId);
-  }, [channelId]);
-
   const mutation = useMutation({
     mutationFn: async (formData: IPostBodyData) =>
       await _POST("/posts/create", formData),
-    onSuccess: () => {
+    onSuccess: data => {
+      setChannel(JSON.stringify(data?.data.channel));
+      notify({
+        type: "success",
+        text: "포스트를 성공적으로 생성했어요!",
+      });
       navigate(-1);
     },
-    onError: data => console.log("Error", data),
+    onError: data => {
+      notify({
+        type: "error",
+        text: "포스트 생성에 실패했어요!",
+      });
+      console.log("Error", data);
+    },
   });
 
   const {
@@ -102,6 +111,8 @@ const CreatePostPageView = () => {
       openModal({
         x: (nativeEvent.offsetX / objectWidth) * 100,
         y: (nativeEvent.offsetY / objectHeight) * 100,
+        tags,
+        setTags,
       });
     }
   };
@@ -113,12 +124,17 @@ const CreatePostPageView = () => {
       id: id,
       x,
       y,
+      tags,
+      setTags,
     });
   };
 
   const channelSelectButtonClickHandler = () => {
     setModalView("CHANNEL_SELECT_VIEW");
-    openModal();
+    openModal({
+      setChannelId: (data: string) => setValue("channelId", data),
+      setChannelName: setChannelName,
+    });
   };
 
   return (
@@ -180,7 +196,11 @@ const CreatePostPageView = () => {
         variant="symbol"
         className="absolute bottom-0"
         onClick={handleSubmit(onValid, onInvalid)}
-        disabled={!(watch("channelId") && watch("file") && watch("title"))}
+        disabled={
+          !(watch("channelId") && watch("file") && watch("title")) ||
+          mutation.isPending
+        }
+        loading={mutation.isPending}
       >
         <span className="font-semibold">포스터 작성</span>
       </Button>

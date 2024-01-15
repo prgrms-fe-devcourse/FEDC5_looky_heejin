@@ -40,8 +40,8 @@ export const useNotification = () => {
       common: INotification[];
       message: INotification[];
     }) => setNotification(param),
-    initCommonCount: () => initCommonCount,
-    initMessageCount: () => initMessageCount,
+    initCommonCount: () => initCommonCount(),
+    initMessageCount: () => initMessageCount(),
   };
 
   return context;

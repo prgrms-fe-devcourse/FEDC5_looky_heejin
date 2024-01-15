@@ -71,7 +71,7 @@ const SearchPage = () => {
     <SearchWrap>
       <SearchBarWrap>
         <SearchBar
-          onClick={handleGoBack}
+          onClickBack={handleGoBack}
           onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
         />
       </SearchBarWrap>
@@ -82,7 +82,7 @@ const SearchPage = () => {
             onItemClick={handleKeywordClick}
           />
         ) : (
-          <SearchResultsView />
+          <SearchResultsView onTagClick={handleKeywordClick} />
         )}
       </SearchViewWrap>
     </SearchWrap>

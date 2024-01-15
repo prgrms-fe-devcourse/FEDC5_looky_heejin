@@ -8,6 +8,8 @@ import useEventQuery from "./hooks/useEventQuery";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMe } from "./hooks/useMe";
 import { NotificationManager } from "./components/Notification";
+import { aesDecrypt } from "./utils/crypto";
+import { Spinner } from "./components/common/Spinner";
 
 const App = () => {
   const [token, setToken] = useLocalStorage("token");
@@ -20,7 +22,8 @@ const App = () => {
   });
 
   if (token !== null) {
-    rootAPI.defaults.headers.common["Authorization"] = "Bearer " + token;
+    rootAPI.defaults.headers.common["Authorization"] =
+      "Bearer " + aesDecrypt(token);
   }
 
   const preload = async () => {
@@ -36,7 +39,7 @@ const App = () => {
           profilePhoto: data.image,
           userName: data.fullName,
         });
-        setAuth({ isLogIn: true, token: token });
+        setAuth({ isLogIn: true, token: aesDecrypt(token) });
       }
     }
   };
@@ -53,7 +56,7 @@ const App = () => {
     prepare();
   }, [isLogIn, token]);
 
-  if (isLoading) return null;
+  if (isLoading) return <Spinner />;
 
   return (
     <>

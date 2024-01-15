@@ -13,6 +13,7 @@ import {
   ErrorContainer,
   SpanStyle,
 } from "./ProfileModal.style";
+import { notify } from "@/utils/toast";
 
 interface IPasswordForm {
   password: string;
@@ -35,11 +36,17 @@ const EditPasswordModal = () => {
       await _UPDATE_PASSWORD({ password: updatedValue }),
     onSuccess: data => {
       if (data === "Password updated successfully.") {
-        alert(`비밀번호 변경 성공!`);
+        notify({
+          type: "success",
+          text: "비밀번호를 성공적으로 변경했습니다.",
+        });
       }
     },
     onError: error => {
-      alert(`비밀번호 변경 실패`);
+      notify({
+        type: "error",
+        text: "비밀번호를 변경에 실패했습니다.",
+      });
       console.log("Error", error);
     },
   });

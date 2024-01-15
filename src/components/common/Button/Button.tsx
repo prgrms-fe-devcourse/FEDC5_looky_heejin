@@ -121,11 +121,10 @@ const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
       $rippleColor={rippleColor}
       {...rest}
     >
-      {children}
+      {!loading ? <>{children}</> : <span className="font-semibold">...</span>}
       {useRipple && variant !== "neumorp" && !disabled && (
         <ButtonRipple ref={rippleRef} className="ripple" />
       )}
-      {loading && <i className="pl-2 m-0 flex">{/* <LoadingDots /> */}</i>}
     </ButtonWrapper>
   );
 });

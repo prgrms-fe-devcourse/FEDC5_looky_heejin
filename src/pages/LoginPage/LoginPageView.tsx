@@ -14,12 +14,13 @@ import {
 import { _LOGIN } from "@/api/queries/login";
 import { ILogIn } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { sha256Encrypt } from "@/utils/crypto";
+import { aesEncrypt, sha256Encrypt } from "@/utils/crypto";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import LoginPageConst from "./LoginPage.const";
 import { useMe } from "@/hooks/useMe";
+import { notify } from "@/utils/toast";
 
 const LoginPageView = () => {
   const { VITE_ADMIN_EMAIL, VITE_ADMIN_PASSWORD } = import.meta.env;
@@ -44,18 +45,26 @@ const LoginPageView = () => {
   const mutation = useMutation({
     mutationFn: async (formData: ILogIn) => await _LOGIN(formData),
     onSuccess({ user, token }) {
-      console.log("API 성공: ", user, token);
+      notify({
+        type: "success",
+        text: "로그인 성공!",
+      });
+
       setAuth({ isLogIn: true, token });
       setMe({
         id: user._id,
         userName: user.fullName,
         profilePhoto: user.image,
       });
-      storeToken(token);
+      const encrypted = aesEncrypt(token);
+      storeToken(encrypted);
       navigate("/home");
     },
     onError(error) {
-      alert(`가입되지 않은 계정이거나 비밀번호 오류입니다!`);
+      notify({
+        type: "error",
+        text: "가입되지 않은 계정이거나 비밀번호 오류입니다!",
+      });
       console.error("API 에러: ", error);
     },
   });

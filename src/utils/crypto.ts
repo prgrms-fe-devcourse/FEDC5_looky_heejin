@@ -6,11 +6,14 @@ export const sha256Encrypt = (data: string) => {
 };
 
 export const aesEncrypt = (data: string) => {
-  return CryptoJS.AES.encrypt(JSON.stringify(data), VITE_CRYPTO_KEY).toString();
+  return CryptoJS.AES.encrypt(data, VITE_CRYPTO_KEY).toString();
 };
 
-export const aesDecrypt = (data: string) => {
+export const aesDecrypt = (data: string | null) => {
+  if (!data) return "";
+
   const bytes = CryptoJS.AES.decrypt(data, VITE_CRYPTO_KEY);
-  const decrypted = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  return decrypted;
+  const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+
+  return decryptedData;
 };

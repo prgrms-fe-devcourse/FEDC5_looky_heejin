@@ -7,3 +7,9 @@ export interface IChannel {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ICreateChannelParams {
+  authRequired: boolean;
+  description: string;
+  name: string;
+}

@@ -31,8 +31,15 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
   box-sizing: border-box;
   margin: 0px 5.5px 12px;
   /* 추후 삭제 예정 */
-  border: 1px solid ${props => props.theme.container_color};
+  border: 1px solid ${props => props.theme.card_container_color};
   border-radius: 0.375rem;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    border-color: ${props => props.theme.symbol_color};
+  }
 `;
 
 export const CardInfoContainer = styled.div`

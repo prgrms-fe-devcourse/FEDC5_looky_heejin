@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SearchPostsView, SearchUsersView } from ".";
 import { useQuery } from "@tanstack/react-query";
 import { _SEARCH, _SEARCH_USERS } from "@/api/queries/search";
@@ -6,13 +6,18 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { IPost, IUser } from "@/types";
 import { ViewWrap } from "@/pages/SearchPage/SearchPage.styles";
 import SearchTab from "@/components/SearchTab";
+import { Spinner } from "@/components/common/Spinner";
 
 interface FilteredData {
   users: IUser[];
   posts: IPost[];
 }
 
-const SearchResultsView = () => {
+const SearchResultsView = ({
+  onTagClick,
+}: {
+  onTagClick: (clickedKeyword: string) => void;
+}) => {
   const [usersData, setUsersData] = useState<IUser[]>([]);
   const [postsData, setPostsData] = useState<IPost[]>([]);
   const [showUsers, setShowUsers] = useState(true);
@@ -27,12 +32,17 @@ const SearchResultsView = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const filteredData = useMemo(() => {
     if (isSuccess) {
-      const copy = [...data];
-      if (copy.length < 1) return;
+      if (!data) return { users: [], posts: [] };
 
-      const filteredData = copy?.reduce<FilteredData>(
+      const copy = [...data];
+      if (copy.length === 0) {
+        setUsersData([]);
+        setPostsData([]);
+      }
+
+      const filtered = copy?.reduce<FilteredData>(
         (results, item) => {
           if (item.title) {
             results.posts = results.posts.concat(item);
@@ -44,28 +54,38 @@ const SearchResultsView = () => {
         { users: [], posts: [] }
       );
 
-      const filteredUsers = filteredData.users;
-      const filteredPosts = filteredData.posts;
-
-      setUsersData(filteredUsers);
-      setPostsData(filteredPosts);
+      return filtered;
     }
   }, [data]);
 
-  const handleTabClick = () => {
-    setShowUsers(!showUsers);
+  useEffect(() => {
+    if (!filteredData) return;
+
+    const filteredUsers = filteredData?.users;
+    const filteredPosts = filteredData?.posts;
+
+    setUsersData(filteredUsers);
+    setPostsData(filteredPosts);
+  }, [filteredData]);
+
+  const handleTabClick = (tabOption: string) => {
+    if (tabOption === "user") {
+      setShowUsers(true);
+    } else {
+      setShowUsers(false);
+    }
   };
 
   const handleUserClick = (userId: string) => {
     navigate(`/profile/${userId}`);
   };
 
-  const handlePostClick = (postId: string) => {
-    navigate(`/profile/${postId}`);
-  };
-
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <ViewWrap>
+        <Spinner />
+      </ViewWrap>
+    );
   }
 
   if (error) {
@@ -73,7 +93,7 @@ const SearchResultsView = () => {
   }
 
   return (
-    <div>
+    <section>
       <ViewWrap>
         {showUsers ? (
           <SearchTab option="user" onClick={handleTabClick}></SearchTab>
@@ -81,12 +101,16 @@ const SearchResultsView = () => {
           <SearchTab option="post" onClick={handleTabClick}></SearchTab>
         )}
         {showUsers ? (
-          <SearchUsersView usersData={usersData} onClick={handleUserClick} />
+          <SearchUsersView
+            usersData={usersData}
+            onTagClick={onTagClick}
+            onClick={handleUserClick}
+          />
         ) : (
-          <SearchPostsView postsData={postsData} onClick={handlePostClick} />
+          <SearchPostsView postsData={postsData} onTagClick={onTagClick} />
         )}
       </ViewWrap>
-    </div>
+    </section>
   );
 };
 

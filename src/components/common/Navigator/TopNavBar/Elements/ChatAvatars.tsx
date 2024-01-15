@@ -28,7 +28,7 @@ const AvatarWrapper = styled.div`
 `;
 
 const PartnerName = styled.span`
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   font-weight: 500;
   margin: 0.15rem auto 0 auto;
 `;
@@ -42,9 +42,9 @@ const ChatAvatars = ({
     <ChatAvatarsWrapper>
       <AvatarsWrapper>
         <AvatarWrapper>
-          <Avatar size="XS" shape="circle" src={partnerAvatarSrc} />
+          <Avatar size="XXS" shape="circle" src={partnerAvatarSrc} />
         </AvatarWrapper>
-        <Avatar size="XS" shape="circle" src={myAvatarSrc} />
+        <Avatar size="XXS" shape="circle" src={myAvatarSrc} />
       </AvatarsWrapper>
       <PartnerName>{partnerName}</PartnerName>
     </ChatAvatarsWrapper>

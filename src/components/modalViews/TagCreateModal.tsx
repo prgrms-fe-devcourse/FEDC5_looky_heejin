@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -5,16 +6,16 @@ import { ModalLayout } from "@/components/common/Modal";
 import InputLabel from "@/components/common/InputLabel";
 import { Button, Input } from "@/components/common";
 import { useUI } from "@/components/common/uiContext";
-import { useNewPost } from "@/hooks/useNewPost";
 import { FieldErrors, useForm } from "react-hook-form";
 import { ITag } from "@/types/post";
-import { useEffect } from "react";
 
 interface ModalProps {
   isEdit?: boolean;
   id?: string;
   x: number;
   y: number;
+  tags: ITag[];
+  setTags: Function;
 }
 
 interface ITagCreateModalProps {
@@ -24,10 +25,9 @@ interface ITagCreateModalProps {
 interface ITagFormProps extends ITag {}
 
 const TagCreateModal = ({ props }: ITagCreateModalProps) => {
-  const { x, y, id, isEdit = false } = props as ModalProps;
+  const { x, y, id, isEdit = false, tags, setTags } = props as ModalProps;
 
   const { closeModal } = useUI();
-  const { addTag, deleteTag, tags } = useNewPost();
 
   const { register, handleSubmit, setValue } = useForm<ITagFormProps>({});
 
@@ -43,9 +43,21 @@ const TagCreateModal = ({ props }: ITagCreateModalProps) => {
     }
   }, []);
 
+  const getTagsWithOutDeletedTag = (targetId: string) => {
+    const targetIndex = tags.findIndex(tag => tag.id === targetId);
+
+    if (targetIndex !== -1) {
+      const newTags = [...tags];
+      newTags.splice(targetIndex, 1);
+
+      return newTags;
+    } else return tags;
+  };
+
   const onValid = (data: ITagFormProps) => {
+    let newTags = tags;
     if (isEdit && id) {
-      deleteTag(id);
+      newTags = getTagsWithOutDeletedTag(id);
     }
 
     const newTag: ITag = {
@@ -57,7 +69,7 @@ const TagCreateModal = ({ props }: ITagCreateModalProps) => {
       y,
     };
 
-    addTag(newTag);
+    setTags([...newTags, newTag]);
 
     closeModal();
   };
@@ -66,7 +78,10 @@ const TagCreateModal = ({ props }: ITagCreateModalProps) => {
   };
 
   const closeClickHander = () => {
-    if (isEdit && id) deleteTag(id);
+    if (isEdit && id) {
+      const newTags = getTagsWithOutDeletedTag(id);
+      setTags(newTags);
+    }
     closeModal();
   };
 

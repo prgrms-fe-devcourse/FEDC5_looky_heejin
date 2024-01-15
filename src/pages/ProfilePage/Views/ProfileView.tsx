@@ -127,8 +127,7 @@ const ProfileView = ({
       }
     },
     onSuccess(data) {
-      console.log(data);
-      console.log("API 성공! UnFollow");
+      console.log("API 성공! UnFollow", data);
       setIsFollow(false);
       setFollowId("");
     },
