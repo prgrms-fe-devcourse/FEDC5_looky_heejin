@@ -7,6 +7,8 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import PostSimpleCard from "@/components/common/PostSimpleCard";
 import { Button } from "@/components/common";
 import { useNavigate } from "react-router-dom";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -44,24 +46,74 @@ const Home = () => {
   const navigate = useNavigate();
   const [channel, _] = useLocalStorage("ViewChannelObj");
   const [data, setData] = useState<any[]>([]);
+  const [queryId, setQueryId] = useState(
+    channel ? JSON.parse(channel)._id : ""
+  );
 
-  const fetchData = async (query: string) => {
-    const res = await _CHANNEL_POSTS(query);
-    if (res) setData(res);
-  };
+  // const fetchData = async (query: string) => {
+  //   const res = await _CHANNEL_POSTS(query);
+  //   if (res) setData(res);
+  // };
+
+  const {
+    data: postData,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["HomePageData", queryId],
+    queryFn: ({ pageParam }) =>
+      _CHANNEL_POSTS(queryId, {
+        offset: pageParam,
+        limit: 6,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.length !== 0 ? allPages.length * 6 : undefined;
+    },
+    select: data => ({
+      pages: data.pages,
+      pageParams: data.pageParams,
+    }),
+  });
+
+  const { setTarget } = useIntersectionObserver({
+    hasNextPage,
+    fetchNextPage,
+  });
 
   const handleClick = () => {
     navigate("/channels");
   };
 
+  const init = async () => {
+    if (channel) {
+      const parsedData = JSON.parse(channel);
+      if (parsedData) {
+        const res = await fetchNextPage();
+        if (res) {
+          console.log(res);
+          setData(res.data?.pages[0]);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     // 궁금증
     // channel을 받아오고 실행해야 하는것이 아닌지?
-    if (channel) {
-      const parsedData = JSON.parse(channel);
-      fetchData(parsedData._id);
-    }
-  }, []);
+    // if (channel) {
+    //   const parsedData = JSON.parse(channel);
+    //   setQueryId(parsedData._id);
+    //   fetchNextPage();
+    //   if (postData) setData(postData?.pages);
+    //   console.log(postData);
+    //   // fetchData(parsedData._id);
+    // }
+    // async () => {
+    //   await init();
+    // };
+    init();
+  }, [hasNextPage, fetchNextPage]);
 
   if (channel && !data.length) {
     return (
@@ -98,14 +150,30 @@ const Home = () => {
     );
   }
 
-  if (data) {
+  if (postData) {
     return (
       <>
+        {/* {postData ?
+            postData.pages.map((list) => 
+            {
+              return list.map((card) => {
+                
+                <PostSimpleCard key={card._id} postData={card} />
+              })
+            } */}
         <Container>
-          {data.map((value, index) => (
-            <PostSimpleCard key={index} postData={value} />
-          ))}
+          {postData
+            ? postData.pages.map((list: any) => {
+                return list.map((card: any) => {
+                  return <PostSimpleCard key={card._id} postData={card} />;
+                });
+              })
+            : null}
         </Container>
+        <div
+          // style={{ position: "fixed", bottom: "3rem", width: "100%" }}
+          ref={setTarget}
+        ></div>
       </>
     );
   }
