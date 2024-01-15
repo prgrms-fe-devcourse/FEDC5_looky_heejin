@@ -62,7 +62,6 @@ const Home = () => {
             fontStyle: "italic",
           }}
         >
-          <span>멋진 사진들을 가져오고 있어요!</span>
           <Spinner />
         </div>
       </>
