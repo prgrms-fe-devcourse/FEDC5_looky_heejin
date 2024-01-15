@@ -25,24 +25,20 @@ const ChangeImageModal = () => {
     onSuccess(data) {
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
-      if (data.image) {
+      if (data.image && profileImage !== data.image) {
         if (id && userName) setMe({ id, userName, profilePhoto: data.image });
-        if (profileImage !== data.image) {
-          setProfileImage(data.image);
-          notify({
-            type: "success",
-            text: "프로필 이미지를 성공적으로 변경했습니다.",
-          });
-        }
+        setProfileImage(data.image);
+        notify({
+          type: "success",
+          text: "프로필 이미지를 성공적으로 변경했습니다.",
+        });
       }
-      if (data.coverImage) {
-        if (profileCover !== data.coverImage) {
-          setProfileCover(data.coverImage);
-          notify({
-            type: "success",
-            text: "커버 이미지를 성공적으로 변경했습니다.",
-          });
-        }
+      if (data.coverImage && profileCover !== data.coverImage) {
+        setProfileCover(data.coverImage);
+        notify({
+          type: "success",
+          text: "커버 이미지를 성공적으로 변경했습니다.",
+        });
       }
     },
     onError(error) {
