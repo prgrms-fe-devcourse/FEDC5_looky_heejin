@@ -8,6 +8,7 @@ import { Modal } from "./Modal";
 import { MODAL_ACTION, MODAL_VIEWS } from "@/store/types/modalType";
 import {
   ChangeImageModal,
+  ChannelCreateModal,
   ChannelSelectModal,
   EditNameModal,
   EditPasswordModal,
@@ -162,6 +163,7 @@ const ModalView: React.FC<{
       {modalView === "EDIT_PASSWORD_VIEW" && <EditPasswordModal />}
       {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
       {modalView === "EDIT_COVERIMAGE_VIEW" && <ChangeImageModal />}
+      {modalView === "CREATE_CHANNEL_VIEW" && <ChannelCreateModal />}
       {modalView === "POST_DETAIL_VIEW" && <PostDetailModal props={props} />}
     </Modal>
   );

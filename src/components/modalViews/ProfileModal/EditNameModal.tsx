@@ -6,6 +6,7 @@ import { NAME_VALIDATION } from "@/pages/ProfilePage/ProfilePage.const";
 import { useMutation } from "@tanstack/react-query";
 import { _UPDATE_NAME } from "@/api/queries/profile";
 import { useProfile } from "@/hooks/useProfile";
+import { useMe } from "@/hooks/useMe";
 import {
   Form,
   InputWrap,
@@ -27,11 +28,15 @@ const EditNameModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<INameFormProps>();
+  const { id, profilePhoto, setMe } = useMe();
 
   const mutation = useMutation({
     mutationFn: async (formData: INameFormProps) =>
       await _UPDATE_NAME(formData),
     onSuccess: data => {
+      console.log("API UPDATE NAME 성공!");
+      if (id && profilePhoto)
+        setMe({ id, profilePhoto, userName: data.fullName });
       setProfileName(data.fullName);
 
       notify({

@@ -52,3 +52,4 @@ export const NAVIGATER = 50;
 export const MODAL = 888;
 export const MODAL_BACKGROUND = 888;
 export const MODAL_LAYOUT = 999;
+export const SPINNER = 9999;
