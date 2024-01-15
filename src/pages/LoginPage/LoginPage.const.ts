@@ -1,7 +1,7 @@
 const emailRegex =
   /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
 const passwordRegex =
-  /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])[\da-zA-Z!@#$%^*+=-]{8,}$/;
+  /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*+=-])[\da-zA-Z!@#$%^&*+=-]{8,}$/;
 
 const EMAIL_VALIDATION_OPTION = {
   required: {
