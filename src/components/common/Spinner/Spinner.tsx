@@ -6,19 +6,36 @@ const spin = keyframes`
   100% {transform: rotate(360deg)}
 `;
 
-// 스피너 ---------------------------------------
+const SpinnerContainer = styled.div`
+  display: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
 const SpinnerWrapper = styled.div`
-  width: 12rem;
-  height: 12rem;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
   animation: ${spin} 8s linear infinite;
   z-index: ${SPINNER};
 `;
 
 const Spinner = () => {
   return (
-    <SpinnerWrapper>
-      <img src="/looky_spinner.png" alt="looky_spinner" />
-    </SpinnerWrapper>
+    <SpinnerContainer>
+      <SpinnerWrapper>
+        <img
+          src="/looky_spinner.png"
+          alt="looky_spinner"
+          width="200px"
+          height="200px"
+        />
+      </SpinnerWrapper>
+    </SpinnerContainer>
   );
 };
 

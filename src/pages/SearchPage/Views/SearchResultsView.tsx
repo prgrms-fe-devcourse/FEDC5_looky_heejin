@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { IPost, IUser } from "@/types";
 import { ViewWrap } from "@/pages/SearchPage/SearchPage.styles";
 import SearchTab from "@/components/SearchTab";
+import { Spinner } from "@/components/common/Spinner";
 
 interface FilteredData {
   users: IUser[];
@@ -80,7 +81,11 @@ const SearchResultsView = ({
   };
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <ViewWrap>
+        <Spinner />
+      </ViewWrap>
+    );
   }
 
   if (error) {

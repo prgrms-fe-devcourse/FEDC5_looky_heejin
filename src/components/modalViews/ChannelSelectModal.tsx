@@ -6,6 +6,7 @@ import tw from "twin.macro";
 import { useQuery } from "@tanstack/react-query";
 import { _GET } from "@/api";
 import { IChannel } from "@/types/channel";
+import { Spinner } from "../common/Spinner";
 
 interface ModalProps {
   setChannelId: Function;
@@ -33,7 +34,7 @@ const ChannelSelectModal = ({ props }: IChannelSelectModalProps) => {
   };
 
   if (isLoading) {
-    return null;
+    return <Spinner />;
   }
 
   return (

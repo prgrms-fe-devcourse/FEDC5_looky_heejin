@@ -14,6 +14,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import { useNotification } from "@/hooks/useNotification";
 import { notify } from "@/utils/toast";
+import { Spinner } from "@/components/common/Spinner";
 
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover, profileInit } =
@@ -120,7 +121,7 @@ const ProfilePage = () => {
   }, [isSuccess]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (error) {

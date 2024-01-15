@@ -5,6 +5,7 @@ import { ChatLi } from "@/components/Chats";
 import { IConversation } from "@/types/message";
 import { useNavigate } from "react-router-dom";
 import { useMe } from "@/hooks/useMe";
+import { Spinner } from "@/components/common/Spinner";
 
 const ChatsPage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const ChatsPage = () => {
     navigate(`/chat/${id}`);
   };
 
-  if (isLoading) return null;
+  if (isLoading) return <Spinner />;
 
   return (
     <ul className="space-y-6 pt-8 w-full">
