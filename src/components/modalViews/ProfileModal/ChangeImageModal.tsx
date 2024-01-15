@@ -12,7 +12,8 @@ import { notify } from "@/utils/toast";
 import { useMe } from "@/hooks/useMe";
 
 const ChangeImageModal = () => {
-  const { setProfileImage, setProfileCover } = useProfile();
+  const { profileImage, profileCover, setProfileImage, setProfileCover } =
+    useProfile();
   const { id, userName, setMe } = useMe();
   const [image, setImage] = useState<File>();
 
@@ -24,7 +25,7 @@ const ChangeImageModal = () => {
     onSuccess(data) {
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
-      if (data.image) {
+      if (data.image && profileImage !== data.image) {
         if (id && userName) setMe({ id, userName, profilePhoto: data.image });
         setProfileImage(data.image);
         notify({
@@ -32,7 +33,7 @@ const ChangeImageModal = () => {
           text: "프로필 이미지를 성공적으로 변경했습니다.",
         });
       }
-      if (data.coverImage) {
+      if (data.coverImage && profileCover !== data.coverImage) {
         setProfileCover(data.coverImage);
         notify({
           type: "success",
