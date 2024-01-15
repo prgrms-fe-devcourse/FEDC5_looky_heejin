@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import { useNotification } from "@/hooks/useNotification";
+import { notify } from "@/utils/toast";
 
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover, profileInit } =
@@ -98,7 +99,10 @@ const ProfilePage = () => {
       });
       profileInit();
 
-      alert("정상적으로 로그아웃되었습니다");
+      notify({
+        type: "success",
+        text: "정상적으로 로그아웃됐습니다.",
+      });
       navigate(`/login`);
     }
   };

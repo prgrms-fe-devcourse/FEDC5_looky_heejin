@@ -12,6 +12,7 @@ import {
   ErrorContainer,
   SpanStyle,
 } from "./ProfileModal.style";
+import { notify } from "@/utils/toast";
 
 interface INameFormProps {
   fullName: string;
@@ -31,10 +32,20 @@ const EditNameModal = () => {
     mutationFn: async (formData: INameFormProps) =>
       await _UPDATE_NAME(formData),
     onSuccess: data => {
-      console.log("API UPDATE NAME 성공!");
       setProfileName(data.fullName);
+
+      notify({
+        type: "success",
+        text: "닉네임을 성공적으로 변경했습니다.",
+      });
     },
-    onError: error => console.log("Error", error),
+    onError: error => {
+      notify({
+        type: "error",
+        text: "닉네임 변경에 실패했습니다.",
+      });
+      console.log("Error", error);
+    },
   });
 
   const onValid = (data: INameFormProps) => {

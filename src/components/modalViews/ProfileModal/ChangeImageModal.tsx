@@ -8,6 +8,7 @@ import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
 import { useProfile } from "@/hooks/useProfile";
 import { UploadWrap } from "./ProfileModal.style";
+import { notify } from "@/utils/toast";
 
 const ChangeImageModal = () => {
   const { setProfileImage, setProfileCover } = useProfile();
@@ -19,17 +20,28 @@ const ChangeImageModal = () => {
   const mutation = useMutation({
     mutationFn: async (formData: IUpdateImage) => await _UPDATE_IMAGE(formData),
     onSuccess(data) {
-      console.log("API 데이터: ", data);
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
       if (data.image) {
         setProfileImage(data.image);
+        notify({
+          type: "success",
+          text: "프로필 이미지를 성공적으로 변경했습니다.",
+        });
       }
       if (data.coverImage) {
         setProfileCover(data.coverImage);
+        notify({
+          type: "success",
+          text: "커버 이미지를 성공적으로 변경했습니다.",
+        });
       }
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "이미지 변경에 실패했습니다.",
+      });
       console.error("API 에러: ", error);
     },
   });
