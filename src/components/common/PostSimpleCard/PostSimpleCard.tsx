@@ -271,7 +271,11 @@ const PostSimpleCard = ({
                       : theme?.symbol_color,
                     fontVariationSettings: "fill",
                   }}
-                  className="material-symbols-rounded"
+                  className={
+                    favoriteClicked
+                      ? "material-icons"
+                      : "material-symbols-rounded"
+                  }
                 >
                   favorite
                 </span>
