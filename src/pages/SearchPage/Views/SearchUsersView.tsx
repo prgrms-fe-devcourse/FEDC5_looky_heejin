@@ -41,7 +41,7 @@ const SearchUsersView = ({
           ))
         ) : (
           <SearchEmptyView onTagClick={onTagClick}>
-            찾는 사용자가 없습니다.
+            <strong>찾는 사용자가 없습니다.</strong>
           </SearchEmptyView>
         )}
       </ListWrap>

@@ -22,7 +22,7 @@ const SearchPostsView = ({ onTagClick, postsData }: IPostsProps) => {
             })
         ) : (
           <SearchEmptyView onTagClick={onTagClick}>
-            찾는 포스트가 없습니다.
+            <strong>찾는 포스트가 없습니다.</strong>
           </SearchEmptyView>
         )}
       </PostWrap>

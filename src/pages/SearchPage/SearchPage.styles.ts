@@ -70,6 +70,7 @@ export const Input = styled.input`
   color: ${props => props.theme.text_primary_color};
   background-color: ${props => props.theme.container_color};
   padding: 0.5rem;
+  padding-right: 2rem;
   box-sizing: border-box;
   padding-left: 1rem;
   border-width: ${BORDER_BASE_WIDTH}px;
