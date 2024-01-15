@@ -1,4 +1,8 @@
-const SEARCH_VALIDATION_OPTION = {
+import { NAV_HEIGHT } from "@/constants/uiConstants";
+
+export const VIEW_HEIGHT = `100vh - ${NAV_HEIGHT * 2}rem`;
+
+export const SEARCH_VALIDATION_OPTION = {
   required: {
     value: true,
     message: "검색어를 입력하세요",
@@ -11,8 +15,4 @@ const SEARCH_VALIDATION_OPTION = {
     value: 50,
     message: "50자 이하 입력하세요",
   },
-};
-
-export default {
-  SEARCH_VALIDATION_OPTION,
 };

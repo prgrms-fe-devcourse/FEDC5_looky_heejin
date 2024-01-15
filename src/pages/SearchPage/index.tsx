@@ -42,7 +42,6 @@ const SearchPage = () => {
     [addRecentHistory]
   );
 
-  // 최근 검색어 클릭하면 Search
   const handleKeywordClick = useCallback((clickedKeyword: string) => {
     handleSearch({ keyword: clickedKeyword });
   }, []);
@@ -72,7 +71,7 @@ const SearchPage = () => {
     <SearchWrap>
       <SearchBarWrap>
         <SearchBar
-          onClick={handleGoBack}
+          onClickBack={handleGoBack}
           onSearch={searchQuery => handleSearch({ keyword: searchQuery })}
         />
       </SearchBarWrap>
@@ -83,7 +82,7 @@ const SearchPage = () => {
             onItemClick={handleKeywordClick}
           />
         ) : (
-          <SearchResultsView />
+          <SearchResultsView onTagClick={handleKeywordClick} />
         )}
       </SearchViewWrap>
     </SearchWrap>

@@ -11,7 +11,6 @@ const SearchRecentView = ({
   onItemClick,
   ...props
 }: SearchRecentProps) => {
-  // 최근 검색어 순으로 정렬
   const reversedKeywords = useMemo(() => {
     if (recentKeywords) {
       try {

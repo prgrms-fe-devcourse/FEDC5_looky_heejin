@@ -15,9 +15,9 @@ import useEventQuery from "@/hooks/useEventQuery";
 import { useMe } from "@/hooks/useMe";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
-const LEFT_PARTITION_WIDTH = "20%";
-const CENTER_PARTITION_WIDTH = "60%";
-const RIGHT_PARTITION_WIDTH = "20%";
+const LEFT_PARTITION_WIDTH = "25%";
+const CENTER_PARTITION_WIDTH = "50%";
+const RIGHT_PARTITION_WIDTH = "25%";
 
 const TopNavBarWrapper = styled.nav`
   position: fixed;
