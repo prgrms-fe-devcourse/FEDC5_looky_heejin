@@ -6,7 +6,7 @@ import { Image } from "@/components/common";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const SplashPage = () => {
-  const [token, _] = useLocalStorage("token");
+  const [token, _] = useLocalStorage("auth_token");
   const navigate = useNavigate();
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {

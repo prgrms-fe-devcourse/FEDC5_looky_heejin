@@ -19,7 +19,7 @@ import { Spinner } from "@/components/common/Spinner";
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover, profileInit } =
     useProfile();
-  const [, setToken] = useLocalStorage("token");
+  const [, setToken] = useLocalStorage("auth_token");
   const [, setKeywords] = useLocalStorage("keywords");
   const { setNotification } = useNotification();
   const { setMe } = useMe();

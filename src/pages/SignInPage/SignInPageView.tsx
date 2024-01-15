@@ -29,7 +29,7 @@ interface ISigninModify extends ISignIn {
 const SignInPage = () => {
   const { setMe } = useMe();
   const { setAuth } = useAuth();
-  const [_, storeToken] = useLocalStorage("token");
+  const [_, storeToken] = useLocalStorage("auth_token");
   const {
     watch,
     register,
