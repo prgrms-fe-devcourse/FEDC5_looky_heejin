@@ -46,7 +46,6 @@ const CreatePostPageView = () => {
     rootAPI.defaults.headers["Content-Type"] = "multipart/form-data";
 
     return () => {
-      // initNewPostData();
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
     };
@@ -81,10 +80,6 @@ const CreatePostPageView = () => {
   } = useForm<ICreatePostFormProps>();
 
   const onValid = (data: ICreatePostFormProps) => {
-    // request body
-    //title: String, <- 필요한 데이터를 JSON.stringfy 해서 넣음
-    //image: Binary | null,
-    //channelId: String
     const additionalData = JSON.stringify({
       title: data.title,
       content: data.content,

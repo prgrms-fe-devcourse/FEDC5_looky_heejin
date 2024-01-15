@@ -106,46 +106,6 @@ export const useUI = () => {
   return context;
 };
 
-// export const useUI = () => {
-//   const dispatch = useDispatch();
-
-//   // reducers state //
-//   const {
-//     displayModal,
-//     modalView,
-//     props: modalProps,
-//   } = useSelector(({ modal }: RootState) => modal);
-
-//   // reducers action //
-//   const openModal = useCallback(
-//     (props?: any) =>
-//       dispatch(modalActions.modalReducer({ type: "OPEN_MODAL", props })),
-//     [dispatch]
-//   );
-
-//   const closeModal = useCallback(
-//     () => dispatch(modalActions.modalReducer({ type: "CLOSE_MODAL" })),
-//     [dispatch]
-//   );
-
-//   const setModalView = useCallback(
-//     (view: MODAL_VIEWS) =>
-//       dispatch(modalActions.modalReducer({ type: "SET_MODAL_VIEW", view })),
-//     [dispatch]
-//   );
-
-//   const context = {
-//     displayModal,
-//     modalView,
-//     modalProps,
-//     openModal: (props?: any) => openModal(props),
-//     closeModal: () => closeModal(),
-//     setModalView: (view: MODAL_VIEWS) => setModalView(view),
-//   };
-
-//   return context;
-// };
-
 // Modal ================================================================= //
 const ModalView: React.FC<{
   modalView: MODAL_VIEWS;

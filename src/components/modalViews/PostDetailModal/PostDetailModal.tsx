@@ -92,7 +92,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState<ITag[]>([]);
-  // const [likes, setLikes] = useState<string[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [myLikeId, setMyLikeId] = useState("");
   const [isILiked, setIsILiked] = useState<boolean>(false);
@@ -108,7 +107,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
-  // const postId = "659c00da1d725b33c1ed7a1e";
   const { id: myId } = useMe();
 
   const navigate = useNavigate();
@@ -118,7 +116,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     queryFn: async () => await _GET("/auth-user"),
   });
 
-  // init fetch--------------------------------------------
   const { isLoading, refetch } = useEventQuery({
     key: `postId-${postId}`,
     endPoint: `/posts/${postId}`,
@@ -143,7 +140,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     setTitle(parsedJson.title);
     setContent(parsedJson.content);
     setTags(parsedJson.tags);
-    // setLikes(data?.data.likes);
     setLikeCount(data?.data.likes.length);
     setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
     data?.data.likes.map((likeData: any) => {
@@ -153,7 +149,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     });
     setComments(data?.data.comments);
   };
-  // --------------------------------------------------------------------------
 
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
@@ -317,7 +312,6 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     if (confirm("포스트를 삭제할까요? 삭제 후에는 되돌릴 수 없습니다.")) {
       deletePostMutation.mutate({ id: postId });
       closeModal();
-      // TODO : 포스트 삭제 api통신 후 홈 화면이 리렌더링될 수 있도록 해야함
     }
   };
 

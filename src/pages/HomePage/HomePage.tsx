@@ -42,8 +42,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // 궁금증
-    // channel을 받아오고 실행해야 하는것이 아닌지?
     if (channel) {
       const parsedData = JSON.parse(channel);
       fetchData(parsedData._id);

@@ -117,7 +117,6 @@ const Upload = ({
         type="file"
         name={name}
         accept={accept}
-        // value={value}
         onChange={handleFileChange}
       />
       <UploadArea $dragging={dragging}>

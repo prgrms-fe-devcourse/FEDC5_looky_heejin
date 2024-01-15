@@ -13,8 +13,6 @@ import Icon from "../Icon/Icon";
 import { CLOSE_ICON } from "@/constants/icons";
 import useTheme from "@/hooks/useTheme";
 
-// import FocusTrap from "@lib/focus-trap";
-
 interface ModalLayoutProps {
   className?: string;
   children?: any;

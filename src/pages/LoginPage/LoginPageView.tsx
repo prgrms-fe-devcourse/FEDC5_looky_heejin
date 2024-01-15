@@ -57,7 +57,6 @@ const LoginPageView = () => {
         profilePhoto: user.image,
       });
       const encrypted = aesEncrypt(token);
-      console.log(encrypted);
       storeToken(encrypted);
       navigate("/home");
     },

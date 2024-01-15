@@ -93,7 +93,7 @@ export const FollowButton = styled(Button)`
   align-items: center;
   justify-content: center;
   width: 4.3rem;
-  height: 1rem; // 왜 안줄어들지
+  height: 1rem;
   font-size: 0.7rem;
   line-height: 0.5rem;
   margin-left: 1rem;
@@ -196,7 +196,6 @@ export const LikeCountSpan = styled.span`
 export const CommentChatWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  // TODO : 리팩토링 - 공통으로 빼기
   margin-right: 0.5rem;
   & :first-child {
     margin-top: 0.25rem;

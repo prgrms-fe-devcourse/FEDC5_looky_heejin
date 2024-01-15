@@ -6,11 +6,11 @@ export interface INotification {
   _id: string;
   author: IUser;
   user: IUser | string;
-  post?: string | null; // 포스트 id
-  follow?: string; // 사용자 id
+  post?: string | null;
+  follow?: string;
   comment?: IComment;
   like?: ILike;
-  message?: string; // 메시지 id
+  message?: string;
   createdAt: string;
   updatedAt: string;
 }

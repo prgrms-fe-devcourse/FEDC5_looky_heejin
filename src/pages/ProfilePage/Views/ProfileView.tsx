@@ -103,7 +103,6 @@ const ProfileView = ({
       return await _FOLLOW({ userId: id });
     },
     onSuccess(data) {
-      console.log(data);
       setIsFollow(true);
       setFollowId(data._id);
 
