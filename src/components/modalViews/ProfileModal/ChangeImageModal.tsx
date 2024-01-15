@@ -8,9 +8,11 @@ import { _UPDATE_IMAGE } from "@/api/queries/profile";
 import { IUpdateImage } from "@/types/profile";
 import { useProfile } from "@/hooks/useProfile";
 import { UploadWrap } from "./ProfileModal.style";
+import { useMe } from "@/hooks/useMe";
 
 const ChangeImageModal = () => {
   const { setProfileImage, setProfileCover } = useProfile();
+  const { id, userName, setMe } = useMe();
   const [image, setImage] = useState<File>();
 
   const { closeModal, modalView } = useUI();
@@ -23,6 +25,7 @@ const ChangeImageModal = () => {
       rootAPI.defaults.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
       if (data.image) {
+        if (id && userName) setMe({ id, userName, profilePhoto: data.image });
         setProfileImage(data.image);
       }
       if (data.coverImage) {
