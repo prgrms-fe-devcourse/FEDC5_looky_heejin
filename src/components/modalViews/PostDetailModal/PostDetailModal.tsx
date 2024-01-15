@@ -454,7 +454,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             <StyledSpan>
               <TitleSpan>{title}</TitleSpan>
               <br />
-              <p style={{ whiteSpace: "pre" }}>{content}</p>
+              <span>
+                <p style={{ whiteSpace: "pre" }}>{content}</p>
+              </span>
             </StyledSpan>
           ) : (
             <StyledSpan>
