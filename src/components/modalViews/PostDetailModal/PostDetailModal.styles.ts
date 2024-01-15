@@ -1,5 +1,10 @@
 import { Button, Input } from "@/components/common";
-import { APP_MAX_WIDTH, MODAL_LAYOUT, SPINNER } from "@/constants/uiConstants";
+import {
+  APP_MAX_WIDTH,
+  MODAL_LAYOUT,
+  SCREEN_SIZE_SM,
+  SPINNER,
+} from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 
@@ -40,8 +45,14 @@ export const SpinnerWrapper = styled.div`
 
 // 전체 -----------------------------------------
 export const PostDetailWrapper = styled.div`
-  width: ${APP_MAX_WIDTH}px;
-  height: 95vh;
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: ${SCREEN_SIZE_SM}px) {
+    width: ${APP_MAX_WIDTH}px;
+    height: 95vh;
+  }
+
   background-color: ${({ theme }) => `${theme.background_color}`};
   border: ${({ theme }) => `0.5px solid ${theme.container_color}`};
   border-radius: 0.5rem;
