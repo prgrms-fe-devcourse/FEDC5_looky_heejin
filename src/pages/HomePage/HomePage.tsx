@@ -17,9 +17,7 @@ const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 10px;
-  margin-left: -5.5px;
-  margin-right: -5.5px;
-  width: calc(100% + 11px);
+  width: 100%;
   padding-bottom: 3rem;
 `;
 
@@ -32,7 +30,6 @@ const Home = () => {
 
   const fetchData = async (query: string) => {
     const res = await _CHANNEL_POSTS(query);
-    console.log(res);
     if (res) {
       setFetch(true);
       setData(res);
