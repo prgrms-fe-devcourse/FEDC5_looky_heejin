@@ -31,7 +31,6 @@ import {
   LikeCountSpan,
   PostDetailWrapper,
   ReplyButton,
-  SpinnerWrapper,
   StyledImg,
   StyledInput,
   StyledSpan,
@@ -62,6 +61,7 @@ import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import { ME } from "@/constants/queryKey";
 import Comments from "./Comments";
 import useEventQuery from "@/hooks/useEventQuery";
+import { Spinner } from "@/components/common/Spinner";
 
 interface ModalProps {
   postId: string;
@@ -348,12 +348,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     });
   };
 
-  if (isLoading)
-    return (
-      <SpinnerWrapper>
-        <img src="/looky_spinner.png" alt="looky_spinner" />
-      </SpinnerWrapper>
-    );
+  if (isLoading) return <Spinner />;
   return (
     <PostDetailWrapper ref={modalRef}>
       <UserInfoWrapper>

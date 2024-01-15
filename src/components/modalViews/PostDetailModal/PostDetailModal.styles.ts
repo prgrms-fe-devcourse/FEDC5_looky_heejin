@@ -30,19 +30,6 @@ export const heartbeat = keyframes`
   }
 `;
 
-export const spin = keyframes`
-  0% {transform: rotate(0deg)}
-  100% {transform: rotate(360deg)}
-`;
-
-// 스피너 ---------------------------------------
-export const SpinnerWrapper = styled.div`
-  width: 12rem;
-  height: 12rem;
-  animation: ${spin} 8s linear infinite;
-  z-index: ${SPINNER};
-`;
-
 // 전체 -----------------------------------------
 export const PostDetailWrapper = styled.div`
   width: 100%;
