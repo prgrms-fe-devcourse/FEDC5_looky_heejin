@@ -128,6 +128,7 @@ const TopNavBar = () => {
           {currentPath === PathName.CHAT && (
             <ChatAvatars
               myAvatarSrc={myProfileImage || undefined}
+              partnerId={partnerId}
               partnerAvatarSrc={partnerData.profileImage || undefined}
               partnerName={partnerData.fullName}
             />
