@@ -2,8 +2,9 @@ import { _GET } from "@/api";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { ChannelStyle } from "./ChannelsPage.styles";
+import { ChannelStyle, ContainDiv } from "./ChannelsPage.styles";
 import { GET_CHANNELS } from "@/constants/queryKey";
+import { Button } from "@/components/common";
 
 const ChannelsPage = () => {
   const [channel, setChannel] = useLocalStorage("ViewChannelObj");
@@ -22,13 +23,17 @@ const ChannelsPage = () => {
   if (data?.data) {
     return (
       <>
-        {data?.data.map((val: any) => {
-          return (
-            <ChannelStyle key={val._id} onClick={() => handleClick(val)}>
-              {val.name}
-            </ChannelStyle>
-          );
-        })}
+        <ContainDiv>
+          {data?.data.map((val: any) => {
+            return (
+              <ChannelStyle key={val._id}>
+                <Button variant="neumorp" onClick={() => handleClick(val)}>
+                  {val.name}
+                </Button>
+              </ChannelStyle>
+            );
+          })}
+        </ContainDiv>
       </>
     );
   }
