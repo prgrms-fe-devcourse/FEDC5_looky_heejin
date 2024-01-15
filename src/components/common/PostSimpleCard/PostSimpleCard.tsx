@@ -139,9 +139,14 @@ const PostSimpleCard = ({
     },
   });
 
+  const likeDataBinding = (data: any) => {
+    setFavoriteId(data._id);
+    setFavoriteClicked(!favoriteClicked);
+  };
+
   const onClickImage = () => {
     setModalView("POST_DETAIL_VIEW");
-    openModal({ postId: postData._id });
+    openModal({ postId: postData._id, likeDataBinding });
   };
 
   const onClickProfile = () => {

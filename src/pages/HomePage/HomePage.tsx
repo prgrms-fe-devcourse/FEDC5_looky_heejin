@@ -9,6 +9,7 @@ import { Button } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { Admin } from "@/components/Admin";
 import { useMe } from "@/hooks/useMe";
+import { Spinner } from "@/components/common/Spinner";
 const { VITE_ADMIN_ID } = import.meta.env;
 
 const Container = styled.div`
@@ -63,7 +64,8 @@ const Home = () => {
             fontStyle: "italic",
           }}
         >
-          멋진 사진들을 가져오고 있어요!
+          <span>멋진 사진들을 가져오고 있어요!</span>
+          <Spinner />
         </div>
       </>
     );

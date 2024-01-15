@@ -34,6 +34,8 @@ export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
   border: 1px solid ${props => props.theme.card_container_color};
   border-radius: 0.375rem;
 
+  transition: all 0.2s ease;
+
   &:hover {
     transform: scale(1.02);
     border-color: ${props => props.theme.symbol_color};

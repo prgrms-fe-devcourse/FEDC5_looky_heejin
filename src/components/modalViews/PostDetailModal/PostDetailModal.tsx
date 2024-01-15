@@ -62,9 +62,11 @@ import { ME } from "@/constants/queryKey";
 import Comments from "./Comments";
 import useEventQuery from "@/hooks/useEventQuery";
 import { Spinner } from "@/components/common/Spinner";
+import { notify } from "@/utils/toast";
 
 interface ModalProps {
   postId: string;
+  likeDataBinding: (data: any) => void;
 }
 
 interface IPostDetailModalProps {
@@ -76,7 +78,7 @@ interface Comment {
 }
 
 const PostDetail = ({ props }: IPostDetailModalProps) => {
-  const { postId } = props as ModalProps;
+  const { postId, likeDataBinding } = props as ModalProps;
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { closeModal } = useUI();
   const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
@@ -172,7 +174,10 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           userId,
           postId: data.post,
         };
-
+        notify({
+          type: "success",
+          text: "댓글이 등록되었어요!",
+        });
         notificationMutation.mutate(newNotification);
         setComments(newComments);
       }
@@ -197,10 +202,19 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           postId: data.post,
         };
         notificationMutation.mutate(newNotification);
+        notify({
+          type: "success",
+          text: "좋아요를 눌렀어요!",
+        });
+        likeDataBinding(data);
+        setMyLikeId(data._id);
       }
-      setMyLikeId(data._id);
     },
     onError() {
+      notify({
+        type: "error",
+        text: "좋아요 생성에 실패했어요.",
+      });
       setIsILiked(false);
       setLikeCount(likeCount - 1);
     },
@@ -211,6 +225,13 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
     onMutate() {
       setIsILiked(false);
       setLikeCount(likeCount - 1);
+    },
+    onSuccess(data) {
+      notify({
+        type: "default",
+        text: "좋아요를 취소했어요.",
+      });
+      likeDataBinding(data);
     },
     onError() {
       setIsILiked(true);
@@ -230,10 +251,18 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         };
         notificationMutation.mutate(newNotification);
       }
+      notify({
+        type: "success",
+        text: "팔로우를 성공했어요.",
+      });
       setIsIFollowed(true);
       setFollowId(data._id);
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "팔로우 요청에 실패했어요.",
+      });
       console.error("error: 팔로우 실패", error);
     },
   });
@@ -241,10 +270,18 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const unfollowMutation = useMutation({
     mutationFn: async (formData: IUnfollow) => await _UNFOLLOW(formData),
     onSuccess() {
+      notify({
+        type: "default",
+        text: "팔로우를 해제했어요.",
+      });
       setIsIFollowed(false);
       setFollowId("");
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "팔로우 해제에 실패했어요.",
+      });
       console.error("error: 언팔로우 실패 ", error);
     },
   });
@@ -252,7 +289,17 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   const deletePostMutation = useMutation({
     mutationFn: async (formData: IDeletePost) =>
       await _DELETE("/posts/delete", formData),
+    onSuccess() {
+      notify({
+        type: "default",
+        text: "포스트를 삭제했어요.",
+      });
+    },
     onError(error) {
+      notify({
+        type: "error",
+        text: "포스트 삭제에 실패했어요.",
+      });
       console.error("error: 포스트 삭제 실패", error);
     },
   });
@@ -464,9 +511,13 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
               <br />
               {content.length > 50 ? (
                 <>
-                  <span>{content.slice(0, 50)}</span>
+                  <span>
+                    <span style={{ whiteSpace: "pre" }}>
+                      {content.slice(0, 50)}
+                    </span>
+                  </span>
                   <ContentDetail onClick={handleContentDetail}>
-                    ...더 보기
+                    {"  "}...더 보기
                   </ContentDetail>
                 </>
               ) : (
