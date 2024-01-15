@@ -99,12 +99,6 @@ const PostSimpleCard = ({
 
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),
-    onSuccess(data) {
-      console.log("알림 api 성공", data);
-    },
-    onError(error) {
-      console.error("알림 api 통신 에러", error);
-    },
   });
 
   const mutation = useMutation({
