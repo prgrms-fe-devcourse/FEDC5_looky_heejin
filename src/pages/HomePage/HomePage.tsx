@@ -8,6 +8,8 @@ import PostSimpleCard from "@/components/common/PostSimpleCard";
 import { Button } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { Admin } from "@/components/Admin";
+import { useMe } from "@/hooks/useMe";
+const { VITE_ADMIN_ID } = import.meta.env;
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -26,6 +28,7 @@ const Home = () => {
   const [channel, _] = useLocalStorage("ViewChannelObj");
   const [data, setData] = useState<any[]>([]);
   const [fetch, setFetch] = useState(false);
+  const { id } = useMe();
 
   const fetchData = async (query: string) => {
     const res = await _CHANNEL_POSTS(query);
@@ -52,7 +55,7 @@ const Home = () => {
   if (channel && !data.length && !fetch) {
     return (
       <>
-        <Admin />
+        {id === VITE_ADMIN_ID ? <Admin /> : null}
         <div
           style={{
             width: "100%",
@@ -81,7 +84,7 @@ const Home = () => {
             height: "100%",
           }}
         >
-          <Admin />
+          {id === VITE_ADMIN_ID ? <Admin /> : null}
           <span style={{ fontSize: "2rem", marginBottom: "1rem" }}>
             채널을 선택해보세요!
           </span>
@@ -100,11 +103,11 @@ const Home = () => {
   if (data && fetch) {
     return (
       <>
-        <Admin />
+        {id === VITE_ADMIN_ID ? <Admin /> : null}
         {data.length ? (
           <Container>
-            {data.map((value, index) => (
-              <PostSimpleCard key={index} postData={value} />
+            {data.map(value => (
+              <PostSimpleCard key={value._id} postData={value} />
             ))}
           </Container>
         ) : (
