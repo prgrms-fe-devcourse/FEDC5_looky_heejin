@@ -13,8 +13,8 @@ const ProfilePostsView = ({ posts }: PostsProps) => {
     <Posts>
       {posts && posts.length > 0 ? (
         <Container>
-          {posts.map((post: IPost, index) => (
-            <PostSimpleCard key={index} postData={post} />
+          {posts.map((post: IPost) => (
+            <PostSimpleCard key={post._id} postData={post} />
           ))}
         </Container>
       ) : isMe ? (
