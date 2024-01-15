@@ -3,7 +3,6 @@ import {
   APP_MAX_WIDTH,
   MODAL_LAYOUT,
   SCREEN_SIZE_SM,
-  SPINNER,
 } from "@/constants/uiConstants";
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
