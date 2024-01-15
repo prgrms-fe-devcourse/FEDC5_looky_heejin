@@ -54,24 +54,30 @@ const NotificationIconWrapper = styled(IconWrapper)`
   position: relative;
 `;
 
-const ChatNotificationCounter = styled.div`
+const ChatNotificationCounter = styled.div<{
+  $width: string;
+  $borderRadius: string;
+}>`
   position: absolute;
   left: 0.95rem;
   top: 0.1rem;
-  width: 1rem;
+  width: ${({ $width }) => $width && $width};
   height: 1rem;
   background-color: ${({ theme }) => theme.symbol_color};
-  border-radius: 50%;
+  border-radius: ${({ $borderRadius }) => $borderRadius && $borderRadius};
   border: ${({ theme }) => `1px solid ${theme.background_color}`};
 `;
 
-const NotificationCounter = styled.div`
+const NotificationCounter = styled.div<{
+  $width: string;
+  $borderRadius: string;
+}>`
   position: absolute;
   left: 0.9rem;
-  width: 1rem;
+  width: ${({ $width }) => $width && $width};
   height: 1rem;
   background-color: ${({ theme }) => theme.symbol_color};
-  border-radius: 50%;
+  border-radius: ${({ $borderRadius }) => $borderRadius && $borderRadius};
   border: ${({ theme }) => `1px solid ${theme.background_color}`};
 `;
 
@@ -111,11 +117,17 @@ const ChatNotificationIconsBox = ({
           >
             <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
             {messageUnseenCount > 0 ? (
-              <ChatNotificationCounter>
-                <NotificationCounterSpan>
-                  {Math.min(messageUnseenCount, 99)}
-                </NotificationCounterSpan>
-              </ChatNotificationCounter>
+              messageUnseenCount > 99 ? (
+                <ChatNotificationCounter $width="1.3rem" $borderRadius="8px">
+                  <NotificationCounterSpan>99+</NotificationCounterSpan>
+                </ChatNotificationCounter>
+              ) : (
+                <ChatNotificationCounter $width="1rem" $borderRadius="50%">
+                  <NotificationCounterSpan>
+                    {messageUnseenCount}
+                  </NotificationCounterSpan>
+                </ChatNotificationCounter>
+              )
             ) : null}
           </NotificationIconWrapper>
           <NotificationIconWrapper
@@ -124,11 +136,17 @@ const ChatNotificationIconsBox = ({
           >
             <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
             {commonUnseenCount > 0 ? (
-              <NotificationCounter>
-                <NotificationCounterSpan>
-                  {Math.min(commonUnseenCount, 99)}
-                </NotificationCounterSpan>
-              </NotificationCounter>
+              commonUnseenCount > 99 ? (
+                <NotificationCounter $width="1.3rem" $borderRadius="8px">
+                  <NotificationCounterSpan>99+</NotificationCounterSpan>
+                </NotificationCounter>
+              ) : (
+                <NotificationCounter $width="1rem" $borderRadius="50%">
+                  <NotificationCounterSpan>
+                    {commonUnseenCount}
+                  </NotificationCounterSpan>
+                </NotificationCounter>
+              )
             ) : null}
           </NotificationIconWrapper>
         </>
