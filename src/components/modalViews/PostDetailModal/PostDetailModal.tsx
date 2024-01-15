@@ -444,9 +444,19 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             onClick={() => tagClickHandler(link)}
           >
             <ToolTip
-              $direction="top"
+              $direction={
+                x
+                  ? x < 80 && x > 20
+                    ? "top"
+                    : x < 20
+                      ? "right"
+                      : "left"
+                  : "top"
+              }
               $options="hover"
               $tooltip={"브랜드: " + brand + "\\A" + "제품 명: " + product}
+              $x={x}
+              $y={y}
             >
               <Tag x={50} y={50} />
             </ToolTip>
