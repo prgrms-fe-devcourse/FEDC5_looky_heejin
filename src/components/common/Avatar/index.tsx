@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 type TShape = "circle" | "round" | "square";
+type TSize = "XXS" | "XS" | "S" | "M" | "L" | "XL";
 
 interface IAvatarProps {
-  size: string;
+  size: TSize;
   shape?: TShape;
   src?: string;
   theme?: string;
@@ -17,6 +18,7 @@ const ShapeToStyle: { [key: string]: string } = {
 };
 
 const SizeToStyle: { [key: string]: string } = {
+  XXS: "26px",
   XS: "32px",
   S: "40px",
   M: "48px",

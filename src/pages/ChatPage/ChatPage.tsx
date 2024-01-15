@@ -86,7 +86,9 @@ const ChatPage = () => {
     seenUpdateMutation.mutate();
     scrollToBottom();
 
-    return () => seenUpdateMutation.mutate();
+    return () => {
+      seenUpdateMutation.mutate();
+    };
   }, []);
 
   return (

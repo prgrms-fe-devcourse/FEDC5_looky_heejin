@@ -93,7 +93,7 @@ const ProfilePage = () => {
       setAuth({ isLogIn: false, token: null });
       setMe({ id: "", profilePhoto: "", userName: "" });
       setToken(null);
-      setKeywords(null);
+      setKeywords([]);
       setNotification({
         common: [],
         message: [],

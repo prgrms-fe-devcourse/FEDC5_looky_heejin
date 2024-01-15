@@ -7,6 +7,7 @@ import {
 import { IDeleteComment } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import CommentLists from "./CommentLists";
+import { notify } from "@/utils/toast";
 
 interface ICommentsProps {
   setComments: React.Dispatch<React.SetStateAction<any[]>>;
@@ -26,6 +27,10 @@ const Comments = ({
     mutationFn: async (formData: IDeleteComment) =>
       await _DELETE_COMMENT(formData),
     onSuccess(data) {
+      notify({
+        type: "default",
+        text: "댓글을 삭제했어요.",
+      });
       console.log("API : 댓글 삭제 성공", data);
       const newComments = comments.filter(({ _id }: any) => _id !== data._id);
       setComments(newComments);

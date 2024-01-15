@@ -1,11 +1,14 @@
-import { ModalLayout } from "../common/Modal";
-import { Button } from "../common";
-import { useUI } from "../common/uiContext";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { useQuery } from "@tanstack/react-query";
+
 import { _GET } from "@/api";
 import { IChannel } from "@/types/channel";
+import useTheme from "@/hooks/useTheme";
+
+import { Button } from "../common";
+import { ModalLayout } from "../common/Modal";
+import { useUI } from "../common/uiContext";
 import { Spinner } from "../common/Spinner";
 
 interface ModalProps {
@@ -20,6 +23,7 @@ interface IChannelSelectModalProps {
 const ChannelSelectModal = ({ props }: IChannelSelectModalProps) => {
   const { setChannelId, setChannelName } = props as ModalProps;
 
+  const theme = useTheme();
   const { closeModal } = useUI();
 
   const { data, isLoading } = useQuery({
@@ -44,9 +48,11 @@ const ChannelSelectModal = ({ props }: IChannelSelectModalProps) => {
           {data?.data.map(({ _id, name }: IChannel) => (
             <ChannelItem key={_id}>
               <Button
-                variant="flat"
-                style={{ padding: "0.3rem 1rem" }}
-                className="bg-[#B3B3B390]"
+                variant="neumorp"
+                style={{
+                  padding: "0.3rem 1rem",
+                  backgroundColor: theme?.white_primary + 30,
+                }}
                 onClick={() => handleChannelSelectClick(_id, name)}
               >
                 <span>{name}</span>
@@ -67,5 +73,7 @@ const ChannelSelectModal = ({ props }: IChannelSelectModalProps) => {
 export default ChannelSelectModal;
 
 const ChannelItem = styled.li`
-  ${tw`rounded-md bg-gray-400`}
+  background-color: ${props => props.theme.white_primary + 30};
+  color: ${props => props.theme.text_primary_color};
+  ${tw`rounded-md`}
 `;
