@@ -13,7 +13,7 @@ const NotificationManager = () => {
     queryKey: [NOTIFICATION],
     queryFn: async () => _GET("/notifications"),
     enabled: isLogIn,
-    refetchInterval: 30 * 1000,
+    refetchInterval: 2000,
   });
 
   const { setNotification } = useNotification();
