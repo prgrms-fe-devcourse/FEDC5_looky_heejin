@@ -81,7 +81,7 @@ const TopNavBar = () => {
   });
 
   useEffect(() => {
-    if (currentPath === PathName.CHAT) {
+    if (currentPath === PathName.CHAT || currentPath === PathName.PROFILE) {
       const getPartnerData = async () => {
         const data = (await refetch()).data;
         setPartnerData({
@@ -127,6 +127,7 @@ const TopNavBar = () => {
           {currentPath === PathName.CHAT && (
             <ChatAvatars
               myAvatarSrc={myProfileImage || undefined}
+              partnerId={partnerId}
               partnerAvatarSrc={partnerData.profileImage || undefined}
               partnerName={partnerData.fullName}
             />
