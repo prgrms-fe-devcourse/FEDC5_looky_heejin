@@ -113,9 +113,15 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   const navigate = useNavigate();
 
-  const { data: myData } = useQuery({
-    queryKey: [ME],
-    queryFn: async () => await _GET("/auth-user"),
+  // const { data: myData } = useQuery({
+  //   queryKey: [ME],
+  //   refetchOnMount: "always",
+  //   queryFn: async () => await _GET("/auth-user"),
+  // });
+
+  const { refetch: myDataRefetch } = useEventQuery({
+    key: ME,
+    endPoint: "/auth-user",
   });
 
   // init fetch--------------------------------------------
@@ -125,13 +131,15 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
   });
   const getPostData = async () => {
     const data = (await refetch()).data;
+    const myData = (await myDataRefetch()).data;
     if (myId) {
-      myData?.data.following.map((followingData: any) => {
-        if (followingData.user === data?.data.author._id) {
-          setIsIFollowed(true);
-          setFollowId(followingData._id);
-        }
-      });
+      const followingData = myData?.data.following.find(
+        (followingData: any) => followingData.user === data?.data.author._id
+      );
+      if (followingData) {
+        setIsIFollowed(true);
+        setFollowId(followingData._id);
+      }
     }
     setUserId(data?.data.author._id);
     setUserName(data?.data.author.fullName);
@@ -241,6 +249,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
+    onMutate() {
+      setIsIFollowed(true);
+    },
     onSuccess(data) {
       if (myId) {
         const newNotification: INotification = {
@@ -255,29 +266,32 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         type: "success",
         text: "팔로우를 성공했어요.",
       });
-      setIsIFollowed(true);
       setFollowId(data._id);
     },
     onError(error) {
-      notify({
-        type: "error",
-        text: "팔로우 요청에 실패했어요.",
-      });
+      setIsIFollowed(false),
+        notify({
+          type: "error",
+          text: "팔로우 요청에 실패했어요.",
+        });
       console.error("error: 팔로우 실패", error);
     },
   });
 
   const unfollowMutation = useMutation({
     mutationFn: async (formData: IUnfollow) => await _UNFOLLOW(formData),
+    onMutate() {
+      setIsIFollowed(false);
+    },
     onSuccess() {
       notify({
         type: "default",
         text: "팔로우를 해제했어요.",
       });
-      setIsIFollowed(false);
       setFollowId("");
     },
     onError(error) {
+      setIsIFollowed(true);
       notify({
         type: "error",
         text: "팔로우 해제에 실패했어요.",
@@ -465,7 +479,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             </ToolTip>
           </Tag>
         ))}
-        <StyledImg src={imageUrl ? imageUrl : "/image_alt.png"} />
+        {imageUrl ? <StyledImg src={imageUrl} /> : null}
       </ImageWrapper>
       <CaptionWrapper>
         <IconsWrapper>
