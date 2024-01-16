@@ -8,7 +8,7 @@ import {
   SEND_ICON,
   TRASH_ICON,
 } from "@/constants/icons";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
