@@ -154,6 +154,7 @@ const CreatePostPageView = () => {
             onChange={file => setValue("file", file)}
             clickable={false}
             className="relative w-full h-full"
+            accept="image/jpg, image/png, image/jpeg, image/webp, image/gif"
           >
             <div
               ref={tagWrapperRef}
