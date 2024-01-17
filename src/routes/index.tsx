@@ -16,7 +16,6 @@ import {
   ChatsPage,
   ChatPage,
 } from "@/pages";
-import TestPage from "@/pages/TestPage";
 import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar/BottomNavBar";
 import AuthRoute from "./AuthRoute";
