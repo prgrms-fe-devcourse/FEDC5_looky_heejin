@@ -61,7 +61,6 @@ const RouterComponent = () => {
                 />
               }
             />
-            <Route path="/test" element={<TestPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
