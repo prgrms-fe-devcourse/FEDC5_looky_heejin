@@ -19,6 +19,9 @@ export const parseDate = (timeData: string | Date, lang = "ko") => {
 
   const passed: number = +new Date() - +new Date(timeData);
 
+  if (passed < 1000) {
+    return "방금";
+  }
   if (checkTime.isSecond(passed)) {
     // 초 단위
     return formatter.format(-calcTime.second(passed), "second");
