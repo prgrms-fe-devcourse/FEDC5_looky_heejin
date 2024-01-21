@@ -19,6 +19,7 @@ import { IButtonProps } from "@/components/ButtonSet";
 import { INotification, IUser } from "@/types";
 import { ME } from "@/constants/queryKey";
 import { _NOTIFY } from "@/api/queries/notify";
+import { notify } from "@/utils/toast";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -103,9 +104,6 @@ const ProfileView = ({
       return await _FOLLOW({ userId: id });
     },
     onSuccess(data) {
-      setIsFollow(true);
-      setFollowId(data._id);
-
       if (myId) {
         notificationMutation.mutate({
           notificationType: "FOLLOW",
@@ -113,9 +111,24 @@ const ProfileView = ({
           userId,
           postId: null,
         });
+        setIsFollow(true);
+        setFollowId(data._id);
+        notify({
+          type: "success",
+          text: "팔로우를 성공했어요.",
+        });
+      } else {
+        notify({
+          type: "error",
+          text: "팔로우 요청에 실패했어요. 로그인이 필요해요.",
+        });
       }
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "팔로우 요청에 실패했어요.",
+      });
       console.error("ERROR: 팔로우 실패", error);
     },
   });
@@ -126,12 +139,19 @@ const ProfileView = ({
         return await _UNFOLLOW({ id: followId });
       }
     },
-    onSuccess(data) {
-      console.log("API 성공! UnFollow", data);
+    onSuccess() {
+      notify({
+        type: "default",
+        text: "팔로우를 해제했어요.",
+      });
       setIsFollow(false);
       setFollowId("");
     },
     onError(error) {
+      notify({
+        type: "error",
+        text: "팔로우 해제에 실패했어요.",
+      });
       console.error("ERROR: 언팔로우 실패", error);
     },
   });
