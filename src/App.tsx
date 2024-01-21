@@ -44,7 +44,7 @@ const App = () => {
           userName: data.fullName,
         });
         // 토큰 값을 redux에도 저장해서. 매번 Storage에서 get하지 않도록.
-        setAuth({ isLogIn: true, token: aesDecrypt(token) });
+        setAuth({ isLogIn: true, token });
         // navigate("/home");
       }
     }

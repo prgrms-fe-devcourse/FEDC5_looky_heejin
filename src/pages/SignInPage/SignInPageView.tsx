@@ -62,7 +62,7 @@ const SignInPage = () => {
         type: "default",
         text: "looky에 오신 것을 환영합니다!",
       });
-      setAuth({ isLogIn: true, token });
+      setAuth({ isLogIn: true, token: aesEncrypt(token) });
       setMe({
         id: user._id,
         userName: user.fullName,

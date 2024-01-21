@@ -50,7 +50,7 @@ const LoginPageView = () => {
         text: "로그인 성공!",
       });
 
-      setAuth({ isLogIn: true, token });
+      setAuth({ isLogIn: true, token: aesEncrypt(token) });
       setMe({
         id: user._id,
         userName: user.fullName,
