@@ -27,6 +27,22 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
   };
 
   useEffect(() => {
+    // popstate 이벤트가 한번만 실행되도록 하기 위한 콜백함수
+    const preventGoBack = () => {
+      // history.pushState(null, "", location.href);
+      onClose();
+    };
+
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      console.log("Close");
+    };
+  }, []);
+
+  useEffect(() => {
     const modalBackground = ref.current;
 
     if (modalBackground) {
