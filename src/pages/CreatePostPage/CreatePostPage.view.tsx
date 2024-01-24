@@ -6,11 +6,17 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
+import { UseMutationResult } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 import { ITag } from "@/types/post";
-
 import { Row } from "@/styles/GlobalStyle";
 import { Button, Input, Upload } from "@/components/common";
+
+import {
+  ICreatePostFormProps,
+  IPostBodyData,
+} from "./CreatePostPage.controller";
 import {
   ChannelTag,
   CreatePostPageContainer,
@@ -19,12 +25,6 @@ import {
   TextArea,
   UploadSection,
 } from "./CreatePostPage.styles";
-import {
-  ICreatePostFormProps,
-  IPostBodyData,
-} from "./CreatePostPage.controller";
-import { UseMutationResult } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
 
 interface ICreatePostPageViewProps {
   handleSubmit: UseFormHandleSubmit<ICreatePostFormProps, undefined>;
