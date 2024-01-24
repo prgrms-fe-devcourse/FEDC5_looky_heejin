@@ -26,7 +26,7 @@ export const useCreatePostMutation = ({
         type: "success",
         text: "포스트를 성공적으로 생성했어요!",
       });
-      navigate("/home");
+      navigate(-1);
     },
     onError: data => {
       notify({
