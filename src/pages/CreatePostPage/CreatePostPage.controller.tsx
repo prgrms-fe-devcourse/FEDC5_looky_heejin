@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
 
-import { _GET, _POST, rootAPI } from "@/api";
+import { rootAPI } from "@/api";
 import { ITag } from "@/types/post";
 import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
