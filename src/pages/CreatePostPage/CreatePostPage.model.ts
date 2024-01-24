@@ -4,12 +4,11 @@ import { _POST } from "@/api";
 import { IToastProps } from "@/utils/toast";
 
 import { IPostBodyData } from "./CreatePostPage.controller";
-import { NavigateOptions, To } from "react-router-dom";
 
 interface IUseCreatePostMutationProps {
   setChannel: Function;
   notify: ({ type, text }: IToastProps) => void;
-  navigate: (to: To, options?: NavigateOptions | undefined) => void;
+  navigate: (delta: number) => void;
 }
 
 export const useCreatePostMutation = ({
