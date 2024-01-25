@@ -2,7 +2,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styled } from "styled-components";
 
-interface IToastProps {
+export interface IToastProps {
   text: string;
   type: "default" | "success" | "warning" | "error";
 }

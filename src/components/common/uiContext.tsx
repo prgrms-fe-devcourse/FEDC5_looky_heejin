@@ -12,10 +12,11 @@ import {
   ChannelSelectModal,
   EditNameModal,
   EditPasswordModal,
-  PostDetailModal,
+  // PostDetailModal,
   TagCreateModal,
   TestModal,
 } from "@/components/modalViews";
+import PostDetailModalController from "../modalViews/PostDetailModal/PostDetailModal.controller";
 
 export interface State {
   displayModal: boolean;
@@ -164,7 +165,9 @@ const ModalView: React.FC<{
       {modalView === "EDIT_IMAGE_VIEW" && <ChangeImageModal />}
       {modalView === "EDIT_COVERIMAGE_VIEW" && <ChangeImageModal />}
       {modalView === "CREATE_CHANNEL_VIEW" && <ChannelCreateModal />}
-      {modalView === "POST_DETAIL_VIEW" && <PostDetailModal props={props} />}
+      {modalView === "POST_DETAIL_VIEW" && (
+        <PostDetailModalController props={props} />
+      )}
     </Modal>
   );
 };
