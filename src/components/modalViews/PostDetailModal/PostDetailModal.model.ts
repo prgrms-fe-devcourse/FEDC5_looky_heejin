@@ -16,14 +16,22 @@ import {
 } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
+interface ILikeInfo {
+  count: number;
+  myLikeId: string;
+  isILiked: boolean;
+}
+
+interface IFollowInfo {
+  isIFollowed: boolean;
+  followId: string;
+}
+
 interface ILikeMuationProps {
   myId: string | null;
   userId: string;
   notify: ({ type, text }: IToastProps) => void;
-  setIsILiked: React.Dispatch<React.SetStateAction<boolean>>;
-  likeCount: number;
-  setLikeCount: React.Dispatch<React.SetStateAction<number>>;
-  setMyLikeId: React.Dispatch<React.SetStateAction<string>>;
+  setLikeInfo: React.Dispatch<React.SetStateAction<ILikeInfo>>;
   likeDataBinding: (data: any) => void;
 }
 
@@ -36,11 +44,12 @@ interface ICommentMutationProps {
 }
 
 interface IFollowMutationProps {
-  setIsIFollowed: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsIFollowed: React.Dispatch<React.SetStateAction<boolean>>;
   myId: string | null;
   userId: string;
   notify: ({ type, text }: IToastProps) => void;
-  setFollowId: React.Dispatch<React.SetStateAction<string>>;
+  setFollowInfo: React.Dispatch<React.SetStateAction<IFollowInfo>>;
+  // setFollowId: React.Dispatch<React.SetStateAction<string>>;
 }
 export const useNotifyMutation = () => {
   const notificationMutation = useMutation({
@@ -57,18 +66,18 @@ export const useLikeMutation = ({
   myId,
   userId,
   notify,
-  setIsILiked,
-  likeCount,
-  setLikeCount,
-  setMyLikeId,
+  setLikeInfo,
   likeDataBinding,
 }: ILikeMuationProps) => {
   const notificationMutation = useNotifyMutation();
   const createLikeMutation = useMutation({
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onMutate() {
-      setIsILiked(true);
-      setLikeCount(likeCount + 1);
+      setLikeInfo(prevState => ({
+        ...prevState,
+        isILiked: true,
+        count: prevState.count + 1,
+      }));
     },
     onSuccess(data) {
       if (myId) {
@@ -85,7 +94,7 @@ export const useLikeMutation = ({
           text: "좋아요를 눌렀어요!",
         });
         likeDataBinding(data);
-        setMyLikeId(data._id);
+        setLikeInfo(prevState => ({ ...prevState, myLikeId: data._id }));
       }
     },
     onError() {
@@ -93,16 +102,22 @@ export const useLikeMutation = ({
         type: "error",
         text: "좋아요 생성에 실패했어요.",
       });
-      setIsILiked(false);
-      setLikeCount(likeCount - 1);
+      setLikeInfo(prevState => ({
+        ...prevState,
+        isILiked: false,
+        count: prevState.count - 1,
+      }));
     },
   });
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
     onMutate() {
-      setIsILiked(false);
-      setLikeCount(likeCount - 1);
+      setLikeInfo(prevState => ({
+        ...prevState,
+        isILiked: false,
+        count: prevState.count - 1,
+      }));
     },
     onSuccess(data) {
       notify({
@@ -112,8 +127,11 @@ export const useLikeMutation = ({
       likeDataBinding(data);
     },
     onError() {
-      setIsILiked(true);
-      setLikeCount(likeCount + 1);
+      setLikeInfo(prevState => ({
+        ...prevState,
+        isILiked: true,
+        count: prevState.count + 1,
+      }));
     },
   });
 
@@ -175,17 +193,16 @@ export const useCommentMutation = ({
 };
 
 export const useFollowMutation = ({
-  setIsIFollowed,
   myId,
   userId,
   notify,
-  setFollowId,
+  setFollowInfo,
 }: IFollowMutationProps) => {
   const notificationMutation = useNotifyMutation();
   const followMutation = useMutation({
     mutationFn: async (formData: IFollow) => await _FOLLOW(formData),
     onMutate() {
-      setIsIFollowed(true);
+      setFollowInfo(prevState => ({ ...prevState, isIFollowed: true }));
     },
     onSuccess(data) {
       if (myId) {
@@ -202,14 +219,14 @@ export const useFollowMutation = ({
         type: "success",
         text: "팔로우를 성공했어요.",
       });
-      setFollowId(data._id);
+      setFollowInfo(prevState => ({ ...prevState, followId: data._id }));
     },
     onError(error) {
-      setIsIFollowed(false),
-        notify({
-          type: "error",
-          text: "팔로우 요청에 실패했어요.",
-        });
+      setFollowInfo(prevState => ({ ...prevState, isIFollowed: false }));
+      notify({
+        type: "error",
+        text: "팔로우 요청에 실패했어요.",
+      });
       console.error("error: 팔로우 실패", error);
     },
   });
@@ -217,17 +234,17 @@ export const useFollowMutation = ({
   const unfollowMutation = useMutation({
     mutationFn: async (formData: IUnfollow) => await _UNFOLLOW(formData),
     onMutate() {
-      setIsIFollowed(false);
+      setFollowInfo(prevState => ({ ...prevState, isIFollowed: false }));
     },
     onSuccess() {
       notify({
         type: "default",
         text: "팔로우를 해제했어요.",
       });
-      setFollowId("");
+      setFollowInfo(prevState => ({ ...prevState, followId: "" }));
     },
     onError(error) {
-      setIsIFollowed(true);
+      setFollowInfo(prevState => ({ ...prevState, isIFollowed: true }));
       notify({
         type: "error",
         text: "팔로우 해제에 실패했어요.",
@@ -259,5 +276,3 @@ export const usePostMutation = ({ notify }: any) => {
   });
   return { deletePostMutation };
 };
-
-//////////

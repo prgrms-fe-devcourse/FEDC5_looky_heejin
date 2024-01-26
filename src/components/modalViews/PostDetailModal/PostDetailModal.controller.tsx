@@ -1,4 +1,3 @@
-import useEventQuery from "@/hooks/useEventQuery";
 import PostDetailModalView from "./PostDetailModal.view";
 import { useMe } from "@/hooks/useMe";
 import { useTheme } from "styled-components";
@@ -15,8 +14,9 @@ import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
 import { ME } from "@/constants/queryKey";
-import { ITag } from "@/types/post";
 import { Spinner } from "@/components/common/Spinner";
+import { useQuery } from "@tanstack/react-query";
+import { _GET } from "@/api";
 
 interface ModalProps {
   postId: string;
@@ -35,98 +35,105 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     mode: "onSubmit",
   });
 
-  const [userId, setUserId] = useState("");
-  const [userName, setUserName] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState<ITag[]>([]);
 
-  const [likeCount, setLikeCount] = useState<number>(0);
-  const [myLikeId, setMyLikeId] = useState("");
-  const [isILiked, setIsILiked] = useState<boolean>(false);
-  const [isIFollowed, setIsIFollowed] = useState(false);
-  const [followId, setFollowId] = useState("");
+  const [postInfo, setPostInfo] = useState({
+    title: "",
+    content: "",
+    tags: [],
+  });
+
+  const [likeInfo, setLikeInfo] = useState({
+    count: 0,
+    myLikeId: "",
+    isILiked: false,
+  });
+
+  const [followInfo, setFollowInfo] = useState({
+    followId: "",
+    isIFollowed: false,
+  });
+
   const [comments, setComments] = useState<string[]>([]);
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
   const [heartAnimation, setHeartAnimation] = useState({
     isShow: false,
     key: 0,
   });
-
   const [isShowComments, setIsShowComments] = useState<boolean>(false);
 
   const theme = useTheme();
-  // const postId = "659c00da1d725b33c1ed7a1e";
   const { id: myId } = useMe();
 
   const navigate = useNavigate();
 
-  const { refetch: myDataRefetch } = useEventQuery({
-    key: ME,
-    endPoint: "/auth-user",
+  const { data: myData } = useQuery({
+    queryKey: [ME],
+    queryFn: async () => await _GET("/auth-user"),
+    gcTime: 0,
   });
 
-  // init fetch--------------------------------------------
-  const { isLoading, refetch } = useEventQuery({
-    key: `postId-${postId}`,
-    endPoint: `/posts/${postId}`,
+  const { data: postData, isLoading } = useQuery({
+    queryKey: [`postId-${postId}`],
+    queryFn: async () => await _GET(`/posts/${postId}`),
+    gcTime: 0,
   });
-  const getPostData = async () => {
-    const data = (await refetch()).data;
-    const myData = (await myDataRefetch()).data;
-    if (myId) {
-      const followingData = myData?.data.following.find(
-        (followingData: any) => followingData.user === data?.data.author._id
-      );
-      if (followingData) {
-        setIsIFollowed(true);
-        setFollowId(followingData._id);
-      }
-    }
-    setUserId(data?.data.author._id);
-    setUserName(data?.data.author.fullName);
-    if (data?.data.author.hasOwnProperty("image")) {
-      setProfileImage(data?.data.author.image);
-    }
-    setImageUrl(data?.data.image);
-    const parsedJson = JSON.parse(data?.data.title);
-    setTitle(parsedJson.title);
-    setContent(parsedJson.content);
-    setTags(parsedJson.tags);
-    // setLikes(data?.data.likes);
-    setLikeCount(data?.data.likes.length);
-    setIsILiked(data?.data.likes.some(({ user }: any) => user === myId));
-    data?.data.likes.map((likeData: any) => {
-      if (likeData.user === myId) {
-        setMyLikeId(likeData._id);
-      }
-    });
-    setComments(data?.data.comments);
-  };
-  // --------------------------------------------------------------------------
+
+  const userId = postData?.data.author._id;
+  const userName = postData?.data.author.fullName;
+  const imageUrl = postData?.data.image;
 
   useEffect(() => {
-    getPostData();
-  }, []);
+    if (postData) {
+      if (myId) {
+        const followingData = myData?.data.following.find(
+          (followingData: any) =>
+            followingData.user === postData?.data.author._id
+        );
+        if (followingData) {
+          setFollowInfo({ isIFollowed: true, followId: followingData._id });
+        }
+      }
+
+      if (postData?.data.author.hasOwnProperty("image")) {
+        setProfileImage(postData?.data.author.image);
+      }
+
+      const parsedJson = JSON.parse(postData?.data.title);
+
+      setPostInfo({
+        title: parsedJson.title,
+        content: parsedJson.content,
+        tags: parsedJson.tags,
+      });
+
+      setLikeInfo({
+        ...likeInfo,
+        count: postData?.data.likes.length,
+        isILiked: postData?.data.likes.some(({ user }: any) => user === myId),
+      });
+
+      postData?.data.likes.map((likeData: any) => {
+        if (likeData.user === myId) {
+          setLikeInfo(prevState => ({ ...prevState, myLikeId: likeData._id }));
+        }
+      });
+      setComments(postData?.data.comments);
+    }
+  }, [postData]);
 
   const { createLikeMutation, deleteLikeMutation } = useLikeMutation({
     myId,
     userId,
     notify,
-    setIsILiked,
-    likeCount,
-    setLikeCount,
-    setMyLikeId,
+    setLikeInfo,
     likeDataBinding,
   });
   const { followMutation, unfollowMutation } = useFollowMutation({
     myId,
     userId,
     notify,
-    setIsIFollowed,
-    setFollowId,
+    setFollowInfo,
   });
   const { createCommentMutation } = useCommentMutation({
     myId,
@@ -163,10 +170,10 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       }
       return;
     }
-    if (!isIFollowed) {
+    if (!followInfo.isIFollowed) {
       myId !== null && followMutation.mutate({ userId });
     } else {
-      unfollowMutation.mutate({ id: followId });
+      unfollowMutation.mutate({ id: followInfo.followId });
     }
   };
   const handleContentDetail = () => {
@@ -181,10 +188,10 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       }
       return;
     }
-    if (isILiked === true) {
-      deleteLikeMutation.mutate({ id: myLikeId });
+    if (likeInfo.isILiked === true) {
+      deleteLikeMutation.mutate({ id: likeInfo.myLikeId });
     }
-    if (isILiked === false) {
+    if (likeInfo.isILiked === false) {
       setHeartAnimation(previousState => ({
         isShow: true,
         key: previousState.key + 1,
@@ -241,25 +248,25 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       userId={userId}
       myId={myId}
       handleDelete={handleDelete}
-      isIFollowed={isIFollowed}
+      isIFollowed={followInfo.isIFollowed}
       handleFollow={handleFollow}
       handleClose={handleClose}
       heartAnimation={heartAnimation}
       tagClickHandler={tagClickHandler}
       imageUrl={imageUrl}
       isContentDetail={isContentDetail}
-      content={content}
-      title={title}
+      content={postInfo.content}
+      title={postInfo.title}
       handleContentDetail={handleContentDetail}
       handleLike={handleLike}
-      isILiked={isILiked}
-      likeCount={likeCount}
+      isILiked={likeInfo.isILiked}
+      likeCount={likeInfo.count}
       toggleShowComments={toggleShowComments}
       handleChat={handleChat}
       register={register}
       handleSubmit={handleSubmit}
       theme={theme}
-      tags={tags}
+      tags={postInfo.tags}
       onValid={onValid}
       onInvalid={onInvalid}
       comments={comments}
