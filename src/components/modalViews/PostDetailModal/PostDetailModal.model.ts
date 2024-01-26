@@ -44,13 +44,12 @@ interface ICommentMutationProps {
 }
 
 interface IFollowMutationProps {
-  // setIsIFollowed: React.Dispatch<React.SetStateAction<boolean>>;
   myId: string | null;
   userId: string;
   notify: ({ type, text }: IToastProps) => void;
   setFollowInfo: React.Dispatch<React.SetStateAction<IFollowInfo>>;
-  // setFollowId: React.Dispatch<React.SetStateAction<string>>;
 }
+
 export const useNotifyMutation = () => {
   const notificationMutation = useMutation({
     mutationFn: async (formData: INotification) => await _NOTIFY(formData),

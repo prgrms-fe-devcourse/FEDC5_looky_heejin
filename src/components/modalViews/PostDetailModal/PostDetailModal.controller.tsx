@@ -29,8 +29,12 @@ interface IPostDetailModalProps {
 
 const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
   const { postId, likeDataBinding } = props as ModalProps;
-  const modalRef = useRef<HTMLDivElement | null>(null);
   const { closeModal } = useUI();
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const { id: myId } = useMe();
+
   const { register, handleSubmit, setValue } = useForm<{ comment: string }>({
     mode: "onSubmit",
   });
@@ -48,7 +52,6 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     myLikeId: "",
     isILiked: false,
   });
-
   const [followInfo, setFollowInfo] = useState({
     followId: "",
     isIFollowed: false,
@@ -56,16 +59,11 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
 
   const [comments, setComments] = useState<string[]>([]);
   const [isContentDetail, setIsContentDetail] = useState<boolean>(false);
+  const [isShowComments, setIsShowComments] = useState<boolean>(false);
   const [heartAnimation, setHeartAnimation] = useState({
     isShow: false,
     key: 0,
   });
-  const [isShowComments, setIsShowComments] = useState<boolean>(false);
-
-  const theme = useTheme();
-  const { id: myId } = useMe();
-
-  const navigate = useNavigate();
 
   const { data: myData } = useQuery({
     queryKey: [ME],
