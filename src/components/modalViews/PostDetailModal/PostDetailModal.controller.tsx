@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   useCommentMutation,
   useFollowMutation,
+  useInitData,
   useLikeMutation,
   usePostMutation,
 } from "./PostDetailModal.model";
@@ -15,8 +16,6 @@ import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
 import { ME } from "@/constants/queryKey";
 import { Spinner } from "@/components/common/Spinner";
-import { useQuery } from "@tanstack/react-query";
-import { _GET } from "@/api";
 
 interface ModalProps {
   postId: string;
@@ -65,18 +64,11 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     key: 0,
   });
 
-  const { data: myData } = useQuery({
-    queryKey: [ME],
-    queryFn: async () => await _GET("/auth-user"),
-    gcTime: 0,
-  });
-
-  const { data: postData, isLoading } = useQuery({
-    queryKey: [`postId-${postId}`],
-    queryFn: async () => await _GET(`/posts/${postId}`),
-    gcTime: 0,
-  });
-
+  const { data: myData } = useInitData(ME, "/auth-user");
+  const { data: postData, isLoading } = useInitData(
+    `postId-${postId}`,
+    `/posts/${postId}`
+  );
   const userId = postData?.data.author._id;
   const userName = postData?.data.author.fullName;
   const imageUrl = postData?.data.image;

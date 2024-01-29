@@ -1,4 +1,4 @@
-import { _DELETE } from "@/api";
+import { _DELETE, _GET } from "@/api";
 import { _CREATE_COMMENT, _DELETE_COMMENT } from "@/api/queries/comment";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import { _CREATE_LIKE, _DELETE_LIKE } from "@/api/queries/like";
@@ -14,7 +14,7 @@ import {
   INotification,
   IUnfollow,
 } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface ILikeInfo {
   count: number;
@@ -49,6 +49,16 @@ interface IFollowMutationProps {
   notify: ({ type, text }: IToastProps) => void;
   setFollowInfo: React.Dispatch<React.SetStateAction<IFollowInfo>>;
 }
+
+export const useInitData = (key: string, endPoint: string) => {
+  const { data, isLoading } = useQuery({
+    queryKey: [key],
+    queryFn: async () => await _GET(endPoint),
+    gcTime: 0,
+  });
+
+  return { data, isLoading };
+};
 
 export const useNotifyMutation = () => {
   const notificationMutation = useMutation({
