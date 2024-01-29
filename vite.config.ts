@@ -19,9 +19,14 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
-  plugins: [react({
-    babel: {
-      plugins: ["babel-plugin-macros", "babel-plugin-styled-components"],
-    },
-  })],
+  plugins: [
+    react({
+      babel: {
+        plugins: ["babel-plugin-macros", "babel-plugin-styled-components"],
+      },
+    }),
+  ],
+  build: {
+    sourcemap: false,
+  },
 });
