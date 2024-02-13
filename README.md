@@ -27,7 +27,11 @@
 | asdfg7123@gmail.com | joyswim.dev@gmail.com | reopard506@gmail.com | hellommmh@gmail.com |
 | <img src="https://github.com/SoJuSo.png" /> | <img src="https://github.com/joyswim.png" /> | <img src="https://github.com/OhWonJu.png" /> | <img src="https://github.com/hellosonic-r.png" /> |
 
+
 ---
+
+## 최종 발표 영상
+[![Video Label](http://img.youtube.com/vi/HR5ErNUulTk/0.jpg)](https://www.youtube.com/watch?v=HR5ErNUulTk)
 
 ## DEMO
 ### Auth
