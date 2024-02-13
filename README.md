@@ -29,6 +29,27 @@
 
 ---
 
+## DEMO
+### Auth
+[looky_auth_min-ezgif.com-gif-to-webm-converter.webm](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/8103c540-f804-4c1b-8e02-7e5279b19e7b)
+
+### Main Page & Posts
+[looky_post_min-ezgif.com-gif-maker.webm](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/90c4a7bf-34d4-46b8-9bc3-07ee5fe5a52c)
+
+### Create Post
+[looky_createPostTag_min-ezgif.com-gif-maker.webm](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/2a54fd9d-2865-44dc-bc69-6764919c5a6f)
+
+### Search
+[looky_search_min-ezgif.com-gif-maker.webm](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/2da7f7f1-2b8c-4aa5-9d10-4113dcf3ade8)
+
+### Chat & Notification
+[looky_darkCN_min-ezgif.com-gif-maker.webm](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/8437b12e-9b40-4eb4-99f8-0c0414336eeb)
+
+### My Page
+[looky_myPage_min-ezgif.com-gif-maker.webm](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/415b9cfb-a969-4df7-a3b4-3efbdf339f89)
+
+---
+
 ## 프로젝트 시작하기
 
 ```
