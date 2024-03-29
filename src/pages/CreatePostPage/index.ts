@@ -1,1 +1,1 @@
-export { default } from "./CreatePostPage.view";
+export { default } from "./CreatePostPage.controller";
