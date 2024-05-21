@@ -13,7 +13,7 @@ type TAuthRouteProps = {
 } & RouteProps;
 
 const AuthRoute = ({ element, ...rest }: TAuthRouteProps) => {
-  const [token, _] = useLocalStorage("token");
+  const [token, _] = useLocalStorage("auth_token");
   rootAPI.defaults.headers.common["Authorization"] =
     "Bearer " + aesDecrypt(token);
 

@@ -10,7 +10,6 @@ interface IBackButtonProps {
 const BackButtonWrapper = styled.div`
   display: inline-block;
   margin: auto 1rem;
-  // 아이콘 컴포넌트 리팩토링 필요
   & > :first-child {
     cursor: pointer;
   }

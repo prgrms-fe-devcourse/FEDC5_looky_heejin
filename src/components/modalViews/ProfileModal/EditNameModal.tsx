@@ -34,7 +34,6 @@ const EditNameModal = () => {
     mutationFn: async (formData: INameFormProps) =>
       await _UPDATE_NAME(formData),
     onSuccess: data => {
-      console.log("API UPDATE NAME 성공!");
       if (id && profilePhoto)
         setMe({ id, profilePhoto, userName: data.fullName });
       setProfileName(data.fullName);

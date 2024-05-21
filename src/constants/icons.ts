@@ -1,4 +1,3 @@
-// 아이콘
 export const HOME_ICON: string = "home";
 export const SEARCH_ICON: string = "search";
 export const USER_ICON: string = "person";

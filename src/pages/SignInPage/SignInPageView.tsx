@@ -29,7 +29,7 @@ interface ISigninModify extends ISignIn {
 const SignInPage = () => {
   const { setMe } = useMe();
   const { setAuth } = useAuth();
-  const [_, storeToken] = useLocalStorage("token");
+  const [_, storeToken] = useLocalStorage("auth_token");
   const {
     watch,
     register,
@@ -103,7 +103,6 @@ const SignInPage = () => {
         message: "비밀번호가 일치하지 않습니다!",
       });
     } else {
-      // 비밀번호 일치시 오류 제거
       clearErrors("passwordCheck");
     }
   }, [watch("password"), watch("passwordCheck")]);
@@ -117,9 +116,6 @@ const SignInPage = () => {
         autoComplete="off"
         onSubmit={handleSubmit(onValid, onInValid)}
       >
-        {/* <div style={{ width: "100%" }}>
-          <InputLabel title="이메일" help={errors.email?.message} />
-        </div> */}
         <ErrorContainer>
           <span className="font-bold">이메일</span>
           {errors.email?.message ? (

@@ -40,7 +40,6 @@ const NAV_VISIBLE_PATH = [
   PathName.HOME,
   PathName.CHANNELS,
   PathName.PROFILE,
-  // PathName.SEARCH,
   PathName.CHATS,
   PathName.CHAT,
   PathName.NOTIFICATIONS,
@@ -122,7 +121,7 @@ const TopNavBar = () => {
           {currentPath === PathName.HOME && (
             <PageTitle
               title={parsedData ? parsedData.name : "채널을 선택해주세요."}
-            ></PageTitle> // 데이터 붙여야함
+            ></PageTitle>
           )}
           {currentPath === PathName.SEARCH && <SearchBar />}
           {currentPath === PathName.CHAT && (
@@ -146,10 +145,10 @@ const TopNavBar = () => {
             <PageTitle title={NavTitle.NOTIFICATIONS}></PageTitle>
           )}
           {currentPath === PathName.POSTDETAIL && (
-            <PageTitle title="포스트 디테일"></PageTitle> // 데이터 붙여야 함
+            <PageTitle title="포스트 디테일"></PageTitle>
           )}
           {currentPath === PathName.NEWPOST && (
-            <PageTitle title={NavTitle.NEWPOST}></PageTitle> // 데이터 붙여야 함
+            <PageTitle title={NavTitle.NEWPOST}></PageTitle>
           )}
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>

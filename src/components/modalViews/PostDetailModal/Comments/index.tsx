@@ -31,7 +31,6 @@ const Comments = ({
         type: "default",
         text: "댓글을 삭제했어요.",
       });
-      console.log("API : 댓글 삭제 성공", data);
       const newComments = comments.filter(({ _id }: any) => _id !== data._id);
       setComments(newComments);
     },
@@ -44,8 +43,6 @@ const Comments = ({
   };
 
   const handleDeleteComment = (id: string) => {
-    console.log("댓글삭제 클릭");
-    console.log(id);
     deleteCommentMutation.mutate({ id });
   };
 

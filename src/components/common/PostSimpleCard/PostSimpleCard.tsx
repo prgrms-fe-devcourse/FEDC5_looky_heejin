@@ -62,7 +62,6 @@ const IsJsonString = (str: string) => {
   }
 };
 
-// todo, 타입 충돌로 인해서 추후 타입 명시
 const PostSimpleCard = ({
   postData,
 }: {
@@ -73,12 +72,10 @@ const PostSimpleCard = ({
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
   const { pathname } = useLocation();
-  // console.log(postData);
   const { data: myData } = useQuery({
     queryKey: [ME],
     queryFn: async () => await _GET("/auth-user"),
   });
-  // console.log(myData);
 
   let parsedData: ITitle = {
     title: "",
@@ -102,13 +99,8 @@ const PostSimpleCard = ({
   });
 
   const mutation = useMutation({
-    // 고민사항..
-    // 목적에 맞지 않는다.
     mutationFn: async (params: string) => await _USERDATA(params),
     onSuccess(data) {
-      // console.log("나다 ", myData);
-      // console.log("포스트 데이터다", postData);
-      // console.log("작성자 데이터다", data);
       if (id) {
         if (typeof postData.likes[0] === "object") {
           postData.likes.map((val: any) => {
@@ -169,7 +161,6 @@ const PostSimpleCard = ({
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
     onSuccess(data) {
       if (id) {
-        console.log("API: 좋아요 생성 성공 ", data);
         const newNotification: INotification = {
           notificationType: "LIKE",
           notificationTypeId: data._id,
@@ -204,8 +195,7 @@ const PostSimpleCard = ({
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
-    onSuccess(data) {
-      console.log("API: 좋아요 삭제 성공 ", data);
+    onSuccess() {
       notify({
         type: "default",
         text: "좋아요를 취소했어요.",
@@ -230,7 +220,6 @@ const PostSimpleCard = ({
   }, []);
 
   if (mutation.isError) {
-    // 에러문구 todo
     return (
       <CardContainer $basis="half">
         <SkeletonFail>데이터를 불러오는 데에 실패했어요!</SkeletonFail>
@@ -239,7 +228,6 @@ const PostSimpleCard = ({
   }
 
   if (mutation.isPending) {
-    // 스켈레톤 todo
     return (
       <CardContainer $basis="half">
         <SkeletonImage />

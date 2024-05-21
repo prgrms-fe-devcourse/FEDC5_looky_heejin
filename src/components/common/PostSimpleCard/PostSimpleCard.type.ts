@@ -27,10 +27,10 @@ export interface INotification {
   _id: string;
   author: any;
   user: IUser | string;
-  post?: string | null; // 포스트 id
-  follow?: string | null; // 사용자 id
+  post?: string | null;
+  follow?: string | null;
   comment?: string | null;
-  message?: string | null; // 메시지 id
+  message?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -59,8 +59,8 @@ export interface IUser {
 
 export interface ILike {
   _id: string;
-  user: string; // 사용자 id
-  post: string; // 포스트 id
+  user: string;
+  post: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -69,8 +69,8 @@ export interface ILike {
 export interface IComment {
   _id: string;
   comment: string;
-  author: IUser; //수정해야함 IUSER인듯?
-  post: string; // 포스트 id
+  author: IUser;
+  post: string;
   createdAt: string;
   updatedAt: string;
 }

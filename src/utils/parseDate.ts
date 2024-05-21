@@ -23,19 +23,15 @@ export const parseDate = (timeData: string | Date, lang = "ko") => {
     return "방금";
   }
   if (checkTime.isSecond(passed)) {
-    // 초 단위
     return formatter.format(-calcTime.second(passed), "second");
   }
   if (checkTime.isMinute(passed)) {
-    // 분 단위
     return formatter.format(-calcTime.minute(passed), "minute");
   }
   if (checkTime.isHour(passed)) {
-    // 시간 단위
     return formatter.format(-calcTime.hour(passed), "hour");
   }
   if (checkTime.isOverOneDay(passed)) {
-    // yyyy년 mm월 dd일
     return new Intl.DateTimeFormat(lang, {
       year: "numeric",
       month: "short",
@@ -48,7 +44,6 @@ export const parseTime = (timeData: string | Date, lang = "ko") => {
   const passed: number = +new Date() - +new Date(timeData);
 
   if (checkTime.isOverOneDay(passed)) {
-    // yyyy년 mm월 dd일
     return new Intl.DateTimeFormat(lang, {
       year: "numeric",
       month: "short",

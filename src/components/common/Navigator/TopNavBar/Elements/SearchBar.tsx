@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { styled } from "styled-components";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
 import Icon from "../../../Icon/Icon";
@@ -53,27 +52,20 @@ const CloseIconWrapper = styled.div`
 `;
 
 const SearchBar = () => {
-  const { keyword, setSearchValue } = useSearchValue();
-  // input에 입력된 값이 리덕스 스토어에 잘 저장되는지 확인 ---
-  useEffect(() => {
-    console.log(keyword);
-  }, [keyword]);
-  // ----------------------------------------------
+  const { setSearchValue } = useSearchValue();
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: {},
   } = useForm({ mode: "onSubmit" });
 
   const onValid = (inputValue: FieldValues) => {
-    console.log(inputValue.search);
     setSearchValue({ keyword: inputValue.search });
   };
 
   const onInvalid = (error: FieldErrors) => {
     console.log("에러 :", error);
-    console.log(errors);
   };
 
   const handleRemoveValue = () => {

@@ -14,7 +14,6 @@ export interface IButtonProps {
 
 const ButtonWrap = styled.div<{ key: string }>``;
 
-// children은 Icon을 받는다.
 const ButtonSet = ({ children, style }: IButtonProps) => {
   return (
     <>
