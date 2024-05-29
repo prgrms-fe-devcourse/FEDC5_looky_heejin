@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /chat*/
+Disallow: /newPost/
+Disallow: /notifications/
