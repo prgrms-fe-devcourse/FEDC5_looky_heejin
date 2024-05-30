@@ -15,6 +15,7 @@ import rippleStyle from "./Button.module.css";
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   className?: string;
+  ariaLabel?: string;
   variant: "flat" | "neumorp" | "symbol" | "disabled";
   buttonColor?: string;
   textColor?: string;
@@ -45,6 +46,7 @@ const ButtonType = {
 const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
   const {
     className,
+    ariaLabel,
     variant = "flat",
     buttonColor,
     textColor,
@@ -106,6 +108,7 @@ const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
 
   return (
     <ButtonWrapper
+      aria-label={ariaLabel}
       aria-pressed={active}
       data-variant={variant}
       ref={mergeRefs([ref, buttonRef])}

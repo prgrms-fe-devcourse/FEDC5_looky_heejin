@@ -159,6 +159,7 @@ const BottomNavBar = () => {
       </IconWrapper>
       <IconWrapper>
         <Button
+          ariaLabel="profile"
           variant="flat"
           useRipple={true}
           onClickHandler={
