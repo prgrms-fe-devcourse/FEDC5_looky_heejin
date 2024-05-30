@@ -11,10 +11,12 @@ import cn from "clsx";
 
 import { ButtonRipple, Disabled, Flat, Neumorp, Symbol } from "./Button.styles";
 import rippleStyle from "./Button.module.css";
+import { NAV_TITLE } from "@/constants";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   className?: string;
+  ariaLabel?: string;
   variant: "flat" | "neumorp" | "symbol" | "disabled";
   buttonColor?: string;
   textColor?: string;
@@ -45,6 +47,7 @@ const ButtonType = {
 const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
   const {
     className,
+    ariaLabel,
     variant = "flat",
     buttonColor,
     textColor,
@@ -106,6 +109,7 @@ const Button: React.FC<ButtonProps> = forwardRef((props, buttonRef) => {
 
   return (
     <ButtonWrapper
+      aria-label={NAV_TITLE.PROFILE}
       aria-pressed={active}
       data-variant={variant}
       ref={mergeRefs([ref, buttonRef])}
