@@ -127,12 +127,19 @@ const LoginPageView = () => {
           {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
         />
 
-        <LogInButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
+        <LogInButtonContainer
+          aria-label="로그인 요청 버튼"
+          onSubmit={handleSubmit(onValid, onInValid)}
+        >
           로그인
         </LogInButtonContainer>
       </FormContainer>
-      <SignInLinkContainer to="/signin">회원가입</SignInLinkContainer>
-      <DoNotLoginLink to="/home">로그인 하지 않고 이용하기</DoNotLoginLink>
+      <SignInLinkContainer aria-label="회원가입 페이지 전환 버튼" to="/signin">
+        회원가입
+      </SignInLinkContainer>
+      <DoNotLoginLink aria-label="로그인 하지 않고 사용하기 버튼" to="/home">
+        로그인 하지 않고 이용하기
+      </DoNotLoginLink>
     </LogInPageContainer>
   );
 };

@@ -185,7 +185,10 @@ const SignInPage = () => {
           })}
         />
 
-        <SubmitButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
+        <SubmitButtonContainer
+          aria-label="회원가입을 위한 정보 제출 버튼"
+          onSubmit={handleSubmit(onValid, onInValid)}
+        >
           회원가입
         </SubmitButtonContainer>
       </FormContainer>
