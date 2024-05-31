@@ -123,12 +123,14 @@ const LoginPageView = () => {
         </ErrorContainer>
         <InputContainer
           type="password"
+          aria-required="true"
           placeholder="비밀번호"
           {...register("password", LoginPageConst.PASSWORD_VALIDATION_OPTION)}
         />
 
         <LogInButtonContainer
           aria-label="로그인 요청 버튼"
+          aria-required="true"
           onSubmit={handleSubmit(onValid, onInValid)}
         >
           로그인
