@@ -6,10 +6,24 @@ interface SearchEmptyProps {
 }
 
 const SearchEmptyView = ({ children, onTagClick }: SearchEmptyProps) => {
+  const handleClick = (clickedKeyword: string | null) => {
+    if (clickedKeyword) {
+      onTagClick(clickedKeyword);
+    }
+  };
+
   const onClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLDivElement;
     const clickedKeyword = target?.textContent;
-    clickedKeyword && onTagClick(clickedKeyword);
+    handleClick(clickedKeyword);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      const target = e.target as HTMLDivElement;
+      const clickedKeyword = target?.textContent;
+      handleClick(clickedKeyword);
+    }
   };
 
   return (
@@ -18,7 +32,9 @@ const SearchEmptyView = ({ children, onTagClick }: SearchEmptyProps) => {
         <Text>{children}</Text>
         <Text>다음의 키워드를 검색해 보세요</Text>
         <TagWrap>
-          <Tag onClick={onClick}>캐주얼</Tag>
+          <Tag tabIndex={0} onClick={onClick} onKeyDown={onKeyDown}>
+            캐주얼
+          </Tag>
         </TagWrap>
       </Wrapper>
     </>

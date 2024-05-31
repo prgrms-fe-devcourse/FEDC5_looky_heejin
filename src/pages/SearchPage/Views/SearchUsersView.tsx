@@ -23,6 +23,15 @@ const SearchUsersView = ({
     return null;
   }
 
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLElement>,
+    userId: string
+  ) => {
+    if (event.key === "Enter") {
+      onClick(userId);
+    }
+  };
+
   return (
     <>
       <ListWrap>
@@ -30,7 +39,9 @@ const SearchUsersView = ({
           usersData.map(user => (
             <ListItem
               key={user._id}
+              tabIndex={0}
               onClick={() => onClick(user._id)}
+              onKeyDown={event => handleKeyDown(event, user._id)}
               {...props}
             >
               <Avatar size="S" src={user.image} />
