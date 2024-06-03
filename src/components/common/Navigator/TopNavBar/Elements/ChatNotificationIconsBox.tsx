@@ -24,7 +24,7 @@ export const zoomin = keyframes`
   }
 `;
 
-const IconsBox = styled.div`
+const IconsBox = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -35,7 +35,7 @@ const IconsBox = styled.div`
   }
 `;
 
-const IconWrapper = styled.div<{ $marginLeft: string }>`
+const IconWrapper = styled.section<{ $marginLeft: string; tabIndex: string }>`
   margin: auto 0.25rem;
   margin-left: ${({ $marginLeft }) => $marginLeft && $marginLeft};
   & > :first-child {
@@ -102,7 +102,11 @@ const ChatNotificationIconsBox = ({
 
   return (
     <IconsBox>
-      <IconWrapper onClick={handleTheme} $marginLeft={id ? "" : "4.5rem"}>
+      <IconWrapper
+        tabIndex="0"
+        onClick={handleTheme}
+        $marginLeft={id ? "" : "4.5rem"}
+      >
         <Icon
           name={theme.theme_mode === "light" ? LIGHTMODE_ICON : DARKMODE_ICON}
           size="1.6rem"
@@ -112,6 +116,7 @@ const ChatNotificationIconsBox = ({
       {id ? (
         <>
           <NotificationIconWrapper
+            tabIndex="0"
             $marginLeft={""}
             onClick={() => onClick(PathName.CHATS)}
           >
@@ -131,6 +136,7 @@ const ChatNotificationIconsBox = ({
             ) : null}
           </NotificationIconWrapper>
           <NotificationIconWrapper
+            tabIndex="0"
             $marginLeft={""}
             onClick={() => onClick(PathName.NOTIFICATIONS)}
           >

@@ -33,7 +33,7 @@ const TopNavBarWrapper = styled.nav`
   z-index: ${NAVIGATER};
 `;
 
-const NavBarPartition = styled.div<{ $width: string }>`
+const NavBarPartition = styled.section<{ $width: string }>`
   width: ${({ $width }) => $width && $width};
 `;
 
