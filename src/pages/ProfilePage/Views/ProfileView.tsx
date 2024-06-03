@@ -10,7 +10,7 @@ import {
   InfoWrap,
   Profile,
 } from "../ProfilePage.style";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 import { _GET } from "@/api";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
 import { useMutation, useQuery } from "@tanstack/react-query";

@@ -1,6 +1,6 @@
 import { _DELETE, _GET, _POST } from "@/api";
 import { Avatar, ToolTip } from "@/components/common";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 import {
   CHAT_ICON,
   CLOSE_ICON,

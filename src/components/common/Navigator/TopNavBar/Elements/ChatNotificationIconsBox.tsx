@@ -1,5 +1,4 @@
 import styled, { keyframes, useTheme } from "styled-components";
-import Icon from "../../../Icon/Icon";
 import {
   CHAT_ICON,
   DARKMODE_ICON,
@@ -10,6 +9,7 @@ import { PathName } from "@/constants/pathNameConstants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import { useNotification } from "@/hooks/useNotification";
+import { Icon } from "@/components/common";
 
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;

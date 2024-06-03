@@ -13,12 +13,12 @@ import {
 import { _USERDATA } from "@/api/queries/userData";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Avatar } from "..";
 import useTheme from "@/hooks/useTheme";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
 import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
+import { Avatar, Icon } from "@/components/common";
 import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
 import { INotification } from "@/types";
@@ -255,22 +255,18 @@ const PostSimpleCard = ({
               onClick={onClickFavorite}
             >
               <NewDiv>
-                <span
+                <Icon
+                  name="favorite"
+                  fill={favoriteClicked ? true : false}
                   style={{
                     scale: "0.8",
                     color: !favoriteClicked
                       ? theme?.gray_300
                       : theme?.symbol_color,
-                    fontVariationSettings: "fill",
+                    fontVariationSettings: `'FILL' 
+                      ${favoriteClicked ? 1 : 0}`,
                   }}
-                  className={
-                    favoriteClicked
-                      ? "material-icons"
-                      : "material-symbols-rounded"
-                  }
-                >
-                  favorite
-                </span>
+                />
               </NewDiv>
             </IconContainer>
             <ProfileContainer>
@@ -314,7 +310,7 @@ const PostSimpleCard = ({
               <TextContainer style={{ fontSize: "1.2rem" }} $why={true}>
                 {parsedData === null ? postData.title : parsedData.title}
               </TextContainer>
-              <TextContainer class="postcard_content">
+              <TextContainer>
                 {parsedData === null ? postData.title : parsedData.content}
               </TextContainer>
             </section>

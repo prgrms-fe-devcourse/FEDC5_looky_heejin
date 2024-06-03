@@ -121,7 +121,7 @@ export const NewDiv = styled.div`
   }
 `;
 
-export const TextContainer = styled.p<{ $why?: boolean; class: string }>`
+export const TextContainer = styled.p<{ $why?: boolean }>`
   width: calc(100% - 11px);
   display: block;
   overflow: hidden;

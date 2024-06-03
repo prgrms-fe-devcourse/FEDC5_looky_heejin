@@ -1,5 +1,4 @@
 import styled, { useTheme } from "styled-components";
-import Icon from "../../Icon/Icon";
 import {
   ADD_BOX_ICON,
   CHANNEL_ICON,
@@ -15,7 +14,7 @@ import {
   NAV_HEIGHT,
 } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
-import { Avatar, Button } from "../..";
+import { Avatar, Button, Icon } from "@/components/common";
 import { useMe } from "@/hooks/useMe";
 import { _GET } from "@/api";
 

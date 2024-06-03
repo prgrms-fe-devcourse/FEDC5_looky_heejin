@@ -15,6 +15,7 @@ export interface IIconProps {
   weight?: number;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  style?: object;
 }
 
 export interface IIconStyle {
@@ -30,6 +31,7 @@ const Icon = ({
   fill = false,
   weight = DEFAULT_ICON_WEIGHT,
   className = "",
+  style,
   ...props
 }: IIconProps) => {
   const processedWeight = Math.min(
@@ -50,7 +52,7 @@ const Icon = ({
   return (
     <i
       className={`material-symbols-rounded ${className}`}
-      style={iconStyle}
+      style={style ? style : iconStyle}
       {...props}
     >
       {name}
