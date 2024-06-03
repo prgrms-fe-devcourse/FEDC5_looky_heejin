@@ -61,12 +61,12 @@ export const GlobalStyle = createGlobalStyle<any>`
     }
 `;
 
-export const Col = styled.div`
+export const Col = styled.section`
   display: flex;
   flex-direction: column;
 `;
 
-export const Row = styled.div`
+export const Row = styled.section`
   display: flex;
   flex-direction: row;
 `;

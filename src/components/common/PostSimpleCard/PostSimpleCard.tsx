@@ -248,7 +248,12 @@ const PostSimpleCard = ({
             />
           </CardImageContainer>
           <CardInfoContainer>
-            <IconContainer $icon="favorite" onClick={onClickFavorite}>
+            <IconContainer
+              role="button"
+              aria-label="좋아요 누르기"
+              $icon="favorite"
+              onClick={onClickFavorite}
+            >
               <NewDiv>
                 <span
                   style={{
@@ -270,6 +275,8 @@ const PostSimpleCard = ({
             </IconContainer>
             <ProfileContainer>
               <span
+                role="button"
+                aria-label="프로필로 이동하기"
                 onClick={onClickProfile}
                 style={{
                   cursor: "pointer",
@@ -282,6 +289,8 @@ const PostSimpleCard = ({
                 ></Avatar>
               </span>
               <span
+                role="button"
+                aria-label="프로필로 이동하기"
                 onClick={onClickProfile}
                 style={{
                   cursor: "pointer",
@@ -292,7 +301,7 @@ const PostSimpleCard = ({
               </span>
             </ProfileContainer>
 
-            <div
+            <section
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -305,10 +314,10 @@ const PostSimpleCard = ({
               <TextContainer style={{ fontSize: "1.2rem" }} $why={true}>
                 {parsedData === null ? postData.title : parsedData.title}
               </TextContainer>
-              <TextContainer>
+              <TextContainer class="postcard_content">
                 {parsedData === null ? postData.title : parsedData.content}
               </TextContainer>
-            </div>
+            </section>
             {/* todo, 태그 정보 */}
           </CardInfoContainer>
         </CardContainer>

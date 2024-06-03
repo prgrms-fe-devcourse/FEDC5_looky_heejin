@@ -12,7 +12,7 @@ import { useMe } from "@/hooks/useMe";
 import { Spinner } from "@/components/common/Spinner";
 const { VITE_ADMIN_ID } = import.meta.env;
 
-const Container = styled.div`
+const Container = styled.section`
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -52,7 +52,7 @@ const Home = () => {
     return (
       <>
         {id === VITE_ADMIN_ID ? <Admin /> : null}
-        <div
+        <section
           style={{
             width: "100%",
             height: "100%",
@@ -63,13 +63,13 @@ const Home = () => {
           }}
         >
           <Spinner />
-        </div>
+        </section>
       </>
     );
   } else if (!channel && !data.length) {
     return (
       <>
-        <div
+        <section
           style={{
             display: "flex",
             alignItems: "center",
@@ -91,7 +91,7 @@ const Home = () => {
           >
             바로 가기
           </Button>
-        </div>
+        </section>
       </>
     );
   }
@@ -107,7 +107,7 @@ const Home = () => {
             ))}
           </Container>
         ) : (
-          <div
+          <section
             style={{
               display: "flex",
               alignItems: "center",
@@ -124,7 +124,7 @@ const Home = () => {
             <span style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
               첫 포스트를 생성해보세요!
             </span>
-          </div>
+          </section>
         )}
       </>
     );
