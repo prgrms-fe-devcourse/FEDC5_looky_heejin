@@ -35,7 +35,7 @@ const IconsBox = styled.section`
   }
 `;
 
-const IconWrapper = styled.section<{ $marginLeft: string; tabIndex: string }>`
+const IconWrapper = styled.section<{ $marginLeft: string; tabIndex: number }>`
   margin: auto 0.25rem;
   margin-left: ${({ $marginLeft }) => $marginLeft && $marginLeft};
   & > :first-child {
@@ -100,10 +100,37 @@ const ChatNotificationIconsBox = ({
     setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
   };
 
+  const handleThemeEnter = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      handleTheme();
+    }
+  };
+
+  const handleChat = () => {
+    onClick(PathName.CHATS);
+  };
+
+  const handleChatEnter = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      handleChat();
+    }
+  };
+
+  const handleNotification = () => {
+    onClick(PathName.NOTIFICATIONS);
+  };
+
+  const handleNotificationEnter = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      handleNotification();
+    }
+  };
+
   return (
     <IconsBox>
       <IconWrapper
-        tabIndex="0"
+        tabIndex={0}
+        onKeyDown={handleThemeEnter}
         onClick={handleTheme}
         $marginLeft={id ? "" : "4.5rem"}
       >
@@ -116,11 +143,18 @@ const ChatNotificationIconsBox = ({
       {id ? (
         <>
           <NotificationIconWrapper
-            tabIndex="0"
+            tabIndex={0}
             $marginLeft={""}
-            onClick={() => onClick(PathName.CHATS)}
+            aria-labelledby={CHAT_ICON}
+            onKeyDown={handleChatEnter}
+            onClick={handleChat}
           >
-            <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
+            <Icon
+              id={CHAT_ICON}
+              name={CHAT_ICON}
+              size="1.6rem"
+              weight={250}
+            ></Icon>
             {messageUnseenCount > 0 ? (
               messageUnseenCount > 99 ? (
                 <ChatNotificationCounter $width="1.3rem" $borderRadius="8px">
@@ -136,11 +170,18 @@ const ChatNotificationIconsBox = ({
             ) : null}
           </NotificationIconWrapper>
           <NotificationIconWrapper
-            tabIndex="0"
+            tabIndex={0}
+            aria-labelledby={NOTIFICATIONS_ICON}
             $marginLeft={""}
-            onClick={() => onClick(PathName.NOTIFICATIONS)}
+            onKeyDown={handleNotificationEnter}
+            onClick={handleNotification}
           >
-            <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
+            <Icon
+              id={NOTIFICATIONS_ICON}
+              name={NOTIFICATIONS_ICON}
+              size="1.7rem"
+              weight={250}
+            ></Icon>
             {commonUnseenCount > 0 ? (
               commonUnseenCount > 99 ? (
                 <NotificationCounter $width="1.3rem" $borderRadius="8px">
