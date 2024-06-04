@@ -1,7 +1,9 @@
 import { Row } from "@/styles/GlobalStyle";
 import styled, { css, keyframes } from "styled-components";
 
-export const CardContainer = styled.article<{ $basis: "half" | "full" }>`
+export const CardContainer = styled.article<{
+  $basis: "half" | "full";
+}>`
   /* 기본 */
   font-size: 1rem;
   flex-direction: column;
@@ -48,7 +50,10 @@ export const CardInfoContainer = styled.section`
   position: relative;
 `;
 
-export const CardImageContainer = styled.section`
+export const CardImageContainer = styled.section<{
+  tabIndex: string;
+  onKeyDown: (e: React.KeyboardEvent) => void;
+}>`
   min-height: 200px;
   min-width: 200px;
   border-radius: 0.375rem;
@@ -76,6 +81,8 @@ export const heartbeat = keyframes`
 
 export const IconContainer = styled.div<{
   $icon: "send" | "comment" | "sell" | "favorite";
+  tabIndex: string;
+  onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
 }>`
   cursor: pointer;
   box-sizing: border-box;
@@ -138,7 +145,10 @@ export const TextContainer = styled.p<{ $why?: boolean }>`
   }}
 `;
 
-export const ProfileContainer = styled(Row)`
+export const ProfileContainer = styled(Row)<{
+  tabIndex: string;
+  onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
+}>`
   width: auto;
   align-items: center;
   margin: 5px;

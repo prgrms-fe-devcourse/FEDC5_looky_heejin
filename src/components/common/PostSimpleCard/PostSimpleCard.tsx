@@ -31,6 +31,11 @@ export interface ITitle {
   tags: ITag[] | null;
 }
 
+interface IProps {
+  key: number | string;
+  postData: any;
+}
+
 // ========================================
 // 충돌 방지를 위한 로직 모음, 추후 삭제 예정
 export interface ICreateLike {
@@ -62,12 +67,7 @@ const IsJsonString = (str: string) => {
   }
 };
 
-const PostSimpleCard = ({
-  postData,
-}: {
-  key: number | string;
-  postData: any;
-}) => {
+const PostSimpleCard = ({ postData }: IProps) => {
   const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
@@ -141,6 +141,13 @@ const PostSimpleCard = ({
     openModal({ postId: postData._id, likeDataBinding });
   };
 
+  const handleImageEnter = (e: React.KeyboardEvent<Element>) => {
+    if (e.key === "Enter") {
+      (e.target as HTMLElement).blur();
+      onClickImage();
+    }
+  };
+
   const onClickProfile = () => {
     if (pathname.includes("profile")) {
       alert(`Easter Egg!!!`);
@@ -149,11 +156,23 @@ const PostSimpleCard = ({
     }
   };
 
+  const handleProfileEnter = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter") {
+      onClickProfile();
+    }
+  };
+
   const onClickFavorite = () => {
     if (!favoriteClicked) {
       createLikeMutation.mutate({ postId: postData._id });
     } else {
       if (favoriteClicked) deleteLikeMutation.mutate({ id: favoriteId });
+    }
+  };
+
+  const handleFavoriteEnter = (e: React.KeyboardEvent<Element>) => {
+    if (e.key === "Enter") {
+      onClickFavorite();
     }
   };
 
@@ -239,7 +258,11 @@ const PostSimpleCard = ({
     return (
       <>
         <CardContainer $basis="half">
-          <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
+          <CardImageContainer
+            tabIndex="0"
+            onKeyDown={handleImageEnter}
+            style={{ minHeight: "200px", minWidth: "100%" }}
+          >
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
               onClick={onClickImage}
@@ -249,6 +272,8 @@ const PostSimpleCard = ({
           </CardImageContainer>
           <CardInfoContainer>
             <IconContainer
+              tabIndex="0"
+              onKeyDown={handleFavoriteEnter}
               role="button"
               aria-label="좋아요 누르기"
               $icon="favorite"
@@ -269,7 +294,7 @@ const PostSimpleCard = ({
                 />
               </NewDiv>
             </IconContainer>
-            <ProfileContainer>
+            <ProfileContainer tabIndex="0" onKeyDown={handleProfileEnter}>
               <span
                 role="button"
                 aria-label="프로필로 이동하기"
