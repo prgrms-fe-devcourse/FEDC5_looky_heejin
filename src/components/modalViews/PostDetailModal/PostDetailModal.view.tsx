@@ -45,6 +45,8 @@ import { _CREATE_LIKE, _DELETE_LIKE } from "@/api/queries/like";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import Comments from "./Comments";
 import { ITag } from "@/types/post";
+import { useUI } from "@/components/common/uiContext";
+import { useEffect } from "react";
 
 interface IHeartAnimation {
   isShow: boolean;
@@ -119,10 +121,18 @@ const PostDetailModalView = ({
   isShowComments,
   setIsShowComments,
 }: IPostDetailModalViewProps) => {
+  const { displayModal } = useUI();
+
+  useEffect(() => {
+    if (displayModal && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [displayModal]);
+
   return (
     <PostDetailWrapper ref={modalRef}>
       <UserInfoWrapper>
-        <UserInfo>
+        <UserInfo tabIndex={0}>
           <AvatarWrapper onClick={handleProfile}>
             {profileImage ? (
               <Avatar src={profileImage} size="S" />
@@ -147,7 +157,7 @@ const PostDetailModalView = ({
           </FollowButton>
         )}
 
-        <CloseIconWrapper>
+        <CloseIconWrapper tabIndex={0}>
           <Icon
             name={CLOSE_ICON}
             size="1.8rem"
@@ -189,7 +199,7 @@ const PostDetailModalView = ({
         <IconsWrapper>
           {/* 추후 refactor 포인트 : className으로 바꾸기  */}
           <HeartWrapper>
-            <HeartIconWrapper>
+            <HeartIconWrapper tabIndex={0}>
               <Icon
                 name={HEART_ICON}
                 onClick={handleLike}
@@ -212,11 +222,21 @@ const PostDetailModalView = ({
           </HeartWrapper>
           <CommentChatWrapper>
             <IconWrapper>
-              <Icon name={CHAT_ICON} size="2rem" onClick={toggleShowComments} />
+              <Icon
+                tabIndex={0}
+                name={CHAT_ICON}
+                size="2rem"
+                onClick={toggleShowComments}
+              />
             </IconWrapper>
             {userId !== myId ? (
               <IconWrapper>
-                <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
+                <Icon
+                  tabIndex={0}
+                  name={SEND_ICON}
+                  size="2.3rem"
+                  onClick={handleChat}
+                />
               </IconWrapper>
             ) : null}
           </CommentChatWrapper>
@@ -241,7 +261,7 @@ const PostDetailModalView = ({
                       {content.slice(0, 50)}
                     </span>
                   </span>
-                  <ContentDetail onClick={handleContentDetail}>
+                  <ContentDetail tabIndex={0} onClick={handleContentDetail}>
                     {"  "}...더 보기
                   </ContentDetail>
                 </>
@@ -272,7 +292,10 @@ const PostDetailModalView = ({
                 required: "댓글을 입력해주세요",
               })}
             />
-            <ReplyButton onClick={handleSubmit(onValid, onInvalid)}>
+            <ReplyButton
+              tabIndex={0}
+              onClick={handleSubmit(onValid, onInvalid)}
+            >
               게시
             </ReplyButton>
           </InputWrapper>
