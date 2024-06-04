@@ -259,7 +259,7 @@ const PostSimpleCard = ({ postData }: IProps) => {
       <>
         <CardContainer $basis="half">
           <CardImageContainer
-            tabIndex="0"
+            tabIndex={0}
             onKeyDown={handleImageEnter}
             style={{ minHeight: "200px", minWidth: "100%" }}
           >
@@ -272,7 +272,7 @@ const PostSimpleCard = ({ postData }: IProps) => {
           </CardImageContainer>
           <CardInfoContainer>
             <IconContainer
-              tabIndex="0"
+              tabIndex={0}
               onKeyDown={handleFavoriteEnter}
               role="button"
               aria-label="좋아요 누르기"
@@ -294,7 +294,7 @@ const PostSimpleCard = ({ postData }: IProps) => {
                 />
               </NewDiv>
             </IconContainer>
-            <ProfileContainer tabIndex="0" onKeyDown={handleProfileEnter}>
+            <ProfileContainer tabIndex={0} onKeyDown={handleProfileEnter}>
               <span
                 role="button"
                 aria-label="프로필로 이동하기"

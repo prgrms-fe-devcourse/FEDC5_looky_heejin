@@ -51,7 +51,7 @@ export const CardInfoContainer = styled.section`
 `;
 
 export const CardImageContainer = styled.section<{
-  tabIndex: string;
+  tabIndex: number;
   onKeyDown: (e: React.KeyboardEvent) => void;
 }>`
   min-height: 200px;
@@ -81,7 +81,7 @@ export const heartbeat = keyframes`
 
 export const IconContainer = styled.div<{
   $icon: "send" | "comment" | "sell" | "favorite";
-  tabIndex: string;
+  tabIndex: number;
   onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
 }>`
   cursor: pointer;
@@ -146,7 +146,7 @@ export const TextContainer = styled.p<{ $why?: boolean }>`
 `;
 
 export const ProfileContainer = styled(Row)<{
-  tabIndex: string;
+  tabIndex: number;
   onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void;
 }>`
   width: auto;
