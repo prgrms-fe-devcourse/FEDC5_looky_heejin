@@ -170,6 +170,7 @@ const ProfileView = ({
   return (
     <Profile
       $isMe={isMe.toString()}
+      tabIndex={0}
       $coverImage={isMe ? profileCover : userCover ?? ""}
       onClick={e => {
         isMe ? onClickCover(e) : null;
