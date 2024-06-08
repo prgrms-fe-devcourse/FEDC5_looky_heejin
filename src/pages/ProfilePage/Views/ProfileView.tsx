@@ -23,12 +23,23 @@ import { notify } from "@/utils/toast";
 
 interface IProfileProps {
   userInfo: IUser;
-  onClickLogout: (e: React.MouseEvent) => void;
-  onClickPassword: (e: React.MouseEvent) => void;
-  onClickEdit: (e: React.MouseEvent) => void;
-  onClickAvatar: (e: React.MouseEvent) => void;
-  onClickCover: (e: React.MouseEvent) => void;
-  onClickChat: (e: React.MouseEvent, paramsId: string) => void;
+  onClickLogout: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickPassword: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickEdit: <T extends React.MouseEvent | React.KeyboardEvent>(e: T) => void;
+  onClickAvatar: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickCover: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickChat: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T,
+    paramsId: string
+  ) => void;
   [key: string]: any;
 }
 
