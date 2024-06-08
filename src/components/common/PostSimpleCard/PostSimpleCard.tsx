@@ -241,8 +241,6 @@ const PostSimpleCard = ({
     }
   };
 
-  console.log(postData);
-
   if (mutation.isSuccess) {
     return (
       <>
