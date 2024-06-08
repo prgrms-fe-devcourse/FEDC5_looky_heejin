@@ -15,6 +15,7 @@ export interface IIconProps {
   weight?: number;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 }
 
 export interface IIconStyle {
