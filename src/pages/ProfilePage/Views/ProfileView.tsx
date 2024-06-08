@@ -167,7 +167,9 @@ const ProfileView = ({
     },
   });
 
-  const handleClickFollow = (e: React.MouseEvent) => {
+  const handleClickFollow = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
     e.stopPropagation();
     if (userId === undefined) return;
 
@@ -178,44 +180,86 @@ const ProfileView = ({
     }
   };
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      onClickCover(e as unknown as React.MouseEvent);
-    }
-  };
-
   return (
     // div태그이므로 alt 태그 추가 불가
     <Profile
       $isMe={isMe.toString()}
       tabIndex={0}
       $coverImage={isMe ? profileCover : userCover ?? ""}
+      // 여기서 발생하는 버블링을 캐치하지 못하는 중..
       onClick={e => {
-        isMe ? onClickCover(e) : null;
+        if (e.type === "click" && e.button === 0 && isMe) {
+          onClickCover(e);
+        }
       }}
-      onKeyDown={onKeyDown}
+      onKeyDown={e => {
+        if (e.key === "Enter") {
+          if (isMe) {
+            onClickCover(e);
+          }
+        }
+      }}
     >
+      {/* 기존 마우스 이벤트가 버튼이 아닌 아이콘에 있는 문제 있음 */}
+      {/* 따라서 아이콘 뎁스까지 들어가지 않아서 키보드 이벤트로 접근할 수 없는 문제점 발생 */}
       {isMe && (
         <ButtonsWrap className="me">
           <ButtonSet style={buttonStyle}>
             <Icon
               name="Password"
               size={ICON_SIZE_SMALL}
-              onClick={onClickPassword}
+              onClick={e => {
+                console.log(`?`);
+                if (isMe) {
+                  e.stopPropagation();
+                  onClickPassword(e);
+                }
+              }}
+              onKeyDown={e => {
+                console.log(`?`);
+                if (e.key === "Enter") {
+                  console.log(`?`);
+                  onClickPassword(e);
+                  e.stopPropagation();
+                }
+              }}
             />
             <Icon
               name="logout"
               size={ICON_SIZE_SMALL}
-              onClick={onClickLogout}
+              onClick={e => {
+                e.stopPropagation();
+                onClickLogout(e);
+              }}
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  if (isMe) {
+                    e.stopPropagation();
+                    onClickLogout(e);
+                  }
+                }
+              }}
             />
           </ButtonSet>
         </ButtonsWrap>
       )}
       <InfoWrap {...props}>
         <AvatarWrap
+          tabIndex={0}
           $isMe={isMe.toString()}
           onClick={e => {
-            isMe ? onClickAvatar(e) : null;
+            if (isMe) {
+              e.stopPropagation();
+              onClickAvatar(e);
+            }
+          }}
+          onKeyDown={e => {
+            if (e.key === "Enter") {
+              if (isMe) {
+                e.stopPropagation();
+                onClickAvatar(e);
+              }
+            }
           }}
         >
           <Avatar src={isMe ? profileImage : userImage ?? ""} size="XL" />
@@ -229,6 +273,7 @@ const ProfileView = ({
         {isMe && (
           <ButtonsWrap className="me">
             <Button
+              tabIndex={-1}
               width={ICON_SIZE_SMALL}
               variant="neumorp"
               style={{
@@ -241,6 +286,12 @@ const ProfileView = ({
                 color={theme.background_color}
                 size={ICON_SIZE_SMALL}
                 onClick={onClickEdit}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    e.stopPropagation();
+                    onClickEdit(e);
+                  }
+                }}
               />
             </Button>
           </ButtonsWrap>
@@ -248,11 +299,25 @@ const ProfileView = ({
         {!isMe && (
           <ButtonsWrap className="others">
             <ButtonSet style={buttonStyle}>
-              <Icon name="chat_bubble" onClick={e => onClickChat(e, userId)} />
+              {/* link 태그로 바꿔야함 */}
+              <Icon
+                name="chat_bubble"
+                onClick={e => onClickChat(e, userId)}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    onClickChat(e, userId);
+                  }
+                }}
+              />
               <Icon
                 name={!isFollow ? "person_add" : "person_check"}
                 color={isFollow ? theme.symbol_color : undefined}
                 onClick={handleClickFollow}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    handleClickFollow(e);
+                  }
+                }}
               />
             </ButtonSet>
           </ButtonsWrap>
