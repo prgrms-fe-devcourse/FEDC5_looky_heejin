@@ -27,7 +27,7 @@ const NotificationCard = ({
   return (
     <CardWrapper>
       <div
-        role="button"
+        role="link"
         tabIndex={0}
         aria-label={`${data.author.fullName} 회원 페이지로 이동하기`}
         className="cursor-pointer"
@@ -44,7 +44,7 @@ const NotificationCard = ({
         onKeyDown={e => {
           if (e.key === "Enter") onClickHandler(data);
         }}
-        role="button"
+        role="link"
         tabIndex={0}
         aria-label={`${data.author.fullName} 해당 게시글 및 회원 페이지로 이동하기`}
       >
