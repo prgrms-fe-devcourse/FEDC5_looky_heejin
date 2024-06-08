@@ -49,6 +49,7 @@ const Icon = ({
 
   return (
     <i
+      tabIndex={0}
       className={`material-symbols-rounded ${className}`}
       style={iconStyle}
       {...props}

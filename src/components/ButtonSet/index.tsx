@@ -21,7 +21,9 @@ const ButtonSet = ({ children, style }: IButtonProps) => {
         children.map((child, index) => {
           return (
             <ButtonWrap key={child + index.toString()}>
-              <Button {...style}>{child}</Button>
+              <Button tabIndex={-1} {...style}>
+                {child}
+              </Button>
             </ButtonWrap>
           );
         })
