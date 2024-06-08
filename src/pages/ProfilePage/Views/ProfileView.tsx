@@ -167,7 +167,14 @@ const ProfileView = ({
     }
   };
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onClickCover(e as unknown as React.MouseEvent);
+    }
+  };
+
   return (
+    // div태그이므로 alt 태그 추가 불가
     <Profile
       $isMe={isMe.toString()}
       tabIndex={0}
@@ -175,6 +182,7 @@ const ProfileView = ({
       onClick={e => {
         isMe ? onClickCover(e) : null;
       }}
+      onKeyDown={onKeyDown}
     >
       {isMe && (
         <ButtonsWrap className="me">
