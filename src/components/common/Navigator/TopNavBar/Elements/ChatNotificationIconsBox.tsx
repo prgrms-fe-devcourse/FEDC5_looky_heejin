@@ -96,33 +96,36 @@ const ChatNotificationIconsBox = ({
   const theme = useTheme();
   const [_, setLocalTheme] = useLocalStorage("theme");
 
-  const handleTheme = () => {
-    setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
-  };
-
-  const handleThemeEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") {
-      handleTheme();
+  const handleTheme = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
     }
   };
 
-  const handleChat = () => {
-    onClick(PathName.CHATS);
-  };
-
-  const handleChatEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") {
-      handleChat();
+  const handleChat = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      onClick(PathName.CHATS);
     }
   };
 
-  const handleNotification = () => {
-    onClick(PathName.NOTIFICATIONS);
-  };
-
-  const handleNotificationEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") {
-      handleNotification();
+  const handleNotification = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      onClick(PathName.NOTIFICATIONS);
     }
   };
 
@@ -130,7 +133,7 @@ const ChatNotificationIconsBox = ({
     <IconsBox>
       <IconWrapper
         tabIndex={0}
-        onKeyDown={handleThemeEnter}
+        onKeyDown={handleTheme}
         onClick={handleTheme}
         $marginLeft={id ? "" : "4.5rem"}
       >
@@ -146,7 +149,7 @@ const ChatNotificationIconsBox = ({
             tabIndex={0}
             $marginLeft={""}
             aria-labelledby={CHAT_ICON}
-            onKeyDown={handleChatEnter}
+            onKeyDown={handleChat}
             onClick={handleChat}
           >
             <Icon
@@ -173,7 +176,7 @@ const ChatNotificationIconsBox = ({
             tabIndex={0}
             aria-labelledby={NOTIFICATIONS_ICON}
             $marginLeft={""}
-            onKeyDown={handleNotificationEnter}
+            onKeyDown={handleNotification}
             onClick={handleNotification}
           >
             <Icon

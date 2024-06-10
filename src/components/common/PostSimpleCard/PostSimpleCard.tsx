@@ -136,43 +136,45 @@ const PostSimpleCard = ({ postData }: IProps) => {
     setFavoriteClicked(!favoriteClicked);
   };
 
-  const onClickImage = () => {
-    setModalView("POST_DETAIL_VIEW");
-    openModal({ postId: postData._id, likeDataBinding });
-  };
-
-  const handleImageEnter = (e: React.KeyboardEvent<Element>) => {
-    if (e.key === "Enter") {
-      (e.target as HTMLElement).blur();
-      onClickImage();
+  const onClickImage = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      setModalView("POST_DETAIL_VIEW");
+      openModal({ postId: postData._id, likeDataBinding });
     }
   };
 
-  const onClickProfile = () => {
-    if (pathname.includes("profile")) {
-      alert(`Easter Egg!!!`);
-    } else {
-      navigate(`/profile/${postData.author._id}`);
+  const onClickProfile = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      if (pathname.includes("profile")) {
+        alert(`Easter Egg!!!`);
+      } else {
+        navigate(`/profile/${postData.author._id}`);
+      }
     }
   };
 
-  const handleProfileEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") {
-      onClickProfile();
-    }
-  };
-
-  const onClickFavorite = () => {
-    if (!favoriteClicked) {
-      createLikeMutation.mutate({ postId: postData._id });
-    } else {
-      if (favoriteClicked) deleteLikeMutation.mutate({ id: favoriteId });
-    }
-  };
-
-  const handleFavoriteEnter = (e: React.KeyboardEvent<Element>) => {
-    if (e.key === "Enter") {
-      onClickFavorite();
+  const onClickFavorite = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      if (!favoriteClicked) {
+        createLikeMutation.mutate({ postId: postData._id });
+      } else {
+        if (favoriteClicked) deleteLikeMutation.mutate({ id: favoriteId });
+      }
     }
   };
 
@@ -260,12 +262,12 @@ const PostSimpleCard = ({ postData }: IProps) => {
         <CardContainer $basis="half">
           <CardImageContainer
             tabIndex={0}
-            onKeyDown={handleImageEnter}
+            onClick={onClickImage}
+            onKeyDown={onClickImage}
             style={{ minHeight: "200px", minWidth: "100%" }}
           >
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
-              onClick={onClickImage}
               src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
             />
@@ -273,11 +275,11 @@ const PostSimpleCard = ({ postData }: IProps) => {
           <CardInfoContainer>
             <IconContainer
               tabIndex={0}
-              onKeyDown={handleFavoriteEnter}
               role="button"
               aria-label="좋아요 누르기"
               $icon="favorite"
               onClick={onClickFavorite}
+              onKeyDown={onClickFavorite}
             >
               <NewDiv>
                 <Icon
@@ -294,11 +296,14 @@ const PostSimpleCard = ({ postData }: IProps) => {
                 />
               </NewDiv>
             </IconContainer>
-            <ProfileContainer tabIndex={0} onKeyDown={handleProfileEnter}>
+            <ProfileContainer
+              tabIndex={0}
+              onClick={onClickProfile}
+              onKeyDown={onClickProfile}
+            >
               <span
                 role="button"
                 aria-label="프로필로 이동하기"
-                onClick={onClickProfile}
                 style={{
                   cursor: "pointer",
                 }}
