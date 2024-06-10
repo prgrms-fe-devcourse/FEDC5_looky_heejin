@@ -215,7 +215,6 @@ const ProfileView = ({
   ];
 
   return (
-    // div태그이므로 alt 태그 추가 불가
     <Profile
       $isMe={isMe.toString()}
       tabIndex={0}
@@ -226,71 +225,28 @@ const ProfileView = ({
           onClickCover(e);
         }
       }}
-      onKeyDown={e => {
-        if (e.key === "Enter") {
-          if (isMe) {
-            onClickCover(e);
-          }
-        }
-      }}
     >
       {/* 기존 마우스 이벤트가 버튼이 아닌 아이콘에 있는 문제 있음 */}
       {/* 따라서 아이콘 뎁스까지 들어가지 않아서 키보드 이벤트로 접근할 수 없는 문제점 발생 */}
       {isMe && (
         <ButtonsWrap className="me">
-          <ButtonSet style={buttonStyle}>
-            <Icon
-              name="Password"
-              size={ICON_SIZE_SMALL}
-              onClick={e => {
-                console.log(`?`);
-                if (isMe) {
-                  e.stopPropagation();
-                  onClickPassword(e);
-                }
-              }}
-              onKeyDown={e => {
-                console.log(`?`);
-                if (e.key === "Enter") {
-                  console.log(`?`);
-                  onClickPassword(e);
-                  e.stopPropagation();
-                }
-              }}
-            />
-            <Icon
-              name="logout"
-              size={ICON_SIZE_SMALL}
-              onClick={e => {
-                e.stopPropagation();
-                onClickLogout(e);
-              }}
-              onKeyDown={e => {
-                if (e.key === "Enter") {
-                  if (isMe) {
-                    e.stopPropagation();
-                    onClickLogout(e);
-                  }
-                }
-              }}
-            />
-          </ButtonSet>
+          <ButtonSet style={buttonStyle} items={passwordAndLogoutItems} />
         </ButtonsWrap>
       )}
       <InfoWrap {...props}>
         <AvatarWrap
-          tabIndex={0}
+          tabIndex={isMe ? 0 : -1}
           $isMe={isMe.toString()}
           onClick={e => {
+            e.stopPropagation();
             if (isMe) {
-              e.stopPropagation();
               onClickAvatar(e);
             }
           }}
           onKeyDown={e => {
             if (e.key === "Enter") {
+              e.stopPropagation();
               if (isMe) {
-                e.stopPropagation();
                 onClickAvatar(e);
               }
             }
@@ -307,53 +263,25 @@ const ProfileView = ({
         {isMe && (
           <ButtonsWrap className="me">
             <Button
-              tabIndex={-1}
               width={ICON_SIZE_SMALL}
               variant="neumorp"
               style={{
                 height: ICON_SIZE_SMALL,
                 borderRadius: ICON_SIZE_SMALL / 2,
               }}
+              onClick={onClickEdit}
             >
               <Icon
                 name="Edit"
                 color={theme.background_color}
                 size={ICON_SIZE_SMALL}
-                onClick={onClickEdit}
-                onKeyDown={e => {
-                  if (e.key === "Enter") {
-                    e.stopPropagation();
-                    onClickEdit(e);
-                  }
-                }}
               />
             </Button>
           </ButtonsWrap>
         )}
         {!isMe && (
           <ButtonsWrap className="others">
-            <ButtonSet style={buttonStyle}>
-              {/* link 태그로 바꿔야함 */}
-              <Icon
-                name="chat_bubble"
-                onClick={e => onClickChat(e, userId)}
-                onKeyDown={e => {
-                  if (e.key === "Enter") {
-                    onClickChat(e, userId);
-                  }
-                }}
-              />
-              <Icon
-                name={!isFollow ? "person_add" : "person_check"}
-                color={isFollow ? theme.symbol_color : undefined}
-                onClick={handleClickFollow}
-                onKeyDown={e => {
-                  if (e.key === "Enter") {
-                    handleClickFollow(e);
-                  }
-                }}
-              />
-            </ButtonSet>
+            <ButtonSet style={buttonStyle} items={followAndMessage} />
           </ButtonsWrap>
         )}
       </InfoWrap>
