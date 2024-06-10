@@ -180,6 +180,40 @@ const ProfileView = ({
     }
   };
 
+  const handleClickChat = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    e.stopPropagation();
+    if (userId) onClickChat(e, userId);
+  };
+
+  const passwordAndLogoutItems = [
+    {
+      name: "Password",
+      size: ICON_SIZE_SMALL,
+      onClick: onClickPassword,
+    },
+    {
+      name: "logout",
+      size: ICON_SIZE_SMALL,
+      onClick: onClickLogout,
+    },
+  ];
+
+  const followAndMessage = [
+    {
+      name: "chat_bubble",
+      size: ICON_SIZE_SMALL,
+      onClick: handleClickChat,
+    },
+    {
+      name: !isFollow ? "person_add" : "person_check",
+      size: ICON_SIZE_SMALL,
+      color: isFollow ? theme.symbol_color : undefined,
+      onClick: handleClickFollow,
+    },
+  ];
+
   return (
     // div태그이므로 alt 태그 추가 불가
     <Profile
