@@ -15,7 +15,6 @@ export interface IIconProps {
   weight?: number;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 }
 
 export interface IIconStyle {
@@ -50,7 +49,6 @@ const Icon = ({
 
   return (
     <i
-      tabIndex={0}
       className={`material-symbols-rounded ${className}`}
       style={iconStyle}
       {...props}
