@@ -217,17 +217,29 @@ const ProfileView = ({
   return (
     <Profile
       $isMe={isMe.toString()}
-      tabIndex={0}
       $coverImage={isMe ? profileCover : userCover ?? ""}
       // 여기서 발생하는 버블링을 캐치하지 못하는 중..
+      // 생각되는 문제점 -> div라서..?
       onClick={e => {
+        console.log(`active!`);
+        e.stopPropagation();
         if (e.type === "click" && e.button === 0 && isMe) {
+          console.log(`active!2`);
           onClickCover(e);
         }
       }}
+      onKeyDown={e => {
+        console.log(e);
+        e.stopPropagation();
+        console.log(`active! 3`);
+        if (e.key === "Enter") {
+          console.log(`active! 4`);
+          if (isMe) {
+            onClickCover(e);
+          }
+        }
+      }}
     >
-      {/* 기존 마우스 이벤트가 버튼이 아닌 아이콘에 있는 문제 있음 */}
-      {/* 따라서 아이콘 뎁스까지 들어가지 않아서 키보드 이벤트로 접근할 수 없는 문제점 발생 */}
       {isMe && (
         <ButtonsWrap className="me">
           <ButtonSet style={buttonStyle} items={passwordAndLogoutItems} />
