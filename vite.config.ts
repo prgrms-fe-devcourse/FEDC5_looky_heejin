@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import path from "path";
 import react from "@vitejs/plugin-react";
 
@@ -19,9 +19,15 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
-  plugins: [react({
-    babel: {
-      plugins: ["babel-plugin-macros", "babel-plugin-styled-components"],
-    },
-  })],
+  plugins: [
+    react({
+      babel: {
+        plugins: ["babel-plugin-macros", "babel-plugin-styled-components"],
+      },
+    }),
+  ],
+  // test: {
+  //   globals: true,
+  //   setupFiles: "./src/test/setup.ts",
+  // },
 });
