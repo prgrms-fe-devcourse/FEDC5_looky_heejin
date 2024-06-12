@@ -389,9 +389,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   if (isLoading) return <Spinner />;
   return (
-    <PostDetailWrapper ref={modalRef}>
+    <PostDetailWrapper>
       <UserInfoWrapper>
-        <UserInfo tabIndex={0}>
+        <UserInfo tabIndex={0} ref={modalRef}>
           <AvatarWrapper onClick={handleProfile}>
             {profileImage ? (
               <Avatar src={profileImage} size="S" />
