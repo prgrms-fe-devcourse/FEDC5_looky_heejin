@@ -27,7 +27,11 @@ const ChannelsPage = () => {
           {data?.data.map((val: any) => {
             return (
               <ChannelStyle key={val._id}>
-                <Button variant="neumorp" onClick={() => handleClick(val)}>
+                <Button
+                  variant="neumorp"
+                  onClick={() => handleClick(val)}
+                  aria-label={`${val.name} 채널으로 이동하기`}
+                >
                   {val.name}
                 </Button>
               </ChannelStyle>
