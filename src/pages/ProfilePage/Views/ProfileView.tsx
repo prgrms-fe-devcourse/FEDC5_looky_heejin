@@ -7,6 +7,7 @@ import { ButtonSet } from "@/components";
 import {
   AvatarWrap,
   ButtonsWrap,
+  CoverChange,
   InfoWrap,
   Profile,
 } from "../ProfilePage.style";
@@ -192,11 +193,13 @@ const ProfileView = ({
       name: "Password",
       size: ICON_SIZE_SMALL,
       onClick: onClickPassword,
+      ariaString: "패스워드 변경하기",
     },
     {
       name: "logout",
       size: ICON_SIZE_SMALL,
       onClick: onClickLogout,
+      ariaString: "로그아웃 하기",
     },
   ];
 
@@ -205,12 +208,16 @@ const ProfileView = ({
       name: "chat_bubble",
       size: ICON_SIZE_SMALL,
       onClick: handleClickChat,
+      ariaString: `${profileName} 회원과 채팅하기`,
     },
     {
       name: !isFollow ? "person_add" : "person_check",
       size: ICON_SIZE_SMALL,
       color: isFollow ? theme.symbol_color : undefined,
       onClick: handleClickFollow,
+      ariaString: !isFollow
+        ? `${profileName} 회원 팔로우하기`
+        : `${profileName} 회원 팔로우 취소하기`,
     },
   ];
 
@@ -218,28 +225,18 @@ const ProfileView = ({
     <Profile
       $isMe={isMe.toString()}
       $coverImage={isMe ? profileCover : userCover ?? ""}
-      // 여기서 발생하는 버블링을 캐치하지 못하는 중..
-      // 생각되는 문제점 -> div라서..?
-      onClick={e => {
-        console.log(`active!`);
-        e.stopPropagation();
-        if (e.type === "click" && e.button === 0 && isMe) {
-          console.log(`active!2`);
-          onClickCover(e);
-        }
-      }}
-      onKeyDown={e => {
-        console.log(e);
-        e.stopPropagation();
-        console.log(`active! 3`);
-        if (e.key === "Enter") {
-          console.log(`active! 4`);
-          if (isMe) {
-            onClickCover(e);
-          }
-        }
-      }}
     >
+      {isMe && (
+        <CoverChange
+          onClick={e => {
+            e.stopPropagation();
+            if (e.type === "click" && isMe) {
+              onClickCover(e);
+            }
+          }}
+          aria-label="커버 이미지 변경하기"
+        />
+      )}
       {isMe && (
         <ButtonsWrap className="me">
           <ButtonSet style={buttonStyle} items={passwordAndLogoutItems} />
