@@ -32,7 +32,13 @@ const SearchEmptyView = ({ children, onTagClick }: SearchEmptyProps) => {
         <Text>{children}</Text>
         <Text>다음의 키워드를 검색해 보세요</Text>
         <TagWrap>
-          <Tag tabIndex={0} onClick={onClick} onKeyDown={onKeyDown}>
+          <Tag
+            role="button"
+            tabIndex={0}
+            aria-label="키워드 예시, 캐주얼 검색해보기"
+            onClick={onClick}
+            onKeyDown={onKeyDown}
+          >
             캐주얼
           </Tag>
         </TagWrap>

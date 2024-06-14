@@ -39,7 +39,9 @@ const SearchUsersView = ({
           usersData.map(user => (
             <ListItem
               key={user._id}
+              role="link"
               tabIndex={0}
+              aria-label={`${user.fullName} 프로필 화면으로 이동하기`}
               onClick={() => onClick(user._id)}
               onKeyDown={event => handleKeyDown(event, user._id)}
               {...props}
