@@ -1,7 +1,7 @@
 import { Row } from "@/styles/GlobalStyle";
 import styled, { css, keyframes } from "styled-components";
 
-export const CardContainer = styled.div<{ $basis: "half" | "full" }>`
+export const CardContainer = styled.article<{ $basis: "half" | "full" }>`
   /* 기본 */
   font-size: 1rem;
   flex-direction: column;

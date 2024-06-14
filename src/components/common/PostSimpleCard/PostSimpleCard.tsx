@@ -246,7 +246,7 @@ const PostSimpleCard = ({
       <>
         <CardContainer
           tabIndex={0}
-          aria-label={`${JSON.parse(postData.title).title}게시물 보기`}
+          aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
           onKeyDown={event => handleKeyDown(event)}
           $basis="half"
         >
