@@ -2,7 +2,7 @@ import { _GET } from "@/api";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { ChannelStyle, ContainDiv } from "./ChannelsPage.styles";
+import { ChannelStyle, ContainSection } from "./ChannelsPage.styles";
 import { GET_CHANNELS } from "@/constants/queryKey";
 import { Button } from "@/components/common";
 
@@ -23,7 +23,7 @@ const ChannelsPage = () => {
   if (data?.data) {
     return (
       <>
-        <ContainDiv>
+        <ContainSection>
           {data?.data.map((val: any) => {
             return (
               <ChannelStyle key={val._id}>
@@ -37,7 +37,7 @@ const ChannelsPage = () => {
               </ChannelStyle>
             );
           })}
-        </ContainDiv>
+        </ContainSection>
       </>
     );
   }
