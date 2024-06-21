@@ -109,6 +109,7 @@ const LoginPageView = () => {
         </ErrorContainer>
         <InputContainer
           type="text"
+          aria-required="true"
           placeholder="looky@example.com"
           {...register("email", LoginPageConst.EMAIL_VALIDATION_OPTION)}
         />
@@ -130,7 +131,6 @@ const LoginPageView = () => {
 
         <LogInButtonContainer
           aria-label="로그인 요청 버튼"
-          aria-required="true"
           onSubmit={handleSubmit(onValid, onInValid)}
         >
           로그인
