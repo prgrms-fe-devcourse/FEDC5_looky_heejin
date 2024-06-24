@@ -1,6 +1,6 @@
 import { _DELETE, _GET, _POST } from "@/api";
 import { Avatar, ToolTip } from "@/components/common";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 import {
   CHAT_ICON,
   CLOSE_ICON,
@@ -389,9 +389,9 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
   if (isLoading) return <Spinner />;
   return (
-    <PostDetailWrapper ref={modalRef}>
+    <PostDetailWrapper>
       <UserInfoWrapper>
-        <UserInfo>
+        <UserInfo tabIndex={0} ref={modalRef}>
           <AvatarWrapper onClick={handleProfile}>
             {profileImage ? (
               <Avatar src={profileImage} size="S" />
@@ -416,7 +416,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           </FollowButton>
         )}
 
-        <CloseIconWrapper>
+        <CloseIconWrapper tabIndex={0}>
           <Icon
             name={CLOSE_ICON}
             size="1.8rem"
@@ -468,7 +468,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         <IconsWrapper>
           {/* 추후 refactor 포인트 : className으로 바꾸기  */}
           <HeartWrapper>
-            <HeartIconWrapper>
+            <HeartIconWrapper
+              tabIndex={1}
+              role="button"
+              aria-label="좋아요 누르기"
+            >
               <Icon
                 name={HEART_ICON}
                 onClick={handleLike}
@@ -495,7 +499,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
             </IconWrapper>
             {userId !== myId ? (
               <IconWrapper>
-                <Icon name={SEND_ICON} size="2.3rem" onClick={handleChat} />
+                <Icon
+                  tabIndex={0}
+                  name={SEND_ICON}
+                  size="2.3rem"
+                  onClick={handleChat}
+                />
               </IconWrapper>
             ) : null}
           </CommentChatWrapper>

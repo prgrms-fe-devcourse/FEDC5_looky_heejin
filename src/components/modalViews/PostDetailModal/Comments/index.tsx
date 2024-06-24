@@ -57,7 +57,7 @@ const Comments = ({
       ) : comments.length === 0 ? (
         <NoComments>댓글이 없습니다.</NoComments>
       ) : (
-        <MoreComments onClick={handleShowComments}>
+        <MoreComments tabIndex={0} onClick={handleShowComments}>
           댓글 {comments.length}개 보기
         </MoreComments>
       )}
