@@ -56,6 +56,7 @@ const SearchBar = ({ onSearch, onClickBack }: ISearchBar) => {
         <Input
           className="shadow"
           type="text"
+          aria-required="true"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요. ex) 캐주얼"
           {...register("searchQuery", SEARCH_VALIDATION_OPTION)}
