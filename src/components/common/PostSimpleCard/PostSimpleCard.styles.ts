@@ -50,9 +50,7 @@ export const CardInfoContainer = styled.section`
   position: relative;
 `;
 
-export const CardImageContainer = styled.section<{
-  tabIndex: number;
-}>`
+export const CardImageContainer = styled.section`
   min-height: 200px;
   min-width: 200px;
   border-radius: 0.375rem;

@@ -35,6 +35,7 @@ const SearchTab = ({ option = "user", onClick, ...props }: ISearchTab) => {
           pointerEvents: tab === "user" ? "none" : undefined,
         }}
         onClickHandler={() => onClickTab()}
+        aria-label="검색된 사용자 보기"
       >
         사용자
       </Button>
@@ -48,6 +49,7 @@ const SearchTab = ({ option = "user", onClick, ...props }: ISearchTab) => {
           pointerEvents: tab === "post" ? "none" : undefined,
         }}
         onClickHandler={() => onClickTab()}
+        aria-label="검색된 게시글 보기"
       >
         게시글
       </Button>

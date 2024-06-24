@@ -256,16 +256,22 @@ const PostSimpleCard = ({ postData }: IProps) => {
     );
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Enter") {
+      onClickImage(event);
+    }
+  };
+
   if (mutation.isSuccess) {
     return (
       <>
-        <CardContainer $basis="half">
-          <CardImageContainer
-            tabIndex={0}
-            onClick={onClickImage}
-            onKeyDown={onClickImage}
-            style={{ minHeight: "200px", minWidth: "100%" }}
-          >
+        <CardContainer
+          tabIndex={0}
+          aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
+          onKeyDown={event => handleKeyDown(event)}
+          $basis="half"
+        >
+          <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
               src={postData.image ? postData.image : "/image_alt.png"}

@@ -1,10 +1,16 @@
 import { Button } from "@/components/common";
-import { ReactNode } from "react";
 import { styled } from "styled-components";
+import Icon from "../common/Icon/Icon";
 
 type TVariant = "flat" | "neumorp" | "symbol" | "disabled";
 export interface IButtonProps {
-  children: ReactNode[] | ReactNode;
+  items: Array<{
+    name: string;
+    size: number;
+    ariaString: string;
+    color?: string | undefined;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  }>;
   style: {
     variant: TVariant;
     width?: number;
@@ -14,22 +20,20 @@ export interface IButtonProps {
 
 const ButtonWrap = styled.div<{ key: string }>``;
 
-const ButtonSet = ({ children, style }: IButtonProps) => {
+const ButtonSet = ({ items, style }: IButtonProps) => {
   return (
     <>
-      {Array.isArray(children) ? (
-        children.map((child, index) => {
-          return (
-            <ButtonWrap key={child + index.toString()}>
-              <Button {...style}>{child}</Button>
-            </ButtonWrap>
-          );
-        })
-      ) : (
-        <div>
-          <Button {...style}>{children}</Button>
-        </div>
-      )}
+      {items.map((item, index) => (
+        <ButtonWrap key={index.toString()}>
+          <Button
+            {...style}
+            onClick={item.onClick}
+            aria-label={`${item.ariaString} 버튼`}
+          >
+            <Icon name={item.name} size={item.size} color={item.color} />
+          </Button>
+        </ButtonWrap>
+      ))}
     </>
   );
 };
