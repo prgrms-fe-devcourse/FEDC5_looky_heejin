@@ -14,8 +14,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
-import { ME } from "@/constants/queryKey";
+import { ME, POST } from "@/constants/queryKey";
 import { Spinner } from "@/components/common/Spinner";
+import { _GET } from "@/api";
+import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface ModalProps {
   postId: string;
@@ -65,13 +68,16 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
   });
 
   const { data: myData } = useInitData(ME, "/auth-user");
-  const { data: postData, isLoading } = useInitData(
-    `postId-${postId}`,
-    `/posts/${postId}`
-  );
-  const userId = postData?.data.author._id;
-  const userName = postData?.data.author.fullName;
-  const imageUrl = postData?.data.image;
+
+  const { data: postData, isLoading } = useQuery({
+    queryKey: [POST, postId],
+    queryFn: async () => await _GET(`/posts/${postId}`),
+    gcTime: 0,
+  });
+
+  const userId = postData?.data?.author._id;
+  const userName = postData?.data?.author.fullName;
+  const imageUrl = postData?.data?.image;
 
   useEffect(() => {
     if (postData) {
@@ -115,6 +121,7 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
   const { createLikeMutation, deleteLikeMutation } = useLikeMutation({
     myId,
     userId,
+    postId,
     notify,
     setLikeInfo,
     likeDataBinding,
@@ -145,13 +152,21 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     if (confirm("포스트를 삭제할까요? 삭제 후에는 되돌릴 수 없습니다.")) {
       deletePostMutation.mutate({ id: postId });
       closeModal();
-      // TODO : 포스트 삭제 api통신 후 홈 화면이 리렌더링될 수 있도록 해야함
     }
   };
 
   const handleClose = () => {
     closeModal();
   };
+
+  const changeServerFollowState = useDebounce(userId => {
+    if (!followInfo.isIFollowed) {
+      myId !== null && followMutation.mutate({ userId });
+    } else {
+      unfollowMutation.mutate({ id: followInfo.followId });
+    }
+  }, 400);
+
   const handleFollow = () => {
     if (!myId) {
       if (confirm(`로그인이 필요합니다. 로그인 페이지로 이동할까요?`)) {
@@ -161,14 +176,25 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       return;
     }
     if (!followInfo.isIFollowed) {
-      myId !== null && followMutation.mutate({ userId });
+      myId !== null &&
+        setFollowInfo(prevState => ({ ...prevState, isIFollowed: true }));
     } else {
-      unfollowMutation.mutate({ id: followInfo.followId });
+      setFollowInfo(prevState => ({ ...prevState, isIFollowed: false }));
     }
+
+    changeServerFollowState(userId);
   };
   const handleContentDetail = () => {
     setIsContentDetail(true);
   };
+
+  const changeServerLikeState = useDebounce(postId => {
+    if (postData?.data.likes.some((like: any) => like.user === myId)) {
+      likeInfo.isILiked && deleteLikeMutation.mutate({ id: likeInfo.myLikeId });
+    } else {
+      !likeInfo.isILiked && createLikeMutation.mutate({ postId: postId });
+    }
+  }, 400);
 
   const handleLike = () => {
     if (!myId) {
@@ -178,16 +204,36 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       }
       return;
     }
-    if (likeInfo.isILiked === true) {
-      deleteLikeMutation.mutate({ id: likeInfo.myLikeId });
-    }
-    if (likeInfo.isILiked === false) {
+
+    if (!likeInfo.isILiked) {
+      myId !== null &&
+        setLikeInfo(prevState => ({
+          ...prevState,
+          isILiked: true,
+          count: prevState.count + 1,
+        }));
       setHeartAnimation(previousState => ({
         isShow: true,
         key: previousState.key + 1,
       }));
-      createLikeMutation.mutate({ postId: postId });
+      notify({
+        type: "success",
+        text: "좋아요를 눌렀어요!",
+      });
+    } else {
+      setLikeInfo(prevState => ({
+        ...prevState,
+        isILiked: false,
+        count: prevState.count - 1,
+      }));
+      notify({
+        type: "default",
+        text: "좋아요를 취소했어요.",
+      });
     }
+
+    changeServerLikeState(postId);
+    console.log(likeInfo.isILiked);
   };
 
   const handleChat = () => {
@@ -251,6 +297,7 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       handleLike={handleLike}
       isILiked={likeInfo.isILiked}
       likeCount={likeInfo.count}
+      // likeCount={postData?.data.likes.length}
       toggleShowComments={toggleShowComments}
       handleChat={handleChat}
       register={register}
