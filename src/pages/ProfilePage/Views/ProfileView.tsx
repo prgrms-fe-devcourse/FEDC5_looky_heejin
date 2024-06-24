@@ -7,6 +7,7 @@ import { ButtonSet } from "@/components";
 import {
   AvatarWrap,
   ButtonsWrap,
+  CoverChange,
   InfoWrap,
   Profile,
 } from "../ProfilePage.style";
@@ -23,12 +24,23 @@ import { notify } from "@/utils/toast";
 
 interface IProfileProps {
   userInfo: IUser;
-  onClickLogout: (e: React.MouseEvent) => void;
-  onClickPassword: (e: React.MouseEvent) => void;
-  onClickEdit: (e: React.MouseEvent) => void;
-  onClickAvatar: (e: React.MouseEvent) => void;
-  onClickCover: (e: React.MouseEvent) => void;
-  onClickChat: (e: React.MouseEvent, paramsId: string) => void;
+  onClickLogout: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickPassword: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickEdit: <T extends React.MouseEvent | React.KeyboardEvent>(e: T) => void;
+  onClickAvatar: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickCover: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => void;
+  onClickChat: <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T,
+    paramsId: string
+  ) => void;
   [key: string]: any;
 }
 
@@ -156,7 +168,9 @@ const ProfileView = ({
     },
   });
 
-  const handleClickFollow = (e: React.MouseEvent) => {
+  const handleClickFollow = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
     e.stopPropagation();
     if (userId === undefined) return;
 
@@ -167,35 +181,84 @@ const ProfileView = ({
     }
   };
 
+  const handleClickChat = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    e.stopPropagation();
+    if (userId) onClickChat(e, userId);
+  };
+
+  const passwordAndLogoutItems = [
+    {
+      name: "Password",
+      size: ICON_SIZE_SMALL,
+      onClick: onClickPassword,
+      ariaString: "패스워드 변경하기",
+    },
+    {
+      name: "logout",
+      size: ICON_SIZE_SMALL,
+      onClick: onClickLogout,
+      ariaString: "로그아웃 하기",
+    },
+  ];
+
+  const followAndMessage = [
+    {
+      name: "chat_bubble",
+      size: ICON_SIZE_SMALL,
+      onClick: handleClickChat,
+      ariaString: `${profileName} 회원과 채팅하기`,
+    },
+    {
+      name: !isFollow ? "person_add" : "person_check",
+      size: ICON_SIZE_SMALL,
+      color: isFollow ? theme.symbol_color : undefined,
+      onClick: handleClickFollow,
+      ariaString: !isFollow
+        ? `${profileName} 회원 팔로우하기`
+        : `${profileName} 회원 팔로우 취소하기`,
+    },
+  ];
+
   return (
     <Profile
       $isMe={isMe.toString()}
       $coverImage={isMe ? profileCover : userCover ?? ""}
-      onClick={e => {
-        isMe ? onClickCover(e) : null;
-      }}
     >
       {isMe && (
+        <CoverChange
+          onClick={e => {
+            e.stopPropagation();
+            if (e.type === "click" && isMe) {
+              onClickCover(e);
+            }
+          }}
+          aria-label="커버 이미지 변경하기"
+        />
+      )}
+      {isMe && (
         <ButtonsWrap className="me">
-          <ButtonSet style={buttonStyle}>
-            <Icon
-              name="Password"
-              size={ICON_SIZE_SMALL}
-              onClick={onClickPassword}
-            />
-            <Icon
-              name="logout"
-              size={ICON_SIZE_SMALL}
-              onClick={onClickLogout}
-            />
-          </ButtonSet>
+          <ButtonSet style={buttonStyle} items={passwordAndLogoutItems} />
         </ButtonsWrap>
       )}
       <InfoWrap {...props}>
         <AvatarWrap
+          tabIndex={isMe ? 0 : -1}
           $isMe={isMe.toString()}
           onClick={e => {
-            isMe ? onClickAvatar(e) : null;
+            e.stopPropagation();
+            if (isMe) {
+              onClickAvatar(e);
+            }
+          }}
+          onKeyDown={e => {
+            if (e.key === "Enter") {
+              e.stopPropagation();
+              if (isMe) {
+                onClickAvatar(e);
+              }
+            }
           }}
         >
           <Avatar src={isMe ? profileImage : userImage ?? ""} size="XL" />
@@ -215,26 +278,19 @@ const ProfileView = ({
                 height: ICON_SIZE_SMALL,
                 borderRadius: ICON_SIZE_SMALL / 2,
               }}
+              onClick={onClickEdit}
             >
               <Icon
                 name="Edit"
                 color={theme.background_color}
                 size={ICON_SIZE_SMALL}
-                onClick={onClickEdit}
               />
             </Button>
           </ButtonsWrap>
         )}
         {!isMe && (
           <ButtonsWrap className="others">
-            <ButtonSet style={buttonStyle}>
-              <Icon name="chat_bubble" onClick={e => onClickChat(e, userId)} />
-              <Icon
-                name={!isFollow ? "person_add" : "person_check"}
-                color={isFollow ? theme.symbol_color : undefined}
-                onClick={handleClickFollow}
-              />
-            </ButtonSet>
+            <ButtonSet style={buttonStyle} items={followAndMessage} />
           </ButtonsWrap>
         )}
       </InfoWrap>
