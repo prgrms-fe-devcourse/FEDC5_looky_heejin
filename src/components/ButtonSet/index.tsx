@@ -1,6 +1,5 @@
-import { Button } from "@/components/common";
+import { Button, Icon } from "@/components/common";
 import { styled } from "styled-components";
-import Icon from "../common/Icon/Icon";
 
 type TVariant = "flat" | "neumorp" | "symbol" | "disabled";
 export interface IButtonProps {
