@@ -12,7 +12,7 @@ import { useMe } from "@/hooks/useMe";
 import { Spinner } from "@/components/common/Spinner";
 const { VITE_ADMIN_ID } = import.meta.env;
 
-const Container = styled.div`
+const Container = styled.section`
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

@@ -93,6 +93,7 @@ const BottomNavBar = () => {
           useRipple={true}
           onClickHandler={() => handleIconClick(PathName.HOME)}
           style={ButtonChildrenSortingStyle}
+          aria-label="홈 화면으로 가기"
         >
           {
             <Icon
@@ -109,6 +110,7 @@ const BottomNavBar = () => {
           useRipple={true}
           onClickHandler={() => handleIconClick(PathName.SEARCH)}
           style={ButtonChildrenSortingStyle}
+          aria-label="검색 화면으로 가기"
         >
           {
             <Icon
@@ -126,6 +128,7 @@ const BottomNavBar = () => {
             useRipple={true}
             onClickHandler={() => handleIconClick(PathName.NEWPOST)}
             style={ButtonChildrenSortingStyle}
+            aria-label="포스팅 생성 화면으로 가기"
           >
             {
               <Icon
@@ -145,6 +148,7 @@ const BottomNavBar = () => {
           useRipple={true}
           onClickHandler={() => handleIconClick(PathName.CHANNELS)}
           style={ButtonChildrenSortingStyle}
+          aria-label="채널 선택 화면으로 가기"
         >
           {
             <Icon
@@ -168,6 +172,7 @@ const BottomNavBar = () => {
               : () => handleIconClick(`login`)
           }
           style={ButtonChildrenSortingStyle}
+          aria-label={id ? `내 프로필 화면으로 가기` : `로그인 화면으로 가기`}
         >
           {id ? (
             <Avatar size="XS" src={profilePhoto ? profilePhoto : ""} />
