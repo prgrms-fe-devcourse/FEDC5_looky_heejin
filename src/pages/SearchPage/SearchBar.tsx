@@ -1,6 +1,6 @@
 import { FieldErrors, useForm } from "react-hook-form";
 import { useCallback, useEffect } from "react";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 import { Form, Input, SearchIconWrap, BackIconWrap } from "./SearchPage.styles";
 import { useSearchParams } from "react-router-dom";
 import { SEARCH_VALIDATION_OPTION } from "./SearchPage.const";

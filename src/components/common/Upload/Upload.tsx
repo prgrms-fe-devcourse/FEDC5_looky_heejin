@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { PLUS_ICON } from "@/constants/icons";
 import { Image } from "@/components/common";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 
 interface IUploadProps {
   droppable?: boolean;

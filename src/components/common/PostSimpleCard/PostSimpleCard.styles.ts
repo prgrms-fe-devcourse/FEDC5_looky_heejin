@@ -1,7 +1,9 @@
 import { Row } from "@/styles/GlobalStyle";
 import styled, { css, keyframes } from "styled-components";
 
-export const CardContainer = styled.article<{ $basis: "half" | "full" }>`
+export const CardContainer = styled.article<{
+  $basis: "half" | "full";
+}>`
   /* 기본 */
   font-size: 1rem;
   flex-direction: column;
@@ -42,13 +44,13 @@ export const CardContainer = styled.article<{ $basis: "half" | "full" }>`
   }
 `;
 
-export const CardInfoContainer = styled.div`
+export const CardInfoContainer = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
 `;
 
-export const CardImageContainer = styled.div`
+export const CardImageContainer = styled.section`
   min-height: 200px;
   min-width: 200px;
   border-radius: 0.375rem;
@@ -76,6 +78,7 @@ export const heartbeat = keyframes`
 
 export const IconContainer = styled.div<{
   $icon: "send" | "comment" | "sell" | "favorite";
+  tabIndex: number;
 }>`
   cursor: pointer;
   box-sizing: border-box;
@@ -121,7 +124,7 @@ export const NewDiv = styled.div`
   }
 `;
 
-export const TextContainer = styled.div<{ $why?: boolean }>`
+export const TextContainer = styled.p<{ $why?: boolean }>`
   width: calc(100% - 11px);
   display: block;
   overflow: hidden;
@@ -138,7 +141,9 @@ export const TextContainer = styled.div<{ $why?: boolean }>`
   }}
 `;
 
-export const ProfileContainer = styled(Row)`
+export const ProfileContainer = styled(Row)<{
+  tabIndex: number;
+}>`
   width: auto;
   align-items: center;
   margin: 5px;
