@@ -469,7 +469,7 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           {/* 추후 refactor 포인트 : className으로 바꾸기  */}
           <HeartWrapper>
             <HeartIconWrapper
-              tabIndex={1}
+              tabIndex={0}
               role="button"
               aria-label="좋아요 누르기"
             >
