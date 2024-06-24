@@ -14,7 +14,8 @@ import {
   INotification,
   IUnfollow,
 } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { POST } from "@/constants/queryKey";
 
 interface ILikeInfo {
   count: number;
@@ -30,6 +31,7 @@ interface IFollowInfo {
 interface ILikeMuationProps {
   myId: string | null;
   userId: string;
+  postId: string;
   notify: ({ type, text }: IToastProps) => void;
   setLikeInfo: React.Dispatch<React.SetStateAction<ILikeInfo>>;
   likeDataBinding: (data: any) => void;
@@ -74,19 +76,42 @@ export const useNotifyMutation = () => {
 export const useLikeMutation = ({
   myId,
   userId,
+  postId,
   notify,
-  setLikeInfo,
-  likeDataBinding,
 }: ILikeMuationProps) => {
+  const queryClient = useQueryClient();
   const notificationMutation = useNotifyMutation();
   const createLikeMutation = useMutation({
     mutationFn: async (formData: ICreateLike) => await _CREATE_LIKE(formData),
-    onMutate() {
-      setLikeInfo(prevState => ({
-        ...prevState,
-        isILiked: true,
-        count: prevState.count + 1,
-      }));
+    onMutate: async ({ postId }) => {
+      queryClient.cancelQueries({ queryKey: [POST, postId] });
+      const previousPostData: any = queryClient.getQueryData([POST, postId]);
+
+      const previousLikes = previousPostData?.data?.likes.filter(
+        (like: any) => {
+          if (like.user !== myId) {
+            return like;
+          }
+        }
+      );
+
+      const newPostData = {
+        ...previousPostData?.data,
+        likes: [
+          ...previousLikes,
+          {
+            createdAt: "",
+            updatedAt: "",
+            post: postId,
+            user: myId,
+            __v: 0,
+            _id: "",
+          },
+        ],
+      };
+      queryClient.setQueryData([POST, postId], { data: newPostData });
+
+      return { previousPostData };
     },
     onSuccess(data) {
       if (myId) {
@@ -98,49 +123,51 @@ export const useLikeMutation = ({
         };
 
         notificationMutation.mutate(newNotification);
-        notify({
-          type: "success",
-          text: "좋아요를 눌렀어요!",
-        });
-        likeDataBinding(data);
-        setLikeInfo(prevState => ({ ...prevState, myLikeId: data._id }));
       }
     },
-    onError() {
-      notify({
-        type: "error",
-        text: "좋아요 생성에 실패했어요.",
-      });
-      setLikeInfo(prevState => ({
-        ...prevState,
-        isILiked: false,
-        count: prevState.count - 1,
-      }));
+    onError: (_, __, context) => {
+      if (context?.previousPostData) {
+        queryClient.setQueryData([POST, postId], context.previousPostData);
+        notify({
+          type: "error",
+          text: "좋아요 생성에 실패했어요.",
+        });
+      }
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: [POST, postId] });
     },
   });
 
   const deleteLikeMutation = useMutation({
     mutationFn: async (formData: IDeleteLike) => await _DELETE_LIKE(formData),
-    onMutate() {
-      setLikeInfo(prevState => ({
-        ...prevState,
-        isILiked: false,
-        count: prevState.count - 1,
-      }));
-    },
-    onSuccess(data) {
-      notify({
-        type: "default",
-        text: "좋아요를 취소했어요.",
+    onMutate: async ({ id }) => {
+      queryClient.cancelQueries({ queryKey: [POST, postId] });
+      const previousPostData: any = queryClient.getQueryData([POST, postId]);
+
+      const newLikes = previousPostData?.data?.likes.filter((like: any) => {
+        if (like._id !== id && like.user !== myId) {
+          return like;
+        }
       });
-      likeDataBinding(data);
+
+      const newPostData = {
+        ...previousPostData?.data,
+        likes: newLikes,
+      };
+
+      queryClient.setQueryData([POST, postId], { data: newPostData });
+
+      return { previousPostData };
     },
-    onError() {
-      setLikeInfo(prevState => ({
-        ...prevState,
-        isILiked: true,
-        count: prevState.count + 1,
-      }));
+
+    onError: (_, __, context) => {
+      if (context?.previousPostData) {
+        queryClient.setQueryData([POST, postId], context.previousPostData);
+      }
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: [POST, postId] });
     },
   });
 
@@ -174,7 +201,6 @@ export const useCommentMutation = ({
 
         notificationMutation.mutate(newNotification);
         setComments(newComments);
-        console.log(newComments);
       }
     },
     onError(error) {
@@ -189,7 +215,6 @@ export const useCommentMutation = ({
         type: "default",
         text: "댓글을 삭제했어요.",
       });
-      console.log("API : 댓글 삭제 성공", data);
       const newComments = comments.filter(({ _id }: any) => _id !== data._id);
       setComments(newComments);
     },
@@ -224,10 +249,6 @@ export const useFollowMutation = ({
 
         notificationMutation.mutate(newNotification);
       }
-      notify({
-        type: "success",
-        text: "팔로우를 성공했어요.",
-      });
       setFollowInfo(prevState => ({ ...prevState, followId: data._id }));
     },
     onError(error) {
@@ -246,10 +267,6 @@ export const useFollowMutation = ({
       setFollowInfo(prevState => ({ ...prevState, isIFollowed: false }));
     },
     onSuccess() {
-      notify({
-        type: "default",
-        text: "팔로우를 해제했어요.",
-      });
       setFollowInfo(prevState => ({ ...prevState, followId: "" }));
     },
     onError(error) {
