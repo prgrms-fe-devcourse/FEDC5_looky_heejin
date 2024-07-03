@@ -265,15 +265,14 @@ const PostSimpleCard = ({ postData }: IProps) => {
   if (mutation.isSuccess) {
     return (
       <>
-        <CardContainer
-          tabIndex={0}
-          aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
-          onKeyDown={event => handleKeyDown(event)}
-          $basis="half"
-        >
+        <CardContainer $basis="half">
           <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
+              tabIndex={0}
+              aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
+              onClick={onClickImage}
+              onKeyDown={event => handleKeyDown(event)}
               src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
             />
@@ -302,12 +301,11 @@ const PostSimpleCard = ({ postData }: IProps) => {
                 />
               </NewDiv>
             </IconContainer>
-            <ProfileContainer
-              tabIndex={0}
-              onClick={onClickProfile}
-              onKeyDown={onClickProfile}
-            >
+            <ProfileContainer>
               <span
+                tabIndex={0}
+                onClick={onClickProfile}
+                onKeyDown={onClickProfile}
                 role="button"
                 aria-label="프로필로 이동하기"
                 style={{

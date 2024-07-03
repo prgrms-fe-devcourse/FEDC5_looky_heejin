@@ -141,9 +141,7 @@ export const TextContainer = styled.p<{ $why?: boolean }>`
   }}
 `;
 
-export const ProfileContainer = styled(Row)<{
-  tabIndex: number;
-}>`
+export const ProfileContainer = styled(Row)`
   width: auto;
   align-items: center;
   margin: 5px;
