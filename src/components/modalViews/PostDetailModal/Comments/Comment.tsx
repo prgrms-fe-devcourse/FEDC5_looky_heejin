@@ -9,7 +9,7 @@ import {
   StyledLi,
   UserNameInComment,
 } from "../PostDetailModal.styles";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 import { CLOSE_ICON } from "@/constants/icons";
 import { Avatar } from "@/components/common";
 import { parseDate } from "@/utils/parseDate";

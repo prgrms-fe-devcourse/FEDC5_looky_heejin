@@ -13,12 +13,12 @@ import {
 import { _USERDATA } from "@/api/queries/userData";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Avatar } from "..";
 import useTheme from "@/hooks/useTheme";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
 import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
+import { Avatar, Icon } from "@/components/common";
 import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
 import { INotification } from "@/types";
@@ -29,6 +29,11 @@ export interface ITitle {
   title: string;
   content: string;
   tags: ITag[] | null;
+}
+
+interface IProps {
+  key: number | string;
+  postData: any;
 }
 
 // ========================================
@@ -62,12 +67,7 @@ const IsJsonString = (str: string) => {
   }
 };
 
-const PostSimpleCard = ({
-  postData,
-}: {
-  key: number | string;
-  postData: any;
-}) => {
+const PostSimpleCard = ({ postData }: IProps) => {
   const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
@@ -136,24 +136,45 @@ const PostSimpleCard = ({
     setFavoriteClicked(!favoriteClicked);
   };
 
-  const onClickImage = () => {
-    setModalView("POST_DETAIL_VIEW");
-    openModal({ postId: postData._id, likeDataBinding });
-  };
-
-  const onClickProfile = () => {
-    if (pathname.includes("profile")) {
-      alert(`Easter Egg!!!`);
-    } else {
-      navigate(`/profile/${postData.author._id}`);
+  const onClickImage = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      setModalView("POST_DETAIL_VIEW");
+      openModal({ postId: postData._id, likeDataBinding });
     }
   };
 
-  const onClickFavorite = () => {
-    if (!favoriteClicked) {
-      createLikeMutation.mutate({ postId: postData._id });
-    } else {
-      if (favoriteClicked) deleteLikeMutation.mutate({ id: favoriteId });
+  const onClickProfile = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      if (pathname.includes("profile")) {
+        alert(`Easter Egg!!!`);
+      } else {
+        navigate(`/profile/${postData.author._id}`);
+      }
+    }
+  };
+
+  const onClickFavorite = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      if (!favoriteClicked) {
+        createLikeMutation.mutate({ postId: postData._id });
+      } else {
+        if (favoriteClicked) deleteLikeMutation.mutate({ id: favoriteId });
+      }
     }
   };
 
@@ -235,42 +256,60 @@ const PostSimpleCard = ({
     );
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Enter") {
+      onClickImage(event);
+    }
+  };
+
   if (mutation.isSuccess) {
     return (
       <>
-        <CardContainer $basis="half">
+        <CardContainer
+          tabIndex={0}
+          aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
+          onKeyDown={event => handleKeyDown(event)}
+          $basis="half"
+        >
           <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
             <CardImage
-              onClick={onClickImage}
               src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
             />
           </CardImageContainer>
           <CardInfoContainer>
-            <IconContainer $icon="favorite" onClick={onClickFavorite}>
+            <IconContainer
+              tabIndex={0}
+              role="button"
+              aria-label="좋아요 누르기"
+              $icon="favorite"
+              onClick={onClickFavorite}
+              onKeyDown={onClickFavorite}
+            >
               <NewDiv>
-                <span
+                <Icon
+                  name="favorite"
+                  fill={favoriteClicked ? true : false}
                   style={{
                     scale: "0.8",
                     color: !favoriteClicked
                       ? theme?.gray_300
                       : theme?.symbol_color,
-                    fontVariationSettings: "fill",
+                    fontVariationSettings: `'FILL' 
+                      ${favoriteClicked ? 1 : 0}`,
                   }}
-                  className={
-                    favoriteClicked
-                      ? "material-icons"
-                      : "material-symbols-rounded"
-                  }
-                >
-                  favorite
-                </span>
+                />
               </NewDiv>
             </IconContainer>
-            <ProfileContainer>
+            <ProfileContainer
+              tabIndex={0}
+              onClick={onClickProfile}
+              onKeyDown={onClickProfile}
+            >
               <span
-                onClick={onClickProfile}
+                role="button"
+                aria-label="프로필로 이동하기"
                 style={{
                   cursor: "pointer",
                 }}
@@ -282,6 +321,8 @@ const PostSimpleCard = ({
                 ></Avatar>
               </span>
               <span
+                role="button"
+                aria-label="프로필로 이동하기"
                 onClick={onClickProfile}
                 style={{
                   cursor: "pointer",
@@ -292,7 +333,7 @@ const PostSimpleCard = ({
               </span>
             </ProfileContainer>
 
-            <div
+            <section
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -308,7 +349,7 @@ const PostSimpleCard = ({
               <TextContainer>
                 {parsedData === null ? postData.title : parsedData.content}
               </TextContainer>
-            </div>
+            </section>
             {/* todo, 태그 정보 */}
           </CardInfoContainer>
         </CardContainer>
