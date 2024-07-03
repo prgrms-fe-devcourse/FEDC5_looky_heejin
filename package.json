@@ -28,7 +28,7 @@
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^9.1.3",
-    "react-use": "^17.4.2",
+    "react-use": "^17.5.0",
     "redux": "^5.0.0",
     "styled-components": "^6.1.11",
     "styled-normalize": "^8.1.1",
