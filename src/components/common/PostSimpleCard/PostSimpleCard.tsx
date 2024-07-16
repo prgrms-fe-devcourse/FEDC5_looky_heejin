@@ -13,7 +13,7 @@ import {
 import { _USERDATA } from "@/api/queries/userData";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Avatar } from "..";
+import { Avatar, Image } from "@/components/common";
 import useTheme from "@/hooks/useTheme";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
@@ -239,12 +239,12 @@ const PostSimpleCard = ({
     return (
       <>
         <CardContainer $basis="half">
-          <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
-            {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
-            <CardImage
-              onClick={onClickImage}
+          <CardImageContainer onClick={onClickImage}>
+            <Image
               src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
+              fill={true}
+              style={{ objectFit: "cover" }}
             />
           </CardImageContainer>
           <CardInfoContainer>

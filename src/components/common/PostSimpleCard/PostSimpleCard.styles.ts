@@ -49,9 +49,11 @@ export const CardInfoContainer = styled.div`
 `;
 
 export const CardImageContainer = styled.div`
+  position: relative;
   min-height: 200px;
-  min-width: 200px;
+  aspect-ratio: 10 / 16;
   border-radius: 0.375rem;
+  cursor: pointer;
 `;
 
 export const CardImage = styled.img`
