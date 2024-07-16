@@ -6,3 +6,5 @@ export { default as InputLabel } from "./InputLabel";
 export { default as Image } from "./Image";
 export { default as Upload } from "./Upload";
 export { default as ToolTip } from "./ToolTip";
+export { default as Spinner } from "./Spinner";
+export { default as Layout } from "./Layout";

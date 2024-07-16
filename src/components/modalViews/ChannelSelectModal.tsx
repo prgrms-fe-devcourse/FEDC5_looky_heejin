@@ -9,7 +9,7 @@ import useTheme from "@/hooks/useTheme";
 import { Button } from "../common";
 import { ModalLayout } from "../common/Modal";
 import { useUI } from "../common/uiContext";
-import { Spinner } from "../common/Spinner";
+import { Spinner } from "@/components/common";
 
 interface ModalProps {
   setChannelId: Function;

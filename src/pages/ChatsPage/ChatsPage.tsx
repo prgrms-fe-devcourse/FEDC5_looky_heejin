@@ -5,7 +5,7 @@ import { ChatLi } from "@/components/Chats";
 import { IConversation } from "@/types/message";
 import { useNavigate } from "react-router-dom";
 import { useMe } from "@/hooks/useMe";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 
 const ChatsPage = () => {
   const navigate = useNavigate();

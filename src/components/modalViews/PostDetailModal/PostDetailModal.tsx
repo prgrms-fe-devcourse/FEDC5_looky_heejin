@@ -61,7 +61,7 @@ import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import { ME } from "@/constants/queryKey";
 import Comments from "./Comments";
 import useEventQuery from "@/hooks/useEventQuery";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 import { notify } from "@/utils/toast";
 
 interface ModalProps {

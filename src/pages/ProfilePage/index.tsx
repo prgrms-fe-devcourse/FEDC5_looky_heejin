@@ -14,7 +14,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import { useNotification } from "@/hooks/useNotification";
 import { notify } from "@/utils/toast";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 
 const ProfilePage = () => {
   const { setProfileName, setProfileImage, setProfileCover, profileInit } =

@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { IPost, IUser } from "@/types";
 import { ViewWrap } from "@/pages/SearchPage/SearchPage.styles";
 import SearchTab from "@/components/SearchTab";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 
 interface FilteredData {
   users: IUser[];

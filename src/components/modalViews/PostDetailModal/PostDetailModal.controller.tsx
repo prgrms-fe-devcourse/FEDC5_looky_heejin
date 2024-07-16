@@ -15,7 +15,7 @@ import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
 import { ME } from "@/constants/queryKey";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 
 interface ModalProps {
   postId: string;

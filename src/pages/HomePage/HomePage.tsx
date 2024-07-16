@@ -9,7 +9,7 @@ import { Button } from "@/components/common";
 import { useNavigate } from "react-router-dom";
 import { Admin } from "@/components/Admin";
 import { useMe } from "@/hooks/useMe";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 const { VITE_ADMIN_ID } = import.meta.env;
 
 const Container = styled.div`
