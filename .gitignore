@@ -30,3 +30,4 @@ dist-ssr
 **/._.DS_Store
 
 yarn.lock
+coverage
