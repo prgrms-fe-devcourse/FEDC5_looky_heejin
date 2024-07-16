@@ -1,6 +1,5 @@
 import {
   CardContainer,
-  CardImage,
   CardImageContainer,
   CardInfoContainer,
   IconContainer,

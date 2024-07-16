@@ -56,14 +56,6 @@ export const CardImageContainer = styled.div`
   cursor: pointer;
 `;
 
-export const CardImage = styled.img`
-  cursor: pointer;
-  width: 100%;
-  aspect-ratio: 10 / 16;
-  object-fit: cover;
-  border-radius: 0.375rem;
-`;
-
 export const heartbeat = keyframes`
   0% {
     transform: scale(1);
