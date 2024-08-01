@@ -9,12 +9,15 @@ export const DEFAULT_ICON_WEIGHT = 200;
 
 export interface IIconProps {
   name: string;
+  id?: string;
   size?: string | number;
   color?: string;
   fill?: boolean;
   weight?: number;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  style?: object;
+  tabIndex?: number;
 }
 
 export interface IIconStyle {
@@ -25,11 +28,14 @@ export interface IIconStyle {
 
 const Icon = ({
   name,
+  id,
   size = DEFAULT_ICON_SIZE,
   color,
   fill = false,
   weight = DEFAULT_ICON_WEIGHT,
   className = "",
+  style,
+  tabIndex,
   ...props
 }: IIconProps) => {
   const processedWeight = Math.min(
@@ -49,8 +55,10 @@ const Icon = ({
 
   return (
     <i
+      id={id}
       className={`material-symbols-rounded ${className}`}
-      style={iconStyle}
+      style={style ? style : iconStyle}
+      tabIndex={tabIndex}
       {...props}
     >
       {name}

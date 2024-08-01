@@ -1,5 +1,4 @@
 import styled, { useTheme } from "styled-components";
-import Icon from "../../Icon/Icon";
 import {
   ADD_BOX_ICON,
   CHANNEL_ICON,
@@ -15,7 +14,7 @@ import {
   NAV_HEIGHT,
 } from "@/constants/uiConstants";
 import { PathName } from "@/constants/pathNameConstants";
-import { Avatar, Button } from "../..";
+import { Avatar, Button, Icon } from "@/components/common";
 import { useMe } from "@/hooks/useMe";
 import { _GET } from "@/api";
 
@@ -93,6 +92,7 @@ const BottomNavBar = () => {
           useRipple={true}
           onClickHandler={() => handleIconClick(PathName.HOME)}
           style={ButtonChildrenSortingStyle}
+          aria-label="홈 화면으로 가기"
         >
           {
             <Icon
@@ -109,6 +109,7 @@ const BottomNavBar = () => {
           useRipple={true}
           onClickHandler={() => handleIconClick(PathName.SEARCH)}
           style={ButtonChildrenSortingStyle}
+          aria-label="검색 화면으로 가기"
         >
           {
             <Icon
@@ -126,6 +127,7 @@ const BottomNavBar = () => {
             useRipple={true}
             onClickHandler={() => handleIconClick(PathName.NEWPOST)}
             style={ButtonChildrenSortingStyle}
+            aria-label="포스팅 생성 화면으로 가기"
           >
             {
               <Icon
@@ -145,6 +147,7 @@ const BottomNavBar = () => {
           useRipple={true}
           onClickHandler={() => handleIconClick(PathName.CHANNELS)}
           style={ButtonChildrenSortingStyle}
+          aria-label="채널 선택 화면으로 가기"
         >
           {
             <Icon
@@ -159,6 +162,7 @@ const BottomNavBar = () => {
       </IconWrapper>
       <IconWrapper>
         <Button
+          ariaLabel="profile"
           variant="flat"
           useRipple={true}
           onClickHandler={
@@ -167,6 +171,7 @@ const BottomNavBar = () => {
               : () => handleIconClick(`login`)
           }
           style={ButtonChildrenSortingStyle}
+          aria-label={id ? `내 프로필 화면으로 가기` : `로그인 화면으로 가기`}
         >
           {id ? (
             <Avatar size="XS" src={profilePhoto ? profilePhoto : ""} />

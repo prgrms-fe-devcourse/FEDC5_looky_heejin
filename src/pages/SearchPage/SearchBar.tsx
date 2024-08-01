@@ -1,6 +1,6 @@
 import { FieldErrors, useForm } from "react-hook-form";
 import { useCallback, useEffect } from "react";
-import Icon from "@/components/common/Icon/Icon";
+import Icon from "@/components/common/Icon";
 import { Form, Input, SearchIconWrap, BackIconWrap } from "./SearchPage.styles";
 import { useSearchParams } from "react-router-dom";
 import { SEARCH_VALIDATION_OPTION } from "./SearchPage.const";
@@ -56,6 +56,7 @@ const SearchBar = ({ onSearch, onClickBack }: ISearchBar) => {
         <Input
           className="shadow"
           type="text"
+          aria-required="true"
           onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요. ex) 캐주얼"
           {...register("searchQuery", SEARCH_VALIDATION_OPTION)}
