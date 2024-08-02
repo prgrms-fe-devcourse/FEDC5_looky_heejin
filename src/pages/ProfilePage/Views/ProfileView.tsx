@@ -1,8 +1,7 @@
 import { useTheme } from "styled-components";
 import { useMe } from "@/hooks/useMe";
 import { useEffect, useState } from "react";
-import { ICON_SIZE, ICON_SIZE_SMALL } from "../ProfilePage.const";
-import { Avatar, Button } from "@/components/common";
+import { Avatar, Button, Icon } from "@/components/common";
 import { ButtonSet } from "@/components";
 import {
   AvatarWrap,
@@ -11,7 +10,6 @@ import {
   InfoWrap,
   Profile,
 } from "../ProfilePage.style";
-import Icon from "@/components/common/Icon";
 import { _GET } from "@/api";
 import { _FOLLOW, _UNFOLLOW } from "@/api/queries/profile";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -21,6 +19,7 @@ import { INotification, IUser } from "@/types";
 import { ME } from "@/constants/queryKey";
 import { _NOTIFY } from "@/api/queries/notify";
 import { notify } from "@/utils/toast";
+import { ICON } from "@/constants/icons";
 
 interface IProfileProps {
   userInfo: IUser;
@@ -46,10 +45,10 @@ interface IProfileProps {
 
 const buttonStyle: IButtonProps["style"] = {
   variant: "neumorp",
-  width: ICON_SIZE,
+  width: ICON.SIZE.LARGE,
   style: {
-    height: ICON_SIZE,
-    borderRadius: ICON_SIZE / 2,
+    height: ICON.SIZE.MEDIUM,
+    borderRadius: "0.5rem",
     marginLeft: "0.5rem",
   },
 };
@@ -190,14 +189,14 @@ const ProfileView = ({
 
   const passwordAndLogoutItems = [
     {
-      name: "Password",
-      size: ICON_SIZE_SMALL,
+      name: ICON.PASSWORD,
+      size: ICON.SIZE.SMALL,
       onClick: onClickPassword,
       ariaString: "패스워드 변경하기",
     },
     {
-      name: "logout",
-      size: ICON_SIZE_SMALL,
+      name: ICON.LOGOUT,
+      size: ICON.SIZE.SMALL,
       onClick: onClickLogout,
       ariaString: "로그아웃 하기",
     },
@@ -205,14 +204,14 @@ const ProfileView = ({
 
   const followAndMessage = [
     {
-      name: "chat_bubble",
-      size: ICON_SIZE_SMALL,
+      name: ICON.CHAT_BUBBLE,
+      size: ICON.SIZE.SMALL,
       onClick: handleClickChat,
       ariaString: `${profileName} 회원과 채팅하기`,
     },
     {
-      name: !isFollow ? "person_add" : "person_check",
-      size: ICON_SIZE_SMALL,
+      name: !isFollow ? ICON.PERSON_ADD : ICON.PERSON_CHECK,
+      size: ICON.SIZE.SMALL,
       color: isFollow ? theme.symbol_color : undefined,
       onClick: handleClickFollow,
       ariaString: !isFollow
@@ -272,18 +271,21 @@ const ProfileView = ({
         {isMe && (
           <ButtonsWrap className="me">
             <Button
-              width={ICON_SIZE_SMALL}
               variant="neumorp"
+              width={ICON.SIZE.LARGE}
+              textColor={theme.background_color}
               style={{
-                height: ICON_SIZE_SMALL,
-                borderRadius: ICON_SIZE_SMALL / 2,
+                height: ICON.SIZE.MEDIUM,
+                borderRadius: "0.5rem",
+                marginTop: "0.3rem",
               }}
               onClick={onClickEdit}
             >
               <Icon
-                name="Edit"
+                name={ICON.EDIT}
                 color={theme.background_color}
-                size={ICON_SIZE_SMALL}
+                size={ICON.SIZE.SMALL}
+                isSprite={true}
               />
             </Button>
           </ButtonsWrap>

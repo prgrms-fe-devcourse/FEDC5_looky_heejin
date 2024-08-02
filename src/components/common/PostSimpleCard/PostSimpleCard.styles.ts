@@ -107,12 +107,15 @@ export const IconContainer = styled.div<{
           border-radius: 50%;
           background-color: ${props => props.theme.background_color};
           /* background-color: rgba(0, 0, 0, 0.3); */
+          padding-right: 0.5rem;
         `;
     }
   }};
 `;
 
 export const NewDiv = styled.div`
+  width: 1.4rem;
+  height: 1.4rem;
   &:hover {
     animation: ${heartbeat} 0.7s ease-in-out infinite;
   }
