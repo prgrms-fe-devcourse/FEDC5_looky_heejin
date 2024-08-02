@@ -28,6 +28,7 @@ export const GlobalStyle = createGlobalStyle<any>`
     html,
     body {
       font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      font-display: swap;
       height: 100%;
       /* height: 100%;
       box-sizing: border-box;
