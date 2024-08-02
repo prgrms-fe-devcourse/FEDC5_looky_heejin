@@ -1,13 +1,6 @@
 import { _DELETE, _GET, _POST } from "@/api";
 import { Avatar, ToolTip } from "@/components/common";
-import Icon from "@/components/common/Icon";
-import {
-  CHAT_ICON,
-  CLOSE_ICON,
-  HEART_ICON,
-  SEND_ICON,
-  TRASH_ICON,
-} from "@/constants/icons";
+import { Icon } from "@/components/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -63,6 +56,7 @@ import Comments from "./Comments";
 import useEventQuery from "@/hooks/useEventQuery";
 import { Spinner } from "@/components/common";
 import { notify } from "@/utils/toast";
+import { ICON } from "@/constants/icons";
 
 interface ModalProps {
   postId: string;
@@ -405,7 +399,12 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         </UserInfo>
         {userId === myId ? (
           <TrashIconWrapper>
-            <Icon name={TRASH_ICON} size="1.8rem" onClick={handleDelete} />
+            <Icon
+              name={ICON.TRASH}
+              size="1.8rem"
+              onClick={handleDelete}
+              isSprite={true}
+            />
           </TrashIconWrapper>
         ) : (
           <FollowButton
@@ -418,10 +417,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
 
         <CloseIconWrapper tabIndex={0}>
           <Icon
-            name={CLOSE_ICON}
+            name={ICON.CLOSE}
             size="1.8rem"
             weight={250}
             onClick={handleClose}
+            isSprite={true}
           />
         </CloseIconWrapper>
       </UserInfoWrapper>
@@ -429,10 +429,11 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
         {heartAnimation.isShow && (
           <HeartInImage key={heartAnimation.key}>
             <Icon
-              name={HEART_ICON}
+              name={ICON.HEART}
               fill={true}
               color={theme.symbol_color}
-            ></Icon>
+              isSprite={true}
+            />
           </HeartInImage>
         )}
         {tags.map(({ x, y, id, brand, product, link }) => (
@@ -469,17 +470,18 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           {/* 추후 refactor 포인트 : className으로 바꾸기  */}
           <HeartWrapper>
             <HeartIconWrapper
-              tabIndex={1}
+              tabIndex={0}
               role="button"
               aria-label="좋아요 누르기"
             >
               <Icon
-                name={HEART_ICON}
+                name={ICON.HEART}
                 onClick={handleLike}
                 fill={isILiked ? true : false}
-                color={isILiked ? theme.symbol_color : ""}
+                color={isILiked ? theme.symbol_color : theme.gray_500}
                 size="2.3rem"
-              ></Icon>
+                isSprite={true}
+              />
             </HeartIconWrapper>
 
             <LikeCountSpan>
@@ -495,15 +497,15 @@ const PostDetail = ({ props }: IPostDetailModalProps) => {
           </HeartWrapper>
           <CommentChatWrapper>
             <IconWrapper>
-              <Icon name={CHAT_ICON} size="2rem" onClick={toggleShowComments} />
+              <Icon name={ICON.CHAT} size="2rem" onClick={toggleShowComments} />
             </IconWrapper>
             {userId !== myId ? (
               <IconWrapper>
                 <Icon
-                  tabIndex={0}
-                  name={SEND_ICON}
+                  name={ICON.SEND}
                   size="2.3rem"
                   onClick={handleChat}
+                  isSprite={true}
                 />
               </IconWrapper>
             ) : null}

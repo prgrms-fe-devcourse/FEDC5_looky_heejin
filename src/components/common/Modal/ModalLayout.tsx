@@ -9,9 +9,9 @@ import {
   ModalHeaderButton,
   ModalContantWrapper,
 } from "./Modal.styles";
-import { CLOSE_ICON } from "@/constants/icons";
 import { Icon } from "@/components/common";
 import useTheme from "@/hooks/useTheme";
+import { ICON } from "@/constants/icons";
 
 interface ModalLayoutProps {
   className?: string;
@@ -69,9 +69,10 @@ const ModalLayout: FC<ModalLayoutProps> = ({
         aria-label="Close panel"
       >
         <Icon
-          name={CLOSE_ICON}
+          name={ICON.CLOSE}
           color={theme?.text_primary_color}
           weight={300}
+          isSprite={true}
         />
       </ModalHeaderButton>
       <ModalContantWrapper>{children}</ModalContantWrapper>

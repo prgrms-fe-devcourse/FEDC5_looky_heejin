@@ -1,9 +1,9 @@
 import { ReactNode, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { PLUS_ICON } from "@/constants/icons";
 import { Image } from "@/components/common";
-import Icon from "@/components/common/Icon";
+import { Icon } from "@/components/common";
+import { ICON } from "@/constants/icons";
 
 interface IUploadProps {
   droppable?: boolean;
@@ -135,7 +135,7 @@ const Upload = ({
           onClick={handleChooseFile}
           className="absolute bottom-6 right-6 bg-white p-2 shadow w-12 h-12 rounded-full flex justify-center items-center"
         >
-          <Icon name={PLUS_ICON} weight={400} size={25} />
+          <Icon name={ICON.PLUS} weight={400} size={25} isSprite={true} />
         </div>
       </UploadArea>
     </UploadContainer>

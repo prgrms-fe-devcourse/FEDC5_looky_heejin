@@ -17,12 +17,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
 import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
-import { Avatar, Icon } from "@/components/common";
+import { Avatar, Icon, Image } from "@/components/common";
 import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
 import { INotification } from "@/types";
 import { _NOTIFY } from "@/api/queries/notify";
 import { notify } from "@/utils/toast";
+import { ICON } from "@/constants/icons";
 
 export interface ITitle {
   title: string;
@@ -267,11 +268,11 @@ const PostSimpleCard = ({ postData }: IProps) => {
         <CardContainer $basis="half">
           <CardImageContainer>
             {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
-            <CardImage
+            <Image
               tabIndex={0}
               aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
               onClick={onClickImage}
-              onKeyDown={event => handleKeyDown(event)}
+              onKeyDown={handleKeyDown}
               src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
               fill={true}
@@ -290,15 +291,16 @@ const PostSimpleCard = ({ postData }: IProps) => {
               <NewDiv>
                 <Icon
                   name="favorite"
+                  size={ICON.SIZE.MEDIUM}
                   fill={favoriteClicked ? true : false}
+                  color={
+                    favoriteClicked ? theme?.symbol_color : theme?.gray_300
+                  }
                   style={{
-                    scale: "0.8",
-                    color: !favoriteClicked
-                      ? theme?.gray_300
-                      : theme?.symbol_color,
                     fontVariationSettings: `'FILL' 
                       ${favoriteClicked ? 1 : 0}`,
                   }}
+                  isSprite={true}
                 />
               </NewDiv>
             </IconContainer>

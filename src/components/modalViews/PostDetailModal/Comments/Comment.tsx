@@ -9,8 +9,8 @@ import {
   StyledLi,
   UserNameInComment,
 } from "../PostDetailModal.styles";
-import Icon from "@/components/common/Icon";
-import { CLOSE_ICON } from "@/constants/icons";
+import { Icon } from "@/components/common";
+import { ICON } from "@/constants/icons";
 import { Avatar } from "@/components/common";
 import { parseDate } from "@/utils/parseDate";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +66,7 @@ const Comment = ({ comment, myId, handleDeleteComment }: CommentProps) => {
           {comment.author._id === myId && (
             <button onClick={() => handleDeleteComment(comment._id)}>
               <DeleteCommentIconWrapper>
-                <Icon name={CLOSE_ICON} size="1rem" />
+                <Icon name={ICON.CLOSE} size="1rem" isSprite={true} />
               </DeleteCommentIconWrapper>
             </button>
           )}

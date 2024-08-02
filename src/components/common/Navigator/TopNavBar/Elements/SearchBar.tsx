@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
-import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
+import { Icon } from "@/components/common";
 import { SEARCH_BAR } from "@/constants/uiConstants";
 import { useSearchValue } from "@/hooks/useSearchValue";
-import { Icon, Input } from "@/components/common";
+import { Input } from "@/components/common";
+import { ICON } from "@/constants/icons";
 
 const SearchBarWrapper = styled.div`
   height: 100%;
@@ -86,15 +87,16 @@ const SearchBar = () => {
           })}
         />
         <SearchIconWrapper>
-          <Icon name={SEARCH_ICON} size="1.3rem" weight={300}></Icon>
+          <Icon name={ICON.SEARCH} size="1.3rem" weight={300} isSprite={true} />
         </SearchIconWrapper>
         <CloseIconWrapper onClick={handleRemoveValue}>
           <Icon
-            name={CLOSE_ICON}
+            name={ICON.CLOSE}
             size="1rem"
             weight={300}
             color="#ffffff"
-          ></Icon>
+            isSprite={true}
+          />
         </CloseIconWrapper>
       </StyledForm>
     </SearchBarWrapper>
