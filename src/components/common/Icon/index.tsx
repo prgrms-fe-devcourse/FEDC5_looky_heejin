@@ -15,6 +15,7 @@ export interface IIconProps {
   fill?: boolean;
   weight?: number;
   className?: string;
+  isSprite?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
   style?: object;
   tabIndex?: number;
@@ -36,6 +37,7 @@ const Icon = ({
   className = "",
   style,
   tabIndex,
+  isSprite,
   ...props
 }: IIconProps) => {
   const processedWeight = Math.min(
@@ -52,6 +54,16 @@ const Icon = ({
       fill ? ICON_FILL : ICON_OUTLINE
     },'wght' ${processedWeight}`,
   };
+
+  if (isSprite) {
+    const dashName = name.replace(/_/g, "-");
+
+    return (
+      <svg fill={color ? color : theme?.gray_500} width={size} height={size}>
+        <use href={`/icons.svg#${dashName}` + `${fill ? "-fill" : ""}`} />
+      </svg>
+    );
+  }
 
   return (
     <i
