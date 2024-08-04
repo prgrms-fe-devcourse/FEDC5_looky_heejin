@@ -32,7 +32,8 @@
     "redux": "^5.0.0",
     "styled-components": "^6.1.11",
     "styled-normalize": "^8.1.1",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
