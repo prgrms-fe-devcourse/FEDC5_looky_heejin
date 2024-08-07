@@ -14,7 +14,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
-import { ME } from "@/constants/queryKey";
 import { Spinner } from "@/components/common/Spinner";
 import FocusTrap from "focus-trap-react";
 
@@ -64,7 +63,7 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     key: 0,
   });
 
-  const { data: myData } = useInitData(ME, "/auth-user");
+  const { data: myData } = useInitData("my-profile", "/auth-user"); // 리렌더링 유벌지점
   const { data: postData, isLoading } = useInitData(
     `postId-${postId}`,
     `/posts/${postId}`
@@ -227,7 +226,7 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
       window.open(link, "_blank", "noopener, noreferrer");
     }
   };
-  
+
   useEffect(() => {
     if (displayModal && modalRef.current) {
       modalRef.current.focus();
