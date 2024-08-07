@@ -19,22 +19,8 @@ import PostDetailModalController from "../modalViews/PostDetailModal/PostDetailM
 import { useModal } from "@/store/useModalStore";
 
 export const useUI = () => {
-  const {
-    closeModal,
-    displayModal,
-    modalProps,
-    modalView,
-    openModal,
-    setModalView,
-  } = useModal();
-
   const context = {
-    closeModal,
-    displayModal,
-    modalProps,
-    modalView,
-    openModal,
-    setModalView,
+    ...useModal(),
   };
 
   if (context === undefined) {
