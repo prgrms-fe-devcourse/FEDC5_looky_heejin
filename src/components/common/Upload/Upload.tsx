@@ -2,7 +2,7 @@ import { ReactNode, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { PLUS_ICON } from "@/constants/icons";
-import { Image } from "@/components/common";
+import { Image as ImageComponent } from "@/components/common";
 import Icon from "@/components/common/Icon";
 
 interface IUploadProps {
@@ -29,6 +29,32 @@ const Upload = ({
   const [file, setFile] = useState<string | null>();
   const [dragging, setDragging] = useState(false);
 
+  const convertImageToWebp = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0);
+
+        canvas.toBlob(blob => {
+          if (blob) {
+            const convertedImage = new File([blob], file.name.split(".")[0], {
+              type: blob.type,
+            });
+            resolve(convertedImage);
+          } else {
+            reject(new Error("Image conversion failed"));
+          }
+        }, "image/webp");
+      };
+      img.onerror = reject;
+    });
+  };
+
   const convertFileToBase64 = (file: File) => {
     return new Promise<string>(resolve => {
       const reader = new FileReader();
@@ -49,10 +75,19 @@ const Upload = ({
     if (files && files?.length > 0) {
       const changedFile = files[0];
 
-      const base64 = await convertFileToBase64(changedFile);
-      setFile(base64);
+      try {
+        const base64 = await convertFileToBase64(changedFile);
+        setFile(base64);
+      } catch (error) {
+        console.error(error);
+      }
 
-      onChange && onChange(changedFile);
+      onChange &&
+        onChange(
+          changedFile.type === "image/gif"
+            ? changedFile
+            : ((await convertImageToWebp(changedFile)) as File)
+        );
     }
   };
 
@@ -98,7 +133,12 @@ const Upload = ({
       const base64 = await convertFileToBase64(changedFile);
       setFile(base64);
 
-      onChange && onChange(changedFile);
+      onChange &&
+        onChange(
+          changedFile.type === "image/gif"
+            ? changedFile
+            : ((await convertImageToWebp(changedFile)) as File)
+        );
     }
     setDragging(false);
   };
@@ -121,7 +161,7 @@ const Upload = ({
       />
       <UploadArea $dragging={dragging}>
         {file ? (
-          <Image
+          <ImageComponent
             src={file}
             fill={true}
             style={{ objectFit: "cover" }}
