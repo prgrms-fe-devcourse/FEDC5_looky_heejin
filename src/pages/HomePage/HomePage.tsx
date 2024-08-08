@@ -102,8 +102,8 @@ const Home = () => {
         {id === VITE_ADMIN_ID ? <Admin /> : null}
         {data.length ? (
           <Container>
-            {data.map(value => (
-              <PostSimpleCard key={value._id} postData={value} />
+            {data.map((value, index) => (
+              <PostSimpleCard key={value._id} index={index} postData={value} />
             ))}
           </Container>
         ) : (

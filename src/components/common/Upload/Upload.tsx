@@ -84,7 +84,7 @@ const Upload = ({
 
       onChange &&
         onChange(
-          changedFile.type === "image/gif"
+          changedFile.type === "image/gif" || changedFile.type === "image/webp"
             ? changedFile
             : ((await convertImageToWebp(changedFile)) as File)
         );

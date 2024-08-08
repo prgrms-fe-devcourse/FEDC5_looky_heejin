@@ -1,6 +1,6 @@
 import {
   CardContainer,
-  CardImage,
+  // CardImage,
   CardImageContainer,
   CardInfoContainer,
   IconContainer,
@@ -18,7 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import type { ITag } from "@/types/post";
 import { _DELETE, _GET, _POST } from "@/api";
 import { ME } from "@/constants/queryKey";
-import { Avatar, Icon } from "@/components/common";
+import { Avatar, Icon, Image } from "@/components/common";
 import { useUI } from "../uiContext";
 import { useMe } from "@/hooks/useMe";
 import { INotification } from "@/types";
@@ -33,6 +33,7 @@ export interface ITitle {
 
 interface IProps {
   key: number | string;
+  index: number;
   postData: any;
 }
 
@@ -67,7 +68,7 @@ const IsJsonString = (str: string) => {
   }
 };
 
-const PostSimpleCard = ({ postData }: IProps) => {
+const PostSimpleCard = ({ postData, index }: IProps) => {
   const [userId, setUserId] = useState("");
   const { setModalView, openModal } = useUI();
   const { id } = useMe();
@@ -266,16 +267,38 @@ const PostSimpleCard = ({ postData }: IProps) => {
     return (
       <>
         <CardContainer $basis="half">
-          <CardImageContainer style={{ minHeight: "200px", minWidth: "100%" }}>
-            {/* todo, 카드 컴포넌트 원주님과 협업 후 공용 컴포넌트로 변경 */}
-            <CardImage
+          <CardImageContainer
+            style={{
+              position: "relative",
+              minHeight: "200px",
+              minWidth: "100%",
+            }}
+          >
+            <Image
+              src={postData.image ? postData.image : "/image_alt.png"}
+              alt="포스팅 이미지"
+              aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
+              onClick={onClickImage}
+              onKeyDown={(event: React.KeyboardEvent<HTMLElement>) =>
+                handleKeyDown(event)
+              }
+              priority={index < 4 ? true : false}
+              tabIndex={0}
+              fill
+              style={{
+                cursor: "pointer",
+                aspectRatio: "10/16",
+                borderRadius: "0.375rem",
+              }}
+            />
+            {/* <CardImage
               tabIndex={0}
               aria-label={`${JSON.parse(postData.title).title} 게시물 보기`}
               onClick={onClickImage}
               onKeyDown={event => handleKeyDown(event)}
               src={postData.image ? postData.image : "/image_alt.png"}
               alt="포스팅 이미지"
-            />
+            /> */}
           </CardImageContainer>
           <CardInfoContainer>
             <IconContainer

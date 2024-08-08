@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
 interface IImageProps {
   src: ArrayBufferLike | string | null;
@@ -8,6 +8,7 @@ interface IImageProps {
   width?: number;
   height?: number;
   fill?: boolean;
+  style?: CSSProperties;
   [key: string]: any;
 }
 
@@ -19,11 +20,12 @@ interface IImageProps {
 const Image = ({
   src,
   alt,
-  priority,
+  priority = false,
   sizes,
   width,
   height,
   fill = false,
+  style,
   ...props
 }: IImageProps) => {
   const [webpImageUrl, setWebpImageUrl] = useState<string | undefined>(
@@ -81,39 +83,21 @@ const Image = ({
   return (
     <>
       {webpImageUrl && (
-        <picture
+        <img
+          alt={alt}
+          src={pngImageUrl}
+          fetchPriority={priority ? "high" : "low"}
+          loading={!priority ? "lazy" : undefined}
+          decoding={!priority ? "async" : undefined}
+          sizes={sizes}
+          {...props}
           style={{
-            position: `${fill ? "absolute" : "relative"}`,
-            top: `${fill && 0}`,
-            left: `${fill && 0}`,
             width: `${fill ? "100%" : `${width}px`}`,
             height: `${fill ? "100%" : `${height}px`}`,
+            objectFit: fill ? "cover" : "none",
+            ...style,
           }}
-        >
-          <source
-            width="100%"
-            height="100%"
-            srcSet={webpImageUrl}
-            type="image/webp"
-            style={{
-              width: "100%",
-              height: "100%",
-              ...props.style,
-            }}
-          />
-          <img
-            alt={alt}
-            src={pngImageUrl}
-            loading={!priority ? "lazy" : undefined}
-            decoding={!priority ? "async" : undefined}
-            sizes={sizes}
-            style={{
-              width: "100%",
-              height: "100%",
-              ...props.style,
-            }}
-          />
-        </picture>
+        />
       )}
     </>
   );
