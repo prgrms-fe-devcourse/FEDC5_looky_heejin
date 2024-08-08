@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useState } from "react";
 
 interface IImageProps {
-  src: ArrayBufferLike | string | null;
+  src: string | null;
   alt?: string;
   sizes?: string;
   priority?: boolean;
@@ -28,45 +28,13 @@ const Image = ({
   style,
   ...props
 }: IImageProps) => {
-  const [webpImageUrl, setWebpImageUrl] = useState<string | undefined>(
-    typeof src === "string" ? src : undefined
-  );
-  const [pngImageUrl, setPngImageUrl] = useState<string | undefined>(
-    typeof src === "string" ? src : undefined
-  );
-
-  useEffect(() => {
-    if (typeof src === "string" || !src) {
-      if (typeof src === "string" && src.startsWith("data:image")) {
-        setWebpImageUrl(src);
-        setPngImageUrl(src);
-      }
-      return;
-    }
-
-    const arrayBufferView = new Uint8Array(src);
-    const webpBlob = new Blob([arrayBufferView], { type: "image/webp" });
-    const pngBlob = new Blob([arrayBufferView], { type: "image/png" });
-
-    const webpUrl = URL.createObjectURL(webpBlob);
-    const pngUrl = URL.createObjectURL(pngBlob);
-
-    setWebpImageUrl(webpUrl);
-    setPngImageUrl(pngUrl);
-
-    return () => {
-      URL.revokeObjectURL(webpUrl);
-      URL.revokeObjectURL(pngUrl);
-    };
-  }, [src]);
-
   if (!fill && (!width || !height)) {
     console.warn("fill 모드가 아닌 경우 width, height 를 필요로 합니다.");
 
     return null;
   }
 
-  if (!src || (!webpImageUrl && !pngImageUrl))
+  if (!src)
     return (
       <div
         style={{
@@ -82,13 +50,13 @@ const Image = ({
 
   return (
     <>
-      {webpImageUrl && (
+      {src && (
         <img
           alt={alt}
-          src={pngImageUrl}
-          fetchPriority={priority ? "high" : "low"}
+          src={src}
+          // fetchPriority={priority ? "high" : "low"}
           loading={!priority ? "lazy" : undefined}
-          decoding={!priority ? "async" : undefined}
+          // decoding={!priority ? "async" : undefined}
           sizes={sizes}
           {...props}
           style={{
