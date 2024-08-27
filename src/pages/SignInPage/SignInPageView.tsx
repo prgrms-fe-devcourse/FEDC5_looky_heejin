@@ -126,6 +126,7 @@ const SignInPage = () => {
         </ErrorContainer>
         <InputContainer
           type="text"
+          aria-required="true"
           placeholder="looky@example.com"
           {...register("email", SignInPageConstant.EMAIL_VALIDATION_OPTION)}
         />
@@ -139,6 +140,7 @@ const SignInPage = () => {
         </ErrorContainer>
         <InputContainer
           type="text"
+          aria-required="true"
           placeholder="lookies"
           {...register(
             "fullName",
@@ -156,6 +158,7 @@ const SignInPage = () => {
         </ErrorContainer>
         <InputContainer
           type="password"
+          aria-required="true"
           placeholder="비밀번호"
           {...register(
             "password",
@@ -173,6 +176,7 @@ const SignInPage = () => {
         </ErrorContainer>
         <InputContainer
           type="password"
+          aria-required="true"
           placeholder="비밀번호 확인"
           {...register("passwordCheck", {
             ...SignInPageConstant.PASSWORD_CHECK_VALIDATION_OPTION,
@@ -185,7 +189,10 @@ const SignInPage = () => {
           })}
         />
 
-        <SubmitButtonContainer onSubmit={handleSubmit(onValid, onInValid)}>
+        <SubmitButtonContainer
+          aria-label="회원가입을 위한 정보 제출 버튼"
+          onSubmit={handleSubmit(onValid, onInValid)}
+        >
           회원가입
         </SubmitButtonContainer>
       </FormContainer>

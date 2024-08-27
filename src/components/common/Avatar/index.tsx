@@ -9,6 +9,7 @@ interface IAvatarProps {
   src?: string;
   theme?: string;
   border?: "none" | "solid";
+  $border?: "none" | "solid";
 }
 
 const ShapeToStyle: { [key: string]: string } = {
@@ -26,14 +27,14 @@ const SizeToStyle: { [key: string]: string } = {
   XL: "64px",
 };
 
-const AvatarWrapper = styled.div<IAvatarProps>`
+const AvatarWrapper = styled.div<Omit<IAvatarProps, "border">>`
   position: relative;
   display: inline-block;
   overflow: hidden;
   width: ${({ size }) => SizeToStyle[size]};
   height: ${({ size }) => SizeToStyle[size]};
-  border: ${({ border, theme }) =>
-    border === "solid" ? `1px solid ${theme.gray_300}` : "none"};
+  border: ${({ $border, theme }) =>
+    $border === "solid" ? `1px solid ${theme.gray_300}` : "none"};
   background-image: ${({ src }) => (src ? `url(${src})` : "url(/profile.png)")};
   background-repeat: no-repeat;
   background-position: center;
@@ -48,13 +49,13 @@ const Avatar = ({
   src,
   border = "solid",
   ...props
-}: IAvatarProps) => {
+}: Omit<IAvatarProps, "$border">) => {
   return (
     <AvatarWrapper
       size={size}
       shape={shape}
       src={src}
-      border={border}
+      $border={border}
       {...props}
     ></AvatarWrapper>
   );

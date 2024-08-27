@@ -14,6 +14,7 @@ import {
 import useEventQuery from "@/hooks/useEventQuery";
 import { useMe } from "@/hooks/useMe";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { NAV_TITLE } from "@/constants";
 
 const LEFT_PARTITION_WIDTH = "25%";
 const CENTER_PARTITION_WIDTH = "50%";
@@ -32,7 +33,7 @@ const TopNavBarWrapper = styled.nav`
   z-index: ${NAVIGATER};
 `;
 
-const NavBarPartition = styled.div<{ $width: string }>`
+const NavBarPartition = styled.section<{ $width: string }>`
   width: ${({ $width }) => $width && $width};
 `;
 
@@ -47,14 +48,6 @@ const NAV_VISIBLE_PATH = [
   PathName.POSTDETAIL,
   PathName.TEST,
 ];
-
-const NavTitle = {
-  CHANNELS: "채널 목록",
-  PROFILE: "프로필",
-  NEWPOST: "새 포스트 작성",
-  NOTIFICATIONS: "알림",
-  CHATS: "대화 목록",
-};
 
 const TopNavBar = () => {
   const [channel, _] = useLocalStorage("ViewChannelObj");
@@ -133,22 +126,22 @@ const TopNavBar = () => {
             />
           )}
           {currentPath === PathName.CHANNELS && (
-            <PageTitle title={NavTitle.CHANNELS}></PageTitle>
+            <PageTitle title={NAV_TITLE.CHANNELS}></PageTitle>
           )}
           {currentPath === PathName.PROFILE && (
-            <PageTitle title={NavTitle.PROFILE}></PageTitle>
+            <PageTitle title={NAV_TITLE.PROFILE}></PageTitle>
           )}
           {currentPath === PathName.CHATS && (
-            <PageTitle title={NavTitle.CHATS}></PageTitle>
+            <PageTitle title={NAV_TITLE.CHATS}></PageTitle>
           )}
           {currentPath === PathName.NOTIFICATIONS && (
-            <PageTitle title={NavTitle.NOTIFICATIONS}></PageTitle>
+            <PageTitle title={NAV_TITLE.NOTIFICATIONS}></PageTitle>
           )}
           {currentPath === PathName.POSTDETAIL && (
             <PageTitle title="포스트 디테일"></PageTitle>
           )}
           {currentPath === PathName.NEWPOST && (
-            <PageTitle title={NavTitle.NEWPOST}></PageTitle>
+            <PageTitle title={NAV_TITLE.NEWPOST}></PageTitle>
           )}
         </NavBarPartition>
         <NavBarPartition $width={RIGHT_PARTITION_WIDTH}>

@@ -37,7 +37,14 @@ const ChatLi = ({
         <Avatar size="M" src={senderProfile} />
         {senderIsOnline && <OnlineIndicator />}
       </ChatLiAvatarBox>
-      <ChatLiArticle>
+      <ChatLiArticle
+        tabIndex={0}
+        role="link"
+        aria-label={`${senderName}와의 채팅방으로 이동하기`}
+        onKeyDown={e => {
+          if (e.key === "Enter") onClickHandler(senderId);
+        }}
+      >
         <p>
           <strong>{senderName}</strong>
         </p>

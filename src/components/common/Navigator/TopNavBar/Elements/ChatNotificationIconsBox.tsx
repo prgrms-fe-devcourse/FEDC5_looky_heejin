@@ -1,5 +1,4 @@
 import styled, { keyframes, useTheme } from "styled-components";
-import Icon from "../../../Icon/Icon";
 import {
   CHAT_ICON,
   DARKMODE_ICON,
@@ -10,6 +9,7 @@ import { PathName } from "@/constants/pathNameConstants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import { useNotification } from "@/hooks/useNotification";
+import { Icon } from "@/components/common";
 
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;
@@ -24,7 +24,7 @@ export const zoomin = keyframes`
   }
 `;
 
-const IconsBox = styled.div`
+const IconsBox = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -35,7 +35,7 @@ const IconsBox = styled.div`
   }
 `;
 
-const IconWrapper = styled.div<{ $marginLeft: string }>`
+const IconWrapper = styled.section<{ $marginLeft: string; tabIndex: number }>`
   margin: auto 0.25rem;
   margin-left: ${({ $marginLeft }) => $marginLeft && $marginLeft};
   & > :first-child {
@@ -96,13 +96,47 @@ const ChatNotificationIconsBox = ({
   const theme = useTheme();
   const [_, setLocalTheme] = useLocalStorage("theme");
 
-  const handleTheme = () => {
-    setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
+  const handleTheme = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      setLocalTheme(theme.theme_mode === "light" ? "dark" : "light");
+    }
+  };
+
+  const handleChat = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      onClick(PathName.CHATS);
+    }
+  };
+
+  const handleNotification = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    if (
+      e.type === "click" ||
+      (e.type === "keydown" && (e as React.KeyboardEvent).key === "Enter")
+    ) {
+      onClick(PathName.NOTIFICATIONS);
+    }
   };
 
   return (
     <IconsBox>
-      <IconWrapper onClick={handleTheme} $marginLeft={id ? "" : "4.5rem"}>
+      <IconWrapper
+        tabIndex={0}
+        onKeyDown={handleTheme}
+        onClick={handleTheme}
+        $marginLeft={id ? "" : "4.5rem"}
+      >
         <Icon
           name={theme.theme_mode === "light" ? LIGHTMODE_ICON : DARKMODE_ICON}
           size="1.6rem"
@@ -112,10 +146,18 @@ const ChatNotificationIconsBox = ({
       {id ? (
         <>
           <NotificationIconWrapper
+            tabIndex={0}
             $marginLeft={""}
-            onClick={() => onClick(PathName.CHATS)}
+            aria-labelledby={CHAT_ICON}
+            onKeyDown={handleChat}
+            onClick={handleChat}
           >
-            <Icon name={CHAT_ICON} size="1.6rem" weight={250}></Icon>
+            <Icon
+              id={CHAT_ICON}
+              name={CHAT_ICON}
+              size="1.6rem"
+              weight={250}
+            ></Icon>
             {messageUnseenCount > 0 ? (
               messageUnseenCount > 99 ? (
                 <ChatNotificationCounter $width="1.3rem" $borderRadius="8px">
@@ -131,10 +173,18 @@ const ChatNotificationIconsBox = ({
             ) : null}
           </NotificationIconWrapper>
           <NotificationIconWrapper
+            tabIndex={0}
+            aria-labelledby={NOTIFICATIONS_ICON}
             $marginLeft={""}
-            onClick={() => onClick(PathName.NOTIFICATIONS)}
+            onKeyDown={handleNotification}
+            onClick={handleNotification}
           >
-            <Icon name={NOTIFICATIONS_ICON} size="1.7rem" weight={250}></Icon>
+            <Icon
+              id={NOTIFICATIONS_ICON}
+              name={NOTIFICATIONS_ICON}
+              size="1.7rem"
+              weight={250}
+            ></Icon>
             {commonUnseenCount > 0 ? (
               commonUnseenCount > 99 ? (
                 <NotificationCounter $width="1.3rem" $borderRadius="8px">

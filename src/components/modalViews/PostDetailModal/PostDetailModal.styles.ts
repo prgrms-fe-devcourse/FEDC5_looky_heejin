@@ -30,7 +30,7 @@ export const heartbeat = keyframes`
 `;
 
 // 전체 -----------------------------------------
-export const PostDetailWrapper = styled.div`
+export const PostDetailWrapper = styled.section`
   width: 100%;
   height: 100%;
 
@@ -55,14 +55,16 @@ export const PostDetailWrapper = styled.div`
 `;
 
 // (상) UserInfo --------------------------------------------
-export const UserInfoWrapper = styled.div`
+export const UserInfoWrapper = styled.section`
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-export const UserInfo = styled.div`
+export const UserInfo = styled.section<{
+  tabIndex?: number;
+}>`
   display: flex;
   flex-direction: row;
 `;
@@ -88,7 +90,10 @@ export const UserNameSpan = styled.span`
   font-weight: 600;
 `;
 
-export const FollowButton = styled(Button)`
+export const FollowButton = styled(Button)<{
+  variant: string;
+  onClick: () => void;
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,7 +106,9 @@ export const FollowButton = styled(Button)`
   background-color: ${({ theme }) => theme.gray_500};
 `;
 
-export const CloseIconWrapper = styled.div`
+export const CloseIconWrapper = styled.div<{
+  tabIndex: number;
+}>`
   position: absolute;
   right: 1rem;
   & :hover {
@@ -119,7 +126,7 @@ export const TrashIconWrapper = styled.div`
 `;
 
 // (중) Image ----------------------------------------
-export const ImageWrapper = styled.div`
+export const ImageWrapper = styled.section`
   position: relative;
   display: flex;
   align-items: center;
@@ -140,13 +147,13 @@ export const StyledImg = styled.img`
 `;
 
 // (하) UserInfo, Image 제외한 Content, Comments 등..
-export const CaptionWrapper = styled.div`
+export const CaptionWrapper = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
 `;
 
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.article`
   /* padding: 0 1rem; */
 `;
 
@@ -160,7 +167,7 @@ export const StyledSpan = styled.span`
   padding: 0 1rem 0.5rem 1rem;
 `;
 
-export const IconsWrapper = styled.div`
+export const IconsWrapper = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -176,7 +183,9 @@ export const HeartWrapper = styled.div`
   margin-left: 0.6rem;
 `;
 
-export const HeartIconWrapper = styled.div`
+export const HeartIconWrapper = styled.div<{
+  tabIndex?: number;
+}>`
   & :first-child {
     margin-top: 0.2rem;
   }
@@ -234,7 +243,7 @@ export const CommentAvatarBox = styled.div`
   position: absolute;
   top: 0;
 `;
-export const CommentWrapper = styled.div`
+export const CommentWrapper = styled.section`
   font-size: 0.9rem;
   padding: 0.5rem 0.5rem 0.2rem 0.5rem;
   border-top: 1px solid ${({ theme }) => theme.container_color};
@@ -275,7 +284,7 @@ export const StyledLi = styled.li`
   }
 `;
 
-export const IconWrapper = styled.div`
+export const IconWrapper = styled.section`
   & > * {
     margin-bottom: 0.3rem;
   }

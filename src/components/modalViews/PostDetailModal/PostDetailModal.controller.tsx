@@ -14,8 +14,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
-import { ME } from "@/constants/queryKey";
 import { Spinner } from "@/components/common";
+import FocusTrap from "focus-trap-react";
 
 interface ModalProps {
   postId: string;
@@ -28,8 +28,7 @@ interface IPostDetailModalProps {
 
 const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
   const { postId, likeDataBinding } = props as ModalProps;
-  const { closeModal } = useUI();
-  const modalRef = useRef<HTMLDivElement | null>(null);
+  const { closeModal, displayModal } = useUI();
   const theme = useTheme();
   const navigate = useNavigate();
   const { id: myId } = useMe();
@@ -38,8 +37,8 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     mode: "onSubmit",
   });
 
+  const modalRef = useRef<HTMLElement | null>(null);
   const [profileImage, setProfileImage] = useState("");
-
   const [postInfo, setPostInfo] = useState({
     title: "",
     content: "",
@@ -64,7 +63,7 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     key: 0,
   });
 
-  const { data: myData } = useInitData(ME, "/auth-user");
+  const { data: myData } = useInitData("my-profile", "/auth-user"); // 리렌더링 유벌지점
   const { data: postData, isLoading } = useInitData(
     `postId-${postId}`,
     `/posts/${postId}`
@@ -228,42 +227,54 @@ const PostDetailModalController = ({ props }: IPostDetailModalProps) => {
     }
   };
 
+  useEffect(() => {
+    if (displayModal && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [displayModal, modalRef.current]);
+
   if (isLoading) return <Spinner />;
   return (
-    <PostDetailModalView
-      modalRef={modalRef}
-      handleProfile={handleProfile}
-      profileImage={profileImage}
-      userName={userName}
-      userId={userId}
-      myId={myId}
-      handleDelete={handleDelete}
-      isIFollowed={followInfo.isIFollowed}
-      handleFollow={handleFollow}
-      handleClose={handleClose}
-      heartAnimation={heartAnimation}
-      tagClickHandler={tagClickHandler}
-      imageUrl={imageUrl}
-      isContentDetail={isContentDetail}
-      content={postInfo.content}
-      title={postInfo.title}
-      handleContentDetail={handleContentDetail}
-      handleLike={handleLike}
-      isILiked={likeInfo.isILiked}
-      likeCount={likeInfo.count}
-      toggleShowComments={toggleShowComments}
-      handleChat={handleChat}
-      register={register}
-      handleSubmit={handleSubmit}
-      theme={theme}
-      tags={postInfo.tags}
-      onValid={onValid}
-      onInvalid={onInvalid}
-      comments={comments}
-      setComments={setComments}
-      isShowComments={isShowComments}
-      setIsShowComments={setIsShowComments}
-    />
+    <FocusTrap
+      focusTrapOptions={{
+        allowOutsideClick: true,
+      }}
+    >
+      <PostDetailModalView
+        modalRef={modalRef}
+        handleProfile={handleProfile}
+        profileImage={profileImage}
+        userName={userName}
+        userId={userId}
+        myId={myId}
+        handleDelete={handleDelete}
+        isIFollowed={followInfo.isIFollowed}
+        handleFollow={handleFollow}
+        handleClose={handleClose}
+        heartAnimation={heartAnimation}
+        tagClickHandler={tagClickHandler}
+        imageUrl={imageUrl}
+        isContentDetail={isContentDetail}
+        content={postInfo.content}
+        title={postInfo.title}
+        handleContentDetail={handleContentDetail}
+        handleLike={handleLike}
+        isILiked={likeInfo.isILiked}
+        likeCount={likeInfo.count}
+        toggleShowComments={toggleShowComments}
+        handleChat={handleChat}
+        register={register}
+        handleSubmit={handleSubmit}
+        theme={theme}
+        tags={postInfo.tags}
+        onValid={onValid}
+        onInvalid={onInvalid}
+        comments={comments}
+        setComments={setComments}
+        isShowComments={isShowComments}
+        setIsShowComments={setIsShowComments}
+      />
+    </FocusTrap>
   );
 };
 

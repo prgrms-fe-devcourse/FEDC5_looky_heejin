@@ -58,35 +58,51 @@ const ProfilePage = () => {
     updateUserData();
   }, [paramsId]);
 
-  const handleChangePassword = (e: React.MouseEvent) => {
+  const handleChangePassword = <
+    T extends React.MouseEvent | React.KeyboardEvent,
+  >(
+    e: T
+  ) => {
     e.stopPropagation();
     setModalView("EDIT_PASSWORD_VIEW");
     openModal();
   };
 
-  const handleChangeName = (e: React.MouseEvent) => {
+  const handleChangeName = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
     e.stopPropagation();
     setModalView("EDIT_NAME_VIEW");
     openModal();
   };
 
-  const handleChangeImage = (e: React.MouseEvent) => {
+  const handleChangeImage = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
     e.stopPropagation();
     setModalView("EDIT_IMAGE_VIEW");
     openModal();
   };
 
-  const handleChangeCover = () => {
+  const handleChangeCover = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
+    e.stopPropagation();
     setModalView("EDIT_COVERIMAGE_VIEW");
     openModal();
   };
 
-  const handleClickChat = (e: React.MouseEvent, id: string) => {
+  const handleClickChat = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T,
+    id: string
+  ) => {
     e.stopPropagation();
     navigate(`/chat/${id}`);
   };
 
-  const handleLogout = (e: React.MouseEvent) => {
+  const handleLogout = <T extends React.MouseEvent | React.KeyboardEvent>(
+    e: T
+  ) => {
     e.stopPropagation();
     const isLogout = confirm("로그아웃을 하시겠습니까?");
     if (isLogout) {

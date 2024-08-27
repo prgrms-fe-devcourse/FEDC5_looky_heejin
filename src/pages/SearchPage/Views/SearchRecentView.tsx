@@ -25,6 +25,15 @@ const SearchRecentView = ({
     return [];
   }, [recentKeywords]);
 
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLElement>,
+    item: string
+  ) => {
+    if (event.key === "Enter") {
+      onItemClick(item);
+    }
+  };
+
   return (
     <section>
       <p
@@ -40,8 +49,11 @@ const SearchRecentView = ({
         {reversedKeywords && reversedKeywords.length > 0 ? (
           reversedKeywords.map((item, index) => (
             <LiContainer
+              tabIndex={0}
+              aria-label={`최근 검색어 ${item}으로 검색`}
               key={item.toString().concat(index)}
               onClick={() => onItemClick(item)}
+              onKeyDown={event => handleKeyDown(event, item)}
               {...props}
             >
               {item}

@@ -9,8 +9,8 @@ import {
   ModalHeaderButton,
   ModalContantWrapper,
 } from "./Modal.styles";
-import Icon from "../Icon/Icon";
 import { CLOSE_ICON } from "@/constants/icons";
+import { Icon } from "@/components/common";
 import useTheme from "@/hooks/useTheme";
 
 interface ModalLayoutProps {

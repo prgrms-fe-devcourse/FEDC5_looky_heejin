@@ -9,12 +9,12 @@ import {
 import styled from "styled-components";
 import tw from "twin.macro";
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.section`
   z-index: ${MODAL};
   ${tw`fixed flex items-center inset-0 justify-center`}
 `;
 
-export const ModalBackground = styled.div<any>`
+export const ModalBackground = styled.section<any>`
   z-index: ${MODAL_BACKGROUND};
 
   ${tw`fixed bg-black bg-opacity-10 flex items-center inset-0 justify-center backdrop-blur-[1.2px]`}

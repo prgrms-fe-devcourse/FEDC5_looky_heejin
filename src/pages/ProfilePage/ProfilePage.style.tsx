@@ -6,9 +6,13 @@ import {
 import { Col, Row } from "@/styles/GlobalStyle";
 import { css, styled } from "styled-components";
 
-export const Profile = styled(Col)<{ $isMe: string; $coverImage: string }>`
+export const Profile = styled.section<{ $isMe: string; $coverImage: string }>`
+  display: flex;
+  flex-direction: column;
+  position: relative;
   min-height: calc(100vh - ${NAV_HEIGHT * 2}rem - 10px);
   height: calc(100vh - ${NAV_HEIGHT * 2}rem - 10px);
+  width: 100%;
   border-top-left-radius: 0.375rem;
   border-top-right-radius: 0.375rem;
   padding: 1rem;
@@ -52,7 +56,9 @@ export const InfoWrap = styled(Col)`
   margin-bottom: 1rem;
 `;
 
-export const Posts = styled(Col)`
+export const Posts = styled.section`
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   min-height: 576px;
@@ -95,4 +101,12 @@ export const Container = styled.div`
 export const EmptyPost = styled.div`
   flex-grow: 1;
   justify-content: center;
+`;
+
+export const CoverChange = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;

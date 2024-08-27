@@ -1,10 +1,9 @@
 import { styled } from "styled-components";
 import { useForm, FieldValues, FieldErrors } from "react-hook-form";
-import Icon from "../../../Icon/Icon";
 import { CLOSE_ICON, SEARCH_ICON } from "@/constants/icons";
 import { SEARCH_BAR } from "@/constants/uiConstants";
 import { useSearchValue } from "@/hooks/useSearchValue";
-import { Input } from "@/components/common";
+import { Icon, Input } from "@/components/common";
 
 const SearchBarWrapper = styled.div`
   height: 100%;
