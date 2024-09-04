@@ -1,6 +1,3 @@
-export const ICON_SIZE_SMALL = 25;
-export const ICON_SIZE = 40;
-
 export const NAME_VALIDATION = {
   required: {
     message: "변경할 닉네임을 입력하세요",

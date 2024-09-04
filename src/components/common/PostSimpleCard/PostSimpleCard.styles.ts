@@ -50,18 +50,12 @@ export const CardInfoContainer = styled.section`
   position: relative;
 `;
 
-export const CardImageContainer = styled.section`
+export const CardImageContainer = styled.div`
+  position: relative;
   min-height: 200px;
-  min-width: 200px;
-  border-radius: 0.375rem;
-`;
-
-export const CardImage = styled.img`
-  cursor: pointer;
-  width: 100%;
   aspect-ratio: 10 / 16;
-  object-fit: cover;
   border-radius: 0.375rem;
+  cursor: pointer;
 `;
 
 export const heartbeat = keyframes`
@@ -113,12 +107,15 @@ export const IconContainer = styled.div<{
           border-radius: 50%;
           background-color: ${props => props.theme.background_color};
           /* background-color: rgba(0, 0, 0, 0.3); */
+          padding-right: 0.5rem;
         `;
     }
   }};
 `;
 
 export const NewDiv = styled.div`
+  width: 1.4rem;
+  height: 1.4rem;
   &:hover {
     animation: ${heartbeat} 0.7s ease-in-out infinite;
   }

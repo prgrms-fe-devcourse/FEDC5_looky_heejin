@@ -1,14 +1,5 @@
 import { _DELETE, _GET, _POST } from "@/api";
-import { Avatar, ToolTip } from "@/components/common";
-import Icon from "@/components/common/Icon";
-import {
-  CHAT_ICON,
-  CLOSE_ICON,
-  HEART_ICON,
-  SEND_ICON,
-  TRASH_ICON,
-} from "@/constants/icons";
-
+import { Avatar, ToolTip, Icon } from "@/components/common";
 import {
   AvatarWrapper,
   CaptionWrapper,
@@ -46,6 +37,7 @@ import { _FOLLOW, _UNFOLLOW } from "@/api/queries/follow";
 import Comments from "./Comments";
 import { ITag } from "@/types/post";
 import React from "react";
+import { ICON } from "@/constants/icons";
 
 interface IHeartAnimation {
   isShow: boolean;
@@ -143,7 +135,7 @@ const PostDetailModalView = React.forwardRef<
           </UserInfo>
           {userId === myId ? (
             <TrashIconWrapper>
-              <Icon name={TRASH_ICON} size="1.8rem" onClick={handleDelete} />
+              <Icon name={ICON.TRASH} size="1.8rem" onClick={handleDelete} />
             </TrashIconWrapper>
           ) : (
             <FollowButton
@@ -156,7 +148,7 @@ const PostDetailModalView = React.forwardRef<
 
           <CloseIconWrapper tabIndex={0}>
             <Icon
-              name={CLOSE_ICON}
+              name={ICON.CLOSE}
               size="1.8rem"
               weight={250}
               onClick={handleClose}
@@ -167,10 +159,13 @@ const PostDetailModalView = React.forwardRef<
           {heartAnimation.isShow && (
             <HeartInImage key={heartAnimation.key}>
               <Icon
-                name={HEART_ICON}
-                fill={true}
-                color={theme.symbol_color}
-              ></Icon>
+                name={ICON.HEART}
+                onClick={handleLike}
+                fill={isILiked ? true : false}
+                color={isILiked ? theme.symbol_color : ""}
+                size="2.3rem"
+                isSprite={true}
+              />
             </HeartInImage>
           )}
           {tags.map(({ x, y, id, brand, product, link }) => (
@@ -198,12 +193,13 @@ const PostDetailModalView = React.forwardRef<
             <HeartWrapper>
               <HeartIconWrapper tabIndex={0}>
                 <Icon
-                  name={HEART_ICON}
+                  name={ICON.HEART}
                   onClick={handleLike}
                   fill={isILiked ? true : false}
                   color={isILiked ? theme.symbol_color : ""}
                   size="2.3rem"
-                ></Icon>
+                  isSprite={true}
+                />
               </HeartIconWrapper>
 
               <LikeCountSpan>
@@ -221,7 +217,7 @@ const PostDetailModalView = React.forwardRef<
               <IconWrapper>
                 <Icon
                   tabIndex={0}
-                  name={CHAT_ICON}
+                  name={ICON.CHAT}
                   size="2rem"
                   onClick={toggleShowComments}
                 />
@@ -230,7 +226,7 @@ const PostDetailModalView = React.forwardRef<
                 <IconWrapper>
                   <Icon
                     tabIndex={0}
-                    name={SEND_ICON}
+                    name={ICON.SEND}
                     size="2.3rem"
                     onClick={handleChat}
                   />

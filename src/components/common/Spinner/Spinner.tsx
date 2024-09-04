@@ -1,4 +1,5 @@
 import { SPINNER } from "@/constants/uiConstants";
+import { Image } from "@/components/common";
 import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
@@ -28,11 +29,11 @@ const Spinner = () => {
   return (
     <SpinnerContainer>
       <SpinnerWrapper>
-        <img
+        <Image
           src="/looky_spinner.png"
           alt="looky_spinner"
-          width="200px"
-          height="200px"
+          width={120}
+          height={120}
         />
       </SpinnerWrapper>
     </SpinnerContainer>

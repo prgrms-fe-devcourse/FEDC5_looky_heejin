@@ -1,30 +1,30 @@
 import { Route, Routes } from "react-router-dom";
 
-import Layout from "@/components/common/Layout";
-import {
-  LoginPage,
-  SplashPage,
-  SignInPage,
-  ChannelsPage,
-  ProfilePage,
-  SearchPage,
-  PostDetailPage,
-  NotFoundPage,
-  HomePage,
-  CreatePostPage,
-  NotificationsPage,
-  ChatsPage,
-  ChatPage,
-} from "@/pages";
+import { Layout, Spinner } from "@/components/common";
 import TopNavBar from "@/components/common/Navigator/TopNavBar/TopNavBar";
 import BottomNavBar from "@/components/common/Navigator/BottomNavBar/BottomNavBar";
 import AuthRoute from "./AuthRoute";
 import Transition from "./Transition";
 import Toast from "@/utils/toast";
+import { Suspense, lazy } from "react";
+
+const LoginPage = lazy(() => import("@/pages/LoginPage"));
+const SplashPage = lazy(() => import("@/pages/SplashPage"));
+const SignInPage = lazy(() => import("@/pages/SignInPage"));
+const ChannelsPage = lazy(() => import("@/pages/ChannelsPage"));
+const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
+const SearchPage = lazy(() => import("@/pages/SearchPage"));
+const PostDetailPage = lazy(() => import("@/pages/PostDetailPage"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+const HomePage = lazy(() => import("@/pages/HomePage"));
+const CreatePostPage = lazy(() => import("@/pages/CreatePostPage"));
+const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
+const ChatsPage = lazy(() => import("@/pages/ChatsPage"));
+const ChatPage = lazy(() => import("@/pages/ChatPage"));
 
 const RouterComponent = () => {
   return (
-    <>
+    <Suspense fallback={<Spinner />}>
       <TopNavBar />
       <Layout>
         <Routes>
@@ -66,7 +66,7 @@ const RouterComponent = () => {
       </Layout>
       <BottomNavBar />
       <Toast />
-    </>
+    </Suspense>
   );
 };
 export default RouterComponent;

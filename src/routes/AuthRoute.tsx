@@ -5,7 +5,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useQuery } from "@tanstack/react-query";
 import { ME } from "@/constants/queryKey";
 import { aesDecrypt } from "@/utils/crypto";
-import { Spinner } from "@/components/common/Spinner";
+import { Spinner } from "@/components/common";
 
 type TAuthRouteProps = {
   element: JSX.Element;

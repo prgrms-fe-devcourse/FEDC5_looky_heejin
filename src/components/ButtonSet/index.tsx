@@ -29,7 +29,12 @@ const ButtonSet = ({ items, style }: IButtonProps) => {
             onClick={item.onClick}
             aria-label={`${item.ariaString} 버튼`}
           >
-            <Icon name={item.name} size={item.size} color={item.color} />
+            <Icon
+              name={item.name}
+              size={item.size}
+              color={item.color}
+              isSprite={true}
+            />
           </Button>
         </ButtonWrap>
       ))}

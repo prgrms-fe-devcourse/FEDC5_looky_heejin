@@ -9,7 +9,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMe } from "./hooks/useMe";
 import { NotificationManager } from "./components/Notification";
 import { aesDecrypt } from "./utils/crypto";
-import { Spinner } from "./components/common/Spinner";
+import { Spinner } from "./components/common";
 
 const App = () => {
   const [token, setToken] = useLocalStorage("auth_token");

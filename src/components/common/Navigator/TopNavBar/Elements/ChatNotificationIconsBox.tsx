@@ -1,15 +1,10 @@
 import styled, { keyframes, useTheme } from "styled-components";
-import {
-  CHAT_ICON,
-  DARKMODE_ICON,
-  LIGHTMODE_ICON,
-  NOTIFICATIONS_ICON,
-} from "@/constants/icons";
+import { Icon } from "@/components/common";
+import { ICON } from "@/constants/icons";
 import { PathName } from "@/constants/pathNameConstants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMe } from "@/hooks/useMe";
 import { useNotification } from "@/hooks/useNotification";
-import { Icon } from "@/components/common";
 
 interface IChatNotificationIconsBoxProps {
   onClick: (path: string) => void;
@@ -138,26 +133,22 @@ const ChatNotificationIconsBox = ({
         $marginLeft={id ? "" : "4.5rem"}
       >
         <Icon
-          name={theme.theme_mode === "light" ? LIGHTMODE_ICON : DARKMODE_ICON}
+          name={theme.theme_mode === "light" ? ICON.LIGHTMODE : ICON.DARKMODE}
           size="1.6rem"
           weight={250}
-        ></Icon>
+          isSprite={true}
+        />
       </IconWrapper>
       {id ? (
         <>
           <NotificationIconWrapper
             tabIndex={0}
             $marginLeft={""}
-            aria-labelledby={CHAT_ICON}
+            aria-labelledby={ICON.CHAT}
             onKeyDown={handleChat}
             onClick={handleChat}
           >
-            <Icon
-              id={CHAT_ICON}
-              name={CHAT_ICON}
-              size="1.6rem"
-              weight={250}
-            ></Icon>
+            <Icon name={ICON.CHAT} size="1.6rem" weight={250} isSprite={true} />
             {messageUnseenCount > 0 ? (
               messageUnseenCount > 99 ? (
                 <ChatNotificationCounter $width="1.3rem" $borderRadius="8px">
@@ -174,17 +165,17 @@ const ChatNotificationIconsBox = ({
           </NotificationIconWrapper>
           <NotificationIconWrapper
             tabIndex={0}
-            aria-labelledby={NOTIFICATIONS_ICON}
+            aria-labelledby={ICON.NOTIFICATIONS}
             $marginLeft={""}
             onKeyDown={handleNotification}
             onClick={handleNotification}
           >
             <Icon
-              id={NOTIFICATIONS_ICON}
-              name={NOTIFICATIONS_ICON}
+              name={ICON.NOTIFICATIONS}
               size="1.7rem"
               weight={250}
-            ></Icon>
+              isSprite={true}
+            />
             {commonUnseenCount > 0 ? (
               commonUnseenCount > 99 ? (
                 <NotificationCounter $width="1.3rem" $borderRadius="8px">

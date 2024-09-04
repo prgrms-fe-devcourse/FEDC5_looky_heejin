@@ -1,10 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import {
-  ADD_BOX_ICON,
-  CHANNEL_ICON,
-  HOME_ICON,
-  SEARCH_ICON,
-} from "@/constants/icons";
+import { ICON } from "@/constants/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import {
@@ -96,9 +91,10 @@ const BottomNavBar = () => {
         >
           {
             <Icon
-              name={HOME_ICON}
+              name={ICON.HOME}
               color={currentPath === PathName.HOME ? theme.symbol_color : ""}
               weight={currentPath === PathName.HOME ? 300 : 250}
+              isSprite={true}
             />
           }
         </Button>
@@ -113,9 +109,10 @@ const BottomNavBar = () => {
         >
           {
             <Icon
-              name={SEARCH_ICON}
+              name={ICON.SEARCH}
               color={currentPath === PathName.SEARCH ? theme.symbol_color : ""}
               weight={currentPath === PathName.SEARCH ? 300 : 250}
+              isSprite={true}
             />
           }
         </Button>
@@ -131,11 +128,12 @@ const BottomNavBar = () => {
           >
             {
               <Icon
-                name={ADD_BOX_ICON}
+                name={ICON.ADD_BOX}
                 color={
                   currentPath === PathName.NEWPOST ? theme.symbol_color : ""
                 }
                 weight={currentPath === PathName.NEWPOST ? 300 : 250}
+                isSprite={true}
               />
             }
           </Button>
@@ -151,11 +149,12 @@ const BottomNavBar = () => {
         >
           {
             <Icon
-              name={CHANNEL_ICON}
+              name={ICON.CHANNEL}
               color={
                 currentPath === PathName.CHANNELS ? theme.symbol_color : ""
               }
               weight={currentPath === PathName.CHANNELS ? 300 : 250}
+              isSprite={true}
             />
           }
         </Button>

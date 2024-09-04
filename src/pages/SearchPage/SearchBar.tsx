@@ -1,11 +1,11 @@
 import { FieldErrors, useForm } from "react-hook-form";
 import { useCallback, useEffect } from "react";
-import Icon from "@/components/common/Icon";
+import { Icon } from "@/components/common";
 import { Form, Input, SearchIconWrap, BackIconWrap } from "./SearchPage.styles";
 import { useSearchParams } from "react-router-dom";
 import { SEARCH_VALIDATION_OPTION } from "./SearchPage.const";
-import { SEARCH_ICON } from "@/constants/icons";
 import { BackButton } from "@/components/common/Navigator/TopNavBar";
+import { ICON } from "@/constants/icons";
 
 interface ISearchBar {
   onSearch: (searchQuery: string) => void;
@@ -63,11 +63,12 @@ const SearchBar = ({ onSearch, onClickBack }: ISearchBar) => {
         />
         <SearchIconWrap>
           <Icon
-            name={SEARCH_ICON}
+            name={ICON.SEARCH}
             size="1.3rem"
             weight={300}
             onClick={handleSubmit(onValid, onInvalid)}
-          ></Icon>
+            isSprite={true}
+          />
         </SearchIconWrap>
       </Form>
     </>
