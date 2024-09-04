@@ -1,4 +1,4 @@
-import React, { FC, Suspense, lazy, useCallback, useMemo } from "react";
+import { FC, Suspense, lazy, useMemo } from "react";
 import { ThemeProvider } from "styled-components";
 
 import { lightTheme, darkTheme } from "@styles/theme";
@@ -53,7 +53,9 @@ const ModalProvider = () => {
     <Suspense fallback={<Spinner />}>
       <Modal onClose={closeModal}>
         {modalView === "INIT_VIEW" && <TestModal />}
-        {modalView === "TAG_CREATE_VIEW" && <TagCreateModal props={modalProps} />}
+        {modalView === "TAG_CREATE_VIEW" && (
+          <TagCreateModal props={modalProps} />
+        )}
         {modalView === "CHANNEL_SELECT_VIEW" && (
           <ChannelSelectModal props={modalProps} />
         )}

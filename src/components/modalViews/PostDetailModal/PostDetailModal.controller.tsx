@@ -14,7 +14,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useUI } from "@/components/common/uiContext";
 import { notify } from "@/utils/toast";
 import { ICreateComment } from "@/types";
-import { ME } from "@/constants/queryKey";
 import { Spinner } from "@/components/common";
 import FocusTrap from "focus-trap-react";
 
