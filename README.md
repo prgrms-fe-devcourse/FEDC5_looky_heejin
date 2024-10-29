@@ -4,9 +4,11 @@
 
 ![logo](https://github.com/prgrms-fe-devcourse/FEDC5_looky_heejin/assets/90549862/ceb789a7-3811-4231-b705-1016345d7fbb)
 
-### [메인 서비스 주소](https://www.looky.kr/)
+### [~~메인 서비스 주소~~](https://www.looky.kr/)
 
-##### [도메인 만료 시 서비스 주소](https://looky-working.vercel.app/)
+##### [~~도메인 만료 시 서비스 주소~~](https://looky-working.vercel.app/)
+
+### API 지원 종료로 인해 서비스가 종료되었습니다. 동작 영상은 아래 데모 영상들을 확인해주세요.
 
 ---
 
