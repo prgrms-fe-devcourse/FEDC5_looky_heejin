@@ -25,9 +25,9 @@
 | 팀장 & COO | CKO | CTO | CAO |
 | :-: | :-: | :-: | :-: |
 | **✨최고 운영 책임자** | **✨최고 지식경영 책임자** | **✨최고 기술 책임자** | **✨최고 관리 책임자** |
-| [김석주](https://github.com/SoJuSo) | [신수영](https://github.com/joyswim) | [오원주](https://github.com/OhWonJu) | [황민호](https://github.com/hellosonic-r) |
+| [김석주](https://github.com/ksjdev) | [신수영](https://github.com/joyswim) | [오원주](https://github.com/OhWonJu) | [황민호](https://github.com/hellosonic-r) |
 | asdfg7123@gmail.com | joyswim.dev@gmail.com | reopard506@gmail.com | hellommmh@gmail.com |
-| <img src="https://github.com/SoJuSo.png" /> | <img src="https://github.com/joyswim.png" /> | <img src="https://github.com/OhWonJu.png" /> | <img src="https://github.com/hellosonic-r.png" /> |
+| <img src="https://github.com/ksjdev.png" /> | <img src="https://github.com/joyswim.png" /> | <img src="https://github.com/OhWonJu.png" /> | <img src="https://github.com/hellosonic-r.png" /> |
 
 
 ---
